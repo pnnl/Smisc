@@ -52,6 +52,8 @@
 ##'
 ##' Note that steps 3, 5, and 7-9 are skipped if \code{njobs = 1}.
 ##'
+##' @export
+##'
 ##' @param X The list, each element of which will be the input to \code{FUN}
 ##' @param FUN A function whose first argument is an element of list \code{X}
 ##' @param \dots Additional named arguments to \code{FUN}

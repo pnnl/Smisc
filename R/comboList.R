@@ -4,7 +4,9 @@
 ##' predictors
 ##'
 ##' Uses \code{\link{combn}} to identify the combinations.
-##' 
+##'
+##' @export
+##'
 ##' @param n.pred integer indicating the number of predictors
 ##' @param outFile text string indicating the .Rdata file to which the returned
 ##' list of predictor combinations will be saved.  If NULL, then no file is

@@ -1,24 +1,26 @@
 ##' Indicates whether a vector of email addreses may be valid
-##' 
+##'
 ##' Indicates whether a vector of email addreses may be valid
-##' 
+##'
 ##' Checks the following conditions:
-##' 
+##'
 ##' 1: Only 1 @@ allowed
-##' 
+##'
 ##' 2: Should have text on both sides of the @@
-##' 
+##'
 ##' 3: Text on right hand side (RHS) of @@ should have at least one dot
-##' 
+##'
 ##' 4: RHS text should not end with a dot
-##' 
+##'
 ##' 5: The suffix of the RHS should have 2 or 3 characters (e.g. 'com', 'net',
 ##' 'uk')
-##' 
+##'
 ##' 6: RHS should not begin with a dot
-##' 
+##'
 ##' 7: No illegal characters--however, it does't check for a backslash
-##' 
+##'
+##' @export
+##'
 ##' @param vec Character vector of email addresses
 ##' @return Logical vector which is \code{TRUE} when the email address is
 ##' valid.
@@ -27,27 +29,27 @@
 ##' \url{http://groups.google.com/group/eaut/web/rules-for-valid-email-addresses}
 ##' @keywords misc
 ##' @examples
-##' 
+##'
 ##'  valid.email.address(c(NA, "@@","this@@that","this@@that@@that","this@@that.com.ar",
 ##'                        "@@this.com","that@@","this@@that.","this@@.that","this@@.that.com",
 ##'                         "this@@that.com","this(@@that.com","this@@that .com"))
-##' 
+##'
 valid.email.address <- function(vec) {
 
   if (!is.character(vec))
     stop("'vec' must be a character vector\n")
-  
+
   # Get the names for later
   n.vec <- names(vec)
-  
+
   # If NA, supplant with one that will work and then substitue NA at the end
   are.NA <- is.na(vec)
   vec[are.NA] <- "email@fake.com"
-    
+
   # (This only.1.ampersand test is necessary since the strsplit condition
   #  will not recognize the situation where an email address ends with a @)
   only.1.ampersand <- unlist(lapply(gregexpr("@", vec), function(x) length(x[x != -1]))) == 1
-    
+
   # After the split, need exactly two strings and each string should have positive length (nchar > 0)
   text.on.both.sides <- unlist(lapply(strsplit(vec, "\\@"), function(x) (length(x) == 2) & (all(nchar(x) > 0))))
 
@@ -70,7 +72,7 @@ valid.email.address <- function(vec) {
   # (Can add or delete characters from the illegal vector as desired--rest of code will still work
 
   # Based in part on
-  # http://groups.google.com/group/eaut/web/rules-for-valid-email-addresses  
+  # http://groups.google.com/group/eaut/web/rules-for-valid-email-addresses
   illegal <- c(" ", '"', "(", ")", ",", ":", ";", "<", ">", "[", "]", "`", "~")
 #    vec <- c(illegal, "ok@email.com")  # For testing
   names(illegal) <- labels <- letters[1:length(illegal)]
@@ -89,7 +91,7 @@ valid.email.address <- function(vec) {
 
   # Summarize accross the matrix
   legal <- apply(legal.mat, 1, all)
-    
+
   # Return an indicator vector of those emails which satisfy all the conditions
   final <- only.1.ampersand & text.on.both.sides & at.least.one.dot & rhs.ends.with.text & suffix.length & no.first.dot & legal
 
@@ -98,5 +100,5 @@ valid.email.address <- function(vec) {
   names(final) <- n.vec
 
   return(final)
-    
+
 } # valid.email.address

@@ -7,8 +7,8 @@
     cat(confirm,"\n")
 }
 
-# This function would be called when namespace is unloaded (if it were not in the search path
-# because it had been loaded via loadNamespace("Smisc")
+# This function would be called when namespace is unloaded (if it were not in the
+# search path because it had been loaded via loadNamespace("Smisc")
 .onUnload <- function(libpath) {
 
   if (is.loaded("smartFilter", PACKAGE = "Smisc")) {

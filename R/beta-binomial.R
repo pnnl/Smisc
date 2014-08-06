@@ -19,13 +19,15 @@
 ##' \frac{nuv(n+u+v)}{(u+v)^2 (1+u+v)} }
 ##'
 ##' @aliases dbb pbb qbb rbb
-##' 
+##'
+##' @export
+##'
 ##' @usage
 ##' dbb(x, N, u, v)
 ##' pbb(q, N, u, v)
 ##' qbb(p, N, u, v)
 ##' rbb(n, N, u, v)
-##' 
+##'
 ##' @param x vector of qauntiles
 ##' @param q vector of quantiles
 ##' @param p vector of probabilities

@@ -1,8 +1,8 @@
 ##' Examines the equivalence of two dataframes or matrices
-##' 
+##'
 ##' Checks whether two data objects (data frames and/or matrices) are
 ##' equivalent and returns a descriptive message describing the result.
-##' 
+##'
 ##' \code{d1} and \code{d2} do not both have to be of the same mode; i.e.
 ##' \code{d1} could be a dataframe and \code{d2} could be a matrix.  If the
 ##' number of rows or the number of columns differ, then no further comparisons
@@ -13,17 +13,19 @@
 ##' equivalent to \code{-Inf}.  Factors in dataframes are converted to
 ##' character strings prior to comparison.  Comparisons are made one column at
 ##' a time.
-##' 
+##'
 ##' If a particular column from both objects are numeric, then for two
 ##' corresponding values, say, \code{a} and \code{b}, equivalence is declared
 ##' if one or more of the following occurs: 1) \code{a == b}, 2) \code{abs(a -
 ##' b) < maxAbsError}, 3) \code{abs((a - b) / b) < maxRelError} if \code{abs(b)
 ##' > abs(a)}, or \code{abs((a - b) / a) < maxRelError} if \code{abs(b) >=
 ##' abs(a)}.
-##' 
+##'
 ##' If both columns are not numeric, they are coerced (if need be) to character
 ##' and then compared directly.
-##' 
+##'
+##' @export
+##'
 ##' @param d1 The first dataframe or matrix
 ##' @param d2 The dataframe or matrix that will be compared to \code{d1}
 ##' @param maxAbsError Numeric values whose absolute difference is less than
@@ -48,37 +50,37 @@
 ##' http://www.cygnus-software.com/papers/comparingfloats/comparingfloats.htm
 ##' @keywords misc
 ##' @examples
-##' 
+##'
 ##' # Number of rows different
 ##' dframeEquiv(matrix(rnorm(20), nrow=4),
 ##'             matrix(rnorm(25), nrow=5))
-##' 
+##'
 ##' # Number of columns different
 ##' dframeEquiv(matrix(rnorm(16), nrow=4),
 ##'             matrix(rnorm(20), nrow=4))
-##' 
+##'
 ##' # Rownames differ
 ##' dframeEquiv(matrix(rnorm(9), nrow=3, dimnames=list(1:3, NULL)),
 ##'             matrix(rnorm(9), nrow=3, dimnames=list(letters[1:3], NULL)))
-##' 
+##'
 ##' # Colnames differ
 ##' dframeEquiv(matrix(rnorm(9), nrow=3, dimnames=list(NULL, 1:3)),
 ##'             matrix(rnorm(9), nrow=3, dimnames=list(NULL, letters[1:3])))
-##' 
+##'
 ##' # Not equivalent
 ##' x <- data.frame(x=factor(c(1,1,2,2,3,3)), y=rnorm(6))
 ##' y <- data.frame(x=factor(c(1,2,2,2,3,3)), y=c(x$y[-6],rnorm(1)))
 ##' dframeEquiv(x, y)
-##' 
+##'
 ##' # Look at discrepancies
 ##' out <- dframeEquiv(x, y)
 ##' out
-##' 
+##'
 ##' # Equivalent
 ##' x <- data.frame(x=letters[1:6], y=0:5)
 ##' y <- x
 ##' dframeEquiv(x, y)
-##' 
+##'
 dframeEquiv <- function(d1, d2, maxAbsError=1e-12, maxRelError=1e-14, verbose=TRUE) {
 
   d1.d2 <- paste("'", deparse(substitute(d1)), "' and '",
@@ -86,13 +88,13 @@ dframeEquiv <- function(d1, d2, maxAbsError=1e-12, maxRelError=1e-14, verbose=TR
 
   # Initialize outputs
   frac.equiv <- loc.inequiv <- equiv.mat <- msg <- NULL
-  
+
   if (!((is.data.frame(d1) | is.matrix(d1)) &
         (is.data.frame(d2) | is.matrix(d2))))
     stop(d1.d2, " must both be data frames or matrices.")
 
   keep.checking <- TRUE
-  
+
   # Check for number of rows
   if (NROW(d1) != NROW(d2)) {
     msg <- paste(d1.d2, "have a different number of rows.")
@@ -105,13 +107,13 @@ dframeEquiv <- function(d1, d2, maxAbsError=1e-12, maxRelError=1e-14, verbose=TR
     keep.checking <- FALSE
   }
 
-  if (keep.checking) { 
+  if (keep.checking) {
 
     # Check colnames
     colStatus <- sum(c(is.null(colnames(d1)), is.null(colnames(d2))))
     if ((colStatus == 1) | ((colStatus == 0) & (any(colnames(d1) != colnames(d2)))))
       msg <- c(msg, paste(d1.d2, "have different column names."))
-    
+
     # Check rownames
     rowStatus <- sum(c(is.null(rownames(d1)), is.null(rownames(d2))))
     if ((rowStatus == 1) | ((rowStatus == 0) & (any(rownames(d1) != rownames(d2)))))
@@ -124,9 +126,9 @@ dframeEquiv <- function(d1, d2, maxAbsError=1e-12, maxRelError=1e-14, verbose=TR
       d2 <- factor2character(d2)
 
     # Change character NA's to special characters "9999999"
-    changeNAchar <- function(x) 
+    changeNAchar <- function(x)
       ifelse(is.na(x), "999999999999", as.character(x))
-     
+
     # Function for checking equivalence of numerical values
     cNum <- function(vec1, vec2) {
 
@@ -145,7 +147,7 @@ dframeEquiv <- function(d1, d2, maxAbsError=1e-12, maxRelError=1e-14, verbose=TR
           vec2[bothNA] <- 99999
         }
       }
-  
+
       # Check +Inf
       v1Inf <- vec1 == Inf
       v2Inf <- vec2 == Inf
@@ -154,7 +156,7 @@ dframeEquiv <- function(d1, d2, maxAbsError=1e-12, maxRelError=1e-14, verbose=TR
       if (any(oneInf <- v1Inf | v2Inf)) {
         vec1[oneInf] <- 9999999
         vec2[oneInf] <- 9
-        
+
         # If they're both Inf, set them to the same number
         if (any(bothInf <- v1Inf & v2Inf)) {
           vec1[bothInf] <- 99999
@@ -170,18 +172,18 @@ dframeEquiv <- function(d1, d2, maxAbsError=1e-12, maxRelError=1e-14, verbose=TR
       if (any(onenInf <- v1nInf | v2nInf)) {
         vec1[onenInf] <- 9999999
         vec2[onenInf] <- 9
-        
+
         # If they're both -Inf, set them to the same number
         if (any(bothnInf <- v1nInf & v2nInf)) {
           vec1[bothnInf] <- 99999
           vec2[bothnInf] <- 99999
-        }        
+        }
       }
 
 
       # Perfect equivalence
       e1 <- vec1 == vec2
-      
+
       # Absolute error equivalence
       e2 <- abs(vec1 - vec2) < maxAbsError
 
@@ -197,7 +199,7 @@ dframeEquiv <- function(d1, d2, maxAbsError=1e-12, maxRelError=1e-14, verbose=TR
       if (any(is.na(e1)))
         warning("in cNum() in dframeEquiv():  'e1' contains an unexpected NA\n", call. = FALSE)
       if (any(is.na(e2)))
-        warning("in cNum() in dframeEquiv():  'e2' contains an unexpected NA\n", call. = FALSE)          
+        warning("in cNum() in dframeEquiv():  'e2' contains an unexpected NA\n", call. = FALSE)
 
       # If we have one of the 3 equivalences, return TRUE
       return(e1 | e2 | e3)
@@ -219,8 +221,8 @@ dframeEquiv <- function(d1, d2, maxAbsError=1e-12, maxRelError=1e-14, verbose=TR
         v1 <- changeNAchar(v1)
         v2 <- changeNAchar(v2)
         equiv.mat <- cbind(equiv.mat, v1 == v2)
-## This doesn't catch all the different ways in which two columns could have different data types        
-#        if (both.num == 1)   
+## This doesn't catch all the different ways in which two columns could have different data types
+#        if (both.num == 1)
 #          msg <- c(msg, paste("Column", i, "of", d1.d2, "do not have same data type.",
 #                   "Will coerce them to characters in order to compare them.")
       }
@@ -228,7 +230,7 @@ dframeEquiv <- function(d1, d2, maxAbsError=1e-12, maxRelError=1e-14, verbose=TR
 
     # Fraction of elements that are equivalent
     frac.equiv <- sum(equiv.mat)/(NROW(d1)*NCOL(d1))
-     
+
     if (!all(equiv.mat)) {
         msg <- c(msg, paste(round(100*frac.equiv,2),
                             "% of the elements of ", d1.d2, " are equivalent.", sep=""))
@@ -242,9 +244,9 @@ dframeEquiv <- function(d1, d2, maxAbsError=1e-12, maxRelError=1e-14, verbose=TR
                                                  (locations %/% NROW(d1)) + 1))
       keep.checking <- FALSE
     }
-    else 
+    else
       msg <- c(msg, paste("All elements of", d1.d2, "appear to be equivalent."))
-    
+
   }
 
   if (verbose)

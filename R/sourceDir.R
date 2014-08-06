@@ -1,5 +1,7 @@
 ##' 'sources' all files with '.R' or '.r' extensions in a directory
-##' 
+##'
+##' @export
+##'
 ##' @param directory Character string indicating the path of the directory
 ##' containing the R source files
 ##' @param recursive \code{=TRUE} descends into subdirectories of
@@ -10,19 +12,19 @@
 ##' @param \dots Additional arguments to \code{source} function
 ##' @return Invisibly returns a character vector containing the files that were
 ##' identified for sourcing.
-##' 
+##'
 ##' Also prints a message indicating whether each file was sourced correctly or
 ##' not.
 ##' @author Landon Sego
 ##' @keywords misc
 ##' @examples
-##' 
+##'
 ##' # Source R files in the current directory
 ##' sourceDir(".")
-##' 
+##'
 ##' # Source R files in the directory "c:\Work\myRcode"
 ##' # sourceDir("c:/Work/myRcode")
-##' 
+##'
 sourceDir <- function(directory, recursive = FALSE, tryCatch = TRUE, ...) {
 
  x <- dir(directory, full.names = TRUE, recursive = recursive)
@@ -33,7 +35,7 @@ sourceDir <- function(directory, recursive = FALSE, tryCatch = TRUE, ...) {
    for (i in files) {
 
      if (tryCatch) {
-     
+
        if (class(err <- try(source(i, ...), silent = TRUE)) != "try-error")
          cat("Sourcing '", i, "'\n", sep = "")
        else
@@ -44,14 +46,14 @@ sourceDir <- function(directory, recursive = FALSE, tryCatch = TRUE, ...) {
        cat("Sourcing '", i, "'\n", sep = "")
        source(i, ...)
      }
-     
+
    } # for (i in files)
-   
+
  } # if length(files)
 
  else
    cat("There are no files with '.R' or '.r' extensions in", directory, "\n")
 
  invisible(files)
- 
+
 } # end sourceDir()

@@ -29,6 +29,8 @@
 ##' \code{v2} are matched to \code{v1} and the resulting vector of differences
 ##' has the same timestamps as \code{v1}.
 ##'
+##' @export
+##'
 ##' @param v1 A time series vector: vector with dates or datetimes for names
 ##' which are non repeating and in chronological order
 ##' @param v2 Another time series vector

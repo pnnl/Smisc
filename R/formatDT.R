@@ -1,30 +1,32 @@
 ##' Converts date or datetime strings into alternate formats
-##' 
+##'
 ##' Can be used to convert date-time character vectors into other types of
 ##' date-time formats.  It is designed to automatically find the appropriate
 ##' date and time informats without the user having to specify them.
-##' 
+##'
 ##' If the input vector contains times, \code{formatDT} assumes that the dates
 ##' and times are separated by at least one space.  The date format and the
 ##' time format of the input vector must be the same for all cells in the
 ##' vector. The input format is determined by the first non-missing entry of
 ##' the \code{dt} vector. Missing values (\code{NA} or \code{""}) are carried
 ##' through to the output vectors without error.
-##' 
+##'
 ##' In chosing the informat, \code{formatDT} first checks if the datetime
 ##' string has a format of "dd/mm/yyyy hh:mm:ss pm".  If so, it moves directly
 ##' to the datetime conversions.  Otherwise, it searches through the date and
 ##' time informats listed below for a suitable match.
-##' 
+##'
 ##' Acceptable date informats for \code{dt}: \code{mm/dd/yyyy},
 ##' \code{mm-dd-yyyy}, \code{yyyy-mm-dd}, \code{yyyymmdd}, \code{ddmonyyyy},
 ##' \code{dd-mon-yyyy}
-##' 
+##'
 ##' Acceptable time informats for \code{dt}: \code{hh:mm:sspm}, \code{hh:mm:ss
 ##' pm}, \code{hh:mm:ss} (24 hour time), \code{hh:mmpm}, \code{hh:mm pm},
 ##' \code{hh:mm} (24 hour time), \code{hhmm} (24 hour time), \code{hhmmss} (24
 ##' hour time)
-##' 
+##'
+##' @export
+##'
 ##' @param dt A character vector of date values or datetime values
 ##' @param date.outformat A character string requesting the date format to be
 ##' returned.  The following date outformats are supported: "mm/dd/yyyy",
@@ -54,38 +56,38 @@
 ##' @author Landon Sego
 ##' @keywords misc
 ##' @examples
-##' 
+##'
 ##' # Demonstrates conversion of different datetime informats
 ##' formatDT("03/12/2004 04:31:17pm", posix=FALSE)
 ##' formatDT("12Mar2004 04:31pm", posix=FALSE)
 ##' formatDT("2004-3-12 16:31:17", posix=FALSE)
 ##' formatDT("7-5-1998 22:13")
-##' 
+##'
 ##' # Specifying different types of outformats
 ##' formatDT("03/12/2004", date.outformat="dd-mon-yyyy", posix=FALSE)
 ##' formatDT("17-Sep-1782 12:31am", date.outformat="yyyy-mm-dd", time.outformat="hh:mm", posix=FALSE)
-##' 
+##'
 ##' # Processing datetime vectors
 ##' formatDT(c("03/12/2004 04:31pm","03/12/2005 04:32:18pm"), posix=FALSE)
 ##' formatDT(c("03/12/2004 04:31:17pm","03/12/2005 04:32:18pm"))
 ##' formatDT(c("03/12/2004 04:31:17pm","03/12/2005 04:32:18pm"), weekday=TRUE)
-##' 
+##'
 ##' # An incorrect date (will produce an error)
 ##' try(formatDT("29-Feb-2001"))
-##' 
+##'
 ##' # An incorrect time will also produce an error
 ##' try(formatDT("28-Feb-2001 00:00:00 AM"))
 ##' formatDT("28-Feb-2001 12:00:00 AM")
-##' 
+##'
 ##' # Illustrate the handling of missing values
 ##' formatDT(c(NA,"","2010-10-23 3:47PM"), weekday=TRUE)
-##' 
+##'
 formatDT <- function(dt,
                      date.outformat=NULL,
                      time.outformat=NULL,
                      posix=TRUE,
                      weekday=FALSE) {
-  
+
   # Assumptions:
   # 'dt' is a character vector with a date or datetime.
   # If it is a datetime, the date and time are separated
@@ -107,7 +109,7 @@ formatDT <- function(dt,
           if (tolower(date.outformat)=="mm/dd/yyyy")  date.outformat <- "%m/%d/%Y"
      else if (tolower(date.outformat)=="yyyy-mm-dd")  date.outformat <- "%Y-%m-%d"
      else if (tolower(date.outformat)=="mm-dd-yyyy")  date.outformat <- "%m-%d-%Y"
-     else if (tolower(date.outformat)=="ddmonyyyy")   date.outformat <- "%d%b%Y"   
+     else if (tolower(date.outformat)=="ddmonyyyy")   date.outformat <- "%d%b%Y"
      else if (tolower(date.outformat)=="dd-mon-yyyy") date.outformat <- "%d-%b-%Y"
      else if (tolower(date.outformat)=="yyyymmdd")    date.outformat <- "%Y%m%d"
      else {
@@ -119,17 +121,17 @@ formatDT <- function(dt,
   }
 
   # Identify the requested time outformats
-  if (is.null(time.outformat)) time.outformat <- "%I:%M:%S %p" 
+  if (is.null(time.outformat)) time.outformat <- "%I:%M:%S %p"
   else {
       # User can intuitively request time outformats
-          if (tolower(time.outformat)=="hh:mm:sspm")  time.outformat <- "%I:%M:%S%p"  
-     else if (tolower(time.outformat)=="hh:mm:ss pm") time.outformat <- "%I:%M:%S %p"  
-     else if (tolower(time.outformat)=="hh:mm:ss")    time.outformat <- "%H:%M:%S"   
+          if (tolower(time.outformat)=="hh:mm:sspm")  time.outformat <- "%I:%M:%S%p"
+     else if (tolower(time.outformat)=="hh:mm:ss pm") time.outformat <- "%I:%M:%S %p"
+     else if (tolower(time.outformat)=="hh:mm:ss")    time.outformat <- "%H:%M:%S"
      else if (tolower(time.outformat)=="hh:mmpm")     time.outformat <- "%I:%M%p"
      else if (tolower(time.outformat)=="hh:mm pm")    time.outformat <- "%I:%M %p"
      else if (tolower(time.outformat)=="hh:mm")       time.outformat <- "%H:%M"
      else if (tolower(time.outformat)=="hhmm")        time.outformat <- "%H%M"
-     else if (tolower(time.outformat)=="hhmmss")      time.outformat <- "%H%M%S"        
+     else if (tolower(time.outformat)=="hhmmss")      time.outformat <- "%H%M%S"
      else {
         cat("Warning in formatDT(): '",time.outformat,"' is not ",
             "a supported time outformat. 'hh:mm pm' will be used ",
@@ -142,33 +144,33 @@ formatDT <- function(dt,
   # Find the first non missing entry in dt, fill in all missing values with that first one
   # Keep record of missing values
   missing.ind <- is.na(dt) | (nchar(dt) == 0)
-  
+
   if (any.missing.ind <- any(missing.ind)) {
 
     if (all(missing.ind))
       stop("All values of 'dt' were '' or NA")
-    
+
     # Backup of dt
     original.dt <- dt
-    
-    # Use the first non-missing value for the time stamp    
+
+    # Use the first non-missing value for the time stamp
     dt.one <- dt[!missing.ind]
     dt.one <- dt.one[1]
-    
+
     # Fill in the missing values with the first non-missing one, will remove them later
     dt[missing.ind] <- dt.one
 
     # Vector of missing values that will be used to fill in output vectors
     original.dt.missing <- original.dt[missing.ind]
-    
+
   }
 
-  
+
   # Preproccessing to account for some obs having no seconds and others having seconds
   # Count the number of colons
   num.colons <- unlist(lapply(gregexpr(":", dt), function(x) length(x[x != -1])))
   u.num.colons <- unique(num.colons)
-        
+
   if (!all(u.num.colons %in% 0:2))
     stop("There should only be 0, 1 or 2 colons in the date time\n")
 
@@ -180,10 +182,10 @@ formatDT <- function(dt,
 
       # Change time string to upper case for easier processing
       dt <- toupper(dt)
-  
+
       # A function to insert the 00 seconds
       sub.func <- function(x) {
-  
+
         if (grepl(" AM", x))
           out <- gsub(" AM", ":00 AM", x)
         else if (grepl("AM", x))
@@ -194,23 +196,23 @@ formatDT <- function(dt,
           out <- gsub("PM", ":00PM", x)
         else
           out <- paste(x, "00", sep=":")
-  
+
         return(out)
-  
+
       } # sub.func
-  
+
       # Now make the substitutions as needed in the time vector
       for (i in 1:length(dt)) {
-              
+
         if (num.colons[i] == 1)
           dt[i] <- sub.func(dt[i])
-              
+
       } # for
 
     } # if (all(1:2 == sort(u.num.colons))) {
   } # if (length(u.num.colons == 2)) {
 
-  
+
   # We assume that time is present in dt
   time.present <- TRUE
 
@@ -218,7 +220,7 @@ formatDT <- function(dt,
   # Check if the string matches the standard "mm/dd/yyy hh:mm:ssam" format.
   # If so, then by-pass all the splitting...
   if ((!is.na(strptime(dt[1],"%m/%d/%Y %I:%M:%S %p"))) &
-      (nchar(dt[1]) <= 22)) 
+      (nchar(dt[1]) <= 22))
      dt.POSIXlt <- strptime(dt,"%m/%d/%Y %I:%M:%S %p")
 
   # Otherwise, split the string of the first element and identify the correct informat
@@ -229,7 +231,7 @@ formatDT <- function(dt,
 
      dtl <- length(dt.split)
      time.string <- date.string <- character(1)
-     
+
      if (dtl > 3)
         stop("Date or datetime '",dt[1],"' has more than 3 strings",
              " that are separated by spaces.\n")
@@ -275,7 +277,7 @@ formatDT <- function(dt,
             break
          }
      }
-     
+
      if (is.null(date.informat))
         stop("The first non-missing date ", date.string,
              " is incorrect or has an invalid format.\n")
@@ -306,7 +308,7 @@ formatDT <- function(dt,
               break
            }
        }
-   
+
        if (is.null(time.informat))
           stop("The first non-missing time ", time.string,
                " is incorrect or has an invalid format.\n")
@@ -314,9 +316,9 @@ formatDT <- function(dt,
        # Create the POSIXlt object
        dt.POSIXlt <- strptime(dt, paste(date.informat,time.informat))
 
-     } # if (time.string != "")) 
+     } # if (time.string != ""))
 
-     # If time is not present (dates only) 
+     # If time is not present (dates only)
      else {
        time.informat <- ""
        time.present <- FALSE
@@ -324,7 +326,7 @@ formatDT <- function(dt,
 
      # Create the POSIXlt object
      dt.POSIXlt <- strptime(dt, paste(date.informat, time.informat))
-  
+
    } # else if (is.na(strptime(dt[1],"%m/%d/%Y %I:%M:%S%p")))
 
    if (any(is.na(dt.POSIXlt)))
@@ -335,7 +337,7 @@ formatDT <- function(dt,
    out <- NULL
 
    # Create output for date, time, and dt
-  
+
    out$date <- format(dt.POSIXlt, date.outformat)
 
    if (time.present){
@@ -357,10 +359,10 @@ formatDT <- function(dt,
      out$time[missing.ind] <- original.dt.missing
      out$dt[missing.ind] <- original.dt.missing
    }
-  
+
 
    # POSIX output
-   if (posix) { 
+   if (posix) {
 
      # Date times
      if (time.present) {

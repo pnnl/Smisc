@@ -16,6 +16,8 @@
 ##' probabilities are very small, i.e, the values tend to go to \code{-Inf}
 ##' more quickly.
 ##'
+##' @export
+##'
 ##' @aliases dkbinom pkbinom
 ##' @param q Vector of quantiles (value at which to evaluate the distribution
 ##' function) of the sum of the k binomial variates

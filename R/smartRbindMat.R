@@ -13,8 +13,10 @@
 
 
 ##' Row bind matrices whose column names may not be the same
-##' 
-##' 
+##'
+##'
+##' @export
+##'
 ##' @param \dots matrix objects (separated by commas), a list of matrices, or a
 ##' character vector containing the names of matrix objects
 ##' @param distinguish if \code{TRUE}, then rownames of the returned matrix are
@@ -29,20 +31,20 @@
 ##' @seealso \code{\link{rbind}}
 ##' @keywords misc
 ##' @examples
-##' 
+##'
 ##' x <- matrix(rnorm(6), ncol = 2, dimnames = list(letters[1:3],letters[4:5]))
 ##' y <- matrix(rnorm(6), ncol = 3, dimnames = list(letters[7:8],letters[4:6]))
 ##' z <- matrix(rnorm(2), nrow = 1, dimnames = list("c",letters[3:4]))
-##' 
+##'
 ##' x
 ##' y
 ##' z
-##' 
+##'
 ##' smartRbindMat(x,y,z)
 ##' smartRbindMat(list(x, y, z), distinguish = TRUE)
 ##' smartRbindMat(y,z,x, distinguish = TRUE)
 ##' smartRbindMat(c("y","x","z"), filler = -20, distinguish = T)
-##' 
+##'
 ##' w1 <- matrix(sample(letters[1:26], 6), ncol = 2,
 ##'              dimnames = list(c("3", "", "4"), c("w", "v")))
 ##' x1 <- matrix(sample(letters[1:26], 6), ncol = 2,
@@ -51,18 +53,18 @@
 ##'              dimnames = list(NULL, letters[4:6]))
 ##' z1 <- matrix(sample(letters[1:26], 2), nrow = 1,
 ##'              dimnames = list(NULL, letters[3:4]))
-##' 
+##'
 ##' w1
 ##' x1
 ##' y1
 ##' z1
-##' 
+##'
 ##' smartRbindMat(w1,x1,y1,z1)
 ##' smartRbindMat(list(w1 = w1, x1 = x1, y1 = y1, z1 = z1), distinguish = TRUE)
-##' 
+##'
 ##' smartRbindMat(w1,x1,y,z1,z)
 ##' smartRbindMat(w1,x1,y,z1,z, distinguish = TRUE)
-##' 
+##'
 smartRbindMat <- function(..., distinguish = FALSE, filler = NA) {
 
   # Gather key pieces
@@ -70,7 +72,7 @@ smartRbindMat <- function(..., distinguish = FALSE, filler = NA) {
   obj.names <- as.character(substitute(list(...)))[-1]
   mats <- matrices
   names(mats) <- obj.names
-    
+
   # If matrices is a list with 1 element with a single character vector:
   if (length(matrices) == 1) {
 
@@ -85,7 +87,7 @@ smartRbindMat <- function(..., distinguish = FALSE, filler = NA) {
         mats <- lapply(as.list(firstElem), get)
         names(mats) <- firstElem
       }
-      
+
       # If it's a list, then this is what we want
       else if (is.list(matrices)) {
 
@@ -94,7 +96,7 @@ smartRbindMat <- function(..., distinguish = FALSE, filler = NA) {
         # Add names if necessary
         if (is.null(names(mats)))
           names(mats) <- 1:length(mats)
-        
+
       }
       else
         stop("'...' must be matrix objects, a list of matrices, or a ",
@@ -103,14 +105,14 @@ smartRbindMat <- function(..., distinguish = FALSE, filler = NA) {
       obj.names <- names(mats)
 
     } # If it's not a matrix
-    
+
   } # If it's length 1
 
   # Verify names of mats aren't duplicated.  If they are, replace them with unique
   # names
-  if (any(duplicated(names(mats)))) 
+  if (any(duplicated(names(mats))))
     names(mats) <- make.unique(names(mats))
-  
+
   # If any of the objects are NULL, remove them from the list
 
   # Verify they are all dataframes or matrices, and obtain the union of the
@@ -126,30 +128,30 @@ smartRbindMat <- function(..., distinguish = FALSE, filler = NA) {
 
     # This allows the possibility that one of objects was NULL
     if (!is.null(x)) {
-      
+
       # Verify we're working with a matrix
       if (!is.matrix(x))
         stop("'", obj.names[cnt], "' is not a matrix\n")
-  
+
       cnames <- colnames(x)
-  
+
       # Make sure the names are not missing
       if (is.null(cnames))
         stop("'", obj.names[cnt], "' does not have column names\n")
 
       if (any(cnames == ""))
         stop("'", obj.names[cnt], "' has empty column name(s)\n")
-  
+
       # Column names must be unique
       if (length(unique(cnames)) < length(cnames))
         stop("'", obj.names[cnt], "' does not have unique column names\n")
-  
+
       # Find the union of all the column names, record the value outside the function
       assign("union.colnames", union(union.colnames, cnames), inherits = TRUE)
-  
-      # Add in rownames if requested 
+
+      # Add in rownames if requested
       if (distinguish) {
-        
+
         if (is.null(rownames(x)))
           rownames(x) <- 1:NROW(x)
 
@@ -159,7 +161,7 @@ smartRbindMat <- function(..., distinguish = FALSE, filler = NA) {
     } # if (!is.null(x))
 
     return(x)
-        
+
   } # check.objects()
 
   # Makes it easier to trace an error
@@ -204,6 +206,6 @@ smartRbindMat <- function(..., distinguish = FALSE, filler = NA) {
 
   # return the result
   return(eval(parse(text = rbind.text)))
-  
+
 } # smartRbind()
 

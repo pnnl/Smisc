@@ -12,16 +12,18 @@
 ##'
 ##' @aliases stripExtension getExtension stripPath getPath grabLast
 ##'
+##' @export
+##'
 ##' @usage stripExtension(vec, split.char = ".")
 ##' getExtension(vec)
 ##' stripPath(vec)
 ##' getPath(vec)
 ##' grabLast(vec, split.char)
-##' 
+##'
 ##' @param vec Character vector (usually containing filenames)
-##' 
+##'
 ##' @param split.char A single character used to split the character strings
-##' 
+##'
 ##' @return \item{stripExtension}{Character vector with the last "." and the
 ##' filename extension removed.  Alternatively, another split character could
 ##' be used.} \item{getExtension}{Character vector of filename extensions}
@@ -29,13 +31,13 @@
 ##' filenames} \item{getPath}{Character vector with pathnames only, the
 ##' filename removed} \item{grabLast}{Character vector of the strings that
 ##' appear after the last instance of \code{split.char}}
-##' 
+##'
 ##' @author Landon Sego
-##' 
+##'
 ##' @seealso \code{\link{basename}}, \code{\link{dirname}}
-##' 
+##'
 ##' @keywords misc
-##' 
+##'
 ##' @examples
 ##' stripExtension(c("this old file.doc","that young file.rtf",
 ##'                  "this.good.file.doc","this_bad_file"))

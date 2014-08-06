@@ -1,32 +1,34 @@
 ##' Computes the cummulative sum of a vector without propogating NAs
-##' 
+##'
 ##' Computes the cummulative sum of a vector without propogating NA's.
-##' 
+##'
 ##' If \code{x} is integer, then integer addition is used.  Otherwise, floating
 ##' point (double) addition is used.
-##' 
+##'
+##' @export
+##'
 ##' @param x An integer or double vector
 ##' @return The vector of cumulative sums.
-##' 
+##'
 ##' Elements in \code{x} that were \code{NA} will continue to be \code{NA}, but
 ##' the \code{NA} will not be propogated.
 ##' @author Landon Sego
 ##' @seealso \code{\link{cumsum}}
 ##' @keywords misc
 ##' @examples
-##' 
-##' 
+##'
+##'
 ##' # Compare to cumsum()
 ##' x <- as.integer(c(5, 2, 7, 9, 0, -1))
 ##' cumsum(x)
 ##' cumsumNA(x)
-##' 
+##'
 ##' # Now with missing values
 ##' x[c(2,4)] <- NA
 ##' print(x)
 ##' cumsum(x)
 ##' cumsumNA(x)
-##' 
+##'
 cumsumNA <- function(x) {
 
   if (all(is.na(x)))
@@ -54,5 +56,5 @@ cumsumNA <- function(x) {
 
   # List the vector with the cumsum
   return(out)
-  
+
 } # cumsumNA

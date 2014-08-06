@@ -10,14 +10,16 @@
 
 
 ##' Approximate the integral of a vector of data over time
-##' 
+##'
 ##' Integrate a series over time by calculating the area under the "curve" of
 ##' the linear interpolation of the series.
-##' 
+##'
 ##' If \code{upper} or \code{lower} does not correspond to a data point, a
 ##' linear interpolation is made between the two neighboring time points to
 ##' predict the resulting data value.
-##' 
+##'
+##' @export
+##'
 ##' @param data Vector of numerical data
 ##' @param time Vector of timestamps which correspond to \code{data}. These can
 ##' either character or POSIXct.
@@ -34,25 +36,25 @@
 ##' @author Landon Sego
 ##' @keywords misc
 ##' @examples
-##' 
-##' 
+##'
+##'
 ##'  # Some example power data
 ##'  data(PowerData)
-##' 
+##'
 ##'  # For some reason, making the graph in Unix/Linux takes forever...so I write it to a pdf
-##' 
+##'
 ##'  # Open the pdf if using Unix
 ##'  unix <- .Platform$OS.type == "unix"
-##' 
+##'
 ##'  # Save this to a file
 ##'  if (unix) {
 ##'   fOut <- openDevice("tmpTimeInt.pdf", height=7, width=14)
 ##'  } else {
 ##'    X11(height=7, width=14)
 ##'  }
-##' 
+##'
 ##'  par(mfrow=c(1,2))
-##' 
+##'
 ##'  # Calculate the kilowatt-minutes, display graph which shows how the
 ##'  # integration is done
 ##'  int1 <- timeIntegration(PowerData,
@@ -61,19 +63,19 @@
 ##'                         upper = "5/6/2008 17:01:36",
 ##'                         check.plot=TRUE,
 ##'                         units = "m")
-##' 
+##'
 ##'  int2 <- timeIntegration(PowerData, check.plot=TRUE, units="m")
-##'  
+##'
 ##'  # close the graphics device
 ##'  if (unix) {
 ##'    dev.off()
-##'    system(paste("acroread", fOut), wait=FALSE)  
+##'    system(paste("acroread", fOut), wait=FALSE)
 ##'  }
-##' 
+##'
 ##'  # Print the outcome
 ##'  pvar(int1, int2)
-##' 
-##' 
+##'
+##'
 ##'  # Some other tests:
 ##'  # This should be 2
 ##'  timeIntegration(c(1,3), c("07-May-2009 15:00", "07-May-2009 16:00"))
@@ -81,14 +83,14 @@
 ##'  timeIntegration(c(1,3), c("07-May-2009 15:30", "07-May-2009 16:00"))
 ##'  # This should be 4
 ##'  timeIntegration(c(1,3), c("07-May-2009 15:30", "07-May-2009 17:30"))
-##' 
+##'
 ##'  # clean up
 ##'  z <- readline("Hit Enter when finished to close the example >>")
 ##'  if (unix)
 ##'    unlink(fOut)
 ##'  rm(PowerData, envir=.GlobalEnv)
-##' 
-##' 
+##'
+##'
 timeIntegration <- function(data, time=names(data), lower=time[1], upper=time[length(time)],
                             check.plot=FALSE, units=c("hours", "minutes", "seconds")) {
 
@@ -98,7 +100,7 @@ timeIntegration <- function(data, time=names(data), lower=time[1], upper=time[le
   # upper - the time (character or POSIX) of the upper bound of the integration
 
   units <- match.arg(units)
-  
+
   # This uses the tseries library
 
   if (is.null(time))
@@ -115,7 +117,7 @@ timeIntegration <- function(data, time=names(data), lower=time[1], upper=time[le
     warning("Only 1 data point was provided\n")
     return(0)
   }
-    
+
   # Check time
   if (!all(class(time) %in% c("POSIXt","POSIXct"))) {
     if (is.character(time))
@@ -166,17 +168,17 @@ timeIntegration <- function(data, time=names(data), lower=time[1], upper=time[le
   n <- length(nd$time)
   time.numeric <- as.numeric(nd$time)
   deltas <- diff(time.numeric)
-  
+
   time.numeric.midpoints <- time.numeric[1:(n-1)] + deltas / 2
   midpoint.heights <- approx(as.numeric(time), data, time.numeric.midpoints)$y
 
   # pvar(time.numeric, time.numeric.midpoints, midpoint.heights, deltas)
-  
+
 
   if (check.plot) {
 
     devAskNewPage(ask=FALSE)
-    
+
     plot(time, data, type="b", font.main=1, cex.main=0.9,
          main=paste("Black circles:  Data values\n",
                     "Blue dots: Midpoints for each trapezoid\n",
@@ -192,13 +194,13 @@ timeIntegration <- function(data, time=names(data), lower=time[1], upper=time[le
 
     for (i in 1:length(nd$time))
       lines(rep(nd$time[i], 2), c(0, nd$value[i]))
-    
+
 
     points(time.numeric.midpoints, midpoint.heights, col="Blue", pch=19, cex=1.2)
 
     axis(2)
     smartTimeAxis(time, time.format="hh:mm:ss")
-    
+
   }
 
   # Define the divisor

@@ -13,6 +13,9 @@
 ##' more quickly.
 ##'
 ##' @aliases d2binom p2binom
+##'
+##' @export
+##'
 ##' @param q The quantile (value at which to evaluate the distribution
 ##' function)
 ##' @param x The value at which to evaluate the mass function

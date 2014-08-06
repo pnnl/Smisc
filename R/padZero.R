@@ -1,21 +1,23 @@
 ##' Pad a vector of numbers with zeros
-##' 
+##'
 ##' Pad a numeric vector with zeros so that each element in the vector either
 ##' has 1) the same number of characters or 2) the same number of trailing
 ##' decimal places.
-##' 
+##'
 ##' For \code{side='left'}, \code{num} is the number of characters that each
 ##' element of the padded, output vector should have.  If \code{num=NULL}, the
 ##' largest number of characters that appears in the vector is chosen for
 ##' \code{num}.
-##' 
+##'
 ##' For \code{side='right'}, \code{num} is the number of decimal places to be
 ##' displayed. If \code{num=NULL}, the number of decimals in the element with
 ##' the largest number of decimal places is used.
-##' 
+##'
 ##' Note that \code{vec} must be numeric when \code{side='right'}.  However,
 ##' \code{vec} may be character when \code{side='left'}.
-##' 
+##'
+##' @export
+##'
 ##' @param vec The numeric vector to be padded
 ##' @param num The number of zeros that will be padded. If \code{NULL}, the
 ##' value is chosen based on the longest string in the vector.
@@ -25,15 +27,15 @@
 ##' @author Landon Sego
 ##' @keywords misc
 ##' @examples
-##' 
+##'
 ##'   # Examples with 0's on the left
 ##'   padZero(c(1,10,100))
 ##'   padZero(c(1,10,100), num=4)
-##' 
+##'
 ##'   # Examples with 0's on the right
 ##'   padZero(c(1.2, 1.34, 1.399), side="r")
 ##'   padZero(c(1.2, 1.34, 1.399), num=5, side="r")
-##' 
+##'
 padZero <- function(vec, num=NULL, side=c("left", "right")) {
 
   side <- match.arg(side)
@@ -48,12 +50,12 @@ padZero <- function(vec, num=NULL, side=c("left", "right")) {
       num <- m.nchar.vec
     else if (num < m.nchar.vec)
       warning("num = ", num, " is less than the largest number of characters, ", m.nchar.vec, ".\n")
-  
+
     # Create the 0 vector
     zV <- tapply(nchar.vec, 1:length(nchar.vec), function(x) paste(rep(0, max(0, num - x)), collapse=""))
-  
+
     out <- paste(zV, c.vec, sep="")
-    
+
   } # if padding on the left
 
   # padding on the right
@@ -72,7 +74,7 @@ padZero <- function(vec, num=NULL, side=c("left", "right")) {
               ", so rounding will occur.\n")
 
     out <- sprintf(paste("%.", num, "f", sep=""), vec)
-    
+
   } # else
 
   return(out)

@@ -9,10 +9,11 @@ vertErrorBar(x, width, center = NULL, height = NULL, min.y = NULL,
 \arguments{
 \item{x}{Vector of x value on the plot around which the vertical error bar will be drawn}
 
-\item{width}{The total width of the cross hatches on top and bottom of the bars, can be a vector
-or a single value}
+\item{width}{The total width of the cross hatches on top and bottom of the bars, can
+be a vector or a single value}
 
-\item{center}{Vector of values designating the vertical center of the error bars, can be a vector or a single value}
+\item{center}{Vector of values designating the vertical center of the error bars, can
+be a vector or a single value}
 
 \item{height}{The total height of the bars, can be a vector or a single value}
 
@@ -20,9 +21,12 @@ or a single value}
 
 \item{max.y}{Vector of values indicating the vertical tops of the bars}
 
-\item{blankMiddle}{the height of a blank spot that will be produced in the middle of the error bar.
-This is useful when the bar is placed around symbols (so as not to overwrite them). Defaults to
-\code{NULL}, in which case a solid error bar is drawn. Can also be a vector or a single value.}
+\item{blankMiddle}{the height of a blank spot that will be produced in the middle of
+the error bar.
+  This is useful when the bar is placed around symbols (so as not to overwrite them).
+Defaults to
+  \code{NULL}, in which case a solid error bar is drawn. Can also be a vector or a
+single value.}
 
 \item{...}{additional arguments to \code{\link{lines}}.}
 }
@@ -33,14 +37,16 @@ Nothing is returned, the error bar is drawn on the plot
 Vertical error bar drawing function
 }
 \details{
-Buyer beware!  It's up to the user to determine what the statistically correct height of the
-error bar should be.
+Buyer beware!  It's up to the user to determine what the statistically correct height
+of theerror bar should be.
 
-Note that \code{x}, \code{y} should be the same length.  \code{height}, \code{width}, and \code{blankMiddle}
-should either be numeric values of length 1, or the same length as \code{x}, in which case the bars could have
+Note that \code{x}, \code{y} should be the same length.  \code{height}, \code{width},
+and \code{blankMiddle} should either be numeric values of length 1, or the same length
+as \code{x}, in which case the bars could have
 different heights, widths, and blankMiddle values if desired.
 
-Either \code{center} and \code{height} must be specified, or \code{min.y} and \code{max.y} must be specifed.
+Either \code{center} and \code{height} must be specified, or \code{min.y} and
+\code{max.y} must be specifed.
 }
 \examples{
 set.seed(343)

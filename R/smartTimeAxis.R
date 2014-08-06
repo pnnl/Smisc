@@ -1,13 +1,15 @@
 ##' Produces a time axis with smart spacing
-##' 
+##'
 ##' Produces a time axis on a plot with interval spacing units that are
 ##' intuitive.  It is intended to be applied to periods of time that do not
 ##' exceed 24 hours (i.e. it does not produce a date stamp in the time axis).
-##' 
+##'
 ##' Chooses a "natural" spacing for the time axis ticks that gives closest to
 ##' \code{nticks} ticks.  Possibilities for natural spacings include 1, 5, 10,
 ##' 15 seconds, etc. OR 1, 2, 5, 10, minutes etc., OR 0.5, 1, 1.5 hours, etc.
-##' 
+##'
+##' @export
+##'
 ##' @param time.vec A time object (vector) that was used to construct the plot,
 ##' presumed to be ordered chronologically
 ##' @param nticks The target number of ticks to use in the axis
@@ -19,34 +21,34 @@
 ##' @seealso \code{\link{axis.POSIXct}}
 ##' @keywords misc
 ##' @examples
-##' 
+##'
 ##' # Get data and set the options to the horizontal axis labels will be
 ##' # oriented vertically
 ##' data(timeData)
 ##' op <- par(las=2, mfrow=c(3,1), mar=c(4,4,1,0.5))
-##' 
+##'
 ##' # Make the default plot
 ##' plot(timeData, xlab="")
-##' 
+##'
 ##' # Make the plot with specialized time axis
 ##' plot(timeData, axes=FALSE, frame.plot=TRUE, xlab="")
-##' 
+##'
 ##' # Add y-axis
 ##' axis(2)
-##' 
+##'
 ##' # Add the time axis
 ##' smartTimeAxis(timeData$time, nticks=10)
-##' 
+##'
 ##' # Only look at a small portion of the data with a different time format
 ##' par(mar=c(7,4,1,0.5))
 ##' plot(timeData[200:237,], type="b", axes=FALSE, frame.plot=TRUE, xlab="")
 ##' axis(2)
 ##' smartTimeAxis(timeData[200:237,"time"], nticks=20, time.format="hh:mm:ss pm")
-##' 
+##'
 ##' # Restore the original par settings
 ##' par(op)
-##' 
-##' 
+##'
+##'
 smartTimeAxis <- function(time.vec, nticks=15, time.format="hh:mm", side=1) {
 
   # time.vec -- a POSIXct vector
@@ -58,9 +60,9 @@ smartTimeAxis <- function(time.vec, nticks=15, time.format="hh:mm", side=1) {
     stop("'time.vec' must be a vector with at least 2 elements\n")
 
   # Select the time format
-       if (tolower(time.format)=="hh:mm:sspm")  time.format <- "%I:%M:%S%p"  
-  else if (tolower(time.format)=="hh:mm:ss pm") time.format <- "%I:%M:%S %p"  
-  else if (tolower(time.format)=="hh:mm:ss")    time.format <- "%H:%M:%S"   
+       if (tolower(time.format)=="hh:mm:sspm")  time.format <- "%I:%M:%S%p"
+  else if (tolower(time.format)=="hh:mm:ss pm") time.format <- "%I:%M:%S %p"
+  else if (tolower(time.format)=="hh:mm:ss")    time.format <- "%H:%M:%S"
   else if (tolower(time.format)=="hh:mmpm")     time.format <- "%I:%M%p"
   else if (tolower(time.format)=="hh:mm pm")    time.format <- "%I:%M %p"
   else if (tolower(time.format)=="hh:mm")       time.format <- "%H:%M"
@@ -79,22 +81,22 @@ smartTimeAxis <- function(time.vec, nticks=15, time.format="hh:mm", side=1) {
   # If the range is longer than 24 hours
   if (time.range > 86400)
     warning("The time range is > 24 hours.  The resulting time axis labeling may not be appropriate.\n")
-       
+
   # possible spacings
   possible.spacings <- c(1/60, 5/60, 10/60, 15/60, 30/60, 45/60,  # Seconds within a minute
                          1,2,5,10,20,30,45,  # Minutes within the hour
                          seq(60,600, by=30)) * 60  # 1 to 10 hours
-  
+
   possible.n.ticks <- time.range / possible.spacings
   adiff <- abs(possible.n.ticks - nticks)
   ideal.spacing <- possible.spacings[which(adiff == min(adiff))]
 
   # Identify the ideal starting point
-  
+
   # Nearest 1 second
   if (ideal.spacing == 1)
     mod.factor <- 1
-  
+
   # Find nearest 5 second mark for 5, 10, or 15 second spacing
   else if (ideal.spacing <= 15)
     mod.factor <- 5
@@ -124,8 +126,8 @@ smartTimeAxis <- function(time.vec, nticks=15, time.format="hh:mm", side=1) {
     mod.factor <- 15*60
 
   # Find the nearest 30 minute for all spacings 1 hour and larger
-  else 
-    mod.factor <- 30*60  
+  else
+    mod.factor <- 30*60
 
   # Calculate the starting point
   start <- min(time.vec) + as.numeric(as.logical(mod.factor)) * (mod.factor - as.numeric(min(time.vec)) %% mod.factor)
@@ -133,5 +135,5 @@ smartTimeAxis <- function(time.vec, nticks=15, time.format="hh:mm", side=1) {
   # Make the time axis
   axis.POSIXct(side, at=seq(start, max(time.vec), by=ideal.spacing),
                format = time.format)
-  
+
 } # smartTimeAxis

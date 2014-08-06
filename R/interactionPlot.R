@@ -18,30 +18,32 @@
 #  http://www.r-project.org/Licenses/
 
 ##' Two-way Interaction Plot with Error Bar
-##' 
+##'
 ##' Plots the mean (or other summary) of the response for two-way combinations
 ##' of factors, thereby illustrating possible interactions.
-##' 
+##'
 ##' %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 ##' This modification of \code{\link{interaction.plot}} adds the \code{errorBar} and
-##' \code{jitterErrorBar} arguments. 
+##' \code{jitterErrorBar} arguments.
 ##' %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-##' 
+##'
 ##' By default the levels of \code{x.factor} are plotted on the x axis in their
 ##' given order, with extra space left at the right for the legend (if
 ##' specified). If \code{x.factor} is an ordered factor and the levels are
 ##' numeric, these numeric values are used for the x axis.
-##' 
+##'
 ##' The response and hence its summary can contain missing values. If so, the
 ##' missing values and the line segments joining them are omitted from the plot
 ##' (and this can be somewhat disconcerting).
-##' 
+##'
 ##' The graphics parameters \code{xlab}, \code{ylab}, \code{ylim}, \code{lty},
 ##' \code{col} and \code{pch} are given suitable defaults (and \code{xlim} and
 ##' \code{xaxs} are set and cannot be overridden).  The defaults are to cycle
 ##' through the line types, use the foreground colour, and to use the symbols
 ##' 1:9, 0, and the capital letters to plot the traces.
-##' 
+##'
+##' @export
+##'
 ##' @param x.factor a factor whose levels will form the x axis.
 ##' @param trace.factor another factor whose levels will form the traces.
 ##' @param response a numeric variable giving the response
@@ -86,32 +88,32 @@
 ##' Wadsworth & Brooks/Cole.
 ##' @keywords hplot
 ##' @examples
-##' 
+##'
 ##' %%% BEGIN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 ##' require(graphics)
-##' 
+##'
 ##' with(ToothGrowth, {
 ##' interactionPlot(dose, supp, len, fixed=TRUE)
 ##' dose <- ordered(dose)
 ##' interactionPlot(dose, supp, len, fixed=TRUE, col = 2:3, leg.bty = "o")
-##' 
+##'
 ##' interactionPlot(dose, supp, len, fixed=TRUE, col = 2:3, type = "p",
 ##'                 errorBar = list(height = 3, width = 0.05, blankMiddle = 1),
 ##'                 jitterErrorBars = TRUE,
 ##'                 main = "Error bars have no meaning--just for illustration")
 ##' })
-##' %%% END %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%                 
-##' 
+##' %%% END %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+##'
 interactionPlot <-
     function(x.factor, trace.factor, response, fun = mean,
-             
+
 ## BEGIN ##############################################################################
-             
+
              errorBar = NULL,
              jitterErrorBars = FALSE,
-             
+
 ## END ################################################################################
-             
+
 	     type = c("l", "p", "b", "o", "c"), legend = TRUE,
              trace.label=deparse(substitute(trace.factor)), fixed=FALSE,
              xlab = deparse(substitute(x.factor)), ylab = ylabel,
@@ -122,13 +124,13 @@ interactionPlot <-
 {
 
 ## BEGIN ##############################################################################
-  
+
     # Find out whether ylim has been changed by the user before it gets lazy-evaluated
     ylimChanged <- deparse(substitute(ylim)) != "range(cells, na.rm = TRUE)"
-    
-  
-## END ################################################################################  
-    
+
+
+## END ################################################################################
+
     ylabel <- paste(deparse(substitute(fun)), "of ",
                     deparse(substitute(response)))
     type <- match.arg(type)
@@ -154,15 +156,15 @@ interactionPlot <-
     dev.hold(); on.exit(dev.flush())
 
 ## BEGIN ##############################################################################
-    
+
     if (!is.null(errorBar)) {
-      
+
       # Check list
       stopifnot(is.list(errorBar))
-      
+
       if (!all(names(errorBar) %in% c("height", "width", "blankMiddle")))
         stop("'errorBar' list must only have names 'height', 'width', and optionally, 'blankMiddle'")
-      
+
       if (!all(c("height", "width") %in% names(errorBar)))
         stop("'errorBar' list must have names 'height', 'width', and optionally, 'blankMiddle'")
 
@@ -172,53 +174,53 @@ interactionPlot <-
 
       # Rearrange xvals a bit if jitter is requested
       if (jitterErrorBars) {
-        
+
         xvals_orig <- xvals
-        
+
         xvals <- matrix(NA, nrow = NROW(cells), ncol = NCOL(cells))
-        
+
         for (i in 1:NCOL(xvals))
           xvals[,i] <- jitter(xvals_orig)
-        
+
       }
-      
+
     }
-    
+
 ## END ################################################################################
-    
+
     matplot(xvals, cells, ..., type = type, xlim = xlim, ylim = ylim,
             xlab = xlab, ylab = ylab, axes = axes, xaxt = "n",
             col = col, lty = lty, pch = pch)
 
 ## BEGIN ##############################################################################
-    
+
     # Add in error bars
     if (!is.null(errorBar)) {
 
       if (!jitterErrorBars) {
-        
+
         for (cn in 1:NCOL(cells)) {
-          for (xv in 1:length(xvals)) 
+          for (xv in 1:length(xvals))
             do.call("vertErrorBar", c(list(x = xvals[xv], center = cells[xv,cn]), errorBar))
         }
-        
+
       }
       else {
-        
+
         cn <- as.vector(cells)
         xv <- as.vector(xvals)
-        
+
         for (i in 1:length(cn))
           do.call("vertErrorBar", c(list(x = xv[i], center = cn[i]), errorBar))
 
         # Restore xvals to it's original state
         xvals <- xvals_orig
       }
-          
+
     }
-    
-## END ################################################################################    
-    
+
+## END ################################################################################
+
     if(axes && xaxt != "n") {
 	## swallow ... arguments intended for matplot():
 	axisInt <- function(x, main, sub, lwd, bg, log, asp, ...)
@@ -227,7 +229,7 @@ interactionPlot <-
 	axisInt(1, at = xvals, labels = xlabs, tick = xtick, mgp = mgp.,
 		xaxt = xaxt, ...)
     }
-    
+
     if(legend) {
         yrng <- diff(ylim)
         yleg <- ylim[2L] - 0.1 * yrng
@@ -251,6 +253,6 @@ interactionPlot <-
                lty = if(type %in% c("l","b")) lty,# NULL works
                bty = leg.bty, bg = leg.bg)
     }
-    
+
     invisible()
 }

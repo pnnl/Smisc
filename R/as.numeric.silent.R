@@ -1,7 +1,9 @@
 ##' Silent wrapper for coercing a vector to numeric
-##' 
+##'
 ##' Silent wrapper for coercing a vector to numeric
-##' 
+##'
+##' @export
+##'
 ##' @param x vector of any type
 ##' @return If \code{as.numeric(x)} produces an error or warning, \code{x} is
 ##' returned unchanged.  Otherwise, \code{as.numeric(x)} is returned.
@@ -9,10 +11,10 @@
 ##' @seealso \code{\link{as.numeric}}
 ##' @keywords ~kwd1 ~kwd2
 ##' @examples
-##' 
+##'
 ##' as.numeric.silent(c("this","that"))
 ##' as.numeric.silent(c("2893.9","9423.48"))
-##' 
+##'
 as.numeric.silent <- function(x) {
 
   # Set warnings to errors
@@ -26,5 +28,5 @@ as.numeric.silent <- function(x) {
   options(op)
 
   return(x.num)
-    
+
 } # as.numeric.silent()
