@@ -1,12 +1,5 @@
-# Function for converting all factors to characters in a data frame
-
-
-
 ##' Converts all factor variables in a dataframe to character variables
 ##' 
-##' 
-##' 
-##' @usage factor2character(dframe)
 ##' @param dframe A dataframe
 ##' @return The same dataframe with the factor variables converted to character
 ##' variables.

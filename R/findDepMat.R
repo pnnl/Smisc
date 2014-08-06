@@ -1,8 +1,3 @@
-# Identify linearly dependent rows or columns in a matrix
-
-# Compare 2 vectors to identify whether
-
-
 ##' Identify linearly dependent rows or columns in a matrix
 ##' 
 ##' Identify which rows or columns are linearly dependent in a numeric matrix
@@ -28,7 +23,6 @@
 ##' Currently this uses nested 'for' loops within R (not C).  Consequently,
 ##' \code{findDepMat} is likely to be slow for large matrices.
 ##' 
-##' @usage findDepMat(X, rows = TRUE, tol = 1e-10)
 ##' @param X A numeric matrix
 ##' @param rows Set \code{rows = TRUE} to identify which rows are linearly
 ##' dependent. Set \code{rows = FALSE} to identify columns that are linearly

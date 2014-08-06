@@ -1,10 +1,3 @@
-# Uses Simpson's rule to approximate an integral.
-
-# Ellis R, Gulick D. "Calculus: One and Several Variables,"
-# Harcourt Brace Jovanovich, Publishers: New York, NY, 1991; 479-482.
-
-
-
 ##' Simple numerical integration routine
 ##' 
 ##' Estimates the integral of a real-valued function using Simpson's or the
@@ -18,8 +11,6 @@
 ##' The lengths or \code{x} and \code{y} should be the same, and they may be
 ##' odd or even. The elements of \code{x} may be irregularly spaced.
 ##' 
-##' @usage integ(y, x = NULL, a = NULL, b = NULL, method = c("simpson",
-##' "trapezoid"))
 ##' @param y Vector of f(x) values
 ##' @param x Numeric vector of sorted x values, each element of \code{x} should
 ##' have a corresponding element of y.  Only required for the trapezoid method.

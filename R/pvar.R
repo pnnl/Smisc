@@ -1,7 +1,3 @@
-# This function writes the value of variables (with labels) to the window
-
-
-
 ##' Prints the name and value of one or more objects
 ##' 
 ##' A convenience function for writing the names and values of objects to the
@@ -12,7 +8,6 @@
 ##' atomic or vectors.  It will accept data frames and matrices without error,
 ##' but the results won't be easily readable.
 ##' 
-##' @usage pvar(..., digits = NULL, abbrev = NULL, verbose = TRUE)
 ##' @param \dots Objects whose names and values are to be printed, separated by
 ##' commas. Can also be a simple list.
 ##' @param digits Number of digits to display for numeric objects.  Defaults to

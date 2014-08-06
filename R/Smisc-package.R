@@ -9,7 +9,7 @@
 ##' @docType package
 ##' @author Landon Sego
 ##'
-##' Maintainer: Landon Sego <Landon.Sego@pnnl.gov>
+##' Maintainer: Landon Sego <Landon.Sego@@pnnl.gov>
 ##' @keywords package
 NULL
 

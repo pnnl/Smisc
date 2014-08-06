@@ -1,7 +1,3 @@
-# Convert a list of vectors with same numbered lengths into a data frame
-
-
-
 ##' Convert a list to a data frame
 ##' 
 ##' Convert a list of vectors (or data frames) with same numbered lengths (or
@@ -13,8 +9,6 @@
 ##' conformable, labeled consistently, of the equivalent class when necessary,
 ##' etc.
 ##' 
-##' @usage list2df(vList, col.names = NULL, row.names = NULL, convert.numeric =
-##' TRUE, strings.as.factors = FALSE)
 ##' @param vList List of vectors or data frames, each vector having the same
 ##' length, \code{n}, or each data frame having the same number of columns,
 ##' \code{n}.

@@ -8,8 +8,6 @@
 ##' \code{nticks} ticks.  Possibilities for natural spacings include 1, 5, 10,
 ##' 15 seconds, etc. OR 1, 2, 5, 10, minutes etc., OR 0.5, 1, 1.5 hours, etc.
 ##' 
-##' @usage smartTimeAxis(time.vec, nticks = 15, time.format = "hh:mm", side =
-##' 1)
 ##' @param time.vec A time object (vector) that was used to construct the plot,
 ##' presumed to be ordered chronologically
 ##' @param nticks The target number of ticks to use in the axis

@@ -1,12 +1,5 @@
-# Source all the .R (or .r) files in a directory.
-
-
-
 ##' 'sources' all files with '.R' or '.r' extensions in a directory
 ##' 
-##' 
-##' 
-##' @usage sourceDir(directory, recursive = FALSE, tryCatch = TRUE, ...)
 ##' @param directory Character string indicating the path of the directory
 ##' containing the R source files
 ##' @param recursive \code{=TRUE} descends into subdirectories of

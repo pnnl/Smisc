@@ -4,8 +4,6 @@
 
 # Landon Sego, 15 Sep 2008
 
-
-
 ##' A continuous version of the binomial cdf
 ##' 
 ##' Uses the incomplete beta function to calculate a continuous version of the
@@ -19,7 +17,6 @@
 ##' length, or, one or more of them can have the same length, so long as the
 ##' other arguments have length 1.  See examples below.
 ##' 
-##' @usage pcbinom(x, n, p, lower.tail = TRUE, log.p = FALSE)
 ##' @param x Real valued vector of the number of successes.
 ##' @param n Real valued vector, all elements in \code{[0, Inf)}, of the number
 ##' of trials.

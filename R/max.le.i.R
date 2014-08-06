@@ -1,15 +1,8 @@
-# In the sequence x[1], x[2], ..., x[n], for each i = 1,...,n,
-# compute the vector y[i] = max(x[j], j = 1,...,i)
-
-
-
 ##' Computes the maximum of the vector up to the current index
 ##' 
 ##' For each index in a vector, computes the maximum of the vector from the
 ##' beginning of the vector up to the current index
 ##' 
-##' 
-##' @usage max.le.i(x)
 ##' @param x A numeric or integer vector
 ##' @return In the sequence \code{x[1], x[2], ..., x[n]}, \code{max.le.i}
 ##' returns the vector \code{y} such that for each \code{i = 1,...,n},
@@ -33,15 +26,13 @@ max.le.i <- function(x) {
     return(.C("max_le_i_INT",
               as.integer(x),
               as.integer(n),
-              y = integer(n),
-              PACKAGE="pnlStat")$y)
+              y = integer(n))$y)
     
   else if (is.numeric(x))
     return(.C("max_le_i_DOUBLE",
               as.double(x),
               as.integer(n),
-              y = double(n),
-              PACKAGE="pnlStat")$y)
+              y = double(n))$y)
   else
     stop("'x' must be a numeric or integer vector\n")
   

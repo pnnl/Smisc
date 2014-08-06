@@ -25,8 +25,6 @@
 ##' \code{hh:mm} (24 hour time), \code{hhmm} (24 hour time), \code{hhmmss} (24
 ##' hour time)
 ##' 
-##' @usage formatDT(dt, date.outformat=NULL, time.outformat=NULL, posix=TRUE,
-##' weekday=FALSE)
 ##' @param dt A character vector of date values or datetime values
 ##' @param date.outformat A character string requesting the date format to be
 ##' returned.  The following date outformats are supported: "mm/dd/yyyy",

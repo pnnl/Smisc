@@ -1,11 +1,3 @@
-# Assess whether data frames are equivalent
-# Uses the convention that NA==NA returns TRUE
-# 
-# Tests for exact equivalency for numeric values (is doesn't try to deal with
-# machine error precision)
-
-
-
 ##' Examines the equivalence of two dataframes or matrices
 ##' 
 ##' Checks whether two data objects (data frames and/or matrices) are
@@ -32,8 +24,6 @@
 ##' If both columns are not numeric, they are coerced (if need be) to character
 ##' and then compared directly.
 ##' 
-##' @usage dframeEquiv(d1, d2, maxAbsError=1e-12, maxRelError=1e-14,
-##' verbose=TRUE)
 ##' @param d1 The first dataframe or matrix
 ##' @param d2 The dataframe or matrix that will be compared to \code{d1}
 ##' @param maxAbsError Numeric values whose absolute difference is less than

@@ -9,8 +9,6 @@
 ##' following rule: If the duration is < 2 min, use seconds.  Else if duration
 ##' < 2 hours, use minutes. Else if < 2 days, use hours.  Otherwise, use days.
 ##' 
-##' @usage timeIt(expr, units = c("automatic", "seconds", "minutes", "hours"),
-##' return.time=FALSE, verbose=TRUE)
 ##' @param expr Any R expression
 ##' @param units A character expression long enough to uniquely identify one of
 ##' "automatic", "seconds", "minutes", or "hours".  Defaults to "automatic".

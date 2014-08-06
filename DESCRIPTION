@@ -1,9 +1,9 @@
-Package: pnlStat
+Package: Smisc
 Title: A collection of miscellaneous functions
-Version: 2014.05.16
+Version: 0.1.0
 Author: Landon Sego and others
-Description: Collection of miscellaneous functions especially suited for the
-    PNNL computing environment
-Depends: parallel
+Description: Sego Miscellaneous:  Collection of miscellaneous functions
+Depends:
+    parallel
 Maintainer: Landon Sego <Landon.Sego@pnnl.gov>
-License: NA, except for interactionPlot, which is GPL2
+License: file LICENSE

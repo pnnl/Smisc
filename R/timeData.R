@@ -3,10 +3,8 @@
 ##' Generic data frame with a time variable to support the example in
 ##' \code{\link{smartTimeAxis}}.
 ##'
-##'
 ##' @name timeData
 ##' @docType data
-##' @usage data(timeData)
 ##' @format A data frame with 414 observations on the following 2 variables.
 ##' \describe{ \item{list("time")}{a POSIXt} \item{list("x")}{a numeric vector}
 ##' }

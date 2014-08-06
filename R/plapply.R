@@ -471,7 +471,7 @@ plapply <- function(X, FUN, ...,
 
     # Concatenate the files
     for (f in list.outputs) {
-      Xout <- c(Xout, load.object(f))
+      Xout <- c(Xout, loadObject(f))
       if (verbose)
         cat("Adding data from '", f, "'\n", sep = "")
     }

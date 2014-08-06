@@ -1,6 +1,3 @@
-# Flexible data aquisition
-
-
 ##' A flexible way to import data into R.
 ##' 
 ##' Imports .Rdata, .csv, package data sets, and regular data frames
@@ -13,7 +10,6 @@
 ##' If a .csv file is supplied, none of the character variables are converted
 ##' to factors.
 ##' 
-##' @usage dataIn(data)
 ##' @param data Can be a data frame or a list of data frames (in which case,
 ##' the same data frame or list is simply returned), or one of the following
 ##' types of single text strings: (1) the name of a .csv file, (2) the name of
@@ -23,7 +19,7 @@
 ##' data.
 ##' @author Landon Sego
 ##' @seealso
-##' \code{\link{data}},\code{\link{load.object}},\code{\link{read.csv}}
+##' \code{\link{data}},\code{\link{loadObject}},\code{\link{read.csv}}
 ##' @keywords misc
 ##' @examples
 ##' 
@@ -87,7 +83,7 @@ dataIn <- function(data) {
           d <- factor2character(read.csv(data))
         
         else if (ext == "rdata") 
-          d <- load.object(data)
+          d <- loadObject(data)
 
         else
           fail <- TRUE

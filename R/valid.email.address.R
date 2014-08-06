@@ -1,17 +1,14 @@
-# Create indicator of the rows that indicates whether the email address meets the following conditions listed in the comments below
-
-
 ##' Indicates whether a vector of email addreses may be valid
 ##' 
 ##' Indicates whether a vector of email addreses may be valid
 ##' 
 ##' Checks the following conditions:
 ##' 
-##' 1: Only 1 @ allowed
+##' 1: Only 1 @@ allowed
 ##' 
-##' 2: Should have text on both sides of the @
+##' 2: Should have text on both sides of the @@
 ##' 
-##' 3: Text on right hand side (RHS) of @ should have at least one dot
+##' 3: Text on right hand side (RHS) of @@ should have at least one dot
 ##' 
 ##' 4: RHS text should not end with a dot
 ##' 
@@ -22,7 +19,6 @@
 ##' 
 ##' 7: No illegal characters--however, it does't check for a backslash
 ##' 
-##' @usage valid.email.address(vec)
 ##' @param vec Character vector of email addresses
 ##' @return Logical vector which is \code{TRUE} when the email address is
 ##' valid.
@@ -32,9 +28,9 @@
 ##' @keywords misc
 ##' @examples
 ##' 
-##'  valid.email.address(c(NA, "@","this@that","this@that@that","this@that.com.ar",
-##'                        "@this.com","that@","this@that.","this@.that","this@.that.com",
-##'                         "this@that.com","this(@that.com","this@that .com"))
+##'  valid.email.address(c(NA, "@@","this@@that","this@@that@@that","this@@that.com.ar",
+##'                        "@@this.com","that@@","this@@that.","this@@.that","this@@.that.com",
+##'                         "this@@that.com","this(@@that.com","this@@that .com"))
 ##' 
 valid.email.address <- function(vec) {
 

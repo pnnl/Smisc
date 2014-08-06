@@ -17,15 +17,14 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-
-
 ##' Two-way Interaction Plot with Error Bar
 ##' 
 ##' Plots the mean (or other summary) of the response for two-way combinations
-##' of factors, thereby illustrating possible interactions. %%% BEGIN
-##' %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% This
-##' modification of \code{\link{interaction.plot}} adds the \code{errorBar} and
-##' \code{jitterErrorBar} arguments. %%% END
+##' of factors, thereby illustrating possible interactions.
+##' 
+##' %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+##' This modification of \code{\link{interaction.plot}} adds the \code{errorBar} and
+##' \code{jitterErrorBar} arguments. 
 ##' %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 ##' 
 ##' By default the levels of \code{x.factor} are plotted on the x axis in their
@@ -43,14 +42,6 @@
 ##' through the line types, use the foreground colour, and to use the symbols
 ##' 1:9, 0, and the capital letters to plot the traces.
 ##' 
-##' @usage interactionPlot(x.factor, trace.factor, response, fun = mean,
-##' errorBar = NULL, jitterErrorBar = FALSE, %%%%%%%% This line is new
-##' %%%%%%%%%%%%%%% type = c("l", "p", "b", "o", "c"), legend = TRUE,
-##' trace.label = deparse(substitute(trace.factor)), fixed = FALSE, xlab =
-##' deparse(substitute(x.factor)), ylab = ylabel, ylim = range(cells,
-##' na.rm=TRUE), lty = nc:1, col = 1, pch = c(1:9, 0, letters), xpd = NULL,
-##' leg.bg = par("bg"), leg.bty = "n", xtick = FALSE, xaxt = par("xaxt"), axes
-##' = TRUE, \dots{})
 ##' @param x.factor a factor whose levels will form the x axis.
 ##' @param trace.factor another factor whose levels will form the traces.
 ##' @param response a numeric variable giving the response
@@ -263,5 +254,3 @@ interactionPlot <-
     
     invisible()
 }
-
-

@@ -1,9 +1,4 @@
-# Calculates a moving average for a timeseries, but it includes the endpoints
-# similar to 'filter'
-
 # Landon Sego  April 2008
-
-
 
 ##' Calculates a moving dot product (or filter) over a series
 ##' 
@@ -25,8 +20,6 @@
 ##' argument description of \code{balance}) are not met, an \code{NA} is
 ##' returned for the corresponding index.
 ##' 
-##' @usage smartFilter(y, weights, min.window = 1, start = 1, skip = 1, balance
-##' = TRUE)
 ##' @param y A numeric vector (can be labeled)
 ##' @param weights Vector of weights that will be used to calculate the moving
 ##' dot product.  Should be odd in length and should sum to unity.
@@ -126,8 +119,7 @@ smartFilter <- function(y, weights, min.window=1, start=1, skip=1, balance=TRUE)
             as.integer(num.windows),
             as.integer(balance),
             out = double(num.windows),
-            NAOK = TRUE,
-            PACKAGE = "pnlStat")$out
+            NAOK = TRUE)$out
 
   # Give appropriate names to out
   if (!is.null(ny <- names(y)))

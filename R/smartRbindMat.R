@@ -8,19 +8,6 @@
 #                       column names.  Row names are reproduced if they exist,
 #                       otherwise, unique rownames are created.
 #
-# Modified by:
-# Date modified:
-# Brief summary of changes:
-#
-# Modified by:
-# Date modified:
-# Brief summary of changes:
-# 
-# Modified by:
-# Date modified:
-# Brief summary of changes:
-#
-#
 ################################################################################
 
 
@@ -28,8 +15,6 @@
 ##' Row bind matrices whose column names may not be the same
 ##' 
 ##' 
-##' 
-##' @usage smartRbindMat(..., distinguish = FALSE, filler = NA)
 ##' @param \dots matrix objects (separated by commas), a list of matrices, or a
 ##' character vector containing the names of matrix objects
 ##' @param distinguish if \code{TRUE}, then rownames of the returned matrix are

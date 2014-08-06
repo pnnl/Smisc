@@ -17,8 +17,6 @@
 ##' more quickly.
 ##'
 ##' @aliases dkbinom pkbinom
-##' @usage dkbinom(x, size, prob, log = FALSE, verbose = FALSE) pkbinom(q,
-##' size, prob, log.p = FALSE, verbose = FALSE)
 ##' @param q Vector of quantiles (value at which to evaluate the distribution
 ##' function) of the sum of the k binomial variates
 ##' @param x Vector of values at which to evaluate the mass function of the sum
@@ -38,12 +36,9 @@
 ##' @seealso \code{\link{dbinom}}, \code{\link{pbinom}}, \code{\link{d2binom}},
 ##' \code{\link{p2binom}}
 ##' @references Based on the exact algorithm discussed by
-##'
 ##' Butler, Ken and Stephens, Michael. (1993) The Distribution of a Sum of
 ##' Binomial Random Variables. Technical Report No. 467, Department of
 ##' Statistics, Stanford University.
-##'
-##' \url{http://statistics.stanford.edu/~ckirby/techreports/ONR/SOL%20ONR%20467.pdf}
 ##' @keywords misc
 ##' @examples
 ##'
@@ -54,6 +49,66 @@
 ##'  dkbinom(c(0, 7), c(3, 4, 2), c(0.3, 0.5, 0.8))
 ##'  pkbinom(c(0, 7), c(3, 4, 2), c(0.3, 0.5, 0.8), verbose = TRUE)
 ##'
+
+dkbinom <- function(x, size, prob, log = FALSE, verbose = FALSE) {
+
+  x <- check.kbinom(x, size, prob)
+
+  # If only one type of variate was requested or if the probs are equal:
+  # If the probs are all equal
+  if (all(diff(prob) == 0) | (length(prob) == 1))
+    return(dbinom(x, sum(size), prob[1], log = log))
+
+  # Calculate the probabilities
+  res <- .C("dkbinom",
+            as.integer(max(x)),
+            as.integer(size),
+            as.double(prob),
+            as.integer(length(size)),
+            as.integer(FALSE),
+            as.integer(verbose),
+            double(max(x)+1),
+            double(max(x)+1),
+            out = double(max(x)+1),
+            double(1))[["out"]][x+1]
+
+  if (log)
+    res <- log(res)
+
+  return(res)
+
+} # dkbinom
+
+
+pkbinom <- function(q, size, prob, log.p = FALSE, verbose = FALSE) {
+
+  x <- check.kbinom(q, size, prob)
+
+  # If only one type of variate was requested or if the probs are equal:
+  # If the probs are all equal
+  if (all(diff(prob) == 0) | (length(prob) == 1))
+    return(pbinom(x, sum(size), prob[1], log.p = log.p))
+
+  res <- .C("dkbinom",
+            as.integer(max(x)),
+            as.integer(size),
+            as.double(prob),
+            as.integer(length(size)),
+            as.integer(FALSE),
+            as.integer(verbose),
+            double(max(x)+1),
+            double(max(x)+1),
+            out = double(max(x)+1),
+            double(1))[["out"]]
+
+  res <- cumsum(res)[x+1]
+
+  if (log.p)
+    res <- log(res)
+
+  return(res)
+
+} # pkbinom
 
 
 # Function for checking inputs of dkbinom and pkbinom
@@ -102,67 +157,3 @@ check.kbinom <- function(x, size, prob) {
   return(x)
 
 } # check.kbinom
-
-
-dkbinom <- function(x, size, prob, log = FALSE, verbose = FALSE) {
-
-  x <- check.kbinom(x, size, prob)
-
-  # If only one type of variate was requested or if the probs are equal:
-  # If the probs are all equal
-  if (all(diff(prob) == 0) | (length(prob) == 1))
-    return(dbinom(x, sum(size), prob[1], log = log))
-
-  # Calculate the probabilities
-  res <- .C("dkbinom",
-            as.integer(max(x)),
-            as.integer(size),
-            as.double(prob),
-            as.integer(length(size)),
-            as.integer(FALSE),
-            as.integer(verbose),
-            double(max(x)+1),
-            double(max(x)+1),
-            out = double(max(x)+1),
-            double(1),
-            PACKAGE = "pnlStat")[["out"]][x+1]
-
-  if (log)
-    res <- log(res)
-
-  return(res)
-
-} # dkbinom
-
-
-pkbinom <- function(q, size, prob, log.p = FALSE, verbose = FALSE) {
-
-  x <- check.kbinom(q, size, prob)
-
-  # If only one type of variate was requested or if the probs are equal:
-  # If the probs are all equal
-  if (all(diff(prob) == 0) | (length(prob) == 1))
-    return(pbinom(x, sum(size), prob[1], log.p = log.p))
-
-  res <- .C("dkbinom",
-            as.integer(max(x)),
-            as.integer(size),
-            as.double(prob),
-            as.integer(length(size)),
-            as.integer(FALSE),
-            as.integer(verbose),
-            double(max(x)+1),
-            double(max(x)+1),
-            out = double(max(x)+1),
-            double(1),
-            PACKAGE = "pnlStat")[["out"]]
-
-  res <- cumsum(res)[x+1]
-
-  if (log.p)
-    res <- log(res)
-
-  return(res)
-
-} # pkbinom
-

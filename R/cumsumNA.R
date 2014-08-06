@@ -1,6 +1,3 @@
-# Cumulative sum that doesn't propogate NAs
-
-
 ##' Computes the cummulative sum of a vector without propogating NAs
 ##' 
 ##' Computes the cummulative sum of a vector without propogating NA's.
@@ -8,7 +5,6 @@
 ##' If \code{x} is integer, then integer addition is used.  Otherwise, floating
 ##' point (double) addition is used.
 ##' 
-##' @usage cumsumNA(x)
 ##' @param x An integer or double vector
 ##' @return The vector of cumulative sums.
 ##' 
@@ -44,16 +40,13 @@ cumsumNA <- function(x) {
               as.integer(x),
               as.integer(n),
               out = integer(n),
-              NAOK = TRUE,
-              PACKAGE = "pnlStat")$out
+              NAOK = TRUE)$out
   else
     out <- .C("cumsumNAdouble",
               as.double(x),
               as.integer(n),
               out = double(n),
-              NAOK = TRUE,
-              PACKAGE = "pnlStat")$out              
-    
+              NAOK = TRUE)$out
 
   # Give appropriate names to out
   if (!is.null(nx <- names(x)))

@@ -7,7 +7,6 @@
 ##' If the '.Rdata' file contains more than one object, only the first object
 ##' is returned and a warning is produced.
 ##' 
-##' @usage load.object(Rdata.file)
 ##' @param Rdata.file A character string containing the '.Rdata' filename
 ##' @return The first object in the '.Rdata' file.
 ##' @author Landon Sego
@@ -23,14 +22,20 @@
 ##' 
 ##' # Save and reload the file
 ##' save(x, file=file.name)
-##' y <- load.object(file.name)
+##' y <- loadObject(file.name)
 ##' print(y)
 ##' 
 ##' # Delete the saved object
 ##' unlink(file.name)
 ##' 
-##' 
-load.object <- function(Rdata.file) {
+##'
+##'
+
+## TODO -- make it capable of loading files with more than one object
+## Save the object to a list, with objects identified by their names in
+## the list
+
+loadObject <- function(Rdata.file) {
 
   obj.in <- load(Rdata.file)
 
@@ -40,4 +45,4 @@ load.object <- function(Rdata.file) {
 
   return(get(obj.in))
   
-} # end load.object
+} # end loadObject

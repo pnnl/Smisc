@@ -1,15 +1,9 @@
-# Convert a data frame into a list, where each element of the list consists of a named list containing a row of the data frame
-
-
-
 ##' Row-wise conversion of a data frame to a list
 ##' 
 ##' Convert a data frame to a list, where each element of the output list
 ##' consists of a named list (or a named vector) containing a single row of the
 ##' data frame.
 ##' 
-##' 
-##' @usage df2list(df, out.type = c("list", "data.frame", "vector"))
 ##' @param df A data frame
 ##' @param out.type Character string uniquely identifying 'list', 'data.frame',
 ##' or 'vector'.  If 'list', then each row of the data frame is output as a

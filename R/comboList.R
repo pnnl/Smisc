@@ -1,14 +1,10 @@
-# Produces a list representing all possible combinations of n.pred predictors
-# Landon Sego, 18 Nov 2011
-
 ##' Produces all possible combinations of a set of linear model predictors
 ##'
 ##' Produces a list representing all possible combinations of linear model
 ##' predictors
 ##'
 ##' Uses \code{\link{combn}} to identify the combinations.
-##'
-##' @usage comboList(n.pred, outFile = NULL, njobs = 1, verbose = FALSE)
+##' 
 ##' @param n.pred integer indicating the number of predictors
 ##' @param outFile text string indicating the .Rdata file to which the returned
 ##' list of predictor combinations will be saved.  If NULL, then no file is

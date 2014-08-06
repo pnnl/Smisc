@@ -1,8 +1,3 @@
-# A parallelized (more flexible) version of dapply that uses plapply
-# FUN must opererate on a single row of X
-
-
-
 ##' Parallelized single row processing of a data frame
 ##' 
 ##' Applies a function to each row of a data frame in a parallelized fashion
@@ -11,11 +6,6 @@
 ##' \code{dfplapply} is a convenient wrapper for \code{plapply}, modified
 ##' especially for parallel, single-row processing of data frames.
 ##' 
-##' @usage dfplapply(X, FUN, ..., output.df = FALSE, packages = NULL,
-##' header.file = NULL, needed.objects = NULL, needed.objects.env =
-##' parent.frame(), jobName = "dfplapply", njobs = 7, collate = FALSE,
-##' random.seed = NULL, max.hours = 24, check.interval.sec = 30, clean.up =
-##' TRUE, rout = !clean.up, verbose = FALSE)
 ##' @param X The data frame, each row of which will be processed using
 ##' \code{FUN}
 ##' @param FUN A function whose first argument is a single-row data frame, i.e.

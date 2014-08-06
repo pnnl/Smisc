@@ -1,13 +1,8 @@
-# Determines whether all the elements in a row are missing
-
-
 ##' Identifies missing rows or columns in a data frame or matrix
 ##' 
 ##' Indicates which rows or columns in a data frame or matrix are completely
 ##' missing (all values are NA's).
 ##' 
-##' 
-##' @usage allMissing(dframe, byRow = TRUE)
 ##' @param dframe A data frame or a matrix
 ##' @param byRow \code{= TRUE} will identify rows that have all missing values.
 ##' \code{= FALSE} identifies entire missing columns

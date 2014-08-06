@@ -11,10 +11,17 @@
 ##' exist (see examples below), a \code{""} is returned.
 ##'
 ##' @aliases stripExtension getExtension stripPath getPath grabLast
-##' @usage stripExtension(vec, split.char = ".") getExtension(vec)
-##' stripPath(vec) getPath(vec) grabLast(vec, split.char)
+##'
+##' @usage stripExtension(vec, split.char = ".")
+##' getExtension(vec)
+##' stripPath(vec)
+##' getPath(vec)
+##' grabLast(vec, split.char)
+##' 
 ##' @param vec Character vector (usually containing filenames)
+##' 
 ##' @param split.char A single character used to split the character strings
+##' 
 ##' @return \item{stripExtension}{Character vector with the last "." and the
 ##' filename extension removed.  Alternatively, another split character could
 ##' be used.} \item{getExtension}{Character vector of filename extensions}
@@ -22,11 +29,14 @@
 ##' filenames} \item{getPath}{Character vector with pathnames only, the
 ##' filename removed} \item{grabLast}{Character vector of the strings that
 ##' appear after the last instance of \code{split.char}}
+##' 
 ##' @author Landon Sego
+##' 
 ##' @seealso \code{\link{basename}}, \code{\link{dirname}}
+##' 
 ##' @keywords misc
+##' 
 ##' @examples
-##'
 ##' stripExtension(c("this old file.doc","that young file.rtf",
 ##'                  "this.good.file.doc","this_bad_file"))
 ##'
@@ -50,8 +60,8 @@
 ##' getPath(c(a="this.good.path/filename.R", b="nopath.R", c="/", d=NA,
 ##'           e="path1/path2/", ""))
 ##'
-##' grabLast(c(a="email@nowhere.com", "this.has.no.at.sign", "@",
-##'              "bad.email@weird.com@", NA, "2at's@email@good.net"), "@")
+##' grabLast(c(a="email@@nowhere.com", "this.has.no.at.sign", "@@",
+##'              "bad.email@@weird.com@@", NA, "2at's@@email@@good.net"), "@@")
 ##'
 ##' # An example with 'real' files
 ##' files <- dir(paste(path.package(package="pnlStat"), "SourceCode/R", sep="/"), full.names=TRUE)[1:5]

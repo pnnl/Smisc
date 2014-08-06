@@ -1,6 +1,3 @@
-# Open a graphics device based on the extension of the filename that is provided
-
-
 ##' Opens a graphics device based on the filename extension
 ##' 
 ##' Opens the appropriate graphics device based on the filename extension
@@ -20,7 +17,6 @@
 ##' do not match the named arguments in the graphics device function that is
 ##' called.
 ##' 
-##' @usage openDevice(fileName, ...)
 ##' @param fileName Character string giving the filename for the graphics
 ##' output.  It must contain one of the extensions listed in the \code{Details}
 ##' below.

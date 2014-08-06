@@ -1,12 +1,3 @@
-.onAttach <- function(libname, pkgname) {
-
-  banner.text <- paste("\nWelcome to the Smisc package, version ", packageDescription("Smisc", fields="Version"), ".\n\n",
-                       "Commented source code can be found in\n", path.package(package="Smisc"), "/SourceCode.\n", sep="")
-
-  packageStartupMessage(banner.text)
-
-}
-
 # This function is called when the library is detached. It unloads the dll's.
 .Last.lib <- function(libpath) {
   confirm <- try(library.dynam.unload("Smisc", libpath), silent = TRUE)

@@ -1,7 +1,3 @@
-# 2-sided moving average which has a variety of shapes
-
-
-
 ##' Calculate the moving average using a 2-sided window
 ##' 
 ##' Wrapper for \code{smartFilter} that creates a set of symmetric weights for
@@ -17,9 +13,6 @@
 ##' neighborhood of missing values are calculated using as much of the window
 ##' weights as possible.
 ##' 
-##' @usage movAvg2(y = NULL, bw = 30, type = c("gaussian", "exponential",
-##' "linear", "uniform"), furthest.weight = 0.01, center.weight = 1, plot =
-##' FALSE, ...)
 ##' @param y The numerical vector for which the moving averages will be
 ##' calculated.  If \code{NULL}, the moving averages are not calculated.
 ##' @param bw 'bandwidth', which is roughly half the width of the moving

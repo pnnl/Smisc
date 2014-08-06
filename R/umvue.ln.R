@@ -12,7 +12,6 @@
 ##' 
 ##' Calculates equations 13.3, 13.5, and 13.6 of Gilbert (1987).
 ##' 
-##' @usage umvue.ln(x)
 ##' @param x Vector of lognormal data
 ##' @return Returns a named vector with the following components \item{mu}{The
 ##' UMVUE of the mean} \item{se.mu}{The UMVUE standard error of the mean}
@@ -79,8 +78,7 @@ psi.n.t <- function(n, tx, tol=1e-15, verbose=FALSE) {
      as.double(tx),
      as.double(tol),
      as.integer(verbose),
-     out = double(1),
-     PACKAGE="pnlStat")$out
+     out = double(1))$out
 
 } # psi.n.t
 

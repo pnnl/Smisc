@@ -18,9 +18,6 @@
 ##' linear interpolation is made between the two neighboring time points to
 ##' predict the resulting data value.
 ##' 
-##' @usage timeIntegration(data, time=names(data), lower=time[1],
-##' upper=time[length(time)], check.plot = FALSE, units=c("hours", "minutes",
-##' "seconds"))
 ##' @param data Vector of numerical data
 ##' @param time Vector of timestamps which correspond to \code{data}. These can
 ##' either character or POSIXct.

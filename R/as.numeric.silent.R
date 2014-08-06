@@ -1,12 +1,7 @@
-# Function to convert a vector to numeric (without producing errors or warnings)
-
-
 ##' Silent wrapper for coercing a vector to numeric
 ##' 
 ##' Silent wrapper for coercing a vector to numeric
 ##' 
-##' 
-##' @usage as.numeric.silent(x)
 ##' @param x vector of any type
 ##' @return If \code{as.numeric(x)} produces an error or warning, \code{x} is
 ##' returned unchanged.  Otherwise, \code{as.numeric(x)} is returned.

@@ -1,4 +1,3 @@
-
 ##' Probability functions for the sum of two independent binomials
 ##'
 ##' The mass and distribution functions of the sum of two independent binomial
@@ -14,8 +13,6 @@
 ##' more quickly.
 ##'
 ##' @aliases d2binom p2binom
-##' @usage d2binom(x, size1, prob1, size2, prob2, log = FALSE) p2binom(q,
-##' size1, prob1, size2, prob2, lower.tail = TRUE, log.p = FALSE)
 ##' @param q The quantile (value at which to evaluate the distribution
 ##' function)
 ##' @param x The value at which to evaluate the mass function
@@ -105,8 +102,7 @@ d2binom <- function(x, size1, prob1, size2, prob2, log=FALSE) {
               as.double(prob1),
               as.integer(size2),
               as.double(prob2),
-              fZ = double(1),
-              PACKAGE="pnlStat")$fZ
+              fZ = double(1))$fZ
 
   if (log)
     out <- log(out)
@@ -170,8 +166,7 @@ p2binom <- function(q, size1, prob1, size2, prob2, lower.tail=TRUE, log.p=FALSE)
               as.double(prob1),
               as.integer(size2),
               as.double(prob2),
-              pZ=double(1),
-              PACKAGE="pnlStat")$pZ
+              pZ=double(1))$pZ
 
   if (!lower.tail)
     out <- 1 - out

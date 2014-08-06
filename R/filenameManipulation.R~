@@ -1,3 +1,67 @@
+##' Filename manipulations: remove the extension or path, extract the extension
+##' or path
+##'
+##' Functions to 1) remove the filename extension 2) extract the filename
+##' extention, 3) strip off the leading path, 4) extract the path, or 5)
+##' extract the last portion of a string that follows a delimiter--from a
+##' vector of filenames.
+##'
+##' Assumes paths are delineated using forward slashes.  If an \code{NA} is
+##' supplied, then an \code{NA} is returned.  If the desired string doesn't
+##' exist (see examples below), a \code{""} is returned.
+##'
+##' @aliases stripExtension getExtension stripPath getPath grabLast
+##' @param vec Character vector (usually containing filenames)
+##' @param split.char A single character used to split the character strings
+##' @return \item{stripExtension}{Character vector with the last "." and the
+##' filename extension removed.  Alternatively, another split character could
+##' be used.} \item{getExtension}{Character vector of filename extensions}
+##' \item{stripPath}{Character vector with leading path removed from the
+##' filenames} \item{getPath}{Character vector with pathnames only, the
+##' filename removed} \item{grabLast}{Character vector of the strings that
+##' appear after the last instance of \code{split.char}}
+##' @author Landon Sego
+##' @seealso \code{\link{basename}}, \code{\link{dirname}}
+##' @keywords misc
+##' @examples
+##'
+##' stripExtension(c("this old file.doc","that young file.rtf",
+##'                  "this.good.file.doc","this_bad_file"))
+##'
+##' stripExtension(c("this old file*doc","that young file*rtf",
+##'                  "this*good*file*doc","this_bad_file"), split.char = "*")
+##'
+##'
+##' # Named vectors are not required, but are included here to make the
+##' # output easier to read.  This example demonstrates a number of
+##' # pathological cases.
+##' stripExtension(c(a = NA, b = ".doc", c = "this.pdf", d = "this.file.", e = ".",
+##'                  f= "noExtension", g = "direc.name/filename.txt", h = ""))
+##'
+##' getExtension(c(a="this old file.doc", b="that young file.rtf",
+##'                c="this.good.file.doc", d="this_bad_file", e="thisfile.",
+##'                f=NA, g="that.this.pdf", h=".", i=""))
+##'
+##' stripPath(c(a="this.good.path/filename.R", b="nopath.R", c="/", d=NA,
+##'             e="only.paths.1/only.paths.2/", ""))
+##'
+##' getPath(c(a="this.good.path/filename.R", b="nopath.R", c="/", d=NA,
+##'           e="path1/path2/", ""))
+##'
+##' grabLast(c(a="email@@nowhere.com", "this.has.no.at.sign", "@@",
+##'              "bad.email@@weird.com@@", NA, "2at's@@email@@good.net"), "@@")
+##'
+##' # An example with 'real' files
+##' files <- dir(paste(path.package(package="pnlStat"), "SourceCode/R", sep="/"), full.names=TRUE)[1:5]
+##' print(files)
+##' stripExtension(files)
+##' stripPath(files)
+##' stripExtension(stripPath(files))
+##' stripPath(stripExtension(files))
+##'
+
+
+
 # strip off the filename extension at the end
 # It assumes that the extension is the string that
 # follows the last period in a filename
@@ -20,7 +84,7 @@ stripExtension <- function(vec, split.char = ".") {
      }
 
      return(x)
-     
+
   } # check.for.ending.period
 
   names.vec <- names(vec)
@@ -35,28 +99,28 @@ stripExtension <- function(vec, split.char = ".") {
 
     else
       return(v1)
-    
+
   } # end rejoin
 
   # If paths exist in the filename, we don't want to cut at "." that are in directories...
   # Strip the extension in the last element of the sub-list when we split by "/"
   sE <- function(v2) {
-    
+
     if (length(v2) == 1) {
       if (is.na(v2))
         return(NA)
     }
-    
+
     v2[length(v2)] <- unlist(lapply(strsplit(v2[length(v2)], split.char, fixed = TRUE), rejoin))
     paste(v2, collapse = "/")
   }
 
   result <- unlist(lapply(strsplit(vec, "/", fixed = TRUE), sE))
-  
+
   names(result) <- names.vec
 
   return(result)
-  
+
 } # end stripExtension()
 
 
@@ -68,14 +132,14 @@ grabLast <- function(vec, split.char) {
     stop("'split.char' argument must be an single character.\n")
   if (length(split.char) != 1)
     stop("'split.char' argument must be an single character.\n")
-  
+
   # Verify that 'vec' is a character vector
   if (!is.character(vec))
     stop("'", deparse(substitute(vec)), "' must be a character vector.\n")
 
   # Prerve the names for later
   names.vec <- names(vec)
-  
+
   # If the last character is the split.char then flag it so that nothing will be returned
   check.for.ending.char <- function(x) {
 
@@ -86,11 +150,11 @@ grabLast <- function(vec, split.char) {
      }
 
      return(x)
-     
+
   } # check.for.ending.char
 
   vec <- tapply(vec, 1:length(vec), check.for.ending.char)
-  
+
   getLast <- function(v1) {
 
     # For NA's, nothing after the split.char, and ""
@@ -103,7 +167,7 @@ grabLast <- function(vec, split.char) {
        if (is.na(v1))
          return(NA)
        # For nothing after the split.char
-       else 
+       else
          return("")
     }
     # If string doesn't end with the split.char
@@ -122,11 +186,11 @@ grabLast <- function(vec, split.char) {
 
 } # grabLast
 
-    
+
 getExtension <- function(vec) {
 
   grabLast(vec, ".")
-  
+
 } # getExtension
 
 stripPath <- function(vec) {
@@ -139,10 +203,10 @@ stripPath <- function(vec) {
 
   # Grab the text string that follows the last '/'
   grabLast(vec1, "/")
-  
+
 } # stripPath
 
-    
+
 # Extracts the path only from a filename
 getPath <- function(vec) {
 
@@ -179,13 +243,13 @@ getPath <- function(vec) {
       if (is.na(v1))
         return(NA)
     }
-    
+
     if ((len <- length(v1)) > 1)
       return(paste(v1[1:(len-1)], collapse="/"))
 
     else
       return(v1)
-    
+
   } # end rejoin
 
   # Return the results
@@ -193,6 +257,6 @@ getPath <- function(vec) {
   names(out) <- names.vec
 
   out
-  
+
 } # getPath
 

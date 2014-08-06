@@ -1,7 +1,3 @@
-# Pads a character or numeric numbers with leading 0's
-
-
-
 ##' Pad a vector of numbers with zeros
 ##' 
 ##' Pad a numeric vector with zeros so that each element in the vector either
@@ -20,7 +16,6 @@
 ##' Note that \code{vec} must be numeric when \code{side='right'}.  However,
 ##' \code{vec} may be character when \code{side='left'}.
 ##' 
-##' @usage padZero(vec, num = NULL, side=c("left","right"))
 ##' @param vec The numeric vector to be padded
 ##' @param num The number of zeros that will be padded. If \code{NULL}, the
 ##' value is chosen based on the longest string in the vector.
