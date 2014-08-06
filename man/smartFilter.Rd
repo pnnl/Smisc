@@ -1,0 +1,87 @@
+\name{smartFilter}
+\alias{smartFilter}
+%- Also NEED an '\alias' for EACH other topic documented here.
+\title{Calculates a moving dot product (or filter) over a series}
+\description{ 
+Calculates a moving dot product over a series using a 2-sided window. It dynamically
+accounts for the incomplete windows which are caused by missing values
+and which occur at the beginning and end of the series.  
+}
+\usage{
+smartFilter(y, weights, min.window = 1, start = 1, skip = 1, balance = TRUE)
+}
+%- maybe also 'usage' for other objects documented here.
+\arguments{
+  \item{y}{A numeric vector (can be labeled)}
+  \item{weights}{Vector of weights that will be used to calculate the
+    moving dot product.  Should be odd in length and should sum to unity.}
+  \item{min.window}{The minimum number of non-missing data points in a
+    window that are required to calculate the dot product}
+  \item{start}{The index of the center of the first window}
+  \item{skip}{The number of indexes to advance the center of the
+    moving window each time the dot product is calculated.}
+  \item{balance}{\code{=TRUE} requires that the first non-missing value
+    in a window occur on or before the center point of the window, and that the last
+    non-missing value occur on or after the center point of the window.}
+}
+\details{
+  \code{smartFilter} has very similar behavior to \code{\link{filter}}, except it 
+  calculates at the edge of a series and it does not propogate NAs which
+  may be imbedded within the series.
+
+  When the window contains missing values, either due to being at the
+  edge of the series or due to NAs imbedded within the series, the
+  weights corresponding to the non-missing data points are re-normalized
+  and the dotproduct is calculated using the available data.  If the
+  number of non-missing data points in the window is less than
+  \code{min.window}, an \code{NA} is produced for the corresponding
+  index.  Likewise, if \code{balance=TRUE}, and the required conditions
+  (described above in the argument description of \code{balance}) 
+  are not met, an \code{NA} is returned for the
+  corresponding index.
+}
+\value{
+  Returns the moving dot product
+}
+%\references{ ~put references to the literature/web site here ~ }
+\author{Landon Sego}
+% \note{ ~~further notes~~ 
+
+%  ~Make other sections like Warning with \section{Warning }{....} ~
+% }
+\seealso{\code{\link{movAvg2}}, \code{\link{filter}}}
+\examples{
+ # Define a simple vector
+ x <- 2^(0:8)
+ names(x) <- letters[1:9]
+
+ # Define weights for a simple moving average of 3 points
+ # (1 point in the past, the present point, and 1 point in the future)
+ wts <- rep(1, 3)/3
+
+ # Note how they are the same, except at the edges of the series.
+ smartFilter(x, wts)
+ filter(x, wts)
+
+ # Notice how filter() propogates missing values
+ y <- 3^(0:8)
+ y[5] <- NA
+ smartFilter(y, wts)
+ filter(y, wts)
+
+ # Compare starting on the second value and skip every other point
+ smartFilter(x, wts)
+ smartFilter(x, wts, start=2, skip=2)
+
+ # Demonstrate how the 'min.window' and 'balance' work
+ y <- round(rnorm(1:20),2)
+ names(y) <- letters[1:20]
+ y[7:9] <- NA
+ y
+ smartFilter(y, rep(1,5)/5, min.window=2, balance=TRUE)
+ smartFilter(y, rep(1,5)/5, min.window=2, balance=FALSE)
+}
+% Add one or more standard keywords, see file 'KEYWORDS' in the
+% R documentation directory.
+\keyword{misc}
+%\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line

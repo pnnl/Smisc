@@ -1,0 +1,132 @@
+\name{timeDiff}
+\Rdversion{1.1}
+\alias{timeDiff}
+%- Also NEED an '\alias' for EACH other topic documented here.
+\title{
+Subtracts two time series by matching irregular time indexes
+}
+\description{
+Subtracts two time series by matching irregular time indexes.  Can also
+be used to snap, or match, the indexes of a time series to a set of standard time
+indexes.
+}
+\usage{
+timeDiff(v1, v2, n.ind=1, full=FALSE)
+}
+%- maybe also 'usage' for other objects documented here.
+\arguments{
+  \item{v1}{
+A time series vector:  vector with dates or datetimes for names which are
+non repeating and in chronological order
+}
+  \item{v2}{
+Another time series vector
+}
+\item{n.ind}{
+  An integer >= 1 that indicates how many elements of the longer of the two vectors
+  will be averaged and matched to the closest timestamp of the shorter
+  vector.  See details below.
+  }
+\item{full}{
+  \code{=TRUE} returns a data frame that shows in detail how the two
+  vectors were matched and the difference calculated
+}
+}
+\details{
+  The format for the timestamps (in the vector names) can be virtually
+  any reasonable format, which will be converted to POSIXct by \code{\link{formatDT}}.
+  
+  Suppose that \code{v1} is shorter than \code{v2}.  For each index of the
+  \code{v1}, the \code{n.ind} indices of \code{v2} 
+  that are closest in time to the \code{v1} index are identified and
+  "matched" (by averaging them)  to the \code{v1} index. In the case
+  of ties, for example, the nearest \code{v2} indexes
+  are both 5 seconds before and 5 seconds after the \code{v1} index of
+  interest, then the closest \code{v2} index in the past (5 seconds before) is
+  matched to the \code{v1} index.
+
+  Hence, the average of the \code{n.ind} elements of \code{v2} that best "match" (are closest in
+  time to) the element of \code{v1} are subtracted from \code{v1}, which
+  creates a series of differences with the same length (and timestamps)
+  as \code{v1}.
+  
+  If instead, \code{v2} is shorter than \code{v1}, then the time stamps
+  of \code{v2} become the 'standard' to which the times of \code{v1} are matched.
+
+  If \code{v1} and \code{v2} are the same length, then the timestamps of
+  \code{v2} are matched to \code{v1} and the resulting vector of
+  differences has the same timestamps as \code{v1}.
+
+}
+\value{
+if \code{full = FALSE} then the difference (after matching) of \code{(v1 - v2)} is returned.
+Otherwise, a data frame is returned that shows how the vectors were
+matched and the resulting difference vector.
+}
+%\references{
+%% ~put references to the literature/web site here ~
+%}
+\author{
+Landon Sego
+}
+%\note{
+%%  ~~further notes~~
+%}
+
+%% ~Make other sections like Warning with \section{Warning }{....} ~
+
+%\seealso{
+%% ~~objects to See Also as \code{\link{help}}, ~~~
+%}
+\examples{
+data(timeDiff.eg)
+
+# Show the example objects
+print(x1)
+print(x2)
+print(x1.d)
+print(x2.d)
+
+
+# Print warnings as they occur
+op <- options(warn=1)
+
+# Show various differences
+timeDiff(x1, x2, full=TRUE)       
+timeDiff(x2.d, x1.d, full=TRUE)
+timeDiff(x1, x1)
+
+options(op)
+
+### If we need to average a time-series at 30 second invervals:
+
+# Create the vector that will be averaged, with time stamps occuring
+# about every 10 seconds
+v1.names <- seq(formatDT("2009-09-12 3:20:31")$dt.posix, formatDT("2009-09-12 3:29:15")$dt.posix, by=10)
+
+# Now jitter the times a bit and look at the time spacing
+v1.names <- v1.names + round(rnorm(length(v1.names), sd=1.5))
+diff(v1.names)
+
+# Create the vector
+v1 <- abs(rnorm(length(v1.names), mean=7, sd=3))
+names(v1) <- v1.names
+
+# Now create a standard vector with values of 0 with time stamps every 30 seconds
+standard.names <- seq(formatDT("2009-09-12 3:21:30")$dt.posix, formatDT("2009-09-12 3:28:30")$dt.posix, by=30)
+standard <- double(length(standard.names))
+names(standard) <- standard.names
+
+# Now average the v1 values by matching the 3 closest values to each standard time:
+timeDiff(v1, standard, n.ind=3, full=TRUE)
+v1.avg <- timeDiff(v1, standard, n.ind=3)
+
+# Check that every 3 obs were averaged
+v1.avg.check <- tapply(v1[6:50], rep(1:15, each=3), mean)
+max(abs(v1.avg.check - v1.avg))
+
+}
+% Add one or more standard keywords, see file 'KEYWORDS' in the
+% R documentation directory.
+\keyword{misc}
+%\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line

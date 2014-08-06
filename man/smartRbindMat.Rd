@@ -1,0 +1,72 @@
+\name{smartRbindMat}
+\alias{smartRbindMat}
+%- Also NEED an '\alias' for EACH other topic documented here.
+\title{Row bind matrices whose column names may not be the same}
+% \description{
+% }
+\usage{
+smartRbindMat(..., distinguish = FALSE, filler = NA)
+}
+%- maybe also 'usage' for other objects documented here.
+\arguments{
+  \item{\dots}{matrix objects (separated by commas), a list of matrices,
+    or a character vector containing the names of matrix objects}
+  \item{distinguish}{if \code{TRUE}, then rownames of the returned matrix
+    are assigned a name consisting of the object name as a prefix,
+    followed by the row name, separated by a ":".  Otherwise, the
+    original rownames are used.}
+  \item{filler}{The character to insert into the final matrix for those
+    empty elements which occur when not all the matrices have the same
+    column names.}
+}
+% \details{
+%}
+\value{
+  Produces a matrix with a union of the column names.  Empty elements
+  resulting from different column names are set to the value of \code{filler}.
+}
+%\references{}
+\author{Landon Sego}
+% \note{ ~~further notes~~ 
+
+%  ~Make other sections like Warning with \section{Warning }{....} ~
+% }
+\seealso{\code{\link{rbind}}}
+\examples{
+x <- matrix(rnorm(6), ncol = 2, dimnames = list(letters[1:3],letters[4:5]))
+y <- matrix(rnorm(6), ncol = 3, dimnames = list(letters[7:8],letters[4:6]))
+z <- matrix(rnorm(2), nrow = 1, dimnames = list("c",letters[3:4]))
+
+x
+y
+z
+
+smartRbindMat(x,y,z)
+smartRbindMat(list(x, y, z), distinguish = TRUE)
+smartRbindMat(y,z,x, distinguish = TRUE)
+smartRbindMat(c("y","x","z"), filler = -20, distinguish = T)
+
+w1 <- matrix(sample(letters[1:26], 6), ncol = 2,
+             dimnames = list(c("3", "", "4"), c("w", "v")))
+x1 <- matrix(sample(letters[1:26], 6), ncol = 2,
+             dimnames = list(NULL, letters[4:5]))
+y1 <- matrix(sample(letters[1:26], 6), ncol = 3,
+             dimnames = list(NULL, letters[4:6]))
+z1 <- matrix(sample(letters[1:26], 2), nrow = 1,
+             dimnames = list(NULL, letters[3:4]))
+
+w1
+x1
+y1
+z1
+
+smartRbindMat(w1,x1,y1,z1)
+smartRbindMat(list(w1 = w1, x1 = x1, y1 = y1, z1 = z1), distinguish = TRUE)
+
+smartRbindMat(w1,x1,y,z1,z)
+smartRbindMat(w1,x1,y,z1,z, distinguish = TRUE)
+}
+% Add one or more standard keywords, see file 'KEYWORDS' in the
+% R documentation directory.
+\keyword{misc}
+%\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line

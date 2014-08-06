@@ -1,0 +1,71 @@
+# Produces a list representing all possible combinations of n.pred predictors
+# Landon Sego, 18 Nov 2011
+
+comboList <- function(n.pred, outFile = NULL, njobs = 1, verbose = FALSE) {
+
+  # n.pred = number of predictors
+  # outFile = text string indicating the .Rdata file to which the final object will be saved
+  # njobs > 1 will run the calculation of the jobs in parallel using plapply()
+  # verbose = TRUE indicates that a message regarding the saving of the output file will be printed
+
+  # Create the profile of counts for each category
+  counts <- choose(n.pred,1:n.pred)
+  groups <- c(1:n.pred)[order(counts, decreasing = TRUE)]
+
+  # Make sure we don't spawn more jobs then there are groups
+  if (njobs > n.pred)
+    njobs <- n.pred
+
+  # Create a list that will spread the combn work out somewhat evenly
+  cnt.list <- vector(njobs, mode="list")
+  for (i in 1:njobs) {
+    if (i < njobs) 
+      cnt.list[[i]] <- groups[i]
+    else
+      cnt.list[[njobs]] <- groups[njobs:length(groups)]
+  }
+
+  # Wrapper function for combn to be used in plapply
+  combn.wrapper <- function(n.to.choose) {
+    
+    if (length(n.to.choose) == 1)
+      return(combn(n.pred, n.to.choose, simplify = FALSE))
+
+    # If the list element has length greater than 1 (these should be the fast cases)
+    else {
+      
+      for (n in n.to.choose) 
+        assign(paste("o", n, sep=""), combn(n.pred, n, simplify = FALSE))
+
+      # concatentate all these lists together at once
+      out.text <- paste("c(", paste(paste("o", n.to.choose, sep=""), collapse=","), ")", sep="")
+      
+      return(eval(parse(text = out.text)))
+      
+    }
+    
+  } # combn.wrapper
+
+  # Now run combn in parallel
+  out <- plapply(cnt.list, combn.wrapper, needed.objects = "n.pred", jobName = "cList",
+                 check.interval.sec = 0.5, njobs = njobs)
+  out <- unlist(out, recursive = FALSE)
+
+  # Final check
+  if (length(out) != sum(counts))
+    stop("comboList produced ", length(out), " models, when it should have produced ", sum(counts), ".")
+
+  cList <- list(len = sum(counts), pList = out)
+  class(cList) <- "combolist"
+
+  # Write an output file if requested
+  if (!is.null(outFile)) {
+    save(cList, file = outFile)
+    if (verbose)
+      cat("Output list saved to", outFile, "\n")
+  }
+
+  # Invisibly return the list
+  invisible(cList)
+
+} # comboList

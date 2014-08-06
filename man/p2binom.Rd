@@ -1,0 +1,52 @@
+\name{Sum of two binomials}
+\alias{d2binom}
+\alias{p2binom}
+\title{Probability functions for the sum of two independent binomials}
+\description{
+The mass and distribution functions of the sum of two independent
+binomial random variables.
+}
+\usage{
+d2binom(x, size1, prob1, size2, prob2, log = FALSE)
+p2binom(q, size1, prob1, size2, prob2, lower.tail = TRUE, log.p = FALSE)
+}
+\arguments{
+  \item{q}{The quantile (value at which to evaluate the distribution function)}
+  \item{x}{The value at which to evaluate the mass function}
+  \item{size1}{The number of trials of the first binomial R.V.}
+  \item{prob1}{The probability of success of the first binomial R.V.}
+  \item{size2}{The number of trials of the second binomial R.V.}
+  \item{prob2}{The probability of success of the second binomial R.V.}
+  \item{lower.tail}{logical; if \code{TRUE} (default), probabilities are P[X <= x],
+          otherwise, P[X > x].}
+  \item{log, log.p}{logical; if TRUE, probabilities p are given as
+    log(p). (See NOTE in details).}
+}
+\details{
+  If \code{prob1} and \code{prob2} are the same, then \code{pbinom} or
+  \code{dbinom} is used.  Otherwise, the convolution of the two
+  binomials is used to calculate the mass or the distribution functions.
+
+  NOTE: When \code{log.p} or \code{log} is \code{TRUE}, these functions
+  do not have the same precision as \code{dbinom} or \code{pbinom} when
+  the probabilities are very small, i.e, the values tend to go to
+  \code{-Inf} more quickly.  
+}
+\value{
+  \code{d2binom} gives the mass function, \code{p2binom} gives the
+  distribution function.  Returns \code{NaN} for invalid inputs of
+  \code{size1}, \code{size2}, \code{prob1}, and \code{prob2}.
+}
+%\references{ ~put references to the literature/web site here ~ }
+\author{Landon Sego}
+% \note{ ~~further notes~~ 
+
+%  ~Make other sections like Warning with \section{Warning }{....} ~
+% }
+\seealso{\code{\link{dbinom}}, \code{\link{pbinom}}, \code{\link{dkbinom}}, \code{\link{pkbinom}}}
+\examples{
+ d2binom(8, 10, 0.3, 17, 0.1)
+ p2binom(8, 10, 0.3, 17, 0.1)
+ p2binom(8, 10, 0.3, 17, 0.1, lower.tail = FALSE, log.p = TRUE)
+}
+\keyword{misc}

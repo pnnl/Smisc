@@ -1,0 +1,81 @@
+\name{dataIn}
+\Rdversion{1.1}
+\alias{dataIn}
+%- Also NEED an '\alias' for EACH other topic documented here.
+\title{
+A flexible way to import data into R.
+}
+\description{
+Imports .Rdata, .csv, package data sets, and regular data frames
+}
+\usage{
+dataIn(data)
+}
+%- maybe also 'usage' for other objects documented here.
+\arguments{
+  \item{data}{Can be a data frame or a list of data frames (in which
+    case, the same data frame or list is
+    simply returned), or one of the following types of single text strings:
+    (1) the name of a .csv file, (2) the name of a .Rdata file, or (3)
+    a data set in a particular package, using the
+    syntax "packageName::dataSetName".}
+}
+\details{
+ This is expecially useful when a function requires data as an
+ argument--and in some cases the data frame already exists as an object,
+ ready to be passed into the function, 
+ but in other cases it may be more convenient to read the data from a
+ file.
+
+ If a .csv file is supplied, none of the character variables are
+ converted to factors.
+}
+\value{
+  A data frame (or list of data frames) containing the requested data.
+}
+%\references{
+%% ~put references to the literature/web site here ~
+%}
+\author{
+Landon Sego
+}
+%\note{
+%%  ~~further notes~~
+%}
+
+%% ~Make other sections like Warning with \section{Warning }{....} ~
+
+\seealso{
+\code{\link{data}},\code{\link{load.object}},\code{\link{read.csv}}
+}
+\examples{
+
+# Write a simple data set
+some.data <-data.frame(a=rnorm(10), b=rpois(10, 5))
+write.csv(some.data, file="tmp.file.csv", row.names=FALSE)
+save(some.data, file="tmp.file.Rdata")
+
+A <- dataIn("tmp.file.csv")
+B <- dataIn("tmp.file.Rdata")
+C <- dataIn(some.data)
+
+# We expect these to be equivalent (this should be TRUE)
+all(c(dframeEquiv(A, B, verbose=FALSE)$equiv,
+      dframeEquiv(B, C, verbose=FALSE)$equiv,
+      dframeEquiv(A, C, verbose=FALSE)$equiv))
+
+# Delete the files
+unlink(c("tmp.file.csv", "tmp.file.Rdata"))
+
+# Loading data from a package
+more.data <- dataIn("datasets::AirPassengers")
+print(more.data)
+
+# remove example objects
+rm(A, B, C, more.data, some.data)
+
+}
+% Add one or more standard keywords, see file 'KEYWORDS' in the
+% R documentation directory.
+\keyword{misc}
+%\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line

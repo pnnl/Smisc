@@ -1,0 +1,82 @@
+\name{Filename Manipulation}
+\alias{stripExtension}
+\alias{getExtension}
+\alias{stripPath}
+\alias{getPath}
+\alias{grabLast}
+%- Also NEED an '\alias' for EACH other topic documented here.
+\title{Filename manipulations:  remove the extension or path, extract
+  the extension or path}
+\description{Functions to 1) remove the filename extension 2) extract the
+  filename extention, 3) strip off
+  the leading path, 4) extract the path, or 5) extract the last portion of a
+  string that follows a delimiter--from a vector of filenames.
+}
+\usage{
+stripExtension(vec)
+getExtension(vec)
+stripPath(vec)
+getPath(vec)
+grabLast(vec, split.char)
+}
+%- maybe also 'usage' for other objects documented here.
+\arguments{
+  \item{vec}{Character vector (usually containing filenames)}
+  \item{split.char}{A single character used to split the character strings}
+}
+\details{
+  Assumes paths are delineated using forward slashes.  If an \code{NA} is
+  supplied, then an \code{NA} is returned.  If the desired string
+  doesn't exist (see examples below), a \code{""} is returned.
+}
+\value{
+  \item{stripExtension}{Character vector with the last "." and the
+    filename extension removed}
+  \item{getExtension}{Character vector of filename extensions}
+  \item{stripPath}{Character vector with leading path removed from the
+    filenames}
+  \item{getPath}{Character vector with pathnames only, the filename removed}
+  \item{grabLast}{Character vector of the strings that appear after the
+    last instance of \code{split.char}}
+}
+%\references{ ~put references to the literature/web site here ~ }
+\author{Landon Sego}
+% \note{ ~~further notes~~ 
+
+%  ~Make other sections like Warning with \section{Warning }{....} ~
+% }
+\seealso{\code{\link{basename}}, \code{\link{dirname}}}
+\examples{
+stripExtension(c("this old file.doc","that young file.rtf",
+                 "this.good.file.doc","this_bad_file"))
+
+
+# Named vectors are not required, but are included here to make the
+# output easier to read
+stripExtension(c(a=NA, b=".doc", c="this.pdf", d="this.file.", e=".",
+                 f="noExtension", g="direc.name/filename.txt", h=""))
+
+getExtension(c(a="this old file.doc", b="that young file.rtf",
+               c="this.good.file.doc", d="this_bad_file", e="thisfile.",
+               f=NA, g="that.this.pdf", h=".", i=""))
+
+stripPath(c(a="this.good.path/filename.R", b="nopath.R", c="/", d=NA,
+            e="only.paths.1/only.paths.2/", ""))
+
+getPath(c(a="this.good.path/filename.R", b="nopath.R", c="/", d=NA,
+          e="path1/path2/", ""))
+
+grabLast(c(a="email@nowhere.com", "this.has.no.at.sign", "@",
+             "bad.email@weird.com@", NA, "2at's@email@good.net"), "@")
+
+# An example with 'real' files
+files <- dir(paste(.path.package(package="pnlStat"), "SourceCode/R", sep="/"), full.names=TRUE)[1:5]
+print(files)
+stripExtension(files)
+stripPath(files)
+stripExtension(stripPath(files))
+stripPath(stripExtension(files))
+}
+\keyword{misc}% at least one, from doc/KEYWORDS
+%\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+

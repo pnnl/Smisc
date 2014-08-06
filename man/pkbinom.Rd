@@ -1,0 +1,71 @@
+\name{Sum of two binomials}
+\alias{dkbinom}
+\alias{pkbinom}
+\title{Probability functions for the sum of k independent binomials}
+\description{
+The mass and distribution functions of the sum of k independent
+binomial random variables, with possibly different probabilities.
+}
+\usage{
+dkbinom(x, size, prob, log = FALSE, verbose = FALSE)
+pkbinom(q, size, prob, log.p = FALSE, verbose = FALSE)
+}
+\arguments{
+  \item{q}{Vector of quantiles (value at which to evaluate the
+    distribution function) of the sum of the k binomial variates}
+  \item{x}{Vector of values at which to evaluate the mass function of
+    the sum of the k binomial variates}
+  \item{size}{Vector of the number of trials}
+  \item{prob}{Vector of the probabilities of success}
+  \item{log, log.p}{logical; if TRUE, probabilities p are given as
+    log(p). (See NOTE in details).}
+  \item{verbose}{\code{= TRUE} produces output that shows the iterations
+    of the convolutions and 3 arrays, A, B, and C that are used to
+    convolve and reconvolve the distributions.  Array C is the final
+    result.  See the source code in \code{dkbinom.c} for more details.
+  }
+}
+\details{
+  \code{size[1]} and \code{prob[1]} are the size and probability of the
+  first binomial variate, \code{size[2]} and \code{prob[2]} are the size
+  and probability of the second binomial variate, etc.
+  
+  If the elements of \code{prob} are all the same,  then \code{pbinom} or
+  \code{dbinom} is used.  Otherwise, repeating convolutions of the k
+  binomials are used to calculate the mass or the distribution functions.
+
+  NOTE: When \code{log.p} or \code{log} is \code{TRUE}, these functions
+  do not have the same precision as \code{dbinom} or \code{pbinom} when
+  the probabilities are very small, i.e, the values tend to go to
+  \code{-Inf} more quickly.  
+}
+\value{
+  \code{dkbinom} gives the mass function, \code{pkbinom} gives the
+  distribution function.  Produces errors for invalid inputs of
+  \code{size}, \code{prob}, \code{x}, and \code{q}.
+}
+\references{Based on the exact algorithm discussed by
+  
+  Butler, Ken and Stephens, Michael. (1993) The Distribution of a Sum of
+  Binomial Random Variables. Technical Report No. 467, Department of
+  Statistics, Stanford University.
+  
+  \url{http://statistics.stanford.edu/~ckirby/techreports/ONR/SOL\%20ONR\%20467.pdf}
+}
+\author{Landon Sego}
+% \note{ ~~further notes~~ 
+
+%  ~Make other sections like Warning with \section{Warning }{....} ~
+% }
+\seealso{\code{\link{dbinom}}, \code{\link{pbinom}},
+  \code{\link{d2binom}}, \code{\link{p2binom}}}
+
+\examples{
+ dkbinom(8, c(10, 17), c(0.3, 0.1))
+ # Compare with p2binom
+ d2binom(8, 10, 0.3, 17, 0.1)
+
+ dkbinom(c(0, 7), c(3, 4, 2), c(0.3, 0.5, 0.8))
+ pkbinom(c(0, 7), c(3, 4, 2), c(0.3, 0.5, 0.8), verbose = TRUE)
+}
+\keyword{misc}

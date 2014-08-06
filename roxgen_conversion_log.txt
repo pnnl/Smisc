@@ -1,0 +1,803 @@
+> Rd2roxygen("Smisc", usage = TRUE)
+Loading required package: Smisc
+##------ Tue Aug 05 16:44:26 2014 ------##
+parsed: allMissing.Rd
+looking for the object 'allMissing' in:
+  allMissing.R: line 2
+Smisc/R/allMissing.R updated
+
+
+##------ Tue Aug 05 16:44:26 2014 ------##
+parsed: as.numeric.silent.Rd
+looking for the object 'as.numeric.silent' in:
+  as.numeric.silent.R: line 2
+Smisc/R/as.numeric.silent.R updated
+
+
+##------ Tue Aug 05 16:44:26 2014 ------##
+parsed: beta-binomial.Rd
+looking for the object 'BetaBinomial' in:
+  allMissing.R: not found
+  as.numeric.silent.R: not found
+  beta-binomial.R: not found
+  comboList.R: not found
+  cumsumNA.R: not found
+  d2binom.R: not found
+  dataIn.R: not found
+  df2list.R: not found
+  dfplappy.R: not found
+  dframeEquiv.R: not found
+  dkbinom.R: not found
+  factor2character.R: not found
+  filenameManipulation.R: not found
+  findDepMat.R: not found
+  formatDT.R: not found
+  integ.R: not found
+  interactionPlot.R: not found
+  ip.R: not found
+  linearMap.R: not found
+  list2df.R: not found
+  load.object.R: not found
+  max.le.i.R: not found
+  movAvg2.R: not found
+  openDevice.R: not found
+  padZero.R: not found
+  parseJob.R: not found
+  pcbinom.R: not found
+  plapply.R: not found
+  pvar.R: not found
+  qqplotGamma.R: not found
+  rma.R: not found
+  smartFilter.R: not found
+  smartRbindMat.R: not found
+  smartTimeAxis.R: not found
+  sort.data.frame.R: not found
+  sourceDir.R: not found
+  timeDiff.R: not found
+  timeIntegration.R: not found
+  timeIt.R: not found
+  timeStamp.R: not found
+  umvue.ln.R: not found
+  valid.email.address.R: not found
+  vertErrorBar.R: not found
+  zzz.R: not found
+unmatched object 'BetaBinomial' written into Smisc/R/Smisc-package.R
+
+
+##------ Tue Aug 05 16:44:26 2014 ------##
+parsed: cheb.2step.od.Rd
+looking for the object 'cheb.2step.od' in:
+  allMissing.R: not found
+  as.numeric.silent.R: not found
+  beta-binomial.R: not found
+  comboList.R: not found
+  cumsumNA.R: not found
+  d2binom.R: not found
+  dataIn.R: not found
+  df2list.R: not found
+  dfplappy.R: not found
+  dframeEquiv.R: not found
+  dkbinom.R: not found
+  factor2character.R: not found
+  filenameManipulation.R: not found
+  findDepMat.R: not found
+  formatDT.R: not found
+  integ.R: not found
+  interactionPlot.R: not found
+  ip.R: not found
+  linearMap.R: not found
+  list2df.R: not found
+  load.object.R: not found
+  max.le.i.R: not found
+  movAvg2.R: not found
+  openDevice.R: not found
+  padZero.R: not found
+  parseJob.R: not found
+  pcbinom.R: not found
+  plapply.R: not found
+  pvar.R: not found
+  qqplotGamma.R: not found
+  rma.R: not found
+  smartFilter.R: not found
+  smartRbindMat.R: not found
+  smartTimeAxis.R: not found
+  Smisc-package.R: not found
+  sort.data.frame.R: not found
+  sourceDir.R: not found
+  timeDiff.R: not found
+  timeIntegration.R: not found
+  timeIt.R: not found
+  timeStamp.R: not found
+  umvue.ln.R: not found
+  valid.email.address.R: not found
+  vertErrorBar.R: not found
+  zzz.R: not found
+unmatched object 'cheb.2step.od' written into Smisc/R/Smisc-package.R
+
+
+##------ Tue Aug 05 16:44:26 2014 ------##
+parsed: cheb.od.Rd
+looking for the object 'cheb.od' in:
+  allMissing.R: not found
+  as.numeric.silent.R: not found
+  beta-binomial.R: not found
+  comboList.R: not found
+  cumsumNA.R: not found
+  d2binom.R: not found
+  dataIn.R: not found
+  df2list.R: not found
+  dfplappy.R: not found
+  dframeEquiv.R: not found
+  dkbinom.R: not found
+  factor2character.R: not found
+  filenameManipulation.R: not found
+  findDepMat.R: not found
+  formatDT.R: not found
+  integ.R: not found
+  interactionPlot.R: not found
+  ip.R: not found
+  linearMap.R: not found
+  list2df.R: not found
+  load.object.R: not found
+  max.le.i.R: not found
+  movAvg2.R: not found
+  openDevice.R: not found
+  padZero.R: not found
+  parseJob.R: not found
+  pcbinom.R: not found
+  plapply.R: not found
+  pvar.R: not found
+  qqplotGamma.R: not found
+  rma.R: not found
+  smartFilter.R: not found
+  smartRbindMat.R: not found
+  smartTimeAxis.R: not found
+  Smisc-package.R: not found
+  sort.data.frame.R: not found
+  sourceDir.R: not found
+  timeDiff.R: not found
+  timeIntegration.R: not found
+  timeIt.R: not found
+  timeStamp.R: not found
+  umvue.ln.R: not found
+  valid.email.address.R: not found
+  vertErrorBar.R: not found
+  zzz.R: not found
+unmatched object 'cheb.od' written into Smisc/R/Smisc-package.R
+
+
+##------ Tue Aug 05 16:44:26 2014 ------##
+parsed: checkBatch.Rd
+looking for the object 'checkBatch' in:
+  allMissing.R: not found
+  as.numeric.silent.R: not found
+  beta-binomial.R: not found
+  comboList.R: not found
+  cumsumNA.R: not found
+  d2binom.R: not found
+  dataIn.R: not found
+  df2list.R: not found
+  dfplappy.R: not found
+  dframeEquiv.R: not found
+  dkbinom.R: not found
+  factor2character.R: not found
+  filenameManipulation.R: not found
+  findDepMat.R: not found
+  formatDT.R: not found
+  integ.R: not found
+  interactionPlot.R: not found
+  ip.R: not found
+  linearMap.R: not found
+  list2df.R: not found
+  load.object.R: not found
+  max.le.i.R: not found
+  movAvg2.R: not found
+  openDevice.R: not found
+  padZero.R: not found
+  parseJob.R: not found
+  pcbinom.R: not found
+  plapply.R: not found
+  pvar.R: not found
+  qqplotGamma.R: not found
+  rma.R: not found
+  smartFilter.R: not found
+  smartRbindMat.R: not found
+  smartTimeAxis.R: not found
+  Smisc-package.R: not found
+  sort.data.frame.R: not found
+  sourceDir.R: not found
+  timeDiff.R: not found
+  timeIntegration.R: not found
+  timeIt.R: not found
+  timeStamp.R: not found
+  umvue.ln.R: not found
+  valid.email.address.R: not found
+  vertErrorBar.R: not found
+  zzz.R: not found
+unmatched object 'checkBatch' written into Smisc/R/Smisc-package.R
+
+
+##------ Tue Aug 05 16:44:26 2014 ------##
+parsed: comboList.Rd
+looking for the object 'comboList' in:
+  comboList.R: line 4
+Smisc/R/comboList.R updated
+
+
+##------ Tue Aug 05 16:44:26 2014 ------##
+parsed: cumsumNA.Rd
+looking for the object 'cumsumNA' in:
+  cumsumNA.R: line 2
+Smisc/R/cumsumNA.R updated
+
+
+##------ Tue Aug 05 16:44:26 2014 ------##
+parsed: dataIn.Rd
+looking for the object 'dataIn' in:
+  dataIn.R: line 2
+Smisc/R/dataIn.R updated
+
+
+##------ Tue Aug 05 16:44:26 2014 ------##
+parsed: df2list.Rd
+looking for the object 'df2list' in:
+  df2list.R: line 3
+Smisc/R/df2list.R updated
+
+
+##------ Tue Aug 05 16:44:26 2014 ------##
+parsed: dfplapply.Rd
+looking for the object 'dfplapply' in:
+  allMissing.R: not found
+  as.numeric.silent.R: not found
+  beta-binomial.R: not found
+  comboList.R: not found
+  cumsumNA.R: not found
+  d2binom.R: not found
+  dataIn.R: not found
+  df2list.R: not found
+  dfplappy.R: line 4
+Smisc/R/dfplappy.R updated
+
+
+##------ Tue Aug 05 16:44:26 2014 ------##
+parsed: dframeEquiv.Rd
+looking for the object 'dframeEquiv' in:
+  dframeEquiv.R: line 7
+Smisc/R/dframeEquiv.R updated
+
+
+##------ Tue Aug 05 16:44:26 2014 ------##
+parsed: factor2character.Rd
+looking for the object 'factor2character' in:
+  factor2character.R: line 3
+Smisc/R/factor2character.R updated
+
+
+##------ Tue Aug 05 16:44:27 2014 ------##
+parsed: filenameManipulation.Rd
+looking for the object 'Filename Manipulation' in:
+  allMissing.R: not found
+  as.numeric.silent.R: not found
+  beta-binomial.R: not found
+  comboList.R: not found
+  cumsumNA.R: not found
+  d2binom.R: not found
+  dataIn.R: not found
+  df2list.R: not found
+  dfplappy.R: not found
+  dframeEquiv.R: not found
+  dkbinom.R: not found
+  factor2character.R: not found
+  filenameManipulation.R: not found
+  findDepMat.R: not found
+  formatDT.R: not found
+  integ.R: not found
+  interactionPlot.R: not found
+  ip.R: not found
+  linearMap.R: not found
+  list2df.R: not found
+  load.object.R: not found
+  max.le.i.R: not found
+  movAvg2.R: not found
+  openDevice.R: not found
+  padZero.R: not found
+  parseJob.R: not found
+  pcbinom.R: not found
+  plapply.R: not found
+  pvar.R: not found
+  qqplotGamma.R: not found
+  rma.R: not found
+  smartFilter.R: not found
+  smartRbindMat.R: not found
+  smartTimeAxis.R: not found
+  Smisc-package.R: not found
+  sort.data.frame.R: not found
+  sourceDir.R: not found
+  timeDiff.R: not found
+  timeIntegration.R: not found
+  timeIt.R: not found
+  timeStamp.R: not found
+  umvue.ln.R: not found
+  valid.email.address.R: not found
+  vertErrorBar.R: not found
+  zzz.R: not found
+unmatched object 'Filename Manipulation' written into Smisc/R/Smisc-package.R
+
+
+##------ Tue Aug 05 16:44:27 2014 ------##
+parsed: find.dframeEquiv.Rd
+looking for the object 'find.dframeEquiv' in:
+  allMissing.R: not found
+  as.numeric.silent.R: not found
+  beta-binomial.R: not found
+  comboList.R: not found
+  cumsumNA.R: not found
+  d2binom.R: not found
+  dataIn.R: not found
+  df2list.R: not found
+  dfplappy.R: not found
+  dframeEquiv.R: not found
+  dkbinom.R: not found
+  factor2character.R: not found
+  filenameManipulation.R: not found
+  findDepMat.R: not found
+  formatDT.R: not found
+  integ.R: not found
+  interactionPlot.R: not found
+  ip.R: not found
+  linearMap.R: not found
+  list2df.R: not found
+  load.object.R: not found
+  max.le.i.R: not found
+  movAvg2.R: not found
+  openDevice.R: not found
+  padZero.R: not found
+  parseJob.R: not found
+  pcbinom.R: not found
+  plapply.R: not found
+  pvar.R: not found
+  qqplotGamma.R: not found
+  rma.R: not found
+  smartFilter.R: not found
+  smartRbindMat.R: not found
+  smartTimeAxis.R: not found
+  Smisc-package.R: not found
+  sort.data.frame.R: not found
+  sourceDir.R: not found
+  timeDiff.R: not found
+  timeIntegration.R: not found
+  timeIt.R: not found
+  timeStamp.R: not found
+  umvue.ln.R: not found
+  valid.email.address.R: not found
+  vertErrorBar.R: not found
+  zzz.R: not found
+unmatched object 'find.dframeEquiv' written into Smisc/R/Smisc-package.R
+
+
+##------ Tue Aug 05 16:44:27 2014 ------##
+parsed: findDepMat.Rd
+looking for the object 'findDepMat' in:
+  findDepMat.R: line 4
+Smisc/R/findDepMat.R updated
+
+
+##------ Tue Aug 05 16:44:27 2014 ------##
+parsed: formatDT.Rd
+looking for the object 'formatDT' in:
+  formatDT.R: line 1
+Smisc/R/formatDT.R updated
+
+
+##------ Tue Aug 05 16:44:27 2014 ------##
+parsed: integ.Rd
+looking for the object 'integ' in:
+  integ.R: line 6
+Smisc/R/integ.R updated
+
+
+##------ Tue Aug 05 16:44:27 2014 ------##
+parsed: interactionPlot.Rd
+looking for the object 'interactionPlot' in:
+  interactionPlot.R: line 20
+Smisc/R/interactionPlot.R updated
+
+
+##------ Tue Aug 05 16:44:27 2014 ------##
+parsed: ip.Rd
+looking for the object 'ip' in:
+  ip.R: line 23
+Smisc/R/ip.R updated
+
+
+##------ Tue Aug 05 16:44:27 2014 ------##
+parsed: killSlurm.Rd
+looking for the object 'killSlurm' in:
+  allMissing.R: not found
+  as.numeric.silent.R: not found
+  beta-binomial.R: not found
+  comboList.R: not found
+  cumsumNA.R: not found
+  d2binom.R: not found
+  dataIn.R: not found
+  df2list.R: not found
+  dfplappy.R: not found
+  dframeEquiv.R: not found
+  dkbinom.R: not found
+  factor2character.R: not found
+  filenameManipulation.R: not found
+  findDepMat.R: not found
+  formatDT.R: not found
+  integ.R: not found
+  interactionPlot.R: not found
+  ip.R: not found
+  linearMap.R: not found
+  list2df.R: not found
+  load.object.R: not found
+  max.le.i.R: not found
+  movAvg2.R: not found
+  openDevice.R: not found
+  padZero.R: not found
+  parseJob.R: not found
+  pcbinom.R: not found
+  plapply.R: not found
+  pvar.R: not found
+  qqplotGamma.R: not found
+  rma.R: not found
+  smartFilter.R: not found
+  smartRbindMat.R: not found
+  smartTimeAxis.R: not found
+  Smisc-package.R: not found
+  sort.data.frame.R: not found
+  sourceDir.R: not found
+  timeDiff.R: not found
+  timeIntegration.R: not found
+  timeIt.R: not found
+  timeStamp.R: not found
+  umvue.ln.R: not found
+  valid.email.address.R: not found
+  vertErrorBar.R: not found
+  zzz.R: not found
+unmatched object 'killSlurm' written into Smisc/R/Smisc-package.R
+
+
+##------ Tue Aug 05 16:44:27 2014 ------##
+parsed: linearMap.Rd
+looking for the object 'linearMap' in:
+  linearMap.R: line 33
+Smisc/R/linearMap.R updated
+
+
+##------ Tue Aug 05 16:44:27 2014 ------##
+parsed: list2df.Rd
+looking for the object 'list2df' in:
+  list2df.R: line 3
+Smisc/R/list2df.R updated
+
+
+##------ Tue Aug 05 16:44:27 2014 ------##
+parsed: load.object.Rd
+looking for the object 'load.object' in:
+  load.object.R: line 1
+Smisc/R/load.object.R updated
+
+
+##------ Tue Aug 05 16:44:27 2014 ------##
+parsed: max.le.i.Rd
+looking for the object 'max.le.i' in:
+  max.le.i.R: line 4
+Smisc/R/max.le.i.R updated
+
+
+##------ Tue Aug 05 16:44:27 2014 ------##
+parsed: movAvg2.Rd
+looking for the object 'movAvg2' in:
+  movAvg2.R: line 3
+Smisc/R/movAvg2.R updated
+
+
+##------ Tue Aug 05 16:44:27 2014 ------##
+parsed: openDevice.Rd
+looking for the object 'openDevice' in:
+  openDevice.R: line 2
+Smisc/R/openDevice.R updated
+
+
+##------ Tue Aug 05 16:44:27 2014 ------##
+parsed: p2binom.Rd
+looking for the object 'Sum of two binomials' in:
+  allMissing.R: not found
+  as.numeric.silent.R: not found
+  beta-binomial.R: not found
+  comboList.R: not found
+  cumsumNA.R: not found
+  d2binom.R: not found
+  dataIn.R: not found
+  df2list.R: not found
+  dfplappy.R: not found
+  dframeEquiv.R: not found
+  dkbinom.R: not found
+  factor2character.R: not found
+  filenameManipulation.R: not found
+  findDepMat.R: not found
+  formatDT.R: not found
+  integ.R: not found
+  interactionPlot.R: not found
+  ip.R: not found
+  linearMap.R: not found
+  list2df.R: not found
+  load.object.R: not found
+  max.le.i.R: not found
+  movAvg2.R: not found
+  openDevice.R: not found
+  padZero.R: not found
+  parseJob.R: not found
+  pcbinom.R: not found
+  plapply.R: not found
+  pvar.R: not found
+  qqplotGamma.R: not found
+  rma.R: not found
+  smartFilter.R: not found
+  smartRbindMat.R: not found
+  smartTimeAxis.R: not found
+  Smisc-package.R: not found
+  sort.data.frame.R: not found
+  sourceDir.R: not found
+  timeDiff.R: not found
+  timeIntegration.R: not found
+  timeIt.R: not found
+  timeStamp.R: not found
+  umvue.ln.R: not found
+  valid.email.address.R: not found
+  vertErrorBar.R: not found
+  zzz.R: not found
+unmatched object 'Sum of two binomials' written into Smisc/R/Smisc-package.R
+
+
+##------ Tue Aug 05 16:44:27 2014 ------##
+parsed: padZero.Rd
+looking for the object 'padZero' in:
+  padZero.R: line 3
+Smisc/R/padZero.R updated
+
+
+##------ Tue Aug 05 16:44:27 2014 ------##
+parsed: parseJob.Rd
+looking for the object 'parseJob' in:
+  parseJob.R: line 58
+Smisc/R/parseJob.R updated
+
+
+##------ Tue Aug 05 16:44:27 2014 ------##
+parsed: pcbinom.Rd
+looking for the object 'pcbinom' in:
+  pcbinom.R: line 7
+Smisc/R/pcbinom.R updated
+
+
+##------ Tue Aug 05 16:44:27 2014 ------##
+parsed: piclapply.Rd
+looking for the object 'piclapply' in:
+  allMissing.R: not found
+  as.numeric.silent.R: not found
+  beta-binomial.R: not found
+  comboList.R: not found
+  cumsumNA.R: not found
+  d2binom.R: not found
+  dataIn.R: not found
+  df2list.R: not found
+  dfplappy.R: not found
+  dframeEquiv.R: not found
+  dkbinom.R: not found
+  factor2character.R: not found
+  filenameManipulation.R: not found
+  findDepMat.R: not found
+  formatDT.R: not found
+  integ.R: not found
+  interactionPlot.R: not found
+  ip.R: not found
+  linearMap.R: not found
+  list2df.R: not found
+  load.object.R: not found
+  max.le.i.R: not found
+  movAvg2.R: not found
+  openDevice.R: not found
+  padZero.R: not found
+  parseJob.R: not found
+  pcbinom.R: not found
+  plapply.R: not found
+  pvar.R: not found
+  qqplotGamma.R: not found
+  rma.R: not found
+  smartFilter.R: not found
+  smartRbindMat.R: not found
+  smartTimeAxis.R: not found
+  Smisc-package.R: not found
+  sort.data.frame.R: not found
+  sourceDir.R: not found
+  timeDiff.R: not found
+  timeIntegration.R: not found
+  timeIt.R: not found
+  timeStamp.R: not found
+  umvue.ln.R: not found
+  valid.email.address.R: not found
+  vertErrorBar.R: not found
+  zzz.R: not found
+unmatched object 'piclapply' written into Smisc/R/Smisc-package.R
+
+
+##------ Tue Aug 05 16:44:27 2014 ------##
+parsed: pkbinom.Rd
+looking for the object 'Sum of two binomials' in:
+  allMissing.R: not found
+  as.numeric.silent.R: not found
+  beta-binomial.R: not found
+  comboList.R: not found
+  cumsumNA.R: not found
+  d2binom.R: not found
+  dataIn.R: not found
+  df2list.R: not found
+  dfplappy.R: not found
+  dframeEquiv.R: not found
+  dkbinom.R: not found
+  factor2character.R: not found
+  filenameManipulation.R: not found
+  findDepMat.R: not found
+  formatDT.R: not found
+  integ.R: not found
+  interactionPlot.R: not found
+  ip.R: not found
+  linearMap.R: not found
+  list2df.R: not found
+  load.object.R: not found
+  max.le.i.R: not found
+  movAvg2.R: not found
+  openDevice.R: not found
+  padZero.R: not found
+  parseJob.R: not found
+  pcbinom.R: not found
+  plapply.R: not found
+  pvar.R: not found
+  qqplotGamma.R: not found
+  rma.R: not found
+  smartFilter.R: not found
+  smartRbindMat.R: not found
+  smartTimeAxis.R: not found
+  Smisc-package.R: not found
+  sort.data.frame.R: not found
+  sourceDir.R: not found
+  timeDiff.R: not found
+  timeIntegration.R: not found
+  timeIt.R: not found
+  timeStamp.R: not found
+  umvue.ln.R: not found
+  valid.email.address.R: not found
+  vertErrorBar.R: not found
+  zzz.R: not found
+unmatched object 'Sum of two binomials' written into Smisc/R/Smisc-package.R
+
+
+##------ Tue Aug 05 16:44:27 2014 ------##
+parsed: plapply.Rd
+looking for the object 'plapply' in:
+  plapply.R: line 4
+Smisc/R/plapply.R updated
+
+
+##------ Tue Aug 05 16:44:27 2014 ------##
+parsed: pnlStat-package.Rd
+unmatched object 'pnlStat' written into Smisc/R/Smisc-package.R
+
+
+##------ Tue Aug 05 16:44:27 2014 ------##
+parsed: PowerData.Rd
+unmatched object 'PowerData' written into Smisc/R/Smisc-package.R
+
+
+##------ Tue Aug 05 16:44:27 2014 ------##
+parsed: pvar.Rd
+looking for the object 'pvar' in:
+  pvar.R: line 3
+Smisc/R/pvar.R updated
+
+
+##------ Tue Aug 05 16:44:28 2014 ------##
+parsed: rma.Rd
+looking for the object 'rma' in:
+  rma.R: line 2
+Smisc/R/rma.R updated
+
+
+##------ Tue Aug 05 16:44:28 2014 ------##
+parsed: smartFilter.Rd
+looking for the object 'smartFilter' in:
+  smartFilter.R: line 6
+Smisc/R/smartFilter.R updated
+
+
+##------ Tue Aug 05 16:44:28 2014 ------##
+parsed: smartRbindMat.Rd
+looking for the object 'smartRbindMat' in:
+  smartRbindMat.R: line 26
+Smisc/R/smartRbindMat.R updated
+
+
+##------ Tue Aug 05 16:44:28 2014 ------##
+parsed: smartTimeAxis.Rd
+looking for the object 'smartTimeAxis' in:
+  smartTimeAxis.R: line 1
+Smisc/R/smartTimeAxis.R updated
+
+
+##------ Tue Aug 05 16:44:28 2014 ------##
+parsed: sort.data.frame.Rd
+looking for the object 'sort.data.frame' in:
+  sort.data.frame.R: line 44
+Smisc/R/sort.data.frame.R updated
+
+
+##------ Tue Aug 05 16:44:28 2014 ------##
+parsed: sourceDir.Rd
+looking for the object 'sourceDir' in:
+  sourceDir.R: line 3
+Smisc/R/sourceDir.R updated
+
+
+##------ Tue Aug 05 16:44:28 2014 ------##
+parsed: timeData.Rd
+unmatched object 'timeData' written into Smisc/R/Smisc-package.R
+
+
+##------ Tue Aug 05 16:44:28 2014 ------##
+parsed: timeDiff.eg.Rd
+unmatched object 'timeDiff.eg' written into Smisc/R/Smisc-package.R
+
+
+##------ Tue Aug 05 16:44:28 2014 ------##
+parsed: timeDiff.Rd
+looking for the object 'timeDiff' in:
+  timeDiff.R: line 4
+Smisc/R/timeDiff.R updated
+
+
+##------ Tue Aug 05 16:44:28 2014 ------##
+parsed: timeIntegration.Rd
+looking for the object 'timeIntegration' in:
+  timeIntegration.R: line 10
+Smisc/R/timeIntegration.R updated
+
+
+##------ Tue Aug 05 16:44:28 2014 ------##
+parsed: timeIt.Rd
+looking for the object 'timeIt' in:
+  timeIt.R: line 2
+Smisc/R/timeIt.R updated
+
+
+##------ Tue Aug 05 16:44:28 2014 ------##
+parsed: timeStamp.Rd
+looking for the object 'timeStamp' in:
+  timeStamp.R: line 1
+Smisc/R/timeStamp.R updated
+
+
+##------ Tue Aug 05 16:44:28 2014 ------##
+parsed: umvue.ln.Rd
+looking for the object 'umvue.ln' in:
+  umvue.ln.R: line 6
+Smisc/R/umvue.ln.R updated
+
+
+##------ Tue Aug 05 16:44:28 2014 ------##
+parsed: valid.email.address.Rd
+looking for the object 'valid.email.address' in:
+  valid.email.address.R: line 2
+Smisc/R/valid.email.address.R updated
+
+
+##------ Tue Aug 05 16:44:28 2014 ------##
+parsed: vertErrorBar.Rd
+looking for the object 'vertErrorBar' in:
+  vertErrorBar.R: line 39
+Smisc/R/vertErrorBar.R updated

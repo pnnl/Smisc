@@ -1,0 +1,70 @@
+\name{movAvg2}
+\alias{movAvg2}
+%- Also NEED an '\alias' for EACH other topic documented here.
+\title{Calculate the moving average using a 2-sided window}
+\description{
+  Wrapper for \code{smartFilter} that creates a set of symmetric weights
+  for the 2-sided
+  window based on the Gaussian kernel, exponetial decay, linear decay,
+  or simple uniform weights, and then calculates the moving average
+  using those weights.  
+}
+\usage{
+movAvg2(y = NULL, bw = 30,
+       type = c("gaussian", "exponential", "linear", "uniform"),
+       furthest.weight = 0.01, center.weight = 1, plot = FALSE, ...)
+}
+%- maybe also 'usage' for other objects documented here.
+\arguments{
+  \item{y}{The numerical vector for which the moving averages will be
+    calculated.  If \code{NULL}, the moving averages are not calculated.}
+  \item{bw}{'bandwidth', which is roughly half the width of the moving window.
+    The total width of the window is \code{2 * bw + 1}. }
+  \item{type}{Character string which uniquely indentifies the type of
+    weights to use, corresponding to the Gaussian kernel, exponential decay, linear decay, or
+    uniform weights. Defaults to 'gaussian'.}
+  \item{furthest.weight}{The unormalized value of the weights at the
+    left and right edges of the window}
+  \item{center.weight}{The unnormalized value of the weights at the
+    center of the window}
+  \item{plot}{\code{=TRUE} produces a plot which shows the weights.}
+  \item{\dots}{additional arguments to \code{\link{smartFilter}}}
+}
+\details{
+  All the weights are normalized (so that they sum to 1) prior to
+  calculating the moving average.
+  
+  Since it uses \code{\link{smartFilter}} to calculate the moving
+  average, the moving average for points near the edge of the series or
+  in the neighborhood of missing values are calculated using as much of
+  the window weights as possible.
+}
+\value{
+  If \code{y} is not \code{NULL}, returns the moving average of the series.  Also produces a plot of the
+  weights if \code{plot=TRUE}.
+}
+%\references{ ~put references to the literature/web site here ~ }
+\author{Landon Sego}
+% \note{ ~~further notes~~ 
+
+%  ~Make other sections like Warning with \section{Warning }{....} ~
+% }
+\seealso{\code{\link{smartFilter}}, \code{\link{filter}}}
+\examples{
+   x <- rnorm(25)
+   movAvg2(x, bw=10, type="e", center.weight=2)
+
+   # Note how it produces the same values as filter (except at the edge
+   # of the series
+   x <- rnorm(10)
+   movAvg2(x, bw=2, type="u")
+   filter(x, rep(1,5)/5)
+
+   # These are also the same, except at the edge.
+   movAvg2(x, bw=1, type="l", furthest.weight=0.5, center.weight=1)
+   filter(x, c(0.5, 1, 0.5)/2)
+}
+% Add one or more standard keywords, see file 'KEYWORDS' in the
+% R documentation directory.
+\keyword{misc}
+%\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
