@@ -23,7 +23,7 @@ If \code{row.names = NULL}, row names from the data frames (or names of the
 
 \item{convert.numeric}{If \code{vList} is list of vectors, \code{= TRUE}
 attempts to convert each column to numeric if possible using
-\code{\link{as.numeric.silent}}}
+\code{\link{as.numericSilent}}}
 
 \item{strings.as.factors}{If \code{vList} is a list of vectors, \code{=
 TRUE} converts character variables into factors using

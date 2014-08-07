@@ -5,17 +5,22 @@
 ##' @export
 ##'
 ##' @param x vector of any type
+##' 
 ##' @return If \code{as.numeric(x)} produces an error or warning, \code{x} is
 ##' returned unchanged.  Otherwise, \code{as.numeric(x)} is returned.
+##' 
 ##' @author Landon Sego
+##' 
 ##' @seealso \code{\link{as.numeric}}
-##' @keywords ~kwd1 ~kwd2
+##' 
+##' @keywords misc
+##' 
 ##' @examples
-##'
-##' as.numeric.silent(c("this","that"))
-##' as.numeric.silent(c("2893.9","9423.48"))
-##'
-as.numeric.silent <- function(x) {
+##' as.numericSilent(c("this","that"))
+##' as.numericSilent(c("2893.9","9423.48"))
+##' as.numericSilent(c("392.1", "that"))
+
+as.numericSilent <- function(x) {
 
   # Set warnings to errors
   op <- options(warn=2)
@@ -29,4 +34,4 @@ as.numeric.silent <- function(x) {
 
   return(x.num)
 
-} # as.numeric.silent()
+} # as.numericSilent()

@@ -12,7 +12,7 @@
 ##' list of predictor combinations will be saved.  If NULL, then no file is
 ##' saved.
 ##' @param njobs Integer indicating the number of parallel jobs to be used in
-##' calculating the combinations, using \code{\link{plapply}}
+##' calculating the combinations, using \code{\link{mclapply}}
 ##' @param verbose \code{= TRUE} indicates that a message regarding the saving
 ##' of the output file will be printed
 ##' @return A list of class \code{combolist} is invisibly returned with the two
@@ -21,7 +21,6 @@
 ##' combinations} \item{pList}{A list where each element contains an integer
 ##' representation of one combination of the predictors}
 ##' @author Landon Sego
-##' @seealso \code{\link{fitAll}}
 ##' @keywords misc
 ##' @examples
 ##'
@@ -74,8 +73,9 @@ comboList <- function(n.pred, outFile = NULL, njobs = 1, verbose = FALSE) {
   } # combn.wrapper
 
   # Now run combn in parallel
-  out <- plapply(cnt.list, combn.wrapper, needed.objects = "n.pred", jobName = "cList",
-                 check.interval.sec = 0.5, njobs = njobs)
+##   out <- plapply(cnt.list, combn.wrapper, needed.objects = "n.pred", jobName = "cList",
+##                  check.interval.sec = 0.5, njobs = njobs)
+  out <- plapply(cnt.list, combn.wrapper, mc.cores = njobs)
   out <- unlist(out, recursive = FALSE)
 
   # Final check

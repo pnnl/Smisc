@@ -159,7 +159,7 @@ timeDiff <- function(v1, v2, n.ind = 1, full = FALSE) {
                         a.v.diff = abs(as.numeric(x - v.long.t)))
 
     # Sort first by the absolute difference, then by descending difference (so that postive values come first on ties)
-    ddiff <- sort.data.frame(ddiff, ~ a.v.diff - v.diff)
+    ddiff <- sortDF(ddiff, ~ a.v.diff - v.diff)
 
     # Will select 1:n.ind of the min.indexes--but we need to make sure that n.ind is not tied with others below it
     if (any(ties <- ddiff[(n.ind+1):NROW(ddiff), "a.v.diff"] == ddiff[n.ind, "a.v.diff"])) {

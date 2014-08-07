@@ -6,7 +6,11 @@
 ##' 2013.03.12\cr Date: \tab 2013-03-12\cr License: \tab Unknown \cr }
 ##'
 ##' @name Smisc
+##' 
 ##' @docType package
+##' 
+##' @useDynLib Smisc
+##' 
 ##' @author Landon Sego
 ##'
 ##' Maintainer: Landon Sego <Landon.Sego@@pnnl.gov>

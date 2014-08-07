@@ -24,7 +24,7 @@
 ##' \code{vList} elements) if possible.
 ##' @param convert.numeric If \code{vList} is list of vectors, \code{= TRUE}
 ##' attempts to convert each column to numeric if possible using
-##' \code{\link{as.numeric.silent}}
+##' \code{\link{as.numericSilent}}
 ##' @param strings.as.factors If \code{vList} is a list of vectors, \code{=
 ##' TRUE} converts character variables into factors using
 ##' \code{\link{factor2character}}.
@@ -174,7 +174,7 @@ list2df <- function(vList, col.names = NULL, row.names = NULL, convert.numeric =
         extract.i <- unlist(lapply(vList, function(x) x[i]))
 
         if (convert.numeric)
-          extract.i <- as.numeric.silent(extract.i)
+          extract.i <- as.numericSilent(extract.i)
 
         assign(paste("V", i, sep = ""), extract.i)
       }

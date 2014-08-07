@@ -22,19 +22,23 @@
 ##' @export
 ##'
 ##' @param vec Character vector of email addresses
+##' 
 ##' @return Logical vector which is \code{TRUE} when the email address is
 ##' valid.
+##' 
 ##' @author Landon Sego
+##' 
 ##' @references Based in part on
 ##' \url{http://groups.google.com/group/eaut/web/rules-for-valid-email-addresses}
+##' 
 ##' @keywords misc
 ##' @examples
 ##'
-##'  valid.email.address(c(NA, "@@","this@@that","this@@that@@that","this@@that.com.ar",
-##'                        "@@this.com","that@@","this@@that.","this@@.that","this@@.that.com",
-##'                         "this@@that.com","this(@@that.com","this@@that .com"))
-##'
-valid.email.address <- function(vec) {
+##' validEmailAddress(c(NA, "@@","this@@that","this@@that@@that","this@@that.com.ar",
+##'                       "@@this.com","that@@","this@@that.","this@@.that","this@@.that.com",
+##'                        "this@@that.com","this(@@that.com","this@@that .com"))
+
+validEmailAddress <- function(vec) {
 
   if (!is.character(vec))
     stop("'vec' must be a character vector\n")
@@ -101,4 +105,4 @@ valid.email.address <- function(vec) {
 
   return(final)
 
-} # valid.email.address
+} # validEmailAddress

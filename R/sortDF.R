@@ -7,13 +7,11 @@
 ##'   For example, to sort the dataframe \code{Oats} with sorting variables \code{Block} and
 ##'   \code{Variety}, useage is either of the following: 
 ##' 
-##'   \code{sort.data.frame(~ Block - Variety, Oats)}  or
+##'   \code{sortDF(~ Block - Variety, Oats)}  or
 ##'   
-##'   \code{sort.data.frame(Oats, ~ - Variety + Block)}
+##'   \code{sortDF(Oats, ~ - Variety + Block)}
 ##'
 ##' @export
-##' 
-##' @usage sort.data.frame(form, dat) sort.data.frame(dat, form)
 ##' 
 ##' @param form A formula with the variable names to use for sorting
 ##' @param dat The dataframe to sort
@@ -28,18 +26,18 @@
 ##'                 x=c("A","D","A","C"),y=c(8,3,9,9),z=c(1,1,1,2))
 ##' 
 ##' # Sort by descending z, descending b
-##' sort.data.frame(~-z-b,d)
+##' sortDF(~-z-b,d)
 ##' 
 ##' # Sort by ascending x, ascending y, and ascending z
-##' sort.data.frame(~x+y+z,d)
+##' sortDF(~x+y+z,d)
 ##' 
 ##' # Sort by descending x, ascending y, ascending z
-##' sort.data.frame(~-x+y+z,d)
+##' sortDF(~-x+y+z,d)
 ##' 
 ##' # Sort by ascending x, descending y, ascending z
-##' sort.data.frame(d,~x-y+z) 
+##' sortDF(d,~x-y+z) 
 
-sort.data.frame <- function(form,dat){
+sortDF <- function(form, dat){
   
 # Author: Kevin Wright 
 # Some ideas from Andy Liaw 
@@ -51,8 +49,8 @@ sort.data.frame <- function(form,dat){
    
 
 # Useage is either of the following: 
-# sort.data.frame(~Block-Variety,Oats) 
-# sort.data.frame(Oats,~-Variety+Block) 
+# sortDF(~Block-Variety,Oats) 
+# sortDF(Oats,~-Variety+Block) 
    
 
 # If dat is the formula, then switch form and dat 
@@ -111,16 +109,16 @@ sort.data.frame <- function(form,dat){
 
   return(dat[do.call("order", calllist), ])
 
-} # sort.data.frame
+} # sortDF
 
 
 
 #d = data.frame(b=factor(c("Hi","Med","Hi","Low"),levels=c("Low","Med","Hi"), 
 #               ordered=TRUE),
 #               x=c("A","D","A","C"),y=c(8,3,9,9),z=c(1,1,1,2))
-#sort.data.frame(~-z-b,d)
-#sort.data.frame(~x+y+z,d)
+#sortDF(~-z-b,d)
+#sortDF(~x+y+z,d)
 
 
-#sort.data.frame(~-x+y+z,d) 
-#sort.data.frame(d,~x-y+z) 
+#sortDF(~-x+y+z,d) 
+#sortDF(d,~x-y+z) 

@@ -13,7 +13,7 @@ list of predictor combinations will be saved.  If NULL, then no file is
 saved.}
 
 \item{njobs}{Integer indicating the number of parallel jobs to be used in
-calculating the combinations, using \code{\link{plapply}}}
+calculating the combinations, using \code{\link{mclapply}}}
 
 \item{verbose}{\code{= TRUE} indicates that a message regarding the saving
 of the output file will be printed}
@@ -38,9 +38,6 @@ print(x)
 }
 \author{
 Landon Sego
-}
-\seealso{
-\code{\link{fitAll}}
 }
 \keyword{misc}
 
