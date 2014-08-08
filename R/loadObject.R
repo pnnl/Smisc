@@ -1,50 +1,66 @@
-##' Loads and returns the first object in an ".Rdata" file
+##' Loads and returns the object(s) in an ".Rdata" file
 ##'
-##' Loads and returns the first object in the ".Rdata" file.  This is useful
-##' for naming the object in the ".Rdata" something other than the name it was
+##' Loads and returns the object(s) in the ".Rdata" file.  This is useful
+##' for naming the object(s) in the ".Rdata" something other than the name it was
 ##' saved as.
-##'
-##' If the '.Rdata' file contains more than one object, only the first object
-##' is returned and a warning is produced.
 ##'
 ##' @export
 ##'
-##' @param Rdata.file A character string containing the '.Rdata' filename
-##' @return The first object in the '.Rdata' file.
+##' @param RdataFile A character string containing the '.Rdata' filename
+##' @return If \code{RdataFile} contains only one object, then that object is returned.
+##' However, if \code{RdataFile} contains multiple objects, a list of those objects is
+##' returned. The names of the list correspond to the names of the saved objects.
 ##' @author Landon Sego
 ##' @keywords misc
 ##' @examples
 ##'
 ##' # Make an example object
-##' x <- data.frame(a=1:10, b=rnorm(10))
+##' x <- data.frame(a = 1:10, b = rnorm(10))
 ##'
 ##' # Create a unique filename with a time stamp
 ##' # imbedded in the filename
-##' file.name <- timeStamp("demo_load_object", "Rdata")
+##' fileName <- timeStamp("demo_load_object", "Rdata")
 ##'
 ##' # Save and reload the file
-##' save(x, file=file.name)
-##' y <- loadObject(file.name)
+##' save(x, file = fileName)
+##' rm(x)
+##' y <- loadObject(fileName)
+##'
+##' # Note how 'x' is not in the global environment
+##' ls()
+##'
+##' # This is the object that was in 'fileName'
 ##' print(y)
 ##'
 ##' # Delete the saved object
-##' unlink(file.name)
+##' unlink(fileName)
 ##'
+##' # Here's an example with two objects saved in a single file
+##' a <- rnorm(10)
+##' b <- rnorm(20)
+##' save(a, b, file = fileName)
 ##'
+##' # Load the results and show them
+##' z <- loadObject(fileName)
+##' print(z)
 ##'
+##' unlink(fileName)
 
-## TODO -- make it capable of loading files with more than one object
-## Save the object to a list, with objects identified by their names in
-## the list
+loadObject <- function(RdataFile) {
 
-loadObject <- function(Rdata.file) {
+  # Load the objects into the environment of this function
+  objIn <- load(RdataFile)
 
-  obj.in <- load(Rdata.file)
+  # Create a list of the objects that were loaded
+  makeListText <- paste("list(", paste(paste(objIn, "=", objIn), collapse = ", "),
+                        ")", sep = "")
+  outList <- eval(parse(text = makeListText))
 
-  if (length(obj.in) > 1)
-    warning(deparse(substitute(Rdata.file)), " contains more than one object. ",
-            "Only object '", obj.in[1], "' will be returned.\n", sep="")
+  # If only one object was loaded, then return that object (not as a list)
+  if (length(objIn) == 1)
+    outList <- outList[[1]]
 
-  return(get(obj.in))
+  # Return the loaded objects
+  return(outList)
 
 } # end loadObject
