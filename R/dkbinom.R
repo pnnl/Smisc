@@ -16,9 +16,14 @@
 ##' probabilities are very small, i.e, the values tend to go to \code{-Inf}
 ##' more quickly.
 ##'
-##' @export
+##' @export dkbinom pkbinom
 ##'
 ##' @aliases dkbinom pkbinom
+##'
+##' @usage
+##' dkbinom(x, size, prob, log = FALSE, verbose = FALSE)
+##' pkbinom(q, size, prob, log.p = FALSE, verbose = FALSE)
+##' 
 ##' @param q Vector of quantiles (value at which to evaluate the distribution
 ##' function) of the sum of the k binomial variates
 ##' @param x Vector of values at which to evaluate the mass function of the sum

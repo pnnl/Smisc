@@ -12,9 +12,10 @@
 ##'
 ##' @aliases stripExtension getExtension stripPath getPath grabLast
 ##'
-##' @export
+##' @export stripExtension getExtension stripPath getPath grabLast
 ##'
-##' @usage stripExtension(vec, split.char = ".")
+##' @usage
+##' stripExtension(vec, split.char = ".")
 ##' getExtension(vec)
 ##' stripPath(vec)
 ##' getPath(vec)
@@ -66,14 +67,12 @@
 ##'              "bad.email@@weird.com@@", NA, "2at's@@email@@good.net"), "@@")
 ##'
 ##' # An example with 'real' files
-##' files <- dir(paste(path.package(package="pnlStat"), "SourceCode/R", sep="/"), full.names=TRUE)[1:5]
+##' files <- dir(paste(path.package(package="Smisc"), "data", sep "/"), full.names = TRUE)
 ##' print(files)
 ##' stripExtension(files)
 ##' stripPath(files)
 ##' stripExtension(stripPath(files))
 ##' stripPath(stripExtension(files))
-##'
-
 
 
 # strip off the filename extension at the end

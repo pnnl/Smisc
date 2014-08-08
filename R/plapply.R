@@ -23,7 +23,7 @@
 ##'
 ##' Each instance of R runs a script that performs the following steps:
 ##'
-##' \enumerate{ \item The \code{pnlStat} package is loaded.
+##' \enumerate{ \item The \code{Smisc} package is loaded.
 ##'
 ##' \item Any other packages indicated in the \code{packages} argument are
 ##' loaded.
@@ -97,7 +97,7 @@
 ##' @return A list equivalent to that returned by \code{lapply(X, FUN, ...)}.
 ##' @author Landon Sego
 ##' @seealso \code{\link{lapply}}, \code{\link{mclapply}},
-##' \code{\link{dfplapply}}, \code{\link{piclapply}}
+##' \code{\link{dfplapply}}
 ##' @keywords misc
 ##' @examples
 ##'

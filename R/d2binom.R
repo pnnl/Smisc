@@ -14,7 +14,12 @@
 ##'
 ##' @aliases d2binom p2binom
 ##'
-##' @export
+##' @export d2binom
+##' @export p2binom
+##'
+##' @usage
+##' d2binom(x, size1, prob1, size2, prob2, log = FALSE)
+##' p2binom(q, size1, prob1, size2, prob2, lower.tail = TRUE, log.p = FALSE)
 ##'
 ##' @param q The quantile (value at which to evaluate the distribution
 ##' function)
@@ -25,7 +30,8 @@
 ##' @param prob2 The probability of success of the second binomial R.V.
 ##' @param lower.tail logical; if \code{TRUE} (default), probabilities are P[X
 ##' <= x], otherwise, P[X > x].
-##' @param log,log.p logical; if TRUE, probabilities p are given as log(p).
+##' @param log logical; if TRUE, probabilities p are given as log(p).
+##' @param log.p logical; if TRUE, probabilities p are given as log(p).
 ##' (See NOTE in details).
 ##' @return \code{d2binom} gives the mass function, \code{p2binom} gives the
 ##' distribution function.  Returns \code{NaN} for invalid inputs of
@@ -51,7 +57,7 @@
 # Landon Sego,  2008-03-05
 
 # Mass function of Z
-d2binom <- function(x, size1, prob1, size2, prob2, log=FALSE) {
+d2binom <- function(x, size1, prob1, size2, prob2, log = FALSE) {
 
   # Verify the lengths of inputs are all 1
   for (v in c("x","size1","prob1","size2","prob2","log")) {

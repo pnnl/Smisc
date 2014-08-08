@@ -20,7 +20,10 @@
 ##'
 ##' @aliases dbb pbb qbb rbb
 ##'
-##' @export
+##' @export dbb
+##' @export pbb
+##' @export qbb
+##' @export rbb
 ##'
 ##' @usage
 ##' dbb(x, N, u, v)

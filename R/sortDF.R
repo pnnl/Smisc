@@ -12,6 +12,8 @@
 ##'   \code{sortDF(Oats, ~ - Variety + Block)}
 ##'
 ##' @export
+##' @usage sortDF(form, dat)
+##' sortDF(dat, form)
 ##' 
 ##' @param form A formula with the variable names to use for sorting
 ##' @param dat The dataframe to sort
@@ -21,21 +23,23 @@
 ##' @author Kevin Wright with ideas from Any Liaw and small edits by Landon Sego
 ##' 
 ##' @examples
-##' d <- data.frame(b=factor(c("Hi","Med","Hi","Low"),levels=c("Low","Med","Hi"), 
-##'                 ordered=TRUE),
-##'                 x=c("A","D","A","C"),y=c(8,3,9,9),z=c(1,1,1,2))
+##' d <- data.frame(b = factor(c("Hi","Med","Hi","Low"), levels = c("Low","Med","Hi"), 
+##'                            ordered = TRUE),
+##'                 x = c("A", "D", "A", "C"),
+##'                 y = c(8, 3, 9, 9),
+##'                 z = c(1, 1, 1, 2))
 ##' 
 ##' # Sort by descending z, descending b
-##' sortDF(~-z-b,d)
+##' sortDF(~ -z - b, d)
 ##' 
 ##' # Sort by ascending x, ascending y, and ascending z
-##' sortDF(~x+y+z,d)
+##' sortDF(~x + y + z, d)
 ##' 
 ##' # Sort by descending x, ascending y, ascending z
-##' sortDF(~-x+y+z,d)
+##' sortDF(~ -x + y + z, d)
 ##' 
 ##' # Sort by ascending x, descending y, ascending z
-##' sortDF(d,~x-y+z) 
+##' sortDF(d, ~x - y + z) 
 
 sortDF <- function(form, dat){
   
@@ -43,12 +47,10 @@ sortDF <- function(form, dat){
 # Some ideas from Andy Liaw 
 # http://tolstoy.newcastle.edu.au/R/help/04/07/1076.html 
 
-
 # Use + for ascending, - for decending. 
 # Sorting is left to right in the formula 
    
-
-# Useage is either of the following: 
+# Usage is either of the following: 
 # sortDF(~Block-Variety,Oats) 
 # sortDF(Oats,~-Variety+Block) 
    
