@@ -1,4 +1,13 @@
 ***********************************************************************************
+Version 0.2.0, 30 Sep 2014
+
+Added sed_insert(), sed_replace(), sed_substitute(), streamEdit() for easy sed-like
+editing of text files (or character vectors).
+
+Added more(), a function to quickly show the contents of a text file on the
+console.
+
+***********************************************************************************
 Version 0.1.1, 08 Aug 2014
 
 Modified loadObject() so that the .Rdata file can contain more than one object,
