@@ -9,12 +9,14 @@
 ##' elements (i.e. lines) in \code{stream} can be removed using the \code{sed_replace} and setting
 ##' \code{replacement} to \code{NULL}.
 ##'
-##' @aliases streamEdit, sed_insert, sed_replace, sed_substitute
+##' @aliases sed_insert sed_replace sed_substitute streamEdit
 ##'
-##' @export streamEdit, sed_insert, sed_replace, sed_substitute
+##' @export sed_insert sed_replace sed_substitute streamEdit
 ##'
+##' @rdname stream_editing
+##' 
 ##' @usage
-##' sed_insert(stream, after, insertion, silent = TRUE)
+##' sed_insert(stream, after, insertion, silent = TRUE, ...)
 ##' sed_replace(stream, at, replacement, silent = TRUE, ...)
 ##' sed_substitute(stream, pattern, replacement, silent = TRUE, ...)
 ##' streamEdit(commandList, stream = NULL, inFile = NULL, outFile = NULL, silent = TRUE)
@@ -68,7 +70,7 @@
 ##'
 ##' @param \dots For \code{sed_insert} and \code{sed_replace}, these are additional named arguments to
 ##' \code{\link{grep}}, which are applicable if \code{after} or \code{at} is a character string.
-##' For \code{sed_substitute}, these are additional named arguments to \code{\link{gsub}}.
+##' For \code{sed_substitute}, these are additional named arguments to \code{\link{grepl}} and \code{\link{gsub}}.
 ##' 
 ##' @return  Functions with the \code{sed} prefix return the edited character vector stream. \code{streamEdit}
 ##' invisibly returns the edited stream, and writes the stream to a file if \code{outFile} is supplied.
