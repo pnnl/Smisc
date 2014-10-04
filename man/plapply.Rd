@@ -5,9 +5,10 @@
 \usage{
 plapply(X, FUN, ..., packages = NULL, header.file = NULL,
   needed.objects = NULL, needed.objects.env = parent.frame(),
-  jobName = "plapply", njobs = detectCores() - 1, max.hours = 24,
-  check.interval.sec = 30, collate = FALSE, random.seed = NULL,
-  clean.up = TRUE, rout = !clean.up, verbose = FALSE)
+  jobName = "plapply", njobs = parallel::detectCores() - 1,
+  max.hours = 24, check.interval.sec = 30, collate = FALSE,
+  random.seed = NULL, clean.up = TRUE, rout = !clean.up,
+  verbose = FALSE)
 }
 \arguments{
 \item{X}{The list, each element of which will be the input to \code{FUN}}

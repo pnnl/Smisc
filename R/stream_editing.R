@@ -9,6 +9,10 @@
 ##' elements (i.e. lines) in \code{stream} can be removed using the \code{sed_replace} and setting
 ##' \code{replacement} to \code{NULL}.
 ##'
+##' If \code{inFile} and \code{outFile} are the same, a backup copy of \code{inFile} is made by attaching
+##' "~" to the end of the filename, e.g., if the original file were \file{aFile.txt}, the backup would be
+##' \file{aFile.txt~}.
+##'
 ##' @aliases sed_insert sed_replace sed_substitute streamEdit
 ##'
 ##' @export sed_insert sed_replace sed_substitute streamEdit
@@ -24,7 +28,7 @@
 ##' @param stream A character vector, each element typically (but not necessarily) containing the text
 ##' from a single line in a file. 
 ##'
-##' @param insertion A character vector that will be inserted after element \code{afterLine} into the
+##' @param insertion A character vector that will be inserted after element \code{after} into the
 ##' \code{stream}
 ##'
 ##' @param after An integer or character string that designates where \code{insertion} is added to \code{stream}.
@@ -303,7 +307,7 @@ streamEdit <- function(commandList, stream = NULL, inFile = NULL, outFile = NULL
 
   # Verify we have a list in the commandList, and that it has acceptable values
   if (!is.list(commandList))
-    stop("'commandList' must be a list.  See Details in help(streamEdit)")
+    stop("'commandList' must be a list. See help(streamEdit)")
 
   # Verify the names are valid
   if (!all(substr(tolower(names(commandList)), 1, 1) %in% c("i", "r", "s")))
@@ -333,19 +337,24 @@ streamEdit <- function(commandList, stream = NULL, inFile = NULL, outFile = NULL
 
     cmdList <- commandList[[i]]
     cmd <- commands[i]
-    
-    # Verify the commands match functions
-    if (!all(names(cmdList) %in% names(formals(cmd))))
-      stop("The arguments supplied in 'commandList' for '", cmd, "' are not correct")
 
     # Execute the commands on the stream
     outStream <- do.call(cmd, c(list(stream = outStream), cmdList))
 
   }
-  
+
   # Write the output
-  if (!is.null(outFile))
+  if (!is.null(outFile)) {
+
+    # Make a backup copy of the inFile if the outFile is the same
+    if (!is.null(inFile)) {
+      if (inFile == outFile) 
+        file.copy(inFile, paste(inFile, "~", sep = ""))
+    }
+
     writeLines(outStream, con = outFile)
+
+  }
 
   # Invisibly return the stream
   invisible(outStream)

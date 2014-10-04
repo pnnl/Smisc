@@ -4,7 +4,7 @@ Version: 0.2.0
 Date: 2014-08-08
 Author: Landon Sego and others
 Description: Sego Miscellaneous:  Collection of miscellaneous functions
-Depends:
+Imports:
     parallel
 Maintainer: Landon Sego <Landon.Sego@pnnl.gov>
 License: file LICENSE

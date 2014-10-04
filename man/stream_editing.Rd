@@ -15,7 +15,7 @@ streamEdit(commandList, stream = NULL, inFile = NULL, outFile = NULL, silent = T
 \item{stream}{A character vector, each element typically (but not necessarily) containing the text
 from a single line in a file.}
 
-\item{insertion}{A character vector that will be inserted after element \code{afterLine} into the
+\item{insertion}{A character vector that will be inserted after element \code{after} into the
 \code{stream}}
 
 \item{after}{An integer or character string that designates where \code{insertion} is added to \code{stream}.
@@ -77,6 +77,10 @@ one string with another throughout the stream.  \code{streamEdit} is a general w
 be used to execute any number of sequential insertion, replacement, or substitution steps. Note that entire
 elements (i.e. lines) in \code{stream} can be removed using the \code{sed_replace} and setting
 \code{replacement} to \code{NULL}.
+
+If \code{inFile} and \code{outFile} are the same, a backup copy of \code{inFile} is made by attaching
+"~" to the end of the filename, e.g., if the original file were \file{aFile.txt}, the backup would be
+\file{aFile.txt~}.
 }
 \examples{
 # Let's create an example stream we can edit
