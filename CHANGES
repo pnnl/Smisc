@@ -1,3 +1,12 @@
+
+
+
+***********************************************************************************
+Version 0.2.1, WAITING for R bug fix before releasing plotFun() 09 Oct 2014
+
+Added ifelse1(), a non-vectorized version of ifelse(). Also added plotFun(), for
+plotting one or more functions over a common domain.
+
 ***********************************************************************************
 Version 0.2.0, 30 Sep 2014
 
@@ -13,7 +22,6 @@ Version 0.1.1, 08 Aug 2014
 Modified loadObject() so that the .Rdata file can contain more than one object,
 in which case loadObject() returns a list.
 
-***********************************************************************************
 
 ***********************************************************************************
 Version 0.1.0, 06 Aug 2014
