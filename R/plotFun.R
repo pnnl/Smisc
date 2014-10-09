@@ -5,7 +5,7 @@
 ##' @param fun A function or a list of functions to be plotted.  These functions should take a single argument.
 ##'
 ##' @param xlim A numeric vector with two elements that define the domain over which the function(s) will be evaluated
-##' and plotted, just as in \link{\code{plot.default}} in \pkg{graphics}.
+##' and plotted, just as in \code{\link{plot.default}} in \pkg{graphics}.
 ##'
 ##' @param col A vector of colors to use in the plotting. It's length should match the length of \code{fun}. See \code{\link{par}} for
 ##' more info about the code{col} graphics parameter.
