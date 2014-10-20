@@ -1,9 +1,10 @@
 Package: Smisc
-Title: A collection of miscellaneous functions
-Version: 0.2.1
-Date: 2014-10-08
+Title: Sego Miscellaneous
+Version: 0.2.2
+Date: 2014-10-20
 Author: Landon Sego and others
-Description: Sego Miscellaneous:  Collection of miscellaneous functions
+Description: Sego Miscellaneous: A collection of functions for statistical
+    computing and data manipulation
 Imports:
     parallel
 Maintainer: Landon Sego <Landon.Sego@pnnl.gov>

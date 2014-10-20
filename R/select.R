@@ -1,12 +1,14 @@
-##' Select row or columns from data frames or matrices
+##' Select rows or columns from data frames or matrices
 ##'
-##' Select row or columns from data frames or matrices while always returning a data frame or matrix
+##' Select rows or columns from data frames or matrices while always returning a data frame or a matrix
 ##'
-##' The primary difference in this function is that if a single row or column is selected, the
-##' object that is returned will be a matrix or a dataframe--and it will not be collapsed into a
+##' The primary contribution of this function is that if a single row or column is selected, the
+##' object that is returned will be a matrix or a dataframe---and it will not be collapsed into a
 ##' single vector, as is the usual behavior in R.
 ##'
-##' @export
+##' @export select
+##' 
+##' @rdname select
 ##'
 ##' @param data A matrix or dataframe from whence data will be selected
 ##'
@@ -67,70 +69,8 @@
 ##' is.matrix(m2c)
 ##'
 ##' \dontshow{
-##' # Testing
-##' test_select <- function() {
-##'
-##'   a1 <- select(d, "a")
-##'   a2 <- select(d, c("a","d"))
-##'   a3 <- select(d, c("c","b","d"))
-##'   a4 <- select(d, c("a","d"))
-##'   a5 <- select(d, c("c"))
-##'   a6 <- select(d, c("d"))
-##'
-##'   # Now make the same calls using indexes
-##'   a1c <- select(d, 1)
-##'   a2c <- select(d, c(1, 4))
-##'   a3c <- select(d, c(3, 2, 4))
-##'   a4c <- select(d, c(1, 4))
-##'   a5c <- select(d, 3)
-##'   a6c <- select(d, 4)
-##'
-##'   # Check results
-##'   stopifnot(identical(d1, d1c),
-##'             identical(a1, a1c),
-##'             identical(a2, a2c),
-##'             identical(a3, a3c),
-##'             identical(a4, a4c),
-##'             identical(a5, a5c),
-##'             identical(a6, a6c))
-##'
-##'   # Now try rows
-##'   b1 <- select(d, c(4, 1), cols = FALSE)
-##'   b2 <- select(d, 2, cols = FALSE)
-##'   b3 <- select(d, 4, cols = FALSE)
-##'
-##'   b1c <- select(d, c("D", "A"), cols = FALSE)
-##'   b2c <- select(d, "B", cols = FALSE)
-##'   b3c <- select(d, "D", cols = FALSE)
-##'
-##'   # Check results
-##'   stopifnot(identical(a1, a1c),
-##'             identical(a2, a2c),
-##'             identical(a3, a3c))
-##'
-##'   # Checks for the matrix stuff
-##'   m3 <- select(m, c("d", "c"))
-##'   m3c <- select(m, c(4, 3))
-##'   m4 <- select(m, "b")
-##'   m4c <- select(m, 2)
-##'   m5 <- select(m, c("D", "C"), cols = FALSE)
-##'   m5c <- select(m, c(4, 3), cols = FALSE)
-##'   m6 <- select(m, "B", cols = FALSE)
-##'   m6c <- select(m, 2, cols = FALSE)
-##'
-##'   # Check results
-##'   stopifnot(identical(m3, m3c),
-##'             identical(m4, m4c),
-##'             identical(m5, m5c),
-##'             identical(m6, m6c))
-##'
-##'   return(TRUE)
-##'
-##' } # test_select
-##'
 ##' # Running checks on select()
-##' test_select()
-##'
+##' Smisc:::test_select()
 ##' }
 
 select <- function(data, selection, cols = TRUE) {
@@ -258,4 +198,93 @@ select <- function(data, selection, cols = TRUE) {
 } # select
 
 
+# A function for testing the behavior of select()
+test_select <- function() {
+
+  # Consider this data frame
+  d <- data.frame(a = 1:5, b = rnorm(5), c = letters[1:5], d = factor(6:10),
+                  row.names = LETTERS[1:5], stringsAsFactors = FALSE)
+ 
+  # We get identical behavior when selecting more than one column
+  d1 <- d[, c("d", "c")]
+  d1c <- select(d, c("d", "c"))
+  stopifnot(identical(d1, d1c))
+ 
+  # Selecting a single row from a data frame produces results identical to default R behavior
+  d2 <- d[2,]
+  d2c <- select(d, "B", cols = FALSE)
+  stopifnot(identical(d2, d2c))
+ 
+  # Now consider a matrix
+  m <- matrix(rnorm(20), nrow = 4, dimnames = list(LETTERS[1:4], letters[1:5]))
+ 
+  # Column selection with two or more or more columns is equivalent to default R behavior
+  m1 <- m[,c(4, 3)]
+  m1c <- select(m, c("d", "c"))
+  stopifnot(identical(m1, m1c))
+ 
+  # Selecting a single row returns a matrix of 1 row instead of a vector
+  m2 <- m["C",]
+  m2c <- select(m, "C", cols = FALSE)
+  stopifnot(!is.matrix(m2),
+            is.matrix(m2c))
+
+  # Test more results
+  a1 <- select(d, "a")
+  a2 <- select(d, c("a","d"))
+  a3 <- select(d, c("c","b","d"))
+  a4 <- select(d, c("a","d"))
+  a5 <- select(d, c("c"))
+  a6 <- select(d, c("d"))
+
+  # Now make the same calls using indexes
+  a1c <- select(d, 1)
+  a2c <- select(d, c(1, 4))
+  a3c <- select(d, c(3, 2, 4))
+  a4c <- select(d, c(1, 4))
+  a5c <- select(d, 3)
+  a6c <- select(d, 4)
+
+  # Check results
+  stopifnot(identical(d1, d1c),
+            identical(a1, a1c),
+            identical(a2, a2c),
+            identical(a3, a3c),
+            identical(a4, a4c),
+            identical(a5, a5c),
+            identical(a6, a6c))
+
+  # Now try rows
+  b1 <- select(d, c(4, 1), cols = FALSE)
+  b2 <- select(d, 2, cols = FALSE)
+  b3 <- select(d, 4, cols = FALSE)
+
+  b1c <- select(d, c("D", "A"), cols = FALSE)
+  b2c <- select(d, "B", cols = FALSE)
+  b3c <- select(d, "D", cols = FALSE)
+
+  # Check results
+  stopifnot(identical(a1, a1c),
+            identical(a2, a2c),
+            identical(a3, a3c))
+
+  # Checks for the matrix stuff
+  m3 <- select(m, c("d", "c"))
+  m3c <- select(m, c(4, 3))
+  m4 <- select(m, "b")
+  m4c <- select(m, 2)
+  m5 <- select(m, c("D", "C"), cols = FALSE)
+  m5c <- select(m, c(4, 3), cols = FALSE)
+  m6 <- select(m, "B", cols = FALSE)
+  m6c <- select(m, 2, cols = FALSE)
+
+  # Check results
+  stopifnot(identical(m3, m3c),
+            identical(m4, m4c),
+            identical(m5, m5c),
+            identical(m6, m6c))
+
+  return(print("All checks completed successfully"))
+
+}  # test_select
 

@@ -11,13 +11,13 @@ plotFun(fun, xlim, col = rainbow(length(fun)), lty = 1:length(fun),
 \item{fun}{A function or a list of functions to be plotted.  These functions should take a single argument.}
 
 \item{xlim}{A numeric vector with two elements that define the domain over which the function(s) will be evaluated
-and plotted, just as in \code{\link{plot.default}} in \pkg{graphics}.}
+and plotted, just as in \code{\link{plot.default}} in the \pkg{graphics} package.}
 
 \item{col}{A vector of colors to use in the plotting. It's length should match the length of \code{fun}. See \code{\link{par}} for
-more info about the code{col} graphics parameter.}
+more info about the \code{col} graphics parameter.}
 
 \item{lty}{A vector of line types to use in the plotting. It's length should match the length of \code{fun}. See \code{\link{par}} for
-more info about the code{lty} graphics parameter.}
+more info about the \code{lty} graphics parameter.}
 
 \item{type}{A single character indicating the type of plotting. This is passed to the \code{type} argument of
 \code{\link{plot.default}}.}

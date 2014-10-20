@@ -1,4 +1,10 @@
 ***********************************************************************************
+Version 0.2.2, 20 Oct 2014
+
+Added select(), a function for subsetting matrices or dataframes by rows or columns
+and returning a matrix or dataframe if only a single row or column was selected.
+
+***********************************************************************************
 Version 0.2.1, 8 Oct 2014
 
 Added ifelse1(), a non-vectorized version of ifelse(). Also added plotFun(), for
