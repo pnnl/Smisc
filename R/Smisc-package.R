@@ -6,7 +6,7 @@
 ##' Package: \tab Smisc\cr
 ##' Type: \tab Package\cr
 ##' Version: \tab 0.2.2\cr
-##' Date: \tab 2014-10-20\cr
+##' Date: \tab 2014-10-28\cr
 ##' License: \tab LICENSE\cr
 ##' }
 ##' 
