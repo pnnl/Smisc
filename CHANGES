@@ -1,4 +1,10 @@
 ***********************************************************************************
+Version 0.2.3, 27 Oct 2014
+
+Added hpd(), a utility for finding highest posterior density intervals for unimodal
+density functions.
+
+***********************************************************************************
 Version 0.2.2, 20 Oct 2014
 
 Added select(), a function for subsetting matrices or dataframes by rows or columns

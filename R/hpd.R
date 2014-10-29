@@ -21,11 +21,11 @@
 ##' If \code{NULL}, the pdf is integrated as needed to calculate probabilities
 ##' as needed.  However, when possible, it's best to provide the cdf.
 ##'
-## @param invcdf A function that takes a single argument in [0, 1] and returns the inverse of the cumulative distribution function.
-## This is required if \code{support} is not finite.
+## @param invcdf A function that takes a single argument in [0, 1] and returns the inverse of the
+## cumulative distribution function. This is required if \code{support} is not finite.
 ##'
 ##' @return A list of class \code{hpd} that contains the following elements:
-##' \begin{itemize}
+##' \describe{
 ##' \item{lower}{The lower endpoint of the highest posterior density interval}
 ##' \item{uper}{The lower endpoint of the highest posterior density interval}
 ##' \item{prob}{The acheived probability of the interval}
@@ -33,12 +33,29 @@
 ##' \item{mode}{The mode of the density}
 ##' \item{pdf}{The probability density function}
 ##' \item{support}{The support of the pdf}
-##' \end{itemize}
+##' }
 ##'
 ##' @author Landon Sego
 ##' 
 ##' @examples
-
+##' # A credible interval using the standard normal
+##' int <- hpd(dnorm, c(-5,5), prob = 0.90) 
+##' print(int)
+##' plot(int)
+##' 
+##' # The gamma density
+##' int <- hpd(function(x) dgamma(x, shape = 2, rate = 0.5), c(0, 20),
+##'            cdf = function(x) pgamma(x, shape = 2, rate = 0.5), prob = 0.8)
+##' print(int)
+##' plot(int)
+##' 
+##' # A credible interval using the Beta density
+##' dens <- function(x) dbeta(x, 7, 12)
+##' dist <- function(x) pbeta(x, 7, 12)
+##' int <- hpd(dens, c(0, 1), cdf = dist)
+##' print(int)
+##' plot(int)
+ 
 hpd <- function(pdf, support, prob = 0.95, cdf = NULL) { #, invcdf = NULL) {
 
   # Basic checks
@@ -56,10 +73,15 @@ hpd <- function(pdf, support, prob = 0.95, cdf = NULL) { #, invcdf = NULL) {
   # Verify pdf is unimodal
   xseq <- seq(support[1], support[2], length = 1000)
   fdiff <- sign(diff(pdf(xseq)))
-  ### TODO check this...
+  fdiff <- fdiff[-which(fdiff == 0)]
+  numChanges <- sum(diff(fdiff) != 0)
   
-  
-  # If the support is infinite on one or more of the bounds, find a finite values way out in the tail where the value is close to 0
+#  pvar(numChanges)
+  if ((numChanges > 1) | (fdiff[100] < 0) | (fdiff[900] > 0))
+    warning("'pdf' may not be unimodal, in which case there are no guarantees!")
+
+  # If the support is infinite on one or more of the bounds, find a finite values way out in the tail where
+  # the value is close to 0
   ## if (any(abs(support) == Inf)) {
 
   ##   if (is.null(invcdf))
@@ -97,17 +119,17 @@ hpd <- function(pdf, support, prob = 0.95, cdf = NULL) { #, invcdf = NULL) {
 
       # Get the two endpoints in the support that correspond to the cut
       objFun <- function(x) {
-        pvar(x, pdf(x), cut, sign(pdf(x) - cut))
+#        pvar(x, pdf(x), cut, sign(pdf(x) - cut))
          pdf(x) - cut
       }
       
       # To the left of the mode
       v1 <- uniroot(objFun, interval = c(support[1], peak - 1e-10), extendInt = "upX")$root
-      pvar(v1, support[1], peak)
+#      pvar(v1, support[1], peak)
 
       # To the right of the mode
       v2 <- uniroot(objFun, interval = c(peak + 1e-10, support[2]), extendInt = "downX")$root
-      pvar(v2, support[2], peak)
+#      pvar(v2, support[2], peak)
       
       # Find area under the curve
       if (is.null(cdf))
@@ -123,7 +145,7 @@ hpd <- function(pdf, support, prob = 0.95, cdf = NULL) { #, invcdf = NULL) {
   } # area
 
   # Now solve for the cut that gives the desired probability
-  cutSolution <- uniroot(function(y) {area(y)$prob - prob}, #; pvar(y, out); return(out)},
+  cutSolution <- uniroot(function(y) area(y)$prob - prob, 
                          interval = c(1e-12, pdf(peak) - 1e-10))$root
 
   # Now return the interval and the mode
@@ -138,51 +160,45 @@ hpd <- function(pdf, support, prob = 0.95, cdf = NULL) { #, invcdf = NULL) {
 # Printing and plotting methods
 ################################################################################
 
-##' @rdname hpd
 ##' @method print hpd
-##' @S3method print hpd
-
+##'
+##' @describeIn hpd Prints the lower and upper limits of the credible interval, along with the achieved
+##' probabilty of that interval.
+##' 
+##' @param  hpdObject object of class \code{hpd}, returned by \code{hpd}
+##' 
+##' @export
 print.hpd <- function(hpdObject) {
     
-  return(hpdObject[c("lower", "upper", "prob")])
+  print(hpdObject[c("lower", "upper", "prob")])
   
 } # print.hpd
 
-##' @rdname hpd
 ##' @method plot hpd
-##' @S3method plot hpd
-##' @params \dots Additional agruments that may be passed to \link{\code{plot.default}} or \link{\code{abline}}
+##' 
+##' @describeIn hpd Plots the density, overlaying the lower and upper limits of the credible interval
+##' 
+##' @param \dots Additional agruments that may be passed to \code{\link{plot.default}} or \code{\link{abline}}
+##' 
+##' @export
 
 plot.hpd <- function(hpdObject, ...) {
 
-  ## TODO create default xlab and ylab values that can be overwritten
-    
-  if ("xlim" %in% names(list(...))) 
-    plotFun(hpdObject$pdf, xlab = expression(x), ylab = expression(f(x)), ...)
-  else 
-    plotFun(hpdObject$pdf, hpdObject$support, xlab = expression(x), ylab = expression(f(x)), ...)      
+  # Set the default plotting args
+  args <- list(fun = hpdObject$pdf, xlim = hpdObject$support, xlab = expression(x), ylab = expression(f(x)))
 
+  # Supplied args
+  supArgs <- list(...)
+
+  # Add the supplied args in
+  if (length(supArgs)) 
+    args <- c(supArgs, args[setdiff(names(args), names(supArgs))])
+
+  # Make the plot
+  do.call(plotFun, args)
+  
   # Add in the lines
   abline(v = c(hpdObject$lower, hpdObject$upper), ...)
   abline(h = hpdObject$cut, col = "Gray")
   
 } # plot.hpd
-
-
-# A credible interval using the standard normal
-## int <- hpd(dnorm, c(-5,5), prob = 0.90) 
-## print(int)
-## plot(int)
-
-# The gamma density
-int <- hpd(function(x) dgamma(x, shape = 2, rate = 0.5), c(0, 20),
-           cdf = function(x) pgamma(x, shape = 2, rate = 0.5), prob = 0.8)
-print(int)
-plot(int)
-
-# A credible interval using the Beta density
-## dens <- function(x) dbeta(x, 7, 12)
-## dist <- function(x) pbeta(x, 7, 12)
-## int <- hpd(dens, c(0, 1), cdf = dist)
-## print(int)
-## plot(int)
