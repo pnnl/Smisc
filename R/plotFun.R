@@ -2,7 +2,8 @@
 ##'
 ##' @export
 ##' 
-##' @param fun A function or a list of functions to be plotted.  These functions should take a single argument.
+##' @param fun A function or a list of functions to be plotted.  These functions should take a single, vector argument and return
+##' a corresponding vector of outputs.
 ##'
 ##' @param xlim A numeric vector with two elements that define the domain over which the function(s) will be evaluated
 ##' and plotted, just as in \code{\link{plot.default}} in the \pkg{graphics} package.
@@ -25,6 +26,10 @@
 ##' @param relY A numeric value in [0, 1] designating the relative vertical (y) position of the legend in the plot.
 ##'
 ##' @param nPoints The number of points that are evaluated and plotted for each function in \code{xlim}.
+##' 
+##' TODO:  edit this--use doCallParallel instead....
+##' @param nCores The number of cores to use for parallel processing, using \code{\link{mclapply}}. \code{nCores > 1} only works
+##' for non-Windows machines.
 ##'
 ##' @param \dots Additional graphical arguments passed to \code{\link{plot.default}}, \code{\link{lines}}, and
 ##' \code{\link{legend}}.  If an argument name specified in \code{\dots} matches an argument name in any
@@ -62,7 +67,8 @@ plotFun <- function(fun, xlim,
                     legendLabels = NULL,
                     relX = 0.7,
                     relY = 0.9, 
-                    nPoints = 1000, ...) {
+                    nPoints = 1000,
+                    nCores = 1, ...) {
     
   # If fun is a single function, make it a list
   if (is.function(fun) & length(fun) == 1) 
@@ -93,7 +99,27 @@ plotFun <- function(fun, xlim,
   xvec <- seq(xlim[1], xlim[2], length = nPoints)
 
   # Calculate the y values for each function
-  yvals <- lapply(fun, function(x) do.call(x, list(xvec)))
+  if ((nCores == 1) | (.Platform$OS.type == "windows")) {
+      
+    yvals <- lapply(fun, function(x) do.call(x, list(xvec)))
+    
+  } else {
+
+    # Make sure nJobs is no larger than the number of points
+    nJobs <- min(nPoints, nCores)
+        
+    # Parse the job over xvec
+    jobIndexes <- parseJob(nPoints, njobs = nJobs)
+
+    # Compute the yvals in parallel for a single function
+    singleFun <- function(fun) {
+      unlist(parallel::mclapply(jobIndexes, function(x) do.call(fun, list(xvec[x])), mc.cores = nJobs))
+    }
+
+    # Call it over all the functions
+    yvals <- lapply(fun, singleFun)
+
+  }
 
   # Create the list with args for the plot.default command
   graphArgs <- list(...)

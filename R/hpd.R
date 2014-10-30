@@ -21,6 +21,10 @@
 ##' If \code{NULL}, the pdf is integrated as needed to calculate probabilities
 ##' as needed.  However, when possible, it's best to provide the cdf.
 ##'
+##' @param nJobs (add this arg via doCallParallel)
+##'
+##' @param checkUnimodal (add this as well)
+##' 
 ## @param invcdf A function that takes a single argument in [0, 1] and returns the inverse of the
 ## cumulative distribution function. This is required if \code{support} is not finite.
 ##'
@@ -73,7 +77,8 @@ hpd <- function(pdf, support, prob = 0.95, cdf = NULL) { #, invcdf = NULL) {
   # Verify pdf is unimodal
   xseq <- seq(support[1], support[2], length = 1000)
   fdiff <- sign(diff(pdf(xseq)))
-  fdiff <- fdiff[-which(fdiff == 0)]
+  if (any(fdiff == 0))
+    fdiff <- fdiff[-which(fdiff == 0)]
   numChanges <- sum(diff(fdiff) != 0)
   
 #  pvar(numChanges)
@@ -178,7 +183,7 @@ print.hpd <- function(hpdObject) {
 ##' 
 ##' @describeIn hpd Plots the density, overlaying the lower and upper limits of the credible interval
 ##' 
-##' @param \dots Additional agruments that may be passed to \code{\link{plot.default}} or \code{\link{abline}}
+##' @param \dots Additional agruments that may be passed to \code{\link{plotFun}}, \code{\link{plot.default}}, or \code{\link{abline}}
 ##' 
 ##' @export
 
@@ -190,7 +195,7 @@ plot.hpd <- function(hpdObject, ...) {
   # Supplied args
   supArgs <- list(...)
 
-  # Add the supplied args in
+  # Add the supplied args, ommiting duplicates in the default args
   if (length(supArgs)) 
     args <- c(supArgs, args[setdiff(names(args), names(supArgs))])
 

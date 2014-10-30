@@ -1,8 +1,10 @@
+
 ***********************************************************************************
-Version 0.2.3, 27 Oct 2014
+Version 0.2.3, 29 Oct 2014
 
 Added hpd(), a utility for finding highest posterior density intervals for unimodal
-density functions.
+density functions.  Added the 'nCores' argument to plotFun() for parallel 
+processing.
 
 ***********************************************************************************
 Version 0.2.2, 20 Oct 2014

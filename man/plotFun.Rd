@@ -5,10 +5,11 @@
 \usage{
 plotFun(fun, xlim, col = rainbow(length(fun)), lty = 1:length(fun),
   type = "l", legendLabels = NULL, relX = 0.7, relY = 0.9,
-  nPoints = 1000, ...)
+  nPoints = 1000, nCores = 1, ...)
 }
 \arguments{
-\item{fun}{A function or a list of functions to be plotted.  These functions should take a single argument.}
+\item{fun}{A function or a list of functions to be plotted.  These functions should take a single, vector argument and return
+a corresponding vector of outputs.}
 
 \item{xlim}{A numeric vector with two elements that define the domain over which the function(s) will be evaluated
 and plotted, just as in \code{\link{plot.default}} in the \pkg{graphics} package.}
@@ -31,6 +32,9 @@ from the \pkg{graphics} package.}
 \item{relY}{A numeric value in [0, 1] designating the relative vertical (y) position of the legend in the plot.}
 
 \item{nPoints}{The number of points that are evaluated and plotted for each function in \code{xlim}.}
+
+\item{nCores}{The number of cores to use for parallel processing, using \code{\link{mclapply}}. \code{nCores > 1} only works
+for non-Windows machines.}
 
 \item{\dots}{Additional graphical arguments passed to \code{\link{plot.default}}, \code{\link{lines}}, and
 \code{\link{legend}}.  If an argument name specified in \code{\dots} matches an argument name in any
