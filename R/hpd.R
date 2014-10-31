@@ -215,17 +215,20 @@ print.hpd <- function(hpdObject) {
 ##' 
 ##' @describeIn hpd Plots the density, overlaying the lower and upper limits of the credible interval
 ##' 
-##' @param \dots Additional agruments that may be passed to \code{\link{plotFun}}, \code{\link{plot.default}}, or \code{\link{abline}}
+##' @param \dots Additional agruments that may be passed to \code{\link{plotFun}}, \code{\link{plot.default}},
+##' or \code{\link{abline}}
 ##' 
 ##' @export
 
 plot.hpd <- function(hpdObject, ...) {
 
   # Set the default plotting args
-  args <- list(fun = hpdObject$pdf, xlim = hpdObject$support, xlab = expression(x), ylab = expression(f(x)))
+  args <- list(fun = hpdObject$pdf, xlim = hpdObject$support,
+               xlab = expression(x), ylab = expression(f(x)), col = "Red")
   
   # Default value for ablineArgs
-  ablineArgs <- list()
+  ablineArgs1 <- list()
+  ablineArgs2 <- list(lty = 3)
   
   # Supplied args
   supArgs <- list(...)
@@ -237,7 +240,11 @@ plot.hpd <- function(hpdObject, ...) {
     args <- c(supArgs, args[setdiff(names(args), names(supArgs))])
 
     # Select only graphical args before passing to abline()
-    ablineArgs <- supArgs[names(supArgs) %in% names(par())]
+    ablineArgs1 <- supArgs[names(supArgs) %in% names(par())]
+
+    # Select only graphical args before passing to abline(), but retain control
+    # of lty
+    ablineArgs2 <- c(list(lty = 3), supArgs[names(supArgs) %in% setdiff(names(par()), "lty")])
     
   }
 
@@ -245,7 +252,7 @@ plot.hpd <- function(hpdObject, ...) {
   do.call(plotFun, args)
 
   # Add in the lines
-  do.call(abline, c(list(v = c(hpdObject$lower, hpdObject$upper)), ablineArgs))
-  abline(h = hpdObject$cut, col = "Gray")
+  do.call(abline, c(list(v = c(hpdObject$lower, hpdObject$upper)), ablineArgs1))
+  do.call(abline, c(list(h = hpdObject$cut), ablineArgs2))
   
 } # plot.hpd

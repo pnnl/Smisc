@@ -36,7 +36,8 @@ the function at 1000 points in the \code{support} interval.  This is done in par
 
 \item{hpdObject}{object of class \code{hpd}, returned by \code{hpd}}
 
-\item{\dots}{Additional agruments that may be passed to \code{\link{plotFun}}, \code{\link{plot.default}}, or \code{\link{abline}}}
+\item{\dots}{Additional agruments that may be passed to \code{\link{plotFun}}, \code{\link{plot.default}},
+or \code{\link{abline}}}
 }
 \value{
 A list of class \code{hpd} that contains the following elements:
