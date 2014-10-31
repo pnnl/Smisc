@@ -2,18 +2,24 @@
 ##'
 ##' Call a function with a vectorized input in parallel
 ##'
-##' This function is designed for the case where \code{fun} is computationally intensive.  Each element of \code{x} is evaluated
-##' independently of the other elements of \code{x}.  Thus, we require that \code{fun(c(x1,x2))} be equivalent
-##' to \code{c(fun(x1), fun(x2))}.
+##' This function is a parallelized wrapper for \code{\link{do.call}} designed for the case where \code{fun} is
+##' computationally intensive.  Each element of \code{x} is evaluated
+##' independently of the other elements of \code{x}.  Thus, \code{fun(c(x1,x2))} must be equivalent
+##' to \code{c(fun(x1), fun(x2))} in order for \code{doCallParallel} to work properly.
 ##'
 ##' @export
 ##' 
-##' @param fun A function that whose first argument is a vector and returns a corresponding vector
+##' @param fun A function, or a text string with the name of the function, whose first argument is a vector and
+##' returns a corresponding vector
 ##' 
 ##' @param x A vector of values that is the first argument to the function
 ##' 
 ##' @param nJobs The number of parallel jobs to spawn using \code{\link{mclapply}}. Note that \code{nJobs > 1} only works
-##' for non-Windows machines
+##' for non-Windows machines.
+##'
+##' @param random.seed If a numeric value is provided, \code{x} is randomized to better distribute the work among the jobs if some
+##' values of \code{x} take longer to evaluate than others.
+##' The original ordering is restored before \code{fun(x, ...)} is returned. If \code{NULL}, no randomization is performed.  
 ##' 
 ##' @param \dots Additional named arguments for \code{fun}
 ##'
@@ -24,22 +30,26 @@
 ##' x <- rnorm(18, mean = 2, sd = 2)
 ##' 
 ##' # 2 cores
-##' y1 <- doCallParallel(pnorm, x, mean = 2, sd = 2, nJobs = 2)
+##' y1 <- doCallParallel("pnorm", x, mean = 2, sd = 2, nJobs = 2)
+##'
+##' # 2 cores and randomization
+##' y2 <- doCallParallel(pnorm, x, mean = 2, sd = 2, nJobs = 2, random.seed = 1)
 ##' 
 ##' # 1 core
-##' y2 <- doCallParallel(pnorm, x, mean = 2, sd = 2, nJobs = 1)
+##' y3 <- doCallParallel(pnorm, x, mean = 2, sd = 2, nJobs = 1)
 ##' 
 ##' # Without using doCallParallel()
-##' y3 <- pnorm(x, mean = 2, sd = 2)
+##' y4 <- pnorm(x, mean = 2, sd = 2)
 ##' 
 ##' # Comparisons
 ##' identical(y1, y2)
 ##' identical(y1, y3)
+##' identical(y1, y4)
 
-doCallParallel <- function(fun, x, nJobs = parallel::detectCores(), ...) {
+doCallParallel <- function(fun, x, nJobs = parallel::detectCores(), random.seed = NULL, ...) {
 
   # Argument checks
-  stopifnot(is.function(fun),
+  stopifnot(if (is.character(fun)) is.function(get(fun)) else is.function(fun),
             is.vector(x),
             is.numeric(nJobs),
             length(nJobs) == 1)
@@ -55,11 +65,19 @@ doCallParallel <- function(fun, x, nJobs = parallel::detectCores(), ...) {
   # To parallelize 
   } else {
 
-    return(unlist(parallel::mclapply(parseJob(length(x), njobs = nJobs),
+    # Create the job ordering
+    xparse <- parseJob(length(x), njobs = nJobs, random.seed = random.seed)
+      
+    out <- unlist(parallel::mclapply(xparse,
                                      function(subset) do.call(fun, list(x[subset], ...)),
-                                     mc.cores = nJobs)))
+                                     mc.cores = nJobs))
+
+    # Reorder if needed
+    if (is.null(random.seed))
+      return(out)
+    else
+      return(out[order(unlist(xparse))])
+  
   }
   
 } # doCallParallel
-
-

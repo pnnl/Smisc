@@ -5,7 +5,8 @@
 \alias{print.hpd}
 \title{Calculate the highest posterior density credible interval for a unimodal density}
 \usage{
-hpd(pdf, support, prob = 0.95, cdf = NULL)
+hpd(pdf, support, prob = 0.95, cdf = NULL, nJobs = 1,
+  checkUnimodal = TRUE)
 
 \method{print}{hpd}(hpdObject)
 
@@ -27,15 +28,21 @@ interval.}
 If \code{NULL}, the pdf is integrated as needed to calculate probabilities
 as needed.  However, when possible, it's best to provide the cdf.}
 
+\item{nJobs}{The number of parallel jobs to spawn using \code{\link{mclapply}}. Note that \code{nJobs > 1} only works
+for non-Windows machines.}
+
+\item{checkUnimodal}{A logical indicating whether the function will be checked for unimodal behavior.  This involves evaluating
+the function at 1000 points in the \code{support} interval.  This is done in parallel if \code{nJobs > 1}.}
+
 \item{hpdObject}{object of class \code{hpd}, returned by \code{hpd}}
 
-\item{\dots}{Additional agruments that may be passed to \code{\link{plot.default}} or \code{\link{abline}}}
+\item{\dots}{Additional agruments that may be passed to \code{\link{plotFun}}, \code{\link{plot.default}}, or \code{\link{abline}}}
 }
 \value{
 A list of class \code{hpd} that contains the following elements:
 \describe{
 \item{lower}{The lower endpoint of the highest posterior density interval}
-\item{uper}{The lower endpoint of the highest posterior density interval}
+\item{upper}{The lower endpoint of the highest posterior density interval}
 \item{prob}{The acheived probability of the interval}
 \item{cut}{The horizontal cut point that gave rise to the interval}
 \item{mode}{The mode of the density}
@@ -46,6 +53,10 @@ A list of class \code{hpd} that contains the following elements:
 \description{
 Calculate the highest posterior density credible interval for a unimodal density
 }
+\details{
+Parallel processing (via \code{nJobs > 1}) may be advantageous if 1) \code{pdf} is a function that is computationally expensive, 2)
+the \code{cdf} is not provided, in which case \code{pdf} is integrated, and/or 3) when \code{checkUnimodal = TRUE}.
+}
 \section{Methods (by generic)}{
 \itemize{
 \item \code{print}: Prints the lower and upper limits of the credible interval, along with the achieved
@@ -55,7 +66,7 @@ probabilty of that interval.
 }}
 \examples{
 # A credible interval using the standard normal
-int <- hpd(dnorm, c(-5,5), prob = 0.90)
+int <- hpd(dnorm, c(-5,5), prob = 0.90, nJobs = 3)
 print(int)
 plot(int)
 

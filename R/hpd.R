@@ -2,6 +2,9 @@
 ##'
 ##' Calculate the highest posterior density credible interval for a unimodal density
 ##'
+##' Parallel processing (via \code{nJobs > 1}) may be advantageous if 1) \code{pdf} is a function that is computationally expensive, 2)
+##' the \code{cdf} is not provided, in which case \code{pdf} is integrated, and/or 3) when \code{checkUnimodal = TRUE}.
+##' 
 ##' @export
 ##'
 ##' @rdname hpd
@@ -21,17 +24,19 @@
 ##' If \code{NULL}, the pdf is integrated as needed to calculate probabilities
 ##' as needed.  However, when possible, it's best to provide the cdf.
 ##'
-##' @param nJobs (add this arg via doCallParallel)
-##'
-##' @param checkUnimodal (add this as well)
+##' @param nJobs The number of parallel jobs to spawn using \code{\link{mclapply}}. Note that \code{nJobs > 1} only works
+##' for non-Windows machines.
 ##' 
-## @param invcdf A function that takes a single argument in [0, 1] and returns the inverse of the
+##' @param checkUnimodal A logical indicating whether the function will be checked for unimodal behavior.  This involves evaluating
+##' the function at 1000 points in the \code{support} interval.  This is done in parallel if \code{nJobs > 1}.
+##'
+##@param invcdf A function that takes a single argument in [0, 1] and returns the inverse of the
 ## cumulative distribution function. This is required if \code{support} is not finite.
 ##'
 ##' @return A list of class \code{hpd} that contains the following elements:
 ##' \describe{
 ##' \item{lower}{The lower endpoint of the highest posterior density interval}
-##' \item{uper}{The lower endpoint of the highest posterior density interval}
+##' \item{upper}{The lower endpoint of the highest posterior density interval}
 ##' \item{prob}{The acheived probability of the interval}
 ##' \item{cut}{The horizontal cut point that gave rise to the interval}
 ##' \item{mode}{The mode of the density}
@@ -43,7 +48,7 @@
 ##' 
 ##' @examples
 ##' # A credible interval using the standard normal
-##' int <- hpd(dnorm, c(-5,5), prob = 0.90) 
+##' int <- hpd(dnorm, c(-5,5), prob = 0.90, nJobs = 3) 
 ##' print(int)
 ##' plot(int)
 ##' 
@@ -60,7 +65,7 @@
 ##' print(int)
 ##' plot(int)
  
-hpd <- function(pdf, support, prob = 0.95, cdf = NULL) { #, invcdf = NULL) {
+hpd <- function(pdf, support, prob = 0.95, cdf = NULL, nJobs = 1, checkUnimodal = TRUE) { #, invcdf = NULL) {
 
   # Basic checks
   stopifnot(is.function(pdf),
@@ -72,18 +77,35 @@ hpd <- function(pdf, support, prob = 0.95, cdf = NULL) { #, invcdf = NULL) {
             is.numeric(prob),
             length(prob) == 1,
             prob > 0,
-            prob <= 1)
+            prob <= 1,
+            is.numeric(nJobs),
+            length(nJobs) == 1,
+            nJobs >= 1,
+            is.logical(checkUnimodal))
 
   # Verify pdf is unimodal
-  xseq <- seq(support[1], support[2], length = 1000)
-  fdiff <- sign(diff(pdf(xseq)))
-  if (any(fdiff == 0))
-    fdiff <- fdiff[-which(fdiff == 0)]
-  numChanges <- sum(diff(fdiff) != 0)
-  
-#  pvar(numChanges)
-  if ((numChanges > 1) | (fdiff[100] < 0) | (fdiff[900] > 0))
-    warning("'pdf' may not be unimodal, in which case there are no guarantees!")
+  if (checkUnimodal) {
+
+    # Define a sequence over which to check the function
+    xseq <- seq(support[1], support[2], length = 1000)
+
+    # Evaluate the function across xseq
+    yseq <- doCallParallel(pdf, xseq, nJobs = nJobs, random.seed = rpois(1, 1000))
+
+    # Look for changes in sign in the local derivative
+    fdiff <- sign(diff(yseq))
+
+    # Remove flat spots
+    if (any(fdiff == 0))
+      fdiff <- fdiff[-which(fdiff == 0)]
+
+    # Count the number of changes in the sign of the derivative
+    numChanges <- sum(diff(fdiff) != 0)
+    
+    if ((numChanges > 1) | (fdiff[100] < 0) | (fdiff[900] > 0))
+      warning("'pdf' may not be unimodal, in which case there are no guarantees!")
+
+  }
 
   # If the support is infinite on one or more of the bounds, find a finite values way out in the tail where
   # the value is close to 0
@@ -113,7 +135,12 @@ hpd <- function(pdf, support, prob = 0.95, cdf = NULL) { #, invcdf = NULL) {
 
     pdfInterval <- function(lower, upper) {
 
-      return(integrate(pdf, lower = max(lower, support[1]), upper = min(upper, support[2]))$value)
+      # Do the calls in parallel
+      pdfParallel <- function(x) {
+        doCallParallel(pdf, x, nJobs = nJobs, random.seed = rpois(1, 1000))
+      }
+        
+      return(integrate(pdfParallel, lower = max(lower, support[1]), upper = min(upper, support[2]))$value)
         
     } # pdfInterval
 
@@ -129,11 +156,11 @@ hpd <- function(pdf, support, prob = 0.95, cdf = NULL) { #, invcdf = NULL) {
       }
       
       # To the left of the mode
-      v1 <- uniroot(objFun, interval = c(support[1], peak - 1e-10), extendInt = "upX")$root
+      v1 <- uniroot(objFun, interval = c(support[1], peak), extendInt = "upX")$root
 #      pvar(v1, support[1], peak)
 
       # To the right of the mode
-      v2 <- uniroot(objFun, interval = c(peak + 1e-10, support[2]), extendInt = "downX")$root
+      v2 <- uniroot(objFun, interval = c(peak, support[2]), extendInt = "downX")$root
 #      pvar(v2, support[2], peak)
       
       # Find area under the curve
@@ -149,9 +176,14 @@ hpd <- function(pdf, support, prob = 0.95, cdf = NULL) { #, invcdf = NULL) {
                   
   } # area
 
+  # Find the larger of the endpoints as a starting place for the cuts
+  loCut <- max(pdf(c(support[1], support[2])))
+
+  # Find the higest cut we'll want to consider
+  hiCut <- pdf(peak) - 1e-10
+  
   # Now solve for the cut that gives the desired probability
-  cutSolution <- uniroot(function(y) area(y)$prob - prob, 
-                         interval = c(1e-12, pdf(peak) - 1e-10))$root
+  cutSolution <- uniroot(function(y) area(y)$prob - prob, interval = c(loCut, hiCut))$root
 
   # Now return the interval and the mode
   out <- c(area(cutSolution), list(cut = cutSolution, mode = peak, pdf = pdf, support = support))
@@ -191,19 +223,29 @@ plot.hpd <- function(hpdObject, ...) {
 
   # Set the default plotting args
   args <- list(fun = hpdObject$pdf, xlim = hpdObject$support, xlab = expression(x), ylab = expression(f(x)))
-
+  
+  # Default value for ablineArgs
+  ablineArgs <- list()
+  
   # Supplied args
   supArgs <- list(...)
 
   # Add the supplied args, ommiting duplicates in the default args
-  if (length(supArgs)) 
+  if (length(supArgs))  {
+
+    # Args for plotFun
     args <- c(supArgs, args[setdiff(names(args), names(supArgs))])
+
+    # Select only graphical args before passing to abline()
+    ablineArgs <- supArgs[names(supArgs) %in% names(par())]
+    
+  }
 
   # Make the plot
   do.call(plotFun, args)
-  
+
   # Add in the lines
-  abline(v = c(hpdObject$lower, hpdObject$upper), ...)
+  do.call(abline, c(list(v = c(hpdObject$lower, hpdObject$upper)), ablineArgs))
   abline(h = hpdObject$cut, col = "Gray")
   
 } # plot.hpd

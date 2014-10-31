@@ -5,10 +5,10 @@
 \usage{
 plotFun(fun, xlim, col = rainbow(length(fun)), lty = 1:length(fun),
   type = "l", legendLabels = NULL, relX = 0.7, relY = 0.9,
-  nPoints = 1000, nCores = 1, ...)
+  nPoints = 1000, nJobs = 1, ...)
 }
 \arguments{
-\item{fun}{A function or a list of functions to be plotted.  These functions should take a single, vector argument and return
+\item{fun}{A function or a list of functions to be plotted.  These functions should take a single, numeric vector argument and return
 a corresponding vector of outputs.}
 
 \item{xlim}{A numeric vector with two elements that define the domain over which the function(s) will be evaluated
@@ -33,7 +33,7 @@ from the \pkg{graphics} package.}
 
 \item{nPoints}{The number of points that are evaluated and plotted for each function in \code{xlim}.}
 
-\item{nCores}{The number of cores to use for parallel processing, using \code{\link{mclapply}}. \code{nCores > 1} only works
+\item{nJobs}{The number of parallel jobs to spawn using \code{\link{mclapply}}. Note that \code{nJobs > 1} only works
 for non-Windows machines.}
 
 \item{\dots}{Additional graphical arguments passed to \code{\link{plot.default}}, \code{\link{lines}}, and
@@ -55,15 +55,15 @@ plotFun(f, c(-2, 3), col = "Black", lty = 2, las = 1)
 
 # A handful of beta density functions, note how they take a single argument
 fList <- list(function(x) dbeta(x, 10, 10),
-             function(y) dbeta(y, 3, 3),
-             function(z) dbeta(z, 0.5, 0.50))
+              function(y) dbeta(y, 3, 3),
+              function(z) dbeta(z, 0.5, 0.50))
 
 # Plot them all on the same plot
 plotFun(fList, c(0.0001, 0.9999), ylim = c(0, 3.5),
-       col = c("Red", "Black", "Blue"), lty = rep(1, 3),
-       xlab = "x", ylab = expression(f(x)),
-       legendLabels = c("a = 10, b = 10", "a = 3, b = 3", "a = 0.5, b = 0.5"),
-       relX = 0.6, relY = 1, lwd = 3, main = "Gamma Densities")
+        col = c("Red", "Black", "Blue"), lty = rep(1, 3),
+        xlab = "x", ylab = expression(f(x)),
+        legendLabels = c("a = 10, b = 10", "a = 3, b = 3", "a = 0.5, b = 0.5"),
+        relX = 0.6, relY = 1, lwd = 3, main = "Gamma Densities")
 }
 \author{
 Landon Sego
