@@ -56,8 +56,8 @@ In code{streamEdit}, one (and only one) of \code{inFile} or \code{stream} must b
 written to using \code{\link{writeLines}}.}
 
 \item{silent}{A logical that, when \code{TRUE}, instructs the \code{sed} functions to simply return the
-\code{stream} if the \code{pattern} is not matched in the \code{stream}.  If \code{silent = FALSE}, a warning
-is issued when a match for \code{pattern} is not found in the \code{stream}.}
+\code{stream} if the \code{pattern} is not matched in the \code{stream}.  If \code{silent = FALSE}, a message
+is printed when a match for \code{pattern} is not found in the \code{stream}.}
 
 \item{\dots}{For \code{sed_insert} and \code{sed_replace}, these are additional named arguments to
 \code{\link{grep}}, which are applicable if \code{after} or \code{at} is a character string.
@@ -81,6 +81,11 @@ elements (i.e. lines) in \code{stream} can be removed using the \code{sed_replac
 If \code{inFile} and \code{outFile} are the same, a backup copy of \code{inFile} is made by attaching
 "~" to the end of the filename, e.g., if the original file were \file{aFile.txt}, the backup would be
 \file{aFile.txt~}.
+
+The value of \code{silent} in \code{streamEdit} is passed to the worker functions (\code{sed_insert},
+\code{sed_replace}, and \code{sed_substitute}) unless the \code{silent} argument is specified for a
+command in \code{commandList}, in which case, for that particular command, the locally supplied value
+of \code{silent} takes precedence.
 }
 \examples{
 # Let's create an example stream we can edit
@@ -136,10 +141,10 @@ stream1 <- streamEdit(list(i = list(after = 3, insertion = "Here's the first ins
                           i = list(after = "insert another",
                                    insertion = c("Here's the second insertion",
                                                  "Another line of the second insertion")),
-                          r = list(at = 1:2, replacement = NULL),
+                          r = list(at = 1:2, replacement = NULL, silent = FALSE),
                           r = list(at = "A line we'll delete", replacement = NULL),
                           r = list(at = "entirely", replacement = "A replacement for the line"),
-                          s = list(pattern = " 'this'", replacement = ""),
+                          s = list(pattern = " 'this'", replacement = "", silent = FALSE),
                           s = list(pattern = "substitution", replacement = "correction")),
                      inFile = "tmpTest_streamEdit.txt")
 

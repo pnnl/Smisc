@@ -13,6 +13,11 @@
 ##' "~" to the end of the filename, e.g., if the original file were \file{aFile.txt}, the backup would be
 ##' \file{aFile.txt~}.
 ##'
+##' The value of \code{silent} in \code{streamEdit} is passed to the worker functions (\code{sed_insert},
+##' \code{sed_replace}, and \code{sed_substitute}) unless the \code{silent} argument is specified for a
+##' command in \code{commandList}, in which case, for that particular command, the locally supplied value
+##' of \code{silent} takes precedence.
+##'
 ##' @aliases sed_insert sed_replace sed_substitute streamEdit
 ##'
 ##' @export sed_insert sed_replace sed_substitute streamEdit
@@ -69,8 +74,8 @@
 ##' written to using \code{\link{writeLines}}.
 ##'
 ##' @param silent A logical that, when \code{TRUE}, instructs the \code{sed} functions to simply return the
-##' \code{stream} if the \code{pattern} is not matched in the \code{stream}.  If \code{silent = FALSE}, a warning
-##' is issued when a match for \code{pattern} is not found in the \code{stream}.
+##' \code{stream} if the \code{pattern} is not matched in the \code{stream}.  If \code{silent = FALSE}, a message
+##' is printed when a match for \code{pattern} is not found in the \code{stream}.
 ##'
 ##' @param \dots For \code{sed_insert} and \code{sed_replace}, these are additional named arguments to
 ##' \code{\link{grep}}, which are applicable if \code{after} or \code{at} is a character string.
@@ -139,10 +144,10 @@
 ##'                           i = list(after = "insert another",
 ##'                                    insertion = c("Here's the second insertion",
 ##'                                                  "Another line of the second insertion")),
-##'                           r = list(at = 1:2, replacement = NULL),
+##'                           r = list(at = 1:2, replacement = NULL, silent = FALSE),
 ##'                           r = list(at = "A line we'll delete", replacement = NULL),
 ##'                           r = list(at = "entirely", replacement = "A replacement for the line"),
-##'                           s = list(pattern = " 'this'", replacement = ""),
+##'                           s = list(pattern = " 'this'", replacement = "", silent = FALSE),
 ##'                           s = list(pattern = "substitution", replacement = "correction")),
 ##'                      inFile = "tmpTest_streamEdit.txt")
 ##'
@@ -178,7 +183,7 @@ sed_insert <- function(stream, after, insertion, silent = TRUE, ...) {
     if (!length(after)) {
 
       if (!silent) 
-        warning("The pattern '", pattern, "' was not found in 'stream'")
+        cat("The pattern '", pattern, "' was not found in 'stream'\n", sep = "")
       
       return(stream)
 
@@ -234,7 +239,7 @@ sed_replace <- function(stream, at, replacement, silent = TRUE, ...) {
     if (!length(at)) {
 
       if (!silent) 
-        warning("The pattern '", pattern, "' was not found in 'stream'")
+        cat("The pattern '", pattern, "' was not found in 'stream'\n", sep = "")
       
       return(stream)
 
@@ -287,7 +292,7 @@ sed_substitute <- function(stream, pattern, replacement, silent = TRUE, ...) {
   if (!any(grepl(pattern, stream, ...))) {
       
     if (!silent) 
-      warning("The pattern '", pattern, "' was not found in 'stream'")
+      cat("The pattern '", pattern, "' was not found in 'stream'\n", sep = "")
       
     return(stream)
 
@@ -299,7 +304,7 @@ sed_substitute <- function(stream, pattern, replacement, silent = TRUE, ...) {
 
 
 # Convenient wrapper for the sed functions
-streamEdit <- function(commandList, stream = NULL, inFile = NULL, outFile = NULL) {
+streamEdit <- function(commandList, stream = NULL, inFile = NULL, outFile = NULL, silent = TRUE) {
 
   # One or the other of 'stream' and 'inFile' must be specified
   if (sum(is.null(stream), is.null(inFile)) != 1)
@@ -338,6 +343,11 @@ streamEdit <- function(commandList, stream = NULL, inFile = NULL, outFile = NULL
     cmdList <- commandList[[i]]
     cmd <- commands[i]
 
+    # If a value for silent is provided in the command list, leave it alone.  Otherwise,
+    # set it to the overall value of silent when streamEdit() was called
+    if (!("silent" %in% names(cmdList)))
+      cmdList <- c(cmdList, list(silent = silent))
+
     # Execute the commands on the stream
     outStream <- do.call(cmd, c(list(stream = outStream), cmdList))
 
@@ -354,7 +364,7 @@ streamEdit <- function(commandList, stream = NULL, inFile = NULL, outFile = NULL
 
     writeLines(outStream, con = outFile)
 
-  }
+  } 
 
   # Invisibly return the stream
   invisible(outStream)
