@@ -1,3 +1,8 @@
+***********************************************************************************
+Version 0.2.4, 12 Nov 2014
+
+pvar() gets a new argument, 'sep'.  Removed ifelse1(), as it duplicates native code
+(e.g., if (cond) val1 else val2) that is almost as easy to type.
 
 ***********************************************************************************
 Version 0.2.3, 30 Oct 2014

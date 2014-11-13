@@ -3,18 +3,21 @@
 \alias{pvar}
 \title{Prints the name and value of one or more objects}
 \usage{
-pvar(..., digits = NULL, abbrev = NULL, verbose = TRUE)
+pvar(..., digits = NULL, abbrev = NULL, sep = ";", verbose = TRUE)
 }
 \arguments{
 \item{\dots}{Objects whose names and values are to be printed, separated by
 commas. Can also be a simple list.}
 
 \item{digits}{Number of digits to display for numeric objects.  Defaults to
-\code{NULL}, which corresponds to no restriction on the number of digits}
+\code{NULL}, which corresponds to no restriction on the number of digits.  This
+is passed to the \code{digits} argument of \code{\link{round}}.}
 
 \item{abbrev}{Number of characters to display for character objects.
 Defaults to \code{NULL}, which corresonds to no restriction on the number
 of characters.}
+
+\item{sep}{Character string that separates the objects that are printed}
 
 \item{verbose}{\code{=TRUE} writes the value of the object(s) to the
 session window}
@@ -42,6 +45,7 @@ pvar(x,y,z)
 pvar(x,y,z, digits=2)
 pvar(x,y,z, abbrev=4)
 pvar(x,y,z, digits=2, abbrev=4)
+pvar(x,y,z, sep = ",")
 
 # values can be vectors too
 x <- 10:12

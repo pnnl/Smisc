@@ -13,10 +13,12 @@
 ##' @param \dots Objects whose names and values are to be printed, separated by
 ##' commas. Can also be a simple list.
 ##' @param digits Number of digits to display for numeric objects.  Defaults to
-##' \code{NULL}, which corresponds to no restriction on the number of digits
+##' \code{NULL}, which corresponds to no restriction on the number of digits.  This
+##' is passed to the \code{digits} argument of \code{\link{round}}.
 ##' @param abbrev Number of characters to display for character objects.
 ##' Defaults to \code{NULL}, which corresonds to no restriction on the number
 ##' of characters.
+##' @param sep Character string that separates the objects that are printed
 ##' @param verbose \code{=TRUE} writes the value of the object(s) to the
 ##' session window
 ##' @return Invisibly returns a character string containing the names of the
@@ -33,6 +35,7 @@
 ##' pvar(x,y,z, digits=2)
 ##' pvar(x,y,z, abbrev=4)
 ##' pvar(x,y,z, digits=2, abbrev=4)
+##' pvar(x,y,z, sep = ",")
 ##'
 ##' # values can be vectors too
 ##' x <- 10:12
@@ -53,8 +56,23 @@
 ##' }
 ##'
 ##'
-pvar <- function(..., digits = NULL, abbrev = NULL, verbose = TRUE) {
+pvar <- function(..., digits = NULL, abbrev = NULL, sep = ";", verbose = TRUE) {
 
+  # Basic checks on arguments
+  if (!is.null(digits))
+    stopifnot(is.numeric(digits),
+              length(digits) == 1)
+  
+  if (!is.null(abbrev))
+    stopifnot(is.numeric(abbrev),
+              length(abbrev) == 1)
+  
+  stopifnot(is.character(sep),
+            length(sep) == 1,
+            is.logical(verbose),
+            length(verbose) == 1)
+              
+    
   # Grab the objects into a list
   vars <- list(...)
   vnames <- as.character(substitute(list(...)))[-1]
@@ -96,7 +114,7 @@ pvar <- function(..., digits = NULL, abbrev = NULL, verbose = TRUE) {
 
   # Collapse the text into a single string
   out <- paste(paste(vnames, lapply(vars, paste, collapse=", "),
-                     sep = " = "), collapse = "; ")
+                     sep = " = "), collapse = paste(sep, " ", sep = ""))
 
   if (verbose)
     cat(out, "\n")
