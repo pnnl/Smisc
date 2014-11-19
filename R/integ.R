@@ -59,7 +59,7 @@ integ <- function(y, x = NULL, a = NULL, b = NULL, method = c("simpson", "trapez
   if (method == "simpson") {
 
     if (!is.null(x))
-      warning("'x' is not use in Simpson's method")
+      warning("'x' is not used in Simpson's method")
 
     if (is.null(a) | is.null(b))
       stop("Both endpoints 'a' and 'b' are required for Simpson's method")
@@ -72,7 +72,7 @@ integ <- function(y, x = NULL, a = NULL, b = NULL, method = c("simpson", "trapez
     if (a > b)
       stop("a must be less than or equal to b.\n")
 
-    if ((length(y)+1)%%2)
+    if ((length(y) + 1) %% 2)
       stop("length(y) must be odd.\n")
 
     if (length(y) < 3)
@@ -104,13 +104,13 @@ integ <- function(y, x = NULL, a = NULL, b = NULL, method = c("simpson", "trapez
     #  }
 
     # We can generate the weights without the loop
-    wts <- ifelse((1:length(y))%%2, 2, 4)
+    wts <- ifelse((1:length(y)) %% 2, 2, 4)
 
     # The first and the last weights are 1
     wts[1] <- wts[length(wts)] <- 1
 
     # Return the approximation of the integral
-    return(as.vector( ((b-a)/(3*n)) * (t(y) %*% wts) ))
+    return(as.vector( ((b - a) / (3 * n)) * (t(y) %*% wts) ))
 
   } # Simpson's method
 
