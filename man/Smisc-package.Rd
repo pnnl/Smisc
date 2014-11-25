@@ -11,8 +11,8 @@ Sego Miscellaneous:  A collection of functions for statistical computing and dat
 \tabular{ll}{
 Package: \tab Smisc\cr
 Type: \tab Package\cr
-Version: \tab 0.2.4\cr
-Date: \tab 2014-11-12\cr
+Version: \tab 0.2.5\cr
+Date: \tab 2014-11-25\cr
 License: \tab LICENSE\cr
 }
 }
