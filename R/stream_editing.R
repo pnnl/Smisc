@@ -202,7 +202,7 @@
 ##'
 ##'aStream <- c("Here's a line to comment",
 ##'             "# A line to uncomment",
-##'             "  <--! Another commented line --> ",
+##'             "  <!-- Another commented line --> ",
 ##'             "And some comments * embedded in the line ;")
 ##'
 ##'# Comment the first line in C style
@@ -429,7 +429,7 @@ sed_comment <- function(stream, at, add = TRUE,
                            "R" = "#",
                            "C" = "//",
                            "Java" = "//",
-                           "html" = "<--!",
+                           "html" = "<!--",
                            "tex" = "%",
                            "SAS" = "*")
   
