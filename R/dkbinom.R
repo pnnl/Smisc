@@ -22,7 +22,7 @@
 ##'
 ##' @usage
 ##' dkbinom(x, size, prob, log = FALSE, verbose = FALSE)
-##' pkbinom(q, size, prob, log.p = FALSE, verbose = FALSE)
+##' pkbinom(q, size, prob, log.p = FALSE, verbose = FALSE, method = c("butler", "naive"))
 ##' 
 ##' @param q Vector of quantiles (value at which to evaluate the distribution
 ##' function) of the sum of the k binomial variates
@@ -36,6 +36,11 @@
 ##' the convolutions and 3 arrays, A, B, and C that are used to convolve and
 ##' reconvolve the distributions.  Array C is the final result.  See the source
 ##' code in \code{dkbinom.c} for more details.
+##' @param method The \code{butler} method (the default) is the algorithm given by Butler, et al.
+##' The \code{naive} method is an alternative approach that can be much slower that can handle no
+##' more the sum of five binomials, but
+##' is useful for validating the \code{butler} method.  The \code{naive} method only works
+##' for a single value of \code{q}.
 ##' @return \code{dkbinom} gives the mass function, \code{pkbinom} gives the
 ##' distribution function.  Produces errors for invalid inputs of \code{size},
 ##' \code{prob}, \code{x}, and \code{q}.
@@ -87,7 +92,7 @@ dkbinom <- function(x, size, prob, log = FALSE, verbose = FALSE) {
 } # dkbinom
 
 
-pkbinom <- function(q, size, prob, log.p = FALSE, verbose = FALSE) {
+pkbinom <- function(q, size, prob, log.p = FALSE, verbose = FALSE, method = c("butler", "naive")) {
 
   x <- check.kbinom(q, size, prob)
 
@@ -96,22 +101,46 @@ pkbinom <- function(q, size, prob, log.p = FALSE, verbose = FALSE) {
   if (all(diff(prob) == 0) | (length(prob) == 1))
     return(pbinom(x, sum(size), prob[1], log.p = log.p))
 
-  res <- .C("dkbinom",
-            as.integer(max(x)),
-            as.integer(size),
-            as.double(prob),
-            as.integer(length(size)),
-            as.integer(FALSE),
-            as.integer(verbose),
-            double(max(x)+1),
-            double(max(x)+1),
-            out = double(max(x)+1),
-            double(1))[["out"]]
+  method <- match.arg(method)
 
-  res <- cumsum(res)[x+1]
+  if ((method == "butler") | (length(size) > 5)) {
+  
+    res <- .C("dkbinom",
+              as.integer(max(x)),
+              as.integer(size),
+              as.double(prob),
+              as.integer(length(size)),
+              as.integer(FALSE),
+              as.integer(verbose),
+              double(max(x)+1),
+              double(max(x)+1),
+              out = double(max(x)+1),
+              double(1))[["out"]]
+  
+    res <- cumsum(res)[x+1]
+
+  }
+  else {
+
+   if (length(x) > 1) {
+    x <- x[1]
+    warning("The 'naive' method is only implemented for a single value of 'q'\n",
+            "Only the first value of q[1] = ", q[1], " has been used.")
+   }
+       
+      
+   res <- .C("pkbinom",
+             as.integer(c(rep(0, 5 - length(size)), size)),
+             as.double(c(rep(1, 5 - length(prob)), prob)),
+             as.integer(x),
+             out = double(1))[["out"]]
+             
+  }
+  
 
   if (log.p)
     res <- log(res)
+  
 
   return(res)
 

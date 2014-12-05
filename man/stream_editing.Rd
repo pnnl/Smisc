@@ -198,7 +198,7 @@ unlink("tmpTest_streamEdit.txt")
 
 aStream <- c("Here's a line to comment",
             "# A line to uncomment",
-            "  <--! Another commented line --> ",
+            "  <!-- Another commented line --> ",
             "And some comments * embedded in the line ;")
 
 # Comment the first line in C style

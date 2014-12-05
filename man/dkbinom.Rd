@@ -5,7 +5,7 @@
 \title{Probability functions for the sum of k independent binomials}
 \usage{
 dkbinom(x, size, prob, log = FALSE, verbose = FALSE)
-pkbinom(q, size, prob, log.p = FALSE, verbose = FALSE)
+pkbinom(q, size, prob, log.p = FALSE, verbose = FALSE, method = c("butler", "naive"))
 }
 \arguments{
 \item{q}{Vector of quantiles (value at which to evaluate the distribution
@@ -25,6 +25,12 @@ of the k binomial variates}
 the convolutions and 3 arrays, A, B, and C that are used to convolve and
 reconvolve the distributions.  Array C is the final result.  See the source
 code in \code{dkbinom.c} for more details.}
+
+\item{method}{The \code{butler} method (the default) is the algorithm given by Butler, et al.
+The \code{naive} method is an alternative approach that can be much slower that can handle no
+more the sum of five binomials, but
+is useful for validating the \code{butler} method.  The \code{naive} method only works
+for a single value of \code{q}.}
 }
 \value{
 \code{dkbinom} gives the mass function, \code{pkbinom} gives the

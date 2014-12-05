@@ -12,7 +12,7 @@ Sego Miscellaneous:  A collection of functions for statistical computing and dat
 Package: \tab Smisc\cr
 Type: \tab Package\cr
 Version: \tab 0.2.5\cr
-Date: \tab 2014-11-25\cr
+Date: \tab 2014-12-04\cr
 License: \tab LICENSE\cr
 }
 }
