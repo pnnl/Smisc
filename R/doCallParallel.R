@@ -1,6 +1,6 @@
 ##' Call a function with a vectorized input in parallel
 ##'
-##' Call a function with a vectorized input in parallel
+##' Call a function with a vectorized input in parallel, where the function is computationally intensive.
 ##'
 ##' This function is a parallelized wrapper for \code{\link{do.call}} designed for the case where \code{fun} is
 ##' computationally intensive.  Each element of \code{x} is evaluated
