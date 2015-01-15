@@ -17,13 +17,17 @@
 ##' @param nJobs The number of parallel jobs to spawn using \code{\link{mclapply}}. Note that \code{nJobs > 1} only works
 ##' for non-Windows machines.
 ##'
-##' @param random.seed If a numeric value is provided, \code{x} is randomized to better distribute the work among the jobs if some
+##' @param random.seed If a numeric value is provided, \code{x} is randomized to better distribute the work among
+##' the jobs if some
 ##' values of \code{x} take longer to evaluate than others.
-##' The original ordering is restored before \code{fun(x, ...)} is returned. If \code{NULL}, no randomization is performed.  
+##' The original ordering is restored before \code{fun(x, ...)} is returned. If \code{NULL},
+##' no randomization is performed.  
 ##' 
 ##' @param \dots Additional named arguments for \code{fun}
 ##'
 ##' @return The same result that would be had by calling \code{fun(x, ...)}, except calculated in parallel
+##'
+##' @author Landon Sego
 ##'
 ##' @examples 
 ##' # Get a vector of x's
