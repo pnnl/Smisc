@@ -1,4 +1,9 @@
 ***********************************************************************************
+Version 0.2.6, xx xxx xxxx
+
+* Added a new function, hardCode(), for printing code to create a particular vector
+
+***********************************************************************************
 Version 0.2.5, 25 Nov 2014
 
 * Stream editing gets a new function, sed_comment(), to facilitate commenting and
@@ -7,25 +12,25 @@ Version 0.2.5, 25 Nov 2014
 ***********************************************************************************
 Version 0.2.4, 12 Nov 2014
 
-* pvar() gets a new argument, 'sep'.  
+* pvar() gets a new argument, 'sep'.
 
-* Removed ifelse1(), as it duplicates native code (e.g., if (cond) val1 else val2) 
+* Removed ifelse1(), as it duplicates native code (e.g., if (cond) val1 else val2)
   that is almost as easy to type.
 
 ***********************************************************************************
 Version 0.2.3, 30 Oct 2014
 
-* Added hpd(), a utility for finding highest posterior density intervals for 
-  unimodal density functions.  
+* Added hpd(), a utility for finding highest posterior density intervals for
+  unimodal density functions.
 
-* Added the 'nJobs' argument to plotFun() for parallel processing.  Added 
+* Added the 'nJobs' argument to plotFun() for parallel processing.  Added
   doCallParallel(), a wrapper for parallelizing function calls over vector inputs.
 
 ***********************************************************************************
 Version 0.2.2, 20 Oct 2014
 
-* Added select(), a function for subsetting matrices or dataframes by rows or 
-  columns and returning a matrix or dataframe if only a single row or column was 
+* Added select(), a function for subsetting matrices or dataframes by rows or
+  columns and returning a matrix or dataframe if only a single row or column was
   selected.
 
 ***********************************************************************************
@@ -37,7 +42,7 @@ Version 0.2.1, 8 Oct 2014
 ***********************************************************************************
 Version 0.2.0, 30 Sep 2014
 
-* Added sed_insert(), sed_replace(), sed_substitute(), streamEdit() for easy 
+* Added sed_insert(), sed_replace(), sed_substitute(), streamEdit() for easy
   sed-like editing of text files (or character vectors).
 
 * Added more(), a function to quickly show the contents of a text file on the
