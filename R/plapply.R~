@@ -373,7 +373,7 @@ plapply <- function(X, FUN, ...,
     save(list = needed.objects, X.i, FUN.p, FUN.argnames, optional.args, file = list.input.i)
 
     # Write the .R file that will be launched
-    cat("require(Smisc)\n",
+    cat("require(sMisc)\n",
 
         # Load packages
         pk.text,
