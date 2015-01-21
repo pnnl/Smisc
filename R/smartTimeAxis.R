@@ -91,6 +91,9 @@ smartTimeAxis <- function(time.vec, nticks=15, time.format="hh:mm", side=1) {
   adiff <- abs(possible.n.ticks - nticks)
   ideal.spacing <- possible.spacings[which(adiff == min(adiff))]
 
+  # Grab the first one in case there are multiple matches
+  ideal.spacing <- ideal.spacing[1]
+
   # Identify the ideal starting point
 
   # Nearest 1 second

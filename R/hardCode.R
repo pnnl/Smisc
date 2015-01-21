@@ -15,7 +15,7 @@
 ##'
 ##' @author Landon Sego
 ##'
-##' @value Prints code (via \code{\link{cat}}) that will create the vector.  This code can then be copied into other
+##' @return Prints code (via \code{\link{cat}}) that will create the vector.  This code can then be copied into other
 ##' source code.  Returns nothing.
 ##'
 ##' @examples
