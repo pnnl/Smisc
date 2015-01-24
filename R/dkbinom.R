@@ -60,8 +60,7 @@
 ##' 
 ##' @author Landon Sego and Alex Venzin
 ##' 
-##' @seealso \code{\link{dbinom}}, \code{\link{pbinom}}, \code{\link{d2binom}},
-##' \code{\link{p2binom}}
+##' @seealso \code{\link{dbinom}}, \code{\link{pbinom}}
 ##' 
 ##' @references The Butler method is based on the exact algorithm discussed by
 ##' Butler, Ken and Stephens, Michael. (1993) The Distribution of a Sum of

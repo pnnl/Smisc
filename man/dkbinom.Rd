@@ -91,8 +91,7 @@ Binomial Random Variables. Technical Report No. 467, Department of
 Statistics, Stanford University.
 }
 \seealso{
-\code{\link{dbinom}}, \code{\link{pbinom}}, \code{\link{d2binom}},
-\code{\link{p2binom}}
+\code{\link{dbinom}}, \code{\link{pbinom}}
 }
 \keyword{misc}
 
