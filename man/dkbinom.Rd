@@ -4,8 +4,8 @@
 \alias{pkbinom}
 \title{Probability functions for the sum of k independent binomials}
 \usage{
-dkbinom(x, size, prob, log = FALSE, verbose = FALSE)
-pkbinom(q, size, prob, log.p = FALSE, verbose = FALSE, method = c("butler", "naive"))
+dkbinom(x, size, prob, log = FALSE, verbose = FALSE, method = c("butler", "fft"), checkArgs = TRUE)
+pkbinom(q, size, prob, log.p = FALSE, verbose = FALSE, method = c("butler", "naive", "fft"))
 }
 \arguments{
 \item{x}{Vector of values at which to evaluate the mass function of the sum
@@ -23,14 +23,18 @@ the convolutions and 3 arrays, A, B, and C that are used to convolve and
 reconvolve the distributions.  Array C is the final result.  See the source
 code in \code{dkbinom.c} for more details.}
 
+\item{method}{The \code{butler} (default) method is the
+algorithm given by Butler, et al. The \code{naive} method is an alternative approach
+that can be  much slower that can handle no more the sum of five binomials, but
+is useful for validating the other methods. The \code{naive} method only works
+for a single value of \code{q}. The \code{fft} method (default) uses the fast Fourier
+transform to compuation of the convolution of k binomial random variates.}
+
+\item{checkArgs}{\code{=TRUE} checks the incoming arguments \code{x}, \code{size},
+\code{prob} for correct structure and consistency.}
+
 \item{q}{Vector of quantiles (value at which to evaluate the distribution
 function) of the sum of the k binomial variates}
-
-\item{method}{The \code{butler} method (the default) is the algorithm given by Butler, et al.
-The \code{naive} method is an alternative approach that can be much slower that can handle no
-more the sum of five binomials, but
-is useful for validating the \code{butler} method.  The \code{naive} method only works
-for a single value of \code{q}.}
 }
 \value{
 \code{dkbinom} gives the mass function, \code{pkbinom} gives the
@@ -56,18 +60,32 @@ probabilities are very small, i.e, the values tend to go to \code{-Inf}
 more quickly.
 }
 \examples{
-dkbinom(8, c(10, 17), c(0.3, 0.1))
- # Compare with p2binom
- d2binom(8, 10, 0.3, 17, 0.1)
+# A sum of 3 binomials...
+dkbinom(c(0, 4, 7), c(3, 4, 2), c(0.3, 0.5, 0.8))
+dkbinom(c(0, 4, 7), c(3, 4, 2), c(0.3, 0.5, 0.8), method = "b")
+pkbinom(c(0, 4, 7), c(3, 4, 2), c(0.3, 0.5, 0.8))
+pkbinom(c(0, 4, 7), c(3, 4, 2), c(0.3, 0.5, 0.8), method = "b")
 
- dkbinom(c(0, 7), c(3, 4, 2), c(0.3, 0.5, 0.8))
- pkbinom(c(0, 7), c(3, 4, 2), c(0.3, 0.5, 0.8), verbose = TRUE)
+# Compare the output of the 3 methods
+pkbinom(4, c(3, 4, 2), c(0.3, 0.5, 0.8), method = "fft")
+pkbinom(4, c(3, 4, 2), c(0.3, 0.5, 0.8), method = "butler")
+pkbinom(4, c(3, 4, 2), c(0.3, 0.5, 0.8), method = "naive")
+
+# Some inputs
+n <- c(30000, 40000, 20000)
+p <- c(0.02, 0.01, 0.005)
+
+# Compare timings
+x1 <- timeIt(pkbinom(1100, n, p, method = "butler"))
+x2 <- timeIt(pkbinom(1100, n, p, method = "naive"))
+x3 <- timeIt(pkbinom(1100, n, p, method = "fft"))
+pvar(x1, x1 - x2, x2 - x3, x1 - x3, digits = 12)
 }
 \author{
-Landon Sego
+Landon Sego and Alex Venzin
 }
 \references{
-Based on the exact algorithm discussed by
+The Butler method is based on the exact algorithm discussed by
 Butler, Ken and Stephens, Michael. (1993) The Distribution of a Sum of
 Binomial Random Variables. Technical Report No. 467, Department of
 Statistics, Stanford University.

@@ -1,4 +1,4 @@
-##' Quickly row or column bind many objects together at once
+##' Quickly row and column bind many objects together at once
 ##'
 ##' A wrapper for \code{\link{rbind}} and \code{\link{cbind}} to quickly bind
 ##' numerous objects together at once using a single call to \code{\link{rbind}} or
