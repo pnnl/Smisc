@@ -39,7 +39,7 @@ qbind <- function(objects, type = c("r", "c")) {
 
   # Verify objects exist
   for (o in objects) {
-    if (!exists(o)) {
+    if (!exists(o, envir = parent.frame())) {
       stop("Object '", o, "' does not exist")
     }
   }
@@ -50,8 +50,8 @@ qbind <- function(objects, type = c("r", "c")) {
                         paste(objects, collapse = ", "),
                         ")",
                         sep = "")
-  
+
   # Execute the binding
-  return(eval(parse(text = stringToEval)))
+  return(eval(parse(text = stringToEval), envir = parent.frame()))
 
 } # qbind
