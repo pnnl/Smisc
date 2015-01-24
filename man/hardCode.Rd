@@ -6,7 +6,7 @@
 hardCode(x, vname = "x", vert = TRUE, ...)
 }
 \arguments{
-\item{x}{A vector}
+\item{x}{A vector (numeric, character, or logical)}
 
 \item{vname}{A string indicating the name of the vector that will be "created" in the code}
 
@@ -16,13 +16,14 @@ hardCode(x, vname = "x", vert = TRUE, ...)
 \item{...}{Additional arguments to \code{\link{cat}}}
 }
 \value{
-Prints code (via \code{\link{cat}}) that will create the vector.  This code can then be copied into other
-source code.  Returns nothing.
+Prints code (via \code{\link{cat}}) that will create the vector.  This code
+can then be copied into other source code.  Returns nothing.
 }
 \description{
-Hard coding isn't the best practice, but sometimes it's useful, especially in on-off scripts for analyses.  This
-function facilitate hard coding constants into R by printing the code from a vector that
-would be needed to create that vector.
+Hard coding isn't the best practice, but sometimes it's useful, especially in
+on-off scripts for analyses.  This
+function facilitate hard coding constants into R by printing the code from a
+vector that would be needed to create that vector.
 }
 \examples{
 # With characters
@@ -37,7 +38,7 @@ hardCode(3:5, vert = FALSE, vname = "num")
 
 # With logicals
 hardCode(TRUE)
-hardCode(TRUE, vert = FALSE)
+hardCode(c(F, T), vert = FALSE)
 hardCode(c(TRUE, FALSE, TRUE), vname = "newLogical")
 }
 \author{

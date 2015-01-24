@@ -1,7 +1,8 @@
 ***********************************************************************************
-Version 0.2.6, xx xxx xxxx
+Version 0.2.6, 24 Jan 2014
 
-* Added a new function, hardCode(), for printing code to create a particular vector
+* New function: hardCode(), for printing code to create a particular vector
+* New function: qbind(), for quickly row or column binding numerous objects
 
 ***********************************************************************************
 Version 0.2.5, 25 Nov 2014

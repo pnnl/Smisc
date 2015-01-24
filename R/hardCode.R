@@ -1,10 +1,13 @@
 ##' Facilitate hard coding constants into R
 ##'
-##' Hard coding isn't the best practice, but sometimes it's useful, especially in on-off scripts for analyses.  This
-##' function facilitate hard coding constants into R by printing the code from a vector that
-##' would be needed to create that vector.
+##' Hard coding isn't the best practice, but sometimes it's useful, especially in
+##' on-off scripts for analyses.  This
+##' function facilitate hard coding constants into R by printing the code from a
+##' vector that would be needed to create that vector.
 ##'
-##' @param x A vector
+##' @export
+##' 
+##' @param x A vector (numeric, character, or logical)
 ##'
 ##' @param vname A string indicating the name of the vector that will be "created" in the code
 ##'
@@ -15,8 +18,8 @@
 ##'
 ##' @author Landon Sego
 ##'
-##' @return Prints code (via \code{\link{cat}}) that will create the vector.  This code can then be copied into other
-##' source code.  Returns nothing.
+##' @return Prints code (via \code{\link{cat}}) that will create the vector.  This code
+##' can then be copied into other source code.  Returns nothing.
 ##'
 ##' @examples
 ##'# With characters
@@ -31,8 +34,9 @@
 ##'
 ##'# With logicals
 ##'hardCode(TRUE)
-##'hardCode(TRUE, vert = FALSE)
+##'hardCode(c(F, T), vert = FALSE)
 ##'hardCode(c(TRUE, FALSE, TRUE), vname = "newLogical")
+
 
 hardCode <- function(x, vname = "x", vert = TRUE, ...) {
 
@@ -53,9 +57,11 @@ hardCode <- function(x, vname = "x", vert = TRUE, ...) {
 
   # Construct the ending portion of the string
   if (length(x) == 1) {
-    endString <- ")\n"
+    beginString <- ""
+    endString <- "\n"
   }
   else {
+    beginString <- "c("
     endString <- paste(",", vs[1],
                        paste(paste(vs[2], qu, x[-1], sep = ""),
                              collapse = paste(qu, ",", vs[3], sep = "")),
@@ -63,9 +69,6 @@ hardCode <- function(x, vname = "x", vert = TRUE, ...) {
   }
 
   # Write the final result
-  cat(vname, " <- c(", qu, x[1], qu,
-      endString, sep = "", ...)
+  cat(vname, " <- ", beginString, qu, x[1], qu, endString, sep = "", ...)
 
 } # hardCode
-
-
