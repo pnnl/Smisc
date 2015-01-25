@@ -3,16 +3,17 @@
 ##' A wrapper for \code{\link{rbind}} and \code{\link{cbind}} to quickly bind
 ##' numerous objects together at once using a single call to \code{\link{rbind}} or
 ##'  \code{\link{cbind}}. This function is most helpful when there are
-##' many objects to bind.
+##' many objects to bind and the object names are easily represented in text.
 ##'
 ##' @export
 ##' 
 ##' @param objects A character vector with the names of the objects to be bound together
 ##'
-##' @param type A single character, "r" for \code{\link{rbind}} or "c" for
-##' \code{\link{cbind}}.  Default to "r".
+##' @param type The type of binding, "row" for \code{\link{rbind}} or "col" for
+##' \code{\link{cbind}}, and "c" for concatenating using \code{\link{c}}.  Defaults to
+##' "row".
 ##'
-##' @return The binded object
+##' @return The bound (binded?) object
 ##'
 ##' @author Landon Sego
 ##'
@@ -29,9 +30,15 @@
 ##' b2 <- matrix(10:18, nrow = 3, dimnames = list(4:6, letters[4:6]))
 ##' b3 <- matrix(19:27, nrow = 3, dimnames = list(7:9, letters[7:9]))
 ##'
-##' qbind(paste("b", 1:3, sep = ""), type = "c")
+##' qbind(paste("b", 1:3, sep = ""), type = "col")
+##'
+##' # Concatenating a vector
+##' a1 <- c(x = 1, y = 2)
+##' a2 <- c(z = 3, w = 4)
+##'
+##' qbind(c("a1", "a2"), type = "c")
 
-qbind <- function(objects, type = c("r", "c")) {
+qbind <- function(objects, type = c("row", "col", "c")) {
 
   # Check arguments
   type <- match.arg(type)
@@ -45,8 +52,11 @@ qbind <- function(objects, type = c("r", "c")) {
   }
 
   # String with the command for binding
-  stringToEval <- paste(if (type == "r") "r" else "c",
-                        "bind(",
+  stringToEval <- paste(switch(type,
+                               "row" = "rbind",
+                               "col" = "cbind",
+                               "c" = "c"),
+                        "(",
                         paste(objects, collapse = ", "),
                         ")",
                         sep = "")
