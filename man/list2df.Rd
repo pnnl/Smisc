@@ -7,9 +7,7 @@ list2df(vList, col.names = NULL, row.names = NULL, convert.numeric = TRUE,
   strings.as.factors = FALSE)
 }
 \arguments{
-\item{vList}{List of vectors or data frames, each vector having the same
-length, \code{n}, or each data frame having the same number of columns,
-\code{n}.}
+\item{vList}{List of vectors, data frames, or lists. See Details.}
 
 \item{col.names}{Optional character vector of length \code{n} with column
 names that will be given to the output data frame.  If \code{col.names =
@@ -41,6 +39,14 @@ Convert a list of vectors (or data frames) with same numbered lengths (or
 number of columns) into a data frame.
 }
 \details{
+If the elements of \code{vList} are vectors, each vector must have the same
+length, \code{n}, and the resulting data frame will have \code{n} columns.
+If the elements of \code{vList} are data frames, each data frame must have the
+same structure (though they may have differing numbers of rows).
+If the elements of \code{vList} are lists, each list is first converted to a data frame
+via \code{\link{as.data.frame}} and the resulting data frames must have the
+same structure (though they may have differing numbers of rows)..
+
 It is permissible for \code{vList} to contain \code{NULL} elements.
 \code{list2df} performs numerous consistency checks to ensure that contents
 of \code{vList} which are combined into the resulting data frame are
@@ -48,22 +54,30 @@ conformable, labeled consistently, of the equivalent class when necessary,
 etc.
 }
 \examples{
-# For a list of data frames
-z <- list(d1 = data.frame(a = 1:10, b = letters[1:10]),
-          d2 = data.frame(a = 11:15, b = letters[11:15]))
-list2df(z)
-
 # For a list of vectors
 x <- c("r1c1 1", "r2c1 2", "r3c1 3", "r4c4 4")
 y <- strsplit(x, "\\ ")
+y
 list2df(y)
 list2df(y, col.names=LETTERS[1:2])
 
-z <- list(NULL, a = c(top = 10, bottom = 12), NULL, b = c(top = 15, bottom = 17))
+# Here's another list of vectors
+z <- list(NULL, a = c(first = 10, second = 12), NULL, b = c(first = 15, second = 17))
+z
+list2df(z)
+
+# For a list of data frames
+z <- list(d1 = data.frame(a = 1:4, b = letters[1:4]),
+          d2 = data.frame(a = 5:6, b = letters[5:6]))
+z
+list2df(z)
+
+# A list of lists
+z <- list(list(a = 10, b = TRUE, c = "hi"), list(a = 12, b = FALSE, c = c("there", "bye")))
+z
 list2df(z)
 }
 \author{
 Landon Sego
 }
-\keyword{misc}
 

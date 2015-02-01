@@ -36,7 +36,7 @@ b3 <- matrix(19:27, nrow = 3, dimnames = list(7:9, letters[7:9]))
 
 qbind(paste("b", 1:3, sep = ""), type = "col")
 
-# Concatenating
+# Concatenating a vector
 a1 <- c(x = 1, y = 2)
 a2 <- c(z = 3, w = 4)
 

@@ -3,6 +3,14 @@
 ##' Convert a list of vectors (or data frames) with same numbered lengths (or
 ##' number of columns) into a data frame.
 ##'
+##' If the elements of \code{vList} are vectors, each vector must have the same
+##' length, \code{n}, and the resulting data frame will have \code{n} columns.
+##' If the elements of \code{vList} are data frames, each data frame must have the
+##' same structure (though they may have differing numbers of rows).
+##' If the elements of \code{vList} are lists, each list is first converted to a data frame
+##' via \code{\link{as.data.frame}} and the resulting data frames must have the
+##' same structure (though they may have differing numbers of rows)..
+##' 
 ##' It is permissible for \code{vList} to contain \code{NULL} elements.
 ##' \code{list2df} performs numerous consistency checks to ensure that contents
 ##' of \code{vList} which are combined into the resulting data frame are
@@ -11,55 +19,68 @@
 ##'
 ##' @export
 ##'
-##' @param vList List of vectors or data frames, each vector having the same
-##' length, \code{n}, or each data frame having the same number of columns,
-##' \code{n}.
+##' @param vList List of vectors, data frames, or lists. See Details.
+##'
 ##' @param col.names Optional character vector of length \code{n} with column
 ##' names that will be given to the output data frame.  If \code{col.names =
 ##' NULL}, column names are extracted if possible from the column names (or
 ##' names) of the data frames (or vectors).
+##' 
 ##' @param row.names Optional character vector with length equivalent to the
 ##' length of \code{vList} containing the row names of the output data frame.
 ##' If \code{row.names = NULL}, row names from the data frames (or names of the
 ##' \code{vList} elements) if possible.
+##' 
 ##' @param convert.numeric If \code{vList} is list of vectors, \code{= TRUE}
 ##' attempts to convert each column to numeric if possible using
 ##' \code{\link{as.numericSilent}}
+##' 
 ##' @param strings.as.factors If \code{vList} is a list of vectors, \code{=
 ##' TRUE} converts character variables into factors using
 ##' \code{\link{factor2character}}.
+##' 
 ##' @return If \code{vList} is list of data frames, a data frame resulting from
 ##' efficiently row binding the data frames in \code{vList} is returned.  If
 ##' \code{vList} is a list of vectors, a data frame is returned where the first
 ##' column contains the first elements of the list vectors, the second column
 ##' contains the second elements of the list vectors, etc.
+##' 
 ##' @author Landon Sego
-##' @keywords misc
+##' 
 ##' @examples
-##'
-##' # For a list of data frames
-##' z <- list(d1 = data.frame(a = 1:10, b = letters[1:10]),
-##'           d2 = data.frame(a = 11:15, b = letters[11:15]))
-##' list2df(z)
 ##'
 ##' # For a list of vectors
 ##' x <- c("r1c1 1", "r2c1 2", "r3c1 3", "r4c4 4")
 ##' y <- strsplit(x, "\ ")
+##' y
 ##' list2df(y)
 ##' list2df(y, col.names=LETTERS[1:2])
 ##'
-##' z <- list(NULL, a = c(top = 10, bottom = 12), NULL, b = c(top = 15, bottom = 17))
+##' # Here's another list of vectors
+##' z <- list(NULL, a = c(first = 10, second = 12), NULL, b = c(first = 15, second = 17))
+##' z
+##' list2df(z)
+##' 
+##' # For a list of data frames
+##' z <- list(d1 = data.frame(a = 1:4, b = letters[1:4]),
+##'           d2 = data.frame(a = 5:6, b = letters[5:6]))
+##' z
+##' list2df(z)
+##'
+##' # A list of lists
+##' z <- list(list(a = 10, b = TRUE, c = "hi"), list(a = 12, b = FALSE, c = c("there", "bye")))
+##' z
 ##' list2df(z)
 ##'
 list2df <- function(vList, col.names = NULL, row.names = NULL, convert.numeric = TRUE,
                     strings.as.factors = FALSE) {
-
+    
   # Assume list is balanced.  Check for it
   lengths <- unlist(lapply(vList, function(x) ifelse(is.null(x), -1, length(x))))
   not.NULL.indicator <- lengths > -1
 
-  # Verify that all list elements have the same class
-  firstClass <- class(vList[[1]])
+  # Verify that all non-NULL list elements have the same class
+  firstClass <- class(vList[not.NULL.indicator][[1]])
   if (!all(unlist(lapply(vList[not.NULL.indicator], function(x) all(class(x) == firstClass)))))
     stop("All elements of the list must have the same class\n")
 
@@ -69,15 +90,22 @@ list2df <- function(vList, col.names = NULL, row.names = NULL, convert.numeric =
   # Estimate of the standard element length
   element.length <- lengths[first.non.NULL]
 
-  if (!all(element.length == lengths[not.NULL.indicator]))
+  if (!all(element.length == lengths[not.NULL.indicator])) {
     stop("List must be balanced. Each list element must have the same\n",
          "number of columns (for data frames) or the same length (for vectors)\n")
+  }
+
+  # If all the elements are lists, convert them to data frames
+  if (all(unlist(lapply(vList, function(x) is.list(x) | is.null(x))))) {
+    vList <- lapply(vList, function(x) if (!is.null(x)) as.data.frame(x) else NULL)
+  }
 
   # See if list elements are data frames
   if (all(unlist(lapply(vList, function(x) is.data.frame(x) | is.null(x))))) {
 
     # Make sure all the column names are the same
-    if (!all(apply(matrix(unlist(lapply(vList, colnames)), ncol = NCOL(vList[[first.non.NULL]]), byrow = TRUE),
+    if (!all(apply(matrix(unlist(lapply(vList, colnames)), ncol = NCOL(vList[[first.non.NULL]]),
+                          byrow = TRUE),
                    2, function(x) {length(unique(x)) == 1})))
       stop("Not all the column names are the same in the data frames")
 
@@ -114,7 +142,7 @@ list2df <- function(vList, col.names = NULL, row.names = NULL, convert.numeric =
         extra.text <- ifelse(!all(not.NULL.indicator),
                              paste("\nNote that there were", sum(!not.NULL.indicator),
                                    "NULL elements in 'vList'\n"),
-                             "\n")
+                             "")
 
         warning(pvar(length(row.names), verbose = FALSE),
                 " does not match the number of rows in the\noutput dataframe, ",
@@ -132,8 +160,9 @@ list2df <- function(vList, col.names = NULL, row.names = NULL, convert.numeric =
   else {
 
     # Otherwise, they need to be vectors
-    if (!all(unlist(lapply(vList, function(x) is.vector(x) | is.null(x)))))
+    if (!all(unlist(lapply(vList, function(x) is.vector(x) | is.null(x))))) {
       stop("All subelements in the list must be vectors\n")
+    }
 
     # Check for names and whether they're all the same
     if (is.null(col.names)) {
@@ -168,13 +197,14 @@ list2df <- function(vList, col.names = NULL, row.names = NULL, convert.numeric =
     else {
 
       # While just populating a matrix with the unlisted list would be more efficient, this
-      # allows us to create a different data types for each variable
+      # allows us to create different data types for each variable
       for (i in 1:element.length) {
 
         extract.i <- unlist(lapply(vList, function(x) x[i]))
 
-        if (convert.numeric)
+        if (convert.numeric) {
           extract.i <- as.numericSilent(extract.i)
+        }
 
         assign(paste("V", i, sep = ""), extract.i)
       }
@@ -184,16 +214,18 @@ list2df <- function(vList, col.names = NULL, row.names = NULL, convert.numeric =
                                             collapse = ", "),
                        ")", sep="")
 
+     
       # Build the data frame
       out <- eval(parse(text = text.df))
 
     } # else vectors not numeric
 
-    # Add in the row.names if possible
-    if (is.null(row.names))
+    # Get rownames from the list if they were not supplied
+    if (is.null(row.names)) {
       row.names <- names(vList)[not.NULL.indicator]
+    }
 
-    # Otherwise, make sure the length is correct
+    # Otherwise, make sure the length of the rownames matches the length of vList
     else if (length(row.names) != length(vList)) {
 
       warning(pvar(length(row.names), verbose = FALSE),
@@ -204,16 +236,19 @@ list2df <- function(vList, col.names = NULL, row.names = NULL, convert.numeric =
       row.names <- NULL
     }
 
-    # Apply the row names if they are present
-    if (!is.null(row.names))
+    # Attempt to apply the row names if they are present
+    if (!is.null(row.names)) {
       rownames(out) <- row.names
+    }
 
     # Convert factors to characters if requested
-    if (!strings.as.factors)
+    if (!strings.as.factors) {
       out <- factor2character(out)
+    }
 
   } # else
 
   return(out)
 
 } # list2df
+
