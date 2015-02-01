@@ -4,6 +4,9 @@ Version 0.2.7, 2015-01-31
 FEATURES / CHANGES
 
 - Added option to bind using `c()` in `qbind()`
+- Modified argument to `loadObject()` so that multiple files can be loaded at
+  once. If only a single file is provided, it behaves just as it did before, so
+  it is backward compatible.
 
 BUG FIXES
 
