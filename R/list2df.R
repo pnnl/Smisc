@@ -9,7 +9,7 @@
 ##' same structure (though they may have differing numbers of rows).
 ##' If the elements of \code{vList} are lists, each list is first converted to a data frame
 ##' via \code{\link{as.data.frame}} and the resulting data frames must have the
-##' same structure (though they may have differing numbers of rows)..
+##' same structure (though they may have differing numbers of rows).
 ##' 
 ##' It is permissible for \code{vList} to contain \code{NULL} elements.
 ##' \code{list2df} performs numerous consistency checks to ensure that contents
