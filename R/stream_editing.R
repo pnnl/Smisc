@@ -88,7 +88,7 @@
 ##' @param inFile A character string designating a file that is to be read (using \code{link{readLines}}
 ##' and will become a \code{stream},
 ##' where each line of the file is mapped to a single element in the character vector \code{stream}.
-##' In code{streamEdit}, one (and only one) of \code{inFile} or \code{stream} must be specified.
+##' In \code{streamEdit}, one (and only one) of \code{inFile} or \code{stream} must be specified.
 ##'
 ##' @param outFile A character string designating a file that the resulting, edited stream will be
 ##' written to using \code{\link{writeLines}}.
