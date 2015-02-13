@@ -6,6 +6,9 @@
 ##' object that is returned will be a matrix or a dataframe---and it will not be collapsed into a
 ##' single vector, as is the usual behavior in R.
 ##'
+##' Selecting no rows or no columns is possible if \code{selection = 0} or if \code{length(selection) == 0}.
+##' In this case, a data frame or matrix with either 0 columns or 0 rows is returned.
+##'  
 ##' @export select
 ##' 
 ##' @rdname select
@@ -68,6 +71,12 @@
 ##' is.matrix(m2)
 ##' is.matrix(m2c)
 ##'
+##' # Selecting no rows or no columns occurs if 0 or an object of length 0
+##' # is passed to 'selection'
+##' select(d, 0)
+##' select(d, which("bizarre" %in% colnames(d)))
+##' select(d, 0, cols = FALSE)
+##'  
 ##' \dontshow{
 ##' # Running checks on select()
 ##' Smisc:::test_select()
@@ -79,16 +88,39 @@ select <- function(data, selection, cols = TRUE) {
   stopifnot(is.matrix(data) | is.data.frame(data),
             is.numeric(selection) | is.character(selection),
             is.vector(selection),
-            length(selection) > 0,
-            is.logical(cols))
+            is.logical(cols),
+            length(cols) == 1)
 
+  # Special case of 0 columns or rows being selected
+  degenerate <- FALSE
+
+  # These strange conditions are necessary because if selection
+  # has 0 length, then testing for 'selection == 0' fails
+  if (!length(selection)) {
+    degenerate <- TRUE
+  }
+  else if (length(selection) == 1) {
+    if (selection == 0) {
+      degenerate <- TRUE
+    }
+  }
+
+  if (degenerate) {
+    if (cols) {
+      return(data[,selection])
+    }
+    else {
+      return(data[selection,])
+    }
+  }
+  
   # Define an error message function if wrong rows or columns are selected
   errMsg <- function(nt) {
 
     paste(ifelse(cols, "Columns '", "Rows '"),
-          ifelse1(length(nt) <= 5,
-                  paste(paste(nt, collapse = "', "), "' ", sep = ""),
-                  paste(paste(nt[1:5], collapse = "', '"), "', and others ", sep = "")),
+          ifelse(length(nt) <= 5,
+                 paste(paste(nt, collapse = "', "), "' ", sep = ""),
+                 paste(paste(nt[1:5], collapse = "', '"), "', and others ", sep = "")),
           "are not present in 'data'.", sep = "")
 
   } # errMsg
@@ -284,6 +316,20 @@ test_select <- function() {
             identical(m5, m5c),
             identical(m6, m6c))
 
+  # Check 0 rows and 0 column results
+  d <- data.frame(a = 1:10, b = 11:20, c = 21:30)
+  rownames(d) <- letters[1:10]
+  m <- as.matrix(d)
+
+  stopifnot(identical(select(d, 0), d[,0]),
+            identical(select(d, character(0)), d[,0]),
+            identical(select(m, 0), m[,0]),
+            identical(select(m, character(0)), m[,0]),
+            identical(select(d, 0, cols = FALSE), d[0,]),
+            identical(select(d, character(0), cols = FALSE), d[0,]),
+            identical(select(m, 0, cols = FALSE), m[0,]),
+            identical(select(m, character(0), cols = FALSE), m[0,]))
+  
   return(print("All checks completed successfully"))
 
 }  # test_select

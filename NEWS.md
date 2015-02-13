@@ -1,3 +1,14 @@
+Version 0.2.8, 2015-02-12
+-----------------------------------------------------------------------------------
+
+FEATURES / CHANGES
+
+- Added flexbility to `select()` by permitting the selection of 0 rows or columns
+
+BUG FIXES
+
+- Corrected one of the error messages in `select()`
+
 Version 0.2.7, 2015-01-31
 -----------------------------------------------------------------------------------
 
