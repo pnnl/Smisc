@@ -14,8 +14,8 @@ United States Government or any agency thereof.
 Redistributions of the software in any form, and publications based on work performed using the
 software should include the following citation as a reference:
 
-Sego LH. 2014. Smisc: A miscellaneous collection of functions. Pacific Northwest National Laboratory.
-http://github/lhsego/Smisc
+Sego LH. 2015. Smisc: Sego Miscellaneous. A collection of functions for statistical computing and data manipulation in R.
+Pacific Northwest National Laboratory. http://github/pnnl/Smisc
 
 
 PACIFIC NORTHWEST NATIONAL LABORATORY
@@ -23,7 +23,7 @@ operated by
 BATTELLE
 for the
 UNITED STATES DEPARTMENT OF ENERGY
-under Contract DE-AC05-76RL01830)
+under Contract DE-AC05-76RL01830
 
 All software in this package is covered under the terms stated above, with exception of the interactionPlot() 
 function, which is GPL2
