@@ -37,10 +37,10 @@
 linearMap <- function(x, D = range(x), R = c(0, 1)) {
 
   # Check inputs
-  stopifnot(is.numeric(x) & is.numeric(D) & is.numeric(R))
-  stopifnot(length(D) == 2)
-  stopifnot(length(R) == 2)
-  stopifnot(D[1] < D[2])
+  stopifnot(is.numeric(x) & is.numeric(D) & is.numeric(R),
+            length(D) == 2,
+            length(R) == 2,
+            D[1] < D[2])
 
 ##   # Don't think I want this, because sometimes you may want to map outside of R
 ##   # Make sure domain of x is contained in D <--

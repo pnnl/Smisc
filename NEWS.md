@@ -1,3 +1,12 @@
+Version 0.2.9, 2015-06-17
+-----------------------------------------------------------------------------------
+
+FEATURES / CHANGES
+
+- Added `selectElements()` for robustly selecting rows or columns from a data frame
+- Added `factor2num()` for converting factors to numeric values
+
+
 Version 0.2.8, 2015-02-12
 -----------------------------------------------------------------------------------
 
@@ -47,8 +56,8 @@ Version 0.2.4, 2014-11-12
 
 FEATURES / CHANGES
 
-- `pvar()` gets a new argument, 'sep'.
-- Removed `ifelse1()`, as it duplicates native code (e.g., if (cond) val1 else val2)
+- `pvar()` gets a new argument, `sep`.
+- Removed `ifelse1()`, as it duplicates native code (e.g., `if (cond) val1 else val2`)
   that is almost as easy to type.
 
 Version 0.2.3, 2014-10-30
