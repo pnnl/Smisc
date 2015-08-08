@@ -1,1 +1,1 @@
-
+Update doCallParallel() to not use mclapply() and use parLapply() instead
