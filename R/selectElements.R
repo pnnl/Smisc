@@ -39,10 +39,19 @@ selectElements <- function(elements, cVec) {
   }
     
   # Basic checks
-  stopifnot(is.vector(elements),
-            is.vector(cVec),
-            is.character(cVec))
-
+  if (!is.vector(elements)) {
+    stop("'", deparse(substitute(elements)),
+         "', the object provided to the 'elements' argument of Smisc::selectElements(), is not a vector")
+  }
+  if (!is.vector(cVec)) {
+    stop("'", deparse(substitute(cVec)),
+         "', the object provided to the 'cVec' argument of Smisc::selectElements(), is not a vector")
+  }
+  if (!is.character(cVec)) {
+    stop("'", deparse(substitute(cVec)),
+         "', the object provided to the 'cVec' argument of Smisc::selectElements(), is not character")
+  }    
+  
   # If elements is character
   if (is.character(elements)) {
 
