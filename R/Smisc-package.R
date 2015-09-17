@@ -5,8 +5,8 @@
 ##' \tabular{ll}{
 ##' Package: \tab Smisc\cr
 ##' Type: \tab Package\cr
-##' Version: \tab 0.2.11\cr
-##' Date: \tab 2015-09-02\cr
+##' Version: \tab 0.2.12\cr
+##' Date: \tab 2015-09-16\cr
 ##' License: \tab LICENSE\cr
 ##' }
 ##' 
