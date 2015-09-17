@@ -114,11 +114,11 @@ plotFun <- function(fun, xlim,
                     lty = lty[1], col = col[1])
 
   # Select arguments from graphArgs that could be used in plot.default()
-  plotArgs2 <- ifelse1(as.logical(length(graphArgs)),
-                       graphArgs[names(graphArgs) %in%
-                                 setdiff(unique(c(names(formals(plot.default)),
-                                                  names(par()))), "...")],
-                       list())
+  plotArgs2 <- if (as.logical(length(graphArgs)))
+                 graphArgs[names(graphArgs) %in%
+                           setdiff(unique(c(names(formals(plot.default)), names(par()))), "...")]
+               else
+                 list()
     
   # Make the first plot
   do.call(plot, c(plotArgs1, plotArgs2))
@@ -127,9 +127,10 @@ plotFun <- function(fun, xlim,
   if (length(fun) > 1) {
 
     # Extract arguments that could be used for lines()
-    lineArgs <- ifelse1(as.logical(length(graphArgs)),
-                        graphArgs[names(graphArgs) %in% names(par())],
-                        list())
+    lineArgs <- if (as.logical(length(graphArgs)))
+                  graphArgs[names(graphArgs) %in% names(par())]
+                else
+                  list()
 
     # Plot the additional functions
     for (i in 2:length(fun))
@@ -143,9 +144,10 @@ plotFun <- function(fun, xlim,
       stop("Length of 'legendLabels' must match the length of 'fun'")
 
     # Extract arguments that could be used for legend
-    legendArgs <- ifelse1(as.logical(length(graphArgs)),
-                          graphArgs[names(graphArgs) %in% names(formals(legend))],
-                          list())
+    legendArgs <- if (as.logical(length(graphArgs)))
+                    graphArgs[names(graphArgs) %in% names(formals(legend))]
+                  else
+                    list()
 
     # Make the legend
     do.call(legend, c(list(x = xlim[1] + relX * diff(xlim),
