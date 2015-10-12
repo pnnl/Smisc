@@ -16,7 +16,7 @@
 ##'
 ##' @usage
 ##' stripExtension(vec, split.char = ".")
-##' getExtension(vec)
+##' getExtension(vec, split.char = ".")
 ##' stripPath(vec)
 ##' getPath(vec)
 ##' grabLast(vec, split.char)
@@ -142,9 +142,9 @@ grabLast <- function(vec, split.char) {
 
   # Check the split.char
   if (!is.character(split.char))
-    stop("'split.char' argument must be an single character.\n")
+    stop("'split.char' argument must be a single character.\n")
   if (length(split.char) != 1)
-    stop("'split.char' argument must be an single character.\n")
+    stop("'split.char' argument must be a single character.\n")
 
   # Verify that 'vec' is a character vector
   if (!is.character(vec))
@@ -192,7 +192,7 @@ grabLast <- function(vec, split.char) {
 
   } # getLast
 
-  result <- unlist(lapply(strsplit(vec, split.char, fixed=TRUE), getLast))
+  result <- unlist(lapply(strsplit(vec, split.char, fixed = TRUE), getLast))
   names(result) <- names.vec
 
   return(result)
@@ -200,9 +200,9 @@ grabLast <- function(vec, split.char) {
 } # grabLast
 
 
-getExtension <- function(vec) {
+getExtension <- function(vec, split.char = ".") {
 
-  grabLast(vec, ".")
+  grabLast(vec, split.char)
 
 } # getExtension
 
