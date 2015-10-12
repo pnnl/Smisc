@@ -10,7 +10,7 @@
 or path}
 \usage{
 stripExtension(vec, split.char = ".")
-getExtension(vec)
+getExtension(vec, split.char = ".")
 stripPath(vec)
 getPath(vec)
 grabLast(vec, split.char)
