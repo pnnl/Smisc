@@ -1,4 +1,7 @@
-##' Probability functions for the sum of k independent binomials
+## TODO:  remove the checkargs argument--and if the calling frame of dkbinom is pkbinom, then
+## don't run the checks
+
+##' ##' Probability functions for the sum of k independent binomials
 ##'
 ##' The mass and distribution functions of the sum of k independent binomial
 ##' random variables, with possibly different probabilities.
@@ -95,6 +98,8 @@
 dkbinom <- function(x, size, prob, log = FALSE, verbose = FALSE,
                     method = c("butler", "fft"), checkArgs = TRUE) {
 
+## TODO:  remove the checkargs argument--and if the calling frame of dkbinom is pkbinom, then
+## don't run the checks, since pkbinom already runs the checks
   if (checkArgs) {
     x <- check.kbinom(x, size, prob)
   }
