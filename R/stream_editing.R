@@ -30,7 +30,8 @@
 ##' sed_insert(stream, after, insertion, silent = TRUE, ...)
 ##' sed_replace(stream, at, replacement, silent = TRUE, ...)
 ##' sed_substitute(stream, pattern, replacement, every = TRUE, silent = TRUE, ...)
-##' sed_comment(stream, at, add = TRUE, type = c("R", "C", "java", "html", "tex"), silent = TRUE, ...)
+##' sed_comment(stream, at, add = TRUE, type = c("R", "C", "java", "html", "tex"),
+##'             silent = TRUE, ...)
 ##' streamEdit(commandList, stream = NULL, inFile = NULL, outFile = NULL, silent = TRUE)
 ##'
 ##' @param stream A character vector, each element typically (but not necessarily) containing the text

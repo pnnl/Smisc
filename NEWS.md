@@ -1,3 +1,13 @@
+Version 0.2.14, 2015-10-21
+-----------------------------------------------------------------------------------
+
+FEATURES / CHANGES
+
+- Various edits to prepare `Smisc` for submission to CRAN
+- Support for Cairo graphics for `openDevice()` is removed
+- `plapply()` was deprecated because it duplicates capbility found in the `parallel` package
+
+
 Version 0.2.13, 2015-10-12
 -----------------------------------------------------------------------------------
 

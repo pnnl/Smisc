@@ -1,3 +1,4 @@
 1. Update doCallParallel() to not use mclapply() and use parLapply() instead
 2. checkArgs argument for pkbinom()
+3. Add testthat checks...
 

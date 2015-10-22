@@ -27,12 +27,17 @@
 ##' @export
 ##'
 ##' @param d1 The first dataframe or matrix
+##' 
 ##' @param d2 The dataframe or matrix that will be compared to \code{d1}
+##' 
 ##' @param maxAbsError Numeric values whose absolute difference is less than
 ##' \code{maxAbsError} will be declared equivalent
+##' 
 ##' @param maxRelError Numeric values whose relative difference is within
 ##' \code{maxRelError} will be declared equivalent
+##' 
 ##' @param verbose \code{=TRUE} prints the result of the comparison
+##' 
 ##' @return Invisibly returns a list with the following components.  (If the
 ##' matrices do not have the same dimensions or the same colnames and rownames,
 ##' then \code{frac.equiv}, \code{loc.equiv}, and \code{equiv.matrix} are all
@@ -43,9 +48,11 @@
 ##' indicating the row and column coordinate locations of the elements that are
 ##' not equivalent} \item{eqiv.matrix}{A boolean matrix with the same dimension
 ##' as \code{d1} and \code{d2}, indicating the equivalent elements}
+##' 
 ##' @author Landon Sego
-##' @seealso \code{\link{all.equal}}, \code{\link{identical}},
-##' \code{\link{find.dframeEquiv}}
+##' 
+##' @seealso \code{\link{all.equal}}, \code{\link{identical}}
+##' 
 ##' @references
 ##' http://www.cygnus-software.com/papers/comparingfloats/comparingfloats.htm
 ##' @keywords misc
@@ -81,7 +88,7 @@
 ##' y <- x
 ##' dframeEquiv(x, y)
 ##'
-dframeEquiv <- function(d1, d2, maxAbsError=1e-12, maxRelError=1e-14, verbose=TRUE) {
+dframeEquiv <- function(d1, d2, maxAbsError = 1e-12, maxRelError = 1e-14, verbose = TRUE) {
 
   d1.d2 <- paste("'", deparse(substitute(d1)), "' and '",
                  deparse(substitute(d2)), "'", sep="")
@@ -221,6 +228,7 @@ dframeEquiv <- function(d1, d2, maxAbsError=1e-12, maxRelError=1e-14, verbose=TR
         v1 <- changeNAchar(v1)
         v2 <- changeNAchar(v2)
         equiv.mat <- cbind(equiv.mat, v1 == v2)
+        
 ## This doesn't catch all the different ways in which two columns could have different data types
 #        if (both.num == 1)
 #          msg <- c(msg, paste("Column", i, "of", d1.d2, "do not have same data type.",
@@ -255,4 +263,4 @@ dframeEquiv <- function(d1, d2, maxAbsError=1e-12, maxRelError=1e-14, verbose=TR
   invisible(list(equiv=keep.checking, msg=msg, frac.equiv=frac.equiv,
                  loc.inequiv=loc.inequiv, equiv.matrix=equiv.mat))
 
-}# end dframeEquiv
+} # dframeEquiv

@@ -9,9 +9,9 @@
 hpd(pdf, support, prob = 0.95, cdf = NULL, nJobs = 1,
   checkUnimodal = TRUE)
 
-\method{print}{hpd}(hpdObject)
+\method{print}{hpd}(x, ...)
 
-\method{plot}{hpd}(hpdObject, ...)
+\method{plot}{hpd}(x, ...)
 }
 \arguments{
 \item{pdf}{Function that takes a single numeric vector argument that returns a vector
@@ -35,10 +35,10 @@ for non-Windows machines.}
 \item{checkUnimodal}{A logical indicating whether the function will be checked for unimodal behavior.  This involves evaluating
 the function at 1000 points in the \code{support} interval.  This is done in parallel if \code{nJobs > 1}.}
 
-\item{hpdObject}{object of class \code{hpd}, returned by \code{hpd}}
+\item{x}{object of class \code{hpd}, returned by \code{hpd}}
 
-\item{\dots}{Additional agruments that may be passed to \code{\link{plotFun}}, \code{\link{plot.default}},
-or \code{\link{abline}}}
+\item{\dots}{For the \code{plot} method, these are additional arguments that may be passed to
+\code{\link{plotFun}}, \code{\link{plot.default}}, or \code{\link{abline}}}
 }
 \value{
 A list of class \code{hpd} that contains the following elements:

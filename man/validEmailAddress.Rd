@@ -42,9 +42,5 @@ validEmailAddress(c(NA, "@","this@that","this@that@that","this@that.com.ar",
 \author{
 Landon Sego
 }
-\references{
-Based in part on
-\url{http://groups.google.com/group/eaut/web/rules-for-valid-email-addresses}
-}
 \keyword{misc}
 

@@ -1,7 +1,7 @@
 ## TODO:  remove the checkargs argument--and if the calling frame of dkbinom is pkbinom, then
 ## don't run the checks
 
-##' ##' Probability functions for the sum of k independent binomials
+##' Probability functions for the sum of k independent binomials
 ##'
 ##' The mass and distribution functions of the sum of k independent binomial
 ##' random variables, with possibly different probabilities.
@@ -26,14 +26,16 @@
 ##' @rdname dkbinom
 ##'
 ##' @usage
-##' dkbinom(x, size, prob, log = FALSE, verbose = FALSE, method = c("butler", "fft"), checkArgs = TRUE)
-##' pkbinom(q, size, prob, log.p = FALSE, verbose = FALSE, method = c("butler", "naive", "fft"))
-##' 
-##' @param q Vector of quantiles (value at which to evaluate the distribution
-##' function) of the sum of the k binomial variates
+##' dkbinom(x, size, prob, log = FALSE, verbose = FALSE,
+##'         method = c("butler", "fft"), checkArgs = TRUE)
+##' pkbinom(q, size, prob, log.p = FALSE, verbose = FALSE,
+##'         method = c("butler", "naive", "fft"))
 ##' 
 ##' @param x Vector of values at which to evaluate the mass function of the sum
 ##' of the k binomial variates
+##'
+##' @param q Vector of quantiles (value at which to evaluate the distribution
+##' function) of the sum of the k binomial variates
 ##' 
 ##' @param size Vector of the number of trials
 ##' 
