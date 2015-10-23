@@ -48,12 +48,14 @@
 ##'
 ##' data(timeDiff.eg)
 ##'
-##' # Show the example objects
-##' print(x1)
-##' print(x2)
-##' print(x1.d)
-##' print(x2.d)
-##'
+##' # Show the objects
+##' print(timeDiff.eg)
+##' 
+##' # Extract the objects from the list for easier use in the example
+##' x1 <- timeDiff.eg$x1
+##' x2 <- timeDiff.eg$x2
+##' x1.d <- timeDiff.eg$x1.d
+##' x2.d <- timeDiff.eg$x2.d
 ##'
 ##' # Print warnings as they occur
 ##' op <- options(warn=1)

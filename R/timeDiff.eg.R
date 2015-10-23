@@ -1,6 +1,6 @@
 ##' Four short time series
 ##'
-##' Four short times series for use in the \code{\link{timeDiff}} example.
+##' Four short times series, stored in a list, for use in the \code{\link{timeDiff}} example.
 ##'
 ##' @name timeDiff.eg
 ##' @docType data

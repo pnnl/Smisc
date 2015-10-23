@@ -13,7 +13,6 @@
 ##'
 ##' @export
 ##' @usage sortDF(form, dat)
-##' sortDF(dat, form)
 ##' 
 ##' @param form A formula with the variable names to use for sorting
 ##' @param dat The dataframe to sort

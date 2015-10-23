@@ -380,7 +380,7 @@ sed_substitute <- function(stream, pattern, replacement, every = TRUE, silent = 
 
 # Comment or uncomment an entire line
 sed_comment <- function(stream, at, add = TRUE,
-                        type = c("R", "C", "Java", "html", "tex", "SAS"),
+                        type = c("R", "C", "java", "html", "tex", "SAS"),
                         silent = TRUE, ...) {
 
   # Basic checks
