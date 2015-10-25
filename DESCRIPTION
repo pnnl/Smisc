@@ -5,7 +5,8 @@ Date: 2015-10-12
 Author: Landon Sego and others
 Description: Sego Miscellaneous: A collection of functions for statistical
     computing and data manipulation in R.
-Imports:
-    parallel
+Imports: 
+    parallel,
+    utils
 Maintainer: Landon Sego <Landon.Sego@pnnl.gov>
 License: file LICENSE

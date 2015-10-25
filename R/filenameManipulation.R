@@ -67,7 +67,7 @@
 ##'              "bad.email@@weird.com@@", NA, "2at's@@email@@good.net"), "@@")
 ##'
 ##' # An example with 'real' files
-##' files <- dir(paste(path.package(package="Smisc"), "data", sep "/"), full.names = TRUE)
+##' files <- dir(file.path(path.package(package = "Smisc"), "data"), full.names = TRUE)
 ##' print(files)
 ##' stripExtension(files)
 ##' stripPath(files)

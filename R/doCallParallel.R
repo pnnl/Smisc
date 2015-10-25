@@ -14,12 +14,10 @@
 ##' 
 ##' @param x A vector of values that is the first argument to the function
 ##' 
-##' @param nJobs The number of parallel jobs to spawn using \code{\link{mclapply}}. Note that \code{nJobs > 1} only works
-##' for non-Windows machines.
+##' @param nJobs The number of parallel jobs to spawn using \code{\link{parLapply}}.
 ##'
 ##' @param random.seed If a numeric value is provided, \code{x} is randomized to better distribute the work among
-##' the jobs if some
-##' values of \code{x} take longer to evaluate than others.
+##' the jobs if some values of \code{x} take longer to evaluate than others.
 ##' The original ordering is restored before \code{fun(x, ...)} is returned. If \code{NULL},
 ##' no randomization is performed.  
 ##' 
@@ -61,8 +59,8 @@ doCallParallel <- function(fun, x, nJobs = parallel::detectCores(), random.seed 
   # Make sure the number of jobs is no larger than the vector x
   nJobs <- min(length(x), nJobs)
 
-  # If only 1 job or windows
-  if ((nJobs == 1) | (.Platform$OS.type == "windows")) {
+  # If only 1 job
+  if (nJobs == 1) {
       
     return(do.call(fun, list(x, ...)))
 
@@ -71,11 +69,27 @@ doCallParallel <- function(fun, x, nJobs = parallel::detectCores(), random.seed 
 
     # Create the job ordering
     xparse <- parseJob(length(x), njobs = nJobs, random.seed = random.seed)
-      
-    out <- unlist(parallel::mclapply(xparse,
-                                     function(subset) do.call(fun, list(x[subset], ...)),
-                                     mc.cores = nJobs))
 
+    # Get the extra arguments
+    args <- list(...)
+
+    # Function for parLapply
+    doCall <- function(subset) {
+      do.call(fun, c(list(x[subset]), args))
+    }
+    
+    # Start the cluster
+    cl <- parallel::makeCluster(nJobs)
+
+    # Send needed objects to cluster
+    parallel::clusterExport(cl, c("fun", "x", "args"), envir = environment())
+
+    # Run the calculation
+    out <- unlist(parallel::parLapply(cl, xparse, doCall))
+
+    # Shut down the cluster
+    parallel::stopCluster(cl)
+                  
     # Reorder if needed
     if (is.null(random.seed))
       return(out)
