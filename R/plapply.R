@@ -1,5 +1,3 @@
-## TODO:  user tempdir() to create the working temporary directory
-
 ##' Simple parallelization of lapply
 ##'
 ##' Parses a large list into subsets and submits a separate R job using lapply
@@ -8,6 +6,8 @@
 ##' \code{plapply} applies \code{FUN} to each element of the list \code{X} by
 ##' parsing the list into \code{njobs} lists of equal (or almost equal) size
 ##' and then applies \code{FUN} to each sublist using \code{\link{lapply}}.
+##' Differences between \code{plapply} and \code{\link{parLapply}} and
+##' \code{\link{mclapply}} are discussed below.
 ##'
 ##' A separate batch instance of R is launched for each sublist, thus utilizing
 ##' another core of the machine. After the jobs complete, the \code{njobs}
@@ -23,64 +23,96 @@
 ##'
 ##' Each instance of R runs a script that performs the following steps:
 ##'
-##' \enumerate{ \item The \code{Smisc} package is loaded.
+##' \enumerate{
+##'
+##' \item The \code{Smisc} package is loaded:  \code{library(Smisc)}
 ##'
 ##' \item Any other packages indicated in the \code{packages} argument are
-##' loaded.
+##' loaded via calls to \code{library()}
 ##'
-##' \item The \code{process.id} global variable is assigned (having been passed
-##' in via a command line argument).
+##' \item The \code{process.id} global variable is assigned to the global
+##' environment of the R instance (having been passed
+##' in via a command line argument)
 ##'
-##' \item The header file (if there is one) is sourced.
+##' \item The header file (if there is one) is sourced
 ##'
 ##' \item The expression \code{pre.process.expression} is evaluated if an
 ##' object of that name is present in the global environment. The object
 ##' \code{pre.process.expression} may be passed in via the header file or via
-##' \code{needed.objects}.
+##' \code{needed.objects}
 ##'
-##' \item \code{\link{lapply}} is called on the sublist.
+##' \item \code{\link{lapply}} is called on the sublist, the sublist is called
+##' \code{X.i}
 ##'
-##' \item The output returned by \code{lapply} is saved to a temporary file
-##' where it will be collected after all jobs have completed.
-##'
-##' \item The expression \code{post.process.expression} is evaluated if an
+##'\item The expression \code{post.process.expression} is evaluated if an
 ##' object of that name is present in the global environment.  The object
 ##' \code{post.process.expression} may be passed in via the header file or via
-##' \code{needed.objects}.
+##' \code{needed.objects}
 ##'
-##' \item Warnings are printed. }
+##' \item The output returned by \code{lapply} is assigned to the object
+##' \code{X.i.out}, and is saved to a temporary file
+##' where it will be collected after all jobs have completed
+##' 
+##' \item Warnings are printed
+##' }
 ##'
 ##' Note that steps 3, 5, and 7-9 are skipped if \code{njobs = 1}.
 ##'
+##' This function has some additional features that may not be readily available
+##' in \code{\link{mclapply}} or \code{\link{parLapply}}:
+##' \itemize{
+##'
+##' \item The \code{.Rout} files produced by each R instance are easily accessible
+##' for convenient debugging or they can be stored as a record of the work that
+##' was performed
+##'
+##' \item The ordering of the processing can be randomized or collated (first-in-first-out)
+##'
+##' \item In each instance, pre-processing or post-processing steps can be performed
+##' before and after the call to \code{\link{lapply}}
+##' }
+##' 
 ##' @export
 ##'
 ##' @param X The list, each element of which will be the input to \code{FUN}
+##' 
 ##' @param FUN A function whose first argument is an element of list \code{X}
+##' 
 ##' @param \dots Additional named arguments to \code{FUN}
+##' 
 ##' @param packages Character vector giving the names of packages that will be
-##' loaded in each new instance of R.
+##' loaded in each new instance of R, using \code{\link{library}}.
+##' 
 ##' @param header.file Text string indicating a file that will be initially
 ##' sourced prior calling \code{\link{lapply}} in order to create an
 ##' 'environment' that will satisfy all potential dependencies for \code{FUN}.
 ##' If \code{NULL}, no file is sourced.
+##' 
 ##' @param needed.objects Character vector giving the names of objects which
 ##' reside in the evironment specified by \code{needed.objects.env} that may be
 ##' needed by \code{FUN} which are loaded into the GLOBAL ENVIRONMENT of each
 ##' new instance of R that is launched.  If \code{NULL}, no additional objects
 ##' are passed.
+##' 
 ##' @param needed.objects.env Environment where \code{needed.objects} reside.
 ##' This defaults to the environment in which \code{plapply} is called.
+##' 
 ##' @param jobName Text string indicating the prefix for files that will be
 ##' created while launching the separate instances of R.
+##' 
 ##' @param njobs The number of jobs (subsets).  Defaults to one less than the
 ##' number of cores on the machine.
+##' 
 ##' @param max.hours The maximum number of hours to wait for the \code{njobs}
 ##' to complete.
+##' 
 ##' @param check.interval.sec The number of seconds to wait between checking to
 ##' see whether all \code{njobs} have completed.
-##' @param collate \code{=TRUE} creates a 'first-in-first-out' processing of
+##' 
+##' @param collate \code{=TRUE} creates a 'first-in-first-out' processing order of
 ##' the elements of the input list \code{X}.  This logical is passed to the
 ##' \code{collate} argument of \code{\link{parseJob}}.
+##' 
 ##' @param random.seed An integer setting the random seed, which will result in
 ##' randomizing the elements of the list assigned to each job. This is useful
 ##' when the computing time for each element varies significantly because it
@@ -88,19 +120,25 @@
 ##' = NULL}, no randomization is performed and the elements of the input list
 ##' are subdivided sequentially among the jobs.  This variable is passed to the
 ##' \code{random.seed} argument of \code{\link{parseJob}}.
+##' 
 ##' @param clean.up \code{=TRUE} will delete temporary workding directory.
+##' 
 ##' @param rout \code{=TRUE} will gather the \code{njobs} *.Rout files into a
 ##' single file named "jobName_YYYY-MM-DD_HHMMSS_XXXX.Rout" which will not be
 ##' deleted.
+##' 
 ##' @param verbose \code{=TRUE} prints messages which show the progress of the
 ##' jobs.
+##' 
 ##' @return A list equivalent to that returned by \code{lapply(X, FUN, ...)}.
+##' 
 ##' @author Landon Sego
-##' @seealso \code{\link{lapply}}, \code{\link{mclapply}},
-##' \code{\link{dfplapply}}
+##' 
+##' @seealso \code{\link{lapply}}, \code{\link{dfplapply}}, \code{\link{mclapply}}
+##' 
 ##' @keywords misc
+##' 
 ##' @examples
-##'
 ##'
 ##' # Create a simple list
 ##' a <- list(a = rnorm(10), b = rnorm(20), c = rnorm(15), d = rnorm(13), e = rnorm(15), f = rnorm(22))
@@ -137,7 +175,7 @@
 ##'
 ##' all(unlist(res.3) == unlist(res.4))
 ##'
-##'
+
 plapply <- function(X, FUN, ...,
                     packages = NULL,
                     header.file = NULL,
@@ -152,11 +190,6 @@ plapply <- function(X, FUN, ...,
                     clean.up = TRUE,
                     rout = !clean.up,
                     verbose = FALSE) {
-
-  # Header file is a file containing R code that will be sourced which create an 'environment'
-  # that will satisfy all potential dependencies that FUN or X may have.
-  # ..., objects that will be saved to the parallel environment on which FUN may depend
-  #       (not additional arguments to FUN)
 
   # Check the platform
   os <- .Platform$OS.type
@@ -180,9 +213,9 @@ plapply <- function(X, FUN, ...,
   # Set njobs to an integer value
   njobs <- as.integer(njobs)
 
-  # If njobs is negative or non-integer
-  if (njobs < 1)
-    stop("'njobs' must be >= 1")
+  # If njobs is negative
+  if (njobs < 1) 
+    njobs <- 1
 
   ################################################################################
   # Run regular lapply if only one job requested
@@ -192,7 +225,7 @@ plapply <- function(X, FUN, ...,
     # Load packages
     if (!is.null(packages)) {
       for (pk in packages)
-        require(pk, character.only = TRUE)
+        library(pk, character.only = TRUE)
     }
 
     # Source the header file
@@ -290,14 +323,14 @@ plapply <- function(X, FUN, ...,
   else {
     pk.text <- NULL
     for (pk in packages)
-      pk.text <- c(pk.text, paste("require(", pk, ")\n", sep = ""))
+      pk.text <- c(pk.text, paste("library(", pk, ")\n", sep = ""))
   }
 
   # Prepare the header file
   if (!is.null(header.file))
     hf.text <- paste("source('", header.file, "')\n", sep = "")
   else
-    hf.text <- "# No header file included.\n"
+    hf.text <- "# No header file included\n"
 
  # Rename needed objects if they are present (strip the suffix)
   if (!is.null(needed.objects))
@@ -306,7 +339,7 @@ plapply <- function(X, FUN, ...,
                  "  assign(stripExtension(v), get(v))\n",
                  "rm(list = neededObjects.vec, neededObjects.vec)\n")
   else
-    mv.text <- "# No needed.objects to rename.\n"
+    mv.text <- "# No needed.objects to rename\n"
 
 
   ################################################################################
@@ -343,7 +376,6 @@ plapply <- function(X, FUN, ...,
 
   dir.create(wkDir)
 
-
   # Base name for files
   rsf <- paste(wkDir, "/", "r", sep = "")
 
@@ -373,7 +405,7 @@ plapply <- function(X, FUN, ...,
     save(list = needed.objects, X.i, FUN.p, FUN.argnames, optional.args, file = list.input.i)
 
     # Write the .R file that will be launched
-    cat("require(Smisc)\n",
+    cat("library(Smisc)\n",
 
         # Load packages
         pk.text,
@@ -384,7 +416,7 @@ plapply <- function(X, FUN, ...,
         # Set the process id variable
         "process.id <- ", i, "\n",
 
-        # Load the file that will create the R environment
+        # Load the file that will place all the needed objects in the Global R environment
         "load('", list.input.i, "')\n",
 
         # Rename 'needed.objects' (if they're present)
@@ -397,12 +429,12 @@ plapply <- function(X, FUN, ...,
         # Process this subset of the list
         "X.i.out <- lapply(X.i, FUN.p)\n",
 
-        # Save this output
-        "save(X.i.out, file='", list.output.i, "')\n",
-
         # Evaluate post-processing expression if it's present
         "if (exists(\"post.process.expression\"))\n",
         "  eval(post.process.expression)\n",
+
+        # Save this output
+        "save(X.i.out, file = '", list.output.i, "')\n",
 
         # Print warnings
         "warnings()\n",
