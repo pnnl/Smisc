@@ -40,6 +40,14 @@
 ##' identical(x, y)
 comboList <- function(n.pred, outFile = NULL, njobs = 1, verbose = FALSE) {
 
+  # Basic checks on the arguments
+  stopifnot(is.numeric(n.pred),
+            n.pred >= 1,
+            if (!is.null(outFile)) is.character(outFile) else TRUE,
+            is.numeric(njobs),
+            njobs >= 1,
+            is.logical(verbose))
+    
   # Create the profile of counts for each category
   counts <- choose(n.pred, 1:n.pred)
   groups <- c(1:n.pred)[order(counts, decreasing = TRUE)]
@@ -82,23 +90,15 @@ comboList <- function(n.pred, outFile = NULL, njobs = 1, verbose = FALSE) {
 
   # Run jobs in serial
   if (njobs == 1) {
+      
     out <- lapply(cnt.list, combn.wrapper)
+    
   }
 
   # Or run in parallel  
   else {
       
-    # create the cluster
-    cl <- parallel::makeCluster(njobs)
-
-    # push needed objects out
-    parallel::clusterExport(cl, "n.pred", envir = environment())
-
-    # Run the calculation
-    out <- parallel::parLapply(cl, cnt.list, combn.wrapper)
-
-    # Shutdown the cluster
-    parallel::stopCluster(cl)
+    out <- parLapplyW(cnt.list, combn.wrapper, njobs = njobs, varlist = "n.pred")
     
   }
 

@@ -5,12 +5,14 @@
 \title{Two-way Interaction Plot with Error Bar}
 \usage{
 interactionPlot(x.factor, trace.factor, response, fun = mean,
-  errorBar = NULL, jitterErrorBars = FALSE, type = c("l", "p", "b", "o",
-  "c"), legend = TRUE, trace.label = deparse(substitute(trace.factor)),
-  fixed = FALSE, xlab = deparse(substitute(x.factor)), ylab = ylabel,
-  ylim = range(cells, na.rm = TRUE), lty = nc:1, col = 1, pch = c(1L:9,
-  0, letters), xpd = NULL, leg.bg = par("bg"), leg.bty = "n",
-  xtick = FALSE, xaxt = par("xaxt"), axes = TRUE, ...)
+                       errorBar = NULL, jitterErrorBars = FALSE,
+	                       type = c("l", "p", "b", "o", "c"), legend = TRUE,
+                       trace.label = deparse(substitute(trace.factor)), fixed = FALSE,
+                       xlab = deparse(substitute(x.factor)), ylab = ylabel,
+                       ylim = range(cells, na.rm=TRUE),
+                       lty = nc:1, col = 1, pch = c(1L:9, 0, letters),
+                       xpd = NULL, leg.bg = par("bg"), leg.bty = "n",
+                       xtick = FALSE, xaxt = par("xaxt"), axes = TRUE, ...)
 }
 \arguments{
 \item{x.factor}{a factor whose levels will form the x axis.}
@@ -26,6 +28,10 @@ value.}
 \code{width}, and optional element \code{blankMiddle}. These correspond to
 the arguments of \code{\link{vertErrorBar}}.  Defaults to \code{NULL}, in
 which case no error bars are drawn}
+
+\item{jitterErrorBars}{Logical indicating whether the x-values of the points
+(and the error bars) should be jittered for easier readability. This
+argument is ignored if \code{errorBar = NULL}.}
 
 \item{type}{the type of plot (see \code{\link{plot.default}}): lines or
 points or both.}
@@ -57,24 +63,18 @@ at the figure border.}
 
 \item{xtick}{logical. Should tick marks be used on the x axis?}
 
-\item{xaxt,axes,}{graphics parameters to be passed to the plotting
+\item{xaxt,axes}{graphics parameters to be passed to the plotting
 routines.}
 
-\item{jitterErrorBar}{Logical indicating whether the x-values of the points
-(and the error bars) should be jittered for easier readability. This
-argument is ignored if \code{errorBar = NULL}.}
-
-\item{list()}{graphics parameters to be passed to the plotting routines.}
+\item{\dots}{graphics parameters to be passed to the plotting routines.}
 }
 \description{
 Plots the mean (or other summary) of the response for two-way combinations
 of factors, thereby illustrating possible interactions.
 }
 \details{
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 This modification of \code{\link{interaction.plot}} adds the \code{errorBar} and
-\code{jitterErrorBar} arguments.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\code{jitterErrorBars} arguments.
 
 By default the levels of \code{x.factor} are plotted on the x axis in their
 given order, with extra space left at the right for the legend (if
@@ -96,7 +96,6 @@ Some of the argument names and the precise behaviour are chosen for
 S-compatibility.
 }
 \examples{
-\%\%\% BEGIN \%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%
 require(graphics)
 
 with(ToothGrowth, {
@@ -109,7 +108,6 @@ interactionPlot(dose, supp, len, fixed=TRUE, col = 2:3, type = "p",
                 jitterErrorBars = TRUE,
                 main = "Error bars have no meaning--just for illustration")
 })
-\%\%\% END \%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%\%
 }
 \author{
 Originates in the \code{stats} package in the R distribution,

@@ -48,16 +48,17 @@
 ##' identical(y1, y3)
 ##' identical(y1, y4)
 
-doCallParallel <- function(fun, x, nJobs = parallel::detectCores(), random.seed = NULL, ...) {
+doCallParallel <- function(fun, x, nJobs = parallel::detectCores() - 1, random.seed = NULL, ...) {
 
   # Argument checks
   stopifnot(if (is.character(fun)) is.function(get(fun)) else is.function(fun),
             is.vector(x),
             is.numeric(nJobs),
-            length(nJobs) == 1)
+            length(nJobs) == 1,
+            if (!is.null(random.seed)) is.numeric(random.seed) else TRUE)
 
-  # Make sure the number of jobs is no larger than the vector x
-  nJobs <- min(length(x), nJobs)
+  # Make sure the number of jobs is no larger than the length of x, and no smaller than 1
+  nJobs <- max(1, min(length(x), nJobs))
 
   # If only 1 job
   if (nJobs == 1) {
@@ -78,18 +79,9 @@ doCallParallel <- function(fun, x, nJobs = parallel::detectCores(), random.seed 
       do.call(fun, c(list(x[subset]), args))
     }
     
-    # Start the cluster
-    cl <- parallel::makeCluster(nJobs)
-
-    # Send needed objects to cluster
-    parallel::clusterExport(cl, c("fun", "x", "args"), envir = environment())
-
-    # Run the calculation
-    out <- unlist(parallel::parLapply(cl, xparse, doCall))
-
-    # Shut down the cluster
-    parallel::stopCluster(cl)
-                  
+    # Run the calculation in parallel
+    out <- unlist(parLapplyW(xparse, doCall, njobs = nJobs, varlist = c("fun", "x", "args")))
+    
     # Reorder if needed
     if (is.null(random.seed))
       return(out)

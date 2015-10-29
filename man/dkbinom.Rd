@@ -5,8 +5,10 @@
 \alias{pkbinom}
 \title{Probability functions for the sum of k independent binomials}
 \usage{
-dkbinom(x, size, prob, log = FALSE, verbose = FALSE, method = c("butler", "fft"), checkArgs = TRUE)
-pkbinom(q, size, prob, log.p = FALSE, verbose = FALSE, method = c("butler", "naive", "fft"))
+dkbinom(x, size, prob, log = FALSE, verbose = FALSE,
+        method = c("butler", "fft"), checkArgs = TRUE)
+pkbinom(q, size, prob, log.p = FALSE, verbose = FALSE,
+        method = c("butler", "naive", "fft"))
 }
 \arguments{
 \item{x}{Vector of values at which to evaluate the mass function of the sum

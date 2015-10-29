@@ -39,7 +39,7 @@ hardCode(3:5, vert = FALSE, vname = "num")
 
 # With logicals
 hardCode(TRUE)
-hardCode(c(F, T), vert = FALSE)
+hardCode(c(FALSE, TRUE), vert = FALSE)
 hardCode(c(TRUE, FALSE, TRUE), vname = "newLogical")
 }
 \author{

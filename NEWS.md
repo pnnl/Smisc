@@ -1,8 +1,9 @@
-Version 0.2.14, 2015-10-21
+Version 0.2.14, 2015-10-28
 -----------------------------------------------------------------------------------
 
 FEATURES / CHANGES
 
+- Addition of `parLapplyW()`
 - Various edits to prepare `Smisc` for submission to CRAN
 - Support for Cairo graphics for `openDevice()` is removed
 

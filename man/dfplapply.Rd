@@ -6,10 +6,10 @@
 \usage{
 dfplapply(X, FUN, ..., output.df = FALSE, packages = NULL,
   header.file = NULL, needed.objects = NULL,
-  needed.objects.env = parent.frame(), jobName = "dfplapply", njobs = 7,
-  max.hours = 24, check.interval.sec = 30, collate = FALSE,
-  random.seed = NULL, clean.up = TRUE, rout = !clean.up,
-  verbose = FALSE)
+  needed.objects.env = parent.frame(), jobName = "dfplapply",
+  njobs = parallel::detectCores() - 1, max.hours = 24,
+  check.interval.sec = 30, collate = FALSE, random.seed = NULL,
+  clean.up = TRUE, rout = !clean.up, verbose = FALSE)
 }
 \arguments{
 \item{X}{The data frame, each row of which will be processed using
@@ -19,18 +19,20 @@ dfplapply(X, FUN, ..., output.df = FALSE, packages = NULL,
 a single row of \code{X}.  The value returned by \code{FUN} can be any
 object}
 
+\item{...}{Additional named arguments to \code{FUN}}
+
 \item{output.df}{logical indicating whether the value returned by
 \code{dfplapply} should be a data frame. If \code{output.df = TRUE}, then
 the value returned by \code{FUN} should be a data frame.  If
 \code{output.df = FALSE}, a list is returned by \code{dfplapply}.}
 
 \item{packages}{Character vector giving the names of packages that will be
-loaded in each new instance of R.}
+loaded in each new instance of R, using \code{\link{library}}.}
 
-\item{header.file}{Optional text string indicating a file that will be
-initially sourced in each instance of R.  Typically this would be used to
-create an 'environment' that will satisfy all potential dependencies for
-\code{FUN}. If \code{NULL}, no file is sourced.}
+\item{header.file}{Text string indicating a file that will be initially
+sourced prior calling \code{\link{lapply}} in order to create an
+'environment' that will satisfy all potential dependencies for \code{FUN}.
+If \code{NULL}, no file is sourced.}
 
 \item{needed.objects}{Character vector giving the names of objects which
 reside in the evironment specified by \code{needed.objects.env} that may be
@@ -39,13 +41,13 @@ new instance of R that is launched.  If \code{NULL}, no additional objects
 are passed.}
 
 \item{needed.objects.env}{Environment where \code{needed.objects} reside.
-This defaults to the environment in which \code{dfplapply} is called.}
+This defaults to the environment in which \code{plapply} is called.}
 
 \item{jobName}{Text string indicating the prefix for files that will be
 created while launching the separate instances of R.}
 
-\item{njobs}{The number of jobs (subsets), which should probably not exceed
-the number of cores on the machine.}
+\item{njobs}{The number of jobs (subsets).  Defaults to one less than the
+number of cores on the machine.}
 
 \item{max.hours}{The maximum number of hours to wait for the \code{njobs}
 to complete.}
@@ -53,28 +55,26 @@ to complete.}
 \item{check.interval.sec}{The number of seconds to wait between checking to
 see whether all \code{njobs} have completed.}
 
-\item{collate}{\code{=TRUE} creates a 'first-in-first-out' processing of
-the elements of the list \code{X}.  This logical is passed to the
+\item{collate}{\code{=TRUE} creates a 'first-in-first-out' processing order of
+the elements of the input list \code{X}.  This logical is passed to the
 \code{collate} argument of \code{\link{parseJob}}.}
 
 \item{random.seed}{An integer setting the random seed, which will result in
-randomizing the rows of the input data frame, \code{X}, that are assigned
-to each job. This is useful when the computing time for each row varies
-significantly.  If \code{NULL}, no randomization is performed and the rows
-of the input data frame \code{X} are subdivided sequentially among the
-jobs.  This variable is passed to the \code{random.seed} argument of
-\code{\link{parseJob}}.}
+randomizing the elements of the list assigned to each job. This is useful
+when the computing time for each element varies significantly because it
+helps to even out the run times of the parallel jobs. If \code{random.seed
+= NULL}, no randomization is performed and the elements of the input list
+are subdivided sequentially among the jobs.  This variable is passed to the
+\code{random.seed} argument of \code{\link{parseJob}}.}
 
-\item{clean.up}{\code{=TRUE} will delete temporary files.}
+\item{clean.up}{\code{=TRUE} will delete temporary workding directory.}
 
 \item{rout}{\code{=TRUE} will gather the \code{njobs} *.Rout files into a
-single file named "jobName_YYYY-MM-DD_HHMMSS.Rout" which will not be
+single file named "jobName_YYYY-MM-DD_HHMMSS_XXXX.Rout" which will not be
 deleted.}
 
 \item{verbose}{\code{=TRUE} prints messages which show the progress of the
 jobs.}
-
-\item{\dots}{Additional named arguments to \code{FUN}}
 }
 \value{
 A list or data frame containing the results of processing each row
@@ -117,7 +117,7 @@ dfplapply(X, test.3, output.df=TRUE, needed.objects="a.out", njobs=2, check.inte
 Landon Sego
 }
 \seealso{
-\code{\link{plapply}}, \code{\link{lapply}}
+\code{\link{plapply}}
 }
 \keyword{misc}
 

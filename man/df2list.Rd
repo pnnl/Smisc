@@ -37,7 +37,7 @@ df2list(d1, out.type = "v")
 Landon Sego
 }
 \seealso{
-\code{\link{list2df}, \code{\link{as.list}}}
+\code{\link{list2df}}, \code{\link{as.list}}
 }
 \keyword{misc}
 

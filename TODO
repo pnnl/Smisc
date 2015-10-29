@@ -1,3 +1,4 @@
 1. checkArgs argument for pkbinom()
 2. Add testthat checks...
+3. Add pddply(), a parallelized wrapper for ddply
 
