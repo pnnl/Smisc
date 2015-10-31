@@ -11,7 +11,8 @@
 sed_insert(stream, after, insertion, silent = TRUE, ...)
 sed_replace(stream, at, replacement, silent = TRUE, ...)
 sed_substitute(stream, pattern, replacement, every = TRUE, silent = TRUE, ...)
-sed_comment(stream, at, add = TRUE, type = c("R", "C", "java", "html", "tex"), silent = TRUE, ...)
+sed_comment(stream, at, add = TRUE, type = c("R", "C", "Java", "html", "tex", "SAS"),
+            silent = TRUE, ...)
 streamEdit(commandList, stream = NULL, inFile = NULL, outFile = NULL, silent = TRUE)
 }
 \arguments{
@@ -142,7 +143,9 @@ stream <- sed_insert(stream, after = 3, "Here's the first insertion")
 stream
 
 # Insert a stream by searching
-print(stream <- sed_insert(stream, c("Here's the second insertion", "Another line of the second insertion"),
+print(stream <- sed_insert(stream,
+                         c("Here's the second insertion",
+                           "Another line of the second insertion"),
                           after = "insert another"))
 
 # Here's a deletion of lines 1 and 2 using line numbers
@@ -217,7 +220,7 @@ print(a <- sed_comment(a, "Another", add = FALSE, type = "html"))
 # Remove the SAS comments
 sed_comment(a, "embedded", add = FALSE, type = "SAS")
 
-# Comment every line Java style
+# Comment every line in Java style
 print(b <- sed_comment(aStream, "comment", type = "Java"))
 
 # Remove the Java comments from the second and fourth lines

@@ -4,8 +4,8 @@
 \alias{doCallParallel}
 \title{Call a function with a vectorized input in parallel}
 \usage{
-doCallParallel(fun, x, nJobs = parallel::detectCores(), random.seed = NULL,
-  ...)
+doCallParallel(fun, x, nJobs = parallel::detectCores() - 1,
+  random.seed = NULL, ...)
 }
 \arguments{
 \item{fun}{A function, or a text string with the name of the function, whose first argument is a vector and
@@ -13,12 +13,10 @@ returns a corresponding vector}
 
 \item{x}{A vector of values that is the first argument to the function}
 
-\item{nJobs}{The number of parallel jobs to spawn using \code{\link{mclapply}}. Note that \code{nJobs > 1} only works
-for non-Windows machines.}
+\item{nJobs}{The number of parallel jobs to spawn using \code{\link{parLapply}}.}
 
 \item{random.seed}{If a numeric value is provided, \code{x} is randomized to better distribute the work among
-the jobs if some
-values of \code{x} take longer to evaluate than others.
+the jobs if some values of \code{x} take longer to evaluate than others.
 The original ordering is restored before \code{fun(x, ...)} is returned. If \code{NULL},
 no randomization is performed.}
 

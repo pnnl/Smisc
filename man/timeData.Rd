@@ -5,7 +5,9 @@
 \alias{timeData}
 \title{Generic data frame with a time variable}
 \format{A data frame with 414 observations on the following 2 variables.
-\describe{ \item{list("time")}{a POSIXt} \item{list("x")}{a numeric vector}
+\describe{
+\item{time}{a POSIXt time variable}
+\item{x}{a numeric vector}
 }}
 \description{
 Generic data frame with a time variable to support the example in

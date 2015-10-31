@@ -14,12 +14,10 @@
 ##' 
 ##' @param x A vector of values that is the first argument to the function
 ##' 
-##' @param nJobs The number of parallel jobs to spawn using \code{\link{mclapply}}. Note that \code{nJobs > 1} only works
-##' for non-Windows machines.
+##' @param nJobs The number of parallel jobs to spawn using \code{\link{parLapply}}.
 ##'
 ##' @param random.seed If a numeric value is provided, \code{x} is randomized to better distribute the work among
-##' the jobs if some
-##' values of \code{x} take longer to evaluate than others.
+##' the jobs if some values of \code{x} take longer to evaluate than others.
 ##' The original ordering is restored before \code{fun(x, ...)} is returned. If \code{NULL},
 ##' no randomization is performed.  
 ##' 
@@ -50,19 +48,20 @@
 ##' identical(y1, y3)
 ##' identical(y1, y4)
 
-doCallParallel <- function(fun, x, nJobs = parallel::detectCores(), random.seed = NULL, ...) {
+doCallParallel <- function(fun, x, nJobs = parallel::detectCores() - 1, random.seed = NULL, ...) {
 
   # Argument checks
   stopifnot(if (is.character(fun)) is.function(get(fun)) else is.function(fun),
             is.vector(x),
             is.numeric(nJobs),
-            length(nJobs) == 1)
+            length(nJobs) == 1,
+            if (!is.null(random.seed)) is.numeric(random.seed) else TRUE)
 
-  # Make sure the number of jobs is no larger than the vector x
-  nJobs <- min(length(x), nJobs)
+  # Make sure the number of jobs is no larger than the length of x, and no smaller than 1
+  nJobs <- max(1, min(length(x), nJobs))
 
-  # If only 1 job or windows
-  if ((nJobs == 1) | (.Platform$OS.type == "windows")) {
+  # If only 1 job
+  if (nJobs == 1) {
       
     return(do.call(fun, list(x, ...)))
 
@@ -71,11 +70,18 @@ doCallParallel <- function(fun, x, nJobs = parallel::detectCores(), random.seed 
 
     # Create the job ordering
     xparse <- parseJob(length(x), njobs = nJobs, random.seed = random.seed)
-      
-    out <- unlist(parallel::mclapply(xparse,
-                                     function(subset) do.call(fun, list(x[subset], ...)),
-                                     mc.cores = nJobs))
 
+    # Get the extra arguments
+    args <- list(...)
+
+    # Function for parLapply
+    doCall <- function(subset) {
+      do.call(fun, c(list(x[subset]), args))
+    }
+    
+    # Run the calculation in parallel
+    out <- unlist(parLapplyW(xparse, doCall, njobs = nJobs, varlist = c("fun", "x", "args")))
+    
     # Reorder if needed
     if (is.null(random.seed))
       return(out)

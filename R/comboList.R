@@ -8,39 +8,54 @@
 ##' @export
 ##'
 ##' @param n.pred integer indicating the number of predictors
+##' 
 ##' @param outFile text string indicating the .Rdata file to which the returned
 ##' list of predictor combinations will be saved.  If NULL, then no file is
 ##' saved.
+##' 
 ##' @param njobs Integer indicating the number of parallel jobs to be used in
-##' calculating the combinations, using \code{\link{mclapply}}
+##' calculating the combinations, using \code{\link{parLapply}}
+##' 
 ##' @param verbose \code{= TRUE} indicates that a message regarding the saving
 ##' of the output file will be printed
+##' 
 ##' @return A list of class \code{combolist} is invisibly returned with the two
 ##' components shown below.  If \code{outFile} is not \code{NULL}, this same
 ##' list is saved to \code{outFile}: \item{len}{The total number of
 ##' combinations} \item{pList}{A list where each element contains an integer
 ##' representation of one combination of the predictors}
+##' 
 ##' @author Landon Sego
+##' 
 ##' @keywords misc
+##' 
 ##' @examples
-##'
-##' x <- comboList(3)
+##' x <- comboList(4)
 ##' print(x)
 ##'
+##' # A parallel job
+##' y <- comboList(4, njobs = 2)
+##'
+##' # Should be equal
+##' identical(x, y)
 comboList <- function(n.pred, outFile = NULL, njobs = 1, verbose = FALSE) {
 
-  # n.pred = number of predictors
-  # outFile = text string indicating the .Rdata file to which the final object will be saved
-  # njobs > 1 will run the calculation of the jobs in parallel using plapply()
-  # verbose = TRUE indicates that a message regarding the saving of the output file will be printed
-
+  # Basic checks on the arguments
+  stopifnot(is.numeric(n.pred),
+            n.pred >= 1,
+            if (!is.null(outFile)) is.character(outFile) else TRUE,
+            is.numeric(njobs),
+            njobs >= 1,
+            is.logical(verbose))
+    
   # Create the profile of counts for each category
-  counts <- choose(n.pred,1:n.pred)
+  counts <- choose(n.pred, 1:n.pred)
   groups <- c(1:n.pred)[order(counts, decreasing = TRUE)]
 
   # Make sure we don't spawn more jobs then there are groups
-  if (njobs > n.pred)
+  if (njobs > n.pred) {
     njobs <- n.pred
+  }
 
   # Create a list that will spread the combn work out somewhat evenly
   cnt.list <- vector(njobs, mode="list")
@@ -51,17 +66,17 @@ comboList <- function(n.pred, outFile = NULL, njobs = 1, verbose = FALSE) {
       cnt.list[[njobs]] <- groups[njobs:length(groups)]
   }
 
-  # Wrapper function for combn to be used in plapply
+  # Wrapper function for combn
   combn.wrapper <- function(n.to.choose) {
 
     if (length(n.to.choose) == 1)
-      return(combn(n.pred, n.to.choose, simplify = FALSE))
+      return(utils::combn(n.pred, n.to.choose, simplify = FALSE))
 
     # If the list element has length greater than 1 (these should be the fast cases)
     else {
 
       for (n in n.to.choose)
-        assign(paste("o", n, sep=""), combn(n.pred, n, simplify = FALSE))
+        assign(paste("o", n, sep=""), utils::combn(n.pred, n, simplify = FALSE))
 
       # concatentate all these lists together at once
       out.text <- paste("c(", paste(paste("o", n.to.choose, sep=""), collapse=","), ")", sep="")
@@ -72,10 +87,22 @@ comboList <- function(n.pred, outFile = NULL, njobs = 1, verbose = FALSE) {
 
   } # combn.wrapper
 
-  # Now run combn in parallel
-##   out <- plapply(cnt.list, combn.wrapper, needed.objects = "n.pred", jobName = "cList",
-##                  check.interval.sec = 0.5, njobs = njobs)
-  out <- plapply(cnt.list, combn.wrapper, mc.cores = njobs)
+
+  # Run jobs in serial
+  if (njobs == 1) {
+      
+    out <- lapply(cnt.list, combn.wrapper)
+    
+  }
+
+  # Or run in parallel  
+  else {
+      
+    out <- parLapplyW(cnt.list, combn.wrapper, njobs = njobs, varlist = "n.pred")
+    
+  }
+
+  # Unpack the list
   out <- unlist(out, recursive = FALSE)
 
   # Final check

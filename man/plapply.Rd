@@ -17,7 +17,7 @@ plapply(X, FUN, ..., packages = NULL, header.file = NULL,
 \item{FUN}{A function whose first argument is an element of list \code{X}}
 
 \item{packages}{Character vector giving the names of packages that will be
-loaded in each new instance of R.}
+loaded in each new instance of R, using \code{\link{library}}.}
 
 \item{header.file}{Text string indicating a file that will be initially
 sourced prior calling \code{\link{lapply}} in order to create an
@@ -45,7 +45,7 @@ to complete.}
 \item{check.interval.sec}{The number of seconds to wait between checking to
 see whether all \code{njobs} have completed.}
 
-\item{collate}{\code{=TRUE} creates a 'first-in-first-out' processing of
+\item{collate}{\code{=TRUE} creates a 'first-in-first-out' processing order of
 the elements of the input list \code{X}.  This logical is passed to the
 \code{collate} argument of \code{\link{parseJob}}.}
 
@@ -79,6 +79,8 @@ for each subset.
 \code{plapply} applies \code{FUN} to each element of the list \code{X} by
 parsing the list into \code{njobs} lists of equal (or almost equal) size
 and then applies \code{FUN} to each sublist using \code{\link{lapply}}.
+Differences between \code{plapply} and \code{\link{parLapply}} and
+\code{\link{mclapply}} are discussed below.
 
 A separate batch instance of R is launched for each sublist, thus utilizing
 another core of the machine. After the jobs complete, the \code{njobs}
@@ -94,34 +96,55 @@ R.
 
 Each instance of R runs a script that performs the following steps:
 
-\enumerate{ \item The \code{Smisc} package is loaded.
+\enumerate{
+
+\item The \code{Smisc} package is loaded:  \code{library(Smisc)}
 
 \item Any other packages indicated in the \code{packages} argument are
-loaded.
+loaded via calls to \code{library()}
 
-\item The \code{process.id} global variable is assigned (having been passed
-in via a command line argument).
+\item The \code{process.id} global variable is assigned to the global
+environment of the R instance (having been passed
+in via a command line argument)
 
-\item The header file (if there is one) is sourced.
+\item The header file (if there is one) is sourced
 
 \item The expression \code{pre.process.expression} is evaluated if an
 object of that name is present in the global environment. The object
 \code{pre.process.expression} may be passed in via the header file or via
-\code{needed.objects}.
+\code{needed.objects}
 
-\item \code{\link{lapply}} is called on the sublist.
-
-\item The output returned by \code{lapply} is saved to a temporary file
-where it will be collected after all jobs have completed.
+\item \code{\link{lapply}} is called on the sublist, the sublist is called
+\code{X.i}
 
 \item The expression \code{post.process.expression} is evaluated if an
 object of that name is present in the global environment.  The object
 \code{post.process.expression} may be passed in via the header file or via
-\code{needed.objects}.
+\code{needed.objects}
 
-\item Warnings are printed. }
+\item The output returned by \code{lapply} is assigned to the object
+\code{X.i.out}, and is saved to a temporary file
+where it will be collected after all jobs have completed
+
+\item Warnings are printed
+}
 
 Note that steps 3, 5, and 7-9 are skipped if \code{njobs = 1}.
+
+This function has some additional features that may not be readily available
+in \code{\link{mclapply}} or \code{\link{parLapply}}:
+\itemize{
+
+\item The \code{.Rout} files produced by each R instance are easily accessible
+for convenient debugging of errors or warnings.  The \code{.Rout} files
+can also serve as an explicit record of the work that
+was performed by the worker nodes
+
+\item The ordering of the processing can be randomized or collated (first-in-first-out)
+
+\item In each instance, pre-processing or post-processing steps can be performed
+before and after the call to \code{\link{lapply}}
+}
 }
 \examples{
 # Create a simple list
@@ -163,8 +186,7 @@ all(unlist(res.3) == unlist(res.4))
 Landon Sego
 }
 \seealso{
-\code{\link{lapply}}, \code{\link{mclapply}},
-\code{\link{dfplapply}}
+\code{\link{lapply}}, \code{\link{dfplapply}}, \code{\link{mclapply}}
 }
 \keyword{misc}
 

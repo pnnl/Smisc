@@ -5,7 +5,7 @@
 \alias{timeDiff.eg}
 \title{Four short time series}
 \description{
-Four short times series for use in the \code{\link{timeDiff}} example.
+Four short times series, stored in a list, for use in the \code{\link{timeDiff}} example.
 }
 \examples{
 data(timeDiff.eg)

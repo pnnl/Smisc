@@ -14,7 +14,7 @@ list of predictor combinations will be saved.  If NULL, then no file is
 saved.}
 
 \item{njobs}{Integer indicating the number of parallel jobs to be used in
-calculating the combinations, using \code{\link{mclapply}}}
+calculating the combinations, using \code{\link{parLapply}}}
 
 \item{verbose}{\code{= TRUE} indicates that a message regarding the saving
 of the output file will be printed}
@@ -34,8 +34,14 @@ predictors
 Uses \code{\link{combn}} to identify the combinations.
 }
 \examples{
-x <- comboList(3)
+x <- comboList(4)
 print(x)
+
+# A parallel job
+y <- comboList(4, njobs = 2)
+
+# Should be equal
+identical(x, y)
 }
 \author{
 Landon Sego

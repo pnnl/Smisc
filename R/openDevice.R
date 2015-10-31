@@ -7,12 +7,6 @@
 ##' \code{\link{postscript}}, \code{\link{pdf}}, \code{\link{jpeg}},
 ##' \code{\link{tiff}}, \code{\link{png}}, or \code{\link{bmp}}.
 ##'
-##' If you're runnning on PIC (olympus and/or its comput nodes) and the
-##' extension of your filename is \code{jpg}, \code{tif}, or \code{png}, then,
-##' out of necesity, Cairo graphics (\code{CairoJPEG}, \code{CairoTIFF},
-##' \code{CairoPNG}) will be used.  Note that \code{bmp} is not supported by
-##' Cairo.
-##'
 ##' \code{openDevice} silently ignores named arguments in \code{\dots{}} which
 ##' do not match the named arguments in the graphics device function that is
 ##' called.
@@ -22,17 +16,23 @@
 ##' @param fileName Character string giving the filename for the graphics
 ##' output.  It must contain one of the extensions listed in the \code{Details}
 ##' below.
+##'
 ##' @param \dots Named arguments to the device functions listed in
 ##' \code{Details} below.
+##' 
 ##' @return The graphics device is opened and the filename is invisibly
 ##' returned.
+##' 
 ##' @author Landon Sego
+##' 
 ##' @keywords misc
+##' 
 ##' @examples
 ##'
 ##' # Open 3 example devices
 ##' openDevice("ex1.pdf", height=6, width=12)
-##'
+##' plot(1:10, 1:10)
+##' 
 ##' openDevice("ex1.jpg")
 ##' plot(1:10, 1:10)
 ##'
@@ -61,54 +61,20 @@ openDevice <- function(fileName, ...) {
 
   supported.extensions <- c("ps","pdf","jpg","tif","png","bmp")
 
-  if (!(ext %in% supported.extensions))
+  if (!(ext %in% supported.extensions)) {
     stop("Filename must have one of the following extensions: '",
          paste(supported.extensions, collapse="', '"), "'.\n")
-
-  useCairo <- FALSE
-
-  # If we're on olympus or any of the pic nodes, use Cairo
-  if (.Platform$OS.type == "unix") {
-
-    usr.host <- system("/bin/hostname -s", intern = TRUE)
-
-    if (gsub("[0-9]", "", usr.host) %in% c("olympus", "olympus-e", "node", "gpu", "fat", "short")){
-
-      if (!(ext %in% c("ps", "pdf")))
-        useCairo <- TRUE
-
-    }
-
   }
 
-
-  # Without Cairo
-  if (!useCairo)
-    fname <- switch(ext,
-                    ps = "postscript",
-                    pdf = "pdf",
-                    jpg = "jpeg",
-                    tif = "tiff",
-                    png = "png",
-                    bmp = "bmp")
-
-  # With Cairo
-  else {
-
-    cat("Message from openDevice():  'useCairo' is being set to TRUE because it appears you ",
-        "are running on PIC\n", sep = "")
-
-    if (ext == "bmp")
-     stop("bmp is not a supported format for Cairo")
-
-    stopifnot(require(Cairo))
-
-    fname <- switch(ext,
-                    jpg = "CairoJPEG",
-                    tif = "CairoTIFF",
-                    png = "CairoPNG")
-  }
-
+  # Assign the function to be used
+  fname <- switch(ext,
+                  ps = "postscript",
+                  pdf = "pdf",
+                  jpg = "jpeg",
+                  tif = "tiff",
+                  png = "png",
+                  bmp = "bmp")
+  
   # Get the argument names of the function that will be called
   argNames <- names(formals(fname))
 

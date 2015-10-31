@@ -48,12 +48,14 @@
 ##'
 ##' data(timeDiff.eg)
 ##'
-##' # Show the example objects
-##' print(x1)
-##' print(x2)
-##' print(x1.d)
-##' print(x2.d)
-##'
+##' # Show the objects
+##' print(timeDiff.eg)
+##' 
+##' # Extract the objects from the list for easier use in the example
+##' x1 <- timeDiff.eg$x1
+##' x2 <- timeDiff.eg$x2
+##' x1.d <- timeDiff.eg$x1.d
+##' x2.d <- timeDiff.eg$x2.d
 ##'
 ##' # Print warnings as they occur
 ##' op <- options(warn=1)
@@ -69,7 +71,8 @@
 ##'
 ##' # Create the vector that will be averaged, with time stamps occuring
 ##' # about every 10 seconds
-##' v1.names <- seq(formatDT("2009-09-12 3:20:31")$dt.posix, formatDT("2009-09-12 3:29:15")$dt.posix, by=10)
+##' v1.names <- seq(formatDT("2009-09-12 3:20:31")$dt.posix,
+##'                 formatDT("2009-09-12 3:29:15")$dt.posix, by=10)
 ##'
 ##' # Now jitter the times a bit and look at the time spacing
 ##' v1.names <- v1.names + round(rnorm(length(v1.names), sd=1.5))
@@ -80,7 +83,8 @@
 ##' names(v1) <- v1.names
 ##'
 ##' # Now create a standard vector with values of 0 with time stamps every 30 seconds
-##' standard.names <- seq(formatDT("2009-09-12 3:21:30")$dt.posix, formatDT("2009-09-12 3:28:30")$dt.posix, by=30)
+##' standard.names <- seq(formatDT("2009-09-12 3:21:30")$dt.posix,
+##'                       formatDT("2009-09-12 3:28:30")$dt.posix, by=30)
 ##' standard <- double(length(standard.names))
 ##' names(standard) <- standard.names
 ##'

@@ -28,9 +28,6 @@
 ##' 
 ##' @author Landon Sego
 ##' 
-##' @references Based in part on
-##' \url{http://groups.google.com/group/eaut/web/rules-for-valid-email-addresses}
-##' 
 ##' @keywords misc
 ##' @examples
 ##'

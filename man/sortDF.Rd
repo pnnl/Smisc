@@ -5,7 +5,6 @@
 \title{Sorts a dataframe by one or more variables}
 \usage{
 sortDF(form, dat)
-sortDF(dat, form)
 }
 \arguments{
 \item{form}{A formula with the variable names to use for sorting}

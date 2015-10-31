@@ -6,7 +6,9 @@
 ##' @name timeData
 ##' @docType data
 ##' @format A data frame with 414 observations on the following 2 variables.
-##' \describe{ \item{list("time")}{a POSIXt} \item{list("x")}{a numeric vector}
+##' \describe{
+##' \item{time}{a POSIXt time variable}
+##' \item{x}{a numeric vector}
 ##' }
 ##' @keywords datasets
 ##' @examples

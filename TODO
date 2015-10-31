@@ -1,1 +1,4 @@
-Update doCallParallel() to not use mclapply() and use parLapply() instead
+1. checkArgs argument for pkbinom()
+2. Add testthat checks...
+3. Add pddply(), a parallelized wrapper for ddply
+

@@ -202,12 +202,12 @@ hpd <- function(pdf, support, prob = 0.95, cdf = NULL, nJobs = 1, checkUnimodal 
 ##' @describeIn hpd Prints the lower and upper limits of the credible interval, along with the achieved
 ##' probabilty of that interval.
 ##' 
-##' @param  hpdObject object of class \code{hpd}, returned by \code{hpd}
+##' @param  x object of class \code{hpd}, returned by \code{hpd}
 ##' 
 ##' @export
-print.hpd <- function(hpdObject) {
+print.hpd <- function(x, ...) {
     
-  print(hpdObject[c("lower", "upper", "prob")])
+  print(x[c("lower", "upper", "prob")])
   
 } # print.hpd
 
@@ -215,15 +215,15 @@ print.hpd <- function(hpdObject) {
 ##' 
 ##' @describeIn hpd Plots the density, overlaying the lower and upper limits of the credible interval
 ##' 
-##' @param \dots Additional agruments that may be passed to \code{\link{plotFun}}, \code{\link{plot.default}},
-##' or \code{\link{abline}}
+##' @param \dots For the \code{plot} method, these are additional arguments that may be passed to
+##' \code{\link{plotFun}}, \code{\link{plot.default}}, or \code{\link{abline}}
 ##' 
 ##' @export
 
-plot.hpd <- function(hpdObject, ...) {
+plot.hpd <- function(x, ...) {
 
   # Set the default plotting args
-  args <- list(fun = hpdObject$pdf, xlim = hpdObject$support,
+  args <- list(fun = x$pdf, xlim = x$support,
                xlab = expression(x), ylab = expression(f(x)), col = "Red")
   
   # Default value for ablineArgs
@@ -252,7 +252,7 @@ plot.hpd <- function(hpdObject, ...) {
   do.call(plotFun, args)
 
   # Add in the lines
-  do.call(abline, c(list(v = c(hpdObject$lower, hpdObject$upper)), ablineArgs1))
-  do.call(abline, c(list(h = hpdObject$cut), ablineArgs2))
+  do.call(abline, c(list(v = c(x$lower, x$upper)), ablineArgs1))
+  do.call(abline, c(list(h = x$cut), ablineArgs2))
   
 } # plot.hpd

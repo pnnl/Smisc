@@ -96,8 +96,7 @@ Landon Sego
 http://www.cygnus-software.com/papers/comparingfloats/comparingfloats.htm
 }
 \seealso{
-\code{\link{all.equal}}, \code{\link{identical}},
-\code{\link{find.dframeEquiv}}
+\code{\link{all.equal}}, \code{\link{identical}}
 }
 \keyword{misc}
 

@@ -22,10 +22,10 @@
 ##' Plots the mean (or other summary) of the response for two-way combinations
 ##' of factors, thereby illustrating possible interactions.
 ##'
-##' %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+## %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 ##' This modification of \code{\link{interaction.plot}} adds the \code{errorBar} and
-##' \code{jitterErrorBar} arguments.
-##' %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+##' \code{jitterErrorBars} arguments.
+## %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 ##'
 ##' By default the levels of \code{x.factor} are plotted on the x axis in their
 ##' given order, with extra space left at the right for the legend (if
@@ -44,6 +44,16 @@
 ##'
 ##' @export
 ##'
+##' @usage interactionPlot(x.factor, trace.factor, response, fun = mean,
+##'                        errorBar = NULL, jitterErrorBars = FALSE,
+##'	                       type = c("l", "p", "b", "o", "c"), legend = TRUE,
+##'                        trace.label = deparse(substitute(trace.factor)), fixed = FALSE,
+##'                        xlab = deparse(substitute(x.factor)), ylab = ylabel,
+##'                        ylim = range(cells, na.rm=TRUE),
+##'                        lty = nc:1, col = 1, pch = c(1L:9, 0, letters),
+##'                        xpd = NULL, leg.bg = par("bg"), leg.bty = "n",
+##'                        xtick = FALSE, xaxt = par("xaxt"), axes = TRUE, ...)
+##'
 ##' @param x.factor a factor whose levels will form the x axis.
 ##' @param trace.factor another factor whose levels will form the traces.
 ##' @param response a numeric variable giving the response
@@ -53,7 +63,7 @@
 ##' \code{width}, and optional element \code{blankMiddle}. These correspond to
 ##' the arguments of \code{\link{vertErrorBar}}.  Defaults to \code{NULL}, in
 ##' which case no error bars are drawn
-##' @param jitterErrorBar Logical indicating whether the x-values of the points
+##' @param jitterErrorBars Logical indicating whether the x-values of the points
 ##' (and the error bars) should be jittered for easier readability. This
 ##' argument is ignored if \code{errorBar = NULL}.
 ##' @param type the type of plot (see \code{\link{plot.default}}): lines or
@@ -74,9 +84,9 @@
 ##' at the figure border.
 ##' @param leg.bg,leg.bty arguments passed to \code{\link{legend}()}.
 ##' @param xtick logical. Should tick marks be used on the x axis?
-##' @param xaxt,axes, graphics parameters to be passed to the plotting
+##' @param xaxt,axes graphics parameters to be passed to the plotting
 ##' routines.
-##' @param list() graphics parameters to be passed to the plotting routines.
+##' @param \dots graphics parameters to be passed to the plotting routines.
 ##' @note Some of the argument names and the precise behaviour are chosen for
 ##' S-compatibility.
 ##' @author Originates in the \code{stats} package in the R distribution,
@@ -89,7 +99,7 @@
 ##' @keywords hplot
 ##' @examples
 ##'
-##' %%% BEGIN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+## %%% BEGIN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 ##' require(graphics)
 ##'
 ##' with(ToothGrowth, {
@@ -102,7 +112,7 @@
 ##'                 jitterErrorBars = TRUE,
 ##'                 main = "Error bars have no meaning--just for illustration")
 ##' })
-##' %%% END %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+## %%% END %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 ##'
 interactionPlot <-
     function(x.factor, trace.factor, response, fun = mean,

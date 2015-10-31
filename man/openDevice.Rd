@@ -27,12 +27,6 @@ Will open a \code{ps}, \code{pdf}, \code{jpg}, \code{tif}, \code{png}, or
 \code{\link{postscript}}, \code{\link{pdf}}, \code{\link{jpeg}},
 \code{\link{tiff}}, \code{\link{png}}, or \code{\link{bmp}}.
 
-If you're runnning on PIC (olympus and/or its comput nodes) and the
-extension of your filename is \code{jpg}, \code{tif}, or \code{png}, then,
-out of necesity, Cairo graphics (\code{CairoJPEG}, \code{CairoTIFF},
-\code{CairoPNG}) will be used.  Note that \code{bmp} is not supported by
-Cairo.
-
 \code{openDevice} silently ignores named arguments in \code{\dots{}} which
 do not match the named arguments in the graphics device function that is
 called.
@@ -40,6 +34,7 @@ called.
 \examples{
 # Open 3 example devices
 openDevice("ex1.pdf", height=6, width=12)
+plot(1:10, 1:10)
 
 openDevice("ex1.jpg")
 plot(1:10, 1:10)
