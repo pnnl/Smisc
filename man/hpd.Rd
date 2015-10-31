@@ -68,7 +68,7 @@ probabilty of that interval.
 }}
 \examples{
 # A credible interval using the standard normal
-int <- hpd(dnorm, c(-5,5), prob = 0.90, nJobs = 3)
+int <- hpd(dnorm, c(-5,5), prob = 0.90, nJobs = 2)
 print(int)
 plot(int)
 

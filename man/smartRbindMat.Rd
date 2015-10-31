@@ -37,7 +37,7 @@ z
 smartRbindMat(x,y,z)
 smartRbindMat(list(x, y, z), distinguish = TRUE)
 smartRbindMat(y,z,x, distinguish = TRUE)
-smartRbindMat(c("y","x","z"), filler = -20, distinguish = T)
+smartRbindMat(c("y","x","z"), filler = -20, distinguish = TRUE)
 
 w1 <- matrix(sample(letters[1:26], 6), ncol = 2,
              dimnames = list(c("3", "", "4"), c("w", "v")))

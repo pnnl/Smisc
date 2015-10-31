@@ -13,6 +13,6 @@ To install:
 A few notes about installation:
 - The `devtools` package is available from [CRAN](http://cran.r-project.org)
 - The `Smisc` package contains C code that requires compilation:  
-On a Mac, you'll need [Xcode](http://developer.apple.com/xcode/), 
+On a Mac, you'll need [Xcode](https://developer.apple.com/xcode/), 
 on Windows, you'll need to install [R tools](http://cran.r-project.org/bin/windows/Rtools/), 
 and on Linux, compilation should take place "automatically."

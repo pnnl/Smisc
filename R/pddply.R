@@ -1,9 +1,11 @@
 ##' Parallel wrapper for plyr::ddply
 ##'
-##' Parallel implementation of \code{\link{ddply}} that suppresses a spurious warning when \code{\link{ddply}} is called in parallel.
-##' All of the arguments except \code{njobs} are passed directly to arguments of the same name in \code{\link{ddply}}.
+##' Parallel implementation of \code{\link[plyr:ddply]{plyr::ddply}} that suppresses a spurious warning when
+##' \code{\link[plyr:ddply]{plyr::ddply}} is called in parallel.
+##' All of the arguments except \code{njobs} are passed directly to arguments of the same name in
+##' \code{\link[plyr:ddply]{plyr::ddply}}.
 ##'
-##' An innocuous warning is thrown when \code{\link{ddply}} is called in parallel:
+##' An innocuous warning is thrown when \code{\link[plyr:ddply]{plyr::ddply}} is called in parallel:
 ##' \url{https://github.com/hadley/plyr/issues/203}.  This function catches and hides that warning, which looks like this:
 ##' \verb{
 ##' 
@@ -11,8 +13,8 @@
 ##' 1: <anonymous>: ... may be used in an incorrect context: '.fun(piece, ...)'
 ##' }
 ##'
-##' If \code{njobs = 1}, a call to \code{\link{ddply}} is made without parallelization anything supplied to \code{.paropts} is
-##' ignored. See the documentation for \code{\link{ddply}} for additional details.
+##' If \code{njobs = 1}, a call to \code{\link[plyr:ddply]{plyr::ddply}} is made without parallelization, and anything
+##' supplied to \code{.paropts} is ignored. See the documentation for \code{\link[plyr:ddply]{plyr::ddply}} for additional details.
 ##' 
 ##' @export
 ##'
@@ -26,7 +28,7 @@
 ##'
 ##' @param njobs the number of parallel jobs to launch, defaulting to one less than the number of available cores on the machine
 ##'
-##' @param .progress name of the progress bar to use, see \code{\link{create_progress_bar}}
+##' @param .progress name of the progress bar to use, see \code{\link[plyr:create_progress_bar]{plyr::create_progress_bar}}
 ##'
 ##' @param .inform produce informative error messages?  This is turned off by default because it substantially
 ##' slows processing speed, but is very useful for debugging
@@ -34,14 +36,14 @@
 ##' @param .drop should combinations of variables that do not appear in the input data be
 ##' preserved (FALSE) or dropped (TRUE, default)
 ##'
-##' @param .paropts a list of additional options passed into the \code{\link{foreach}} function when parallel
-##' computation is enabled.  This is important if (for example) your code relies on external data
+##' @param .paropts a list of additional options passed into the \code{\link[foreach:foreach]{foreach::foreach}} function
+##' when parallel computation is enabled.  This is important if (for example) your code relies on external data
 ##' or packages. Use the \code{.export} and \code{.packages} arguments to
 ##' supply them so that all cluster nodes have the correct environment set up for computing.
 ##'
-##' @return  The object data frame returned by \code{\link{ddply}}
+##' @return  The object data frame returned by \code{\link[plyr:ddply]{plyr::ddply}}
 ##'
-##' @seealso \code{\link{ddply}}
+##' @seealso \code{\link[plyr:ddply]{plyr::ddply}}
 ##'
 ##' @examples
 ##'data(baseball, package = "plyr")
@@ -94,6 +96,11 @@ pddply <- function(.data, .variables, .fun = NULL, ...,
                          .drop = .drop, .parallel = FALSE))
     }
 
+    # Make sure the foreach package is available
+    if (!requireNamespace("foreach", quietly = TRUE)) {
+      stop("foreach package is required by pddply() when njobs > 1")
+    }
+    
     # Set up the cluster  
     cl <- parallel::makeCluster(njobs)
     doParallel::registerDoParallel(cl)
