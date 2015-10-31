@@ -36,7 +36,8 @@ supply them so that all cluster nodes have the correct environment set up for co
 The object data frame returned by \code{\link{ddply}}
 }
 \description{
-Parallel implementation of \code{\link{ddply}} that suppresses a spurious warning when \code{\link{ddply}} is called in parallel
+Parallel implementation of \code{\link{ddply}} that suppresses a spurious warning when \code{\link{ddply}} is called in parallel.
+All of the arguments except \code{njobs} are passed directly to arguments of the same name in \code{\link{ddply}}.
 }
 \details{
 An innocuous warning is thrown when \code{\link{ddply}} is called in parallel:

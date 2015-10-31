@@ -1,6 +1,7 @@
 ##' Parallel wrapper for plyr::ddply
 ##'
-##' Parallel implementation of \code{\link{ddply}} that suppresses a spurious warning when \code{\link{ddply}} is called in parallel
+##' Parallel implementation of \code{\link{ddply}} that suppresses a spurious warning when \code{\link{ddply}} is called in parallel.
+##' All of the arguments except \code{njobs} are passed directly to arguments of the same name in \code{\link{ddply}}.
 ##'
 ##' An innocuous warning is thrown when \code{\link{ddply}} is called in parallel:
 ##' \url{https://github.com/hadley/plyr/issues/203}.  This function catches and hides that warning, which looks like this:
@@ -135,7 +136,7 @@ pddply <- function(.data, .variables, .fun = NULL, ...,
 
       }
       
-    } # If there are warning messages
+    } 
 
     # Return the result
     return(o$value)
