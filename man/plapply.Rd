@@ -136,8 +136,9 @@ in \code{\link{mclapply}} or \code{\link{parLapply}}:
 \itemize{
 
 \item The \code{.Rout} files produced by each R instance are easily accessible
-for convenient debugging or they can be stored as a record of the work that
-was performed
+for convenient debugging of errors or warnings.  The \code{.Rout} files
+can also serve as an explicit record of the work that
+was performed by the worker nodes
 
 \item The ordering of the processing can be randomized or collated (first-in-first-out)
 
