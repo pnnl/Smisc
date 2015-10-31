@@ -20,7 +20,7 @@ Display the contents of a file to the R terminal, like the \code{more} command i
 }
 \examples{
 cat("Here's a file\\n", "with a few lines\\n", "to read.\\n", sep = "", file = "tmpFile.txt")
-splashFile("tmpFile.txt")
+more("tmpFile.txt")
 unlink("tmpFile.txt")
 }
 \seealso{

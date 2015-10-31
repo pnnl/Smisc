@@ -8,9 +8,10 @@ Description: Sego Miscellaneous: A collection of functions for statistical
 Imports: 
     parallel,
     utils,
-    doParallel,
-    foreach
+    plyr,
+    doParallel
 Suggests:
-    testthat
+    testthat,
+    foreach
 Maintainer: Landon Sego <Landon.Sego@pnnl.gov>
 License: file LICENSE

@@ -79,12 +79,13 @@ for each subset.
 \code{plapply} applies \code{FUN} to each element of the list \code{X} by
 parsing the list into \code{njobs} lists of equal (or almost equal) size
 and then applies \code{FUN} to each sublist using \code{\link{lapply}}.
-Differences between \code{plapply} and \code{\link{parLapply}} and
-\code{\link{mclapply}} are discussed below.
+Differences between \code{plapply} and other similar functions,
+like \code{\link{parLapply}} and \code{\link{mclapply}}, are discussed below.
 
 A separate batch instance of R is launched for each sublist, thus utilizing
 another core of the machine. After the jobs complete, the \code{njobs}
-output lists are reassembled.
+output lists are reassembled. The global environments for each batch instance
+of R are created by writing/reading data to/from disc.
 
 If \code{collate = TRUE} or \code{random.seed = Integer value}, the output
 list returned by \code{plapply} is reordered to reflect the original
@@ -129,10 +130,11 @@ where it will be collected after all jobs have completed
 \item Warnings are printed
 }
 
-Note that steps 3, 5, and 7-9 are skipped if \code{njobs = 1}.
+If \code{njobs = 1}, none of the previous steps are executed, only this
+call is made:  \code{lapply(X, FUN, ...)}
 
 This function has some additional features that may not be readily available
-in \code{\link{mclapply}} or \code{\link{parLapply}}:
+other parallization functions like \code{\link{mclapply}} and \code{\link{parLapply}}:
 \itemize{
 
 \item The \code{.Rout} files produced by each R instance are easily accessible

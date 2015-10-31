@@ -48,7 +48,7 @@
 ##' identical(y1, y3)
 ##' identical(y1, y4)
 
-doCallParallel <- function(fun, x, nJobs = parallel::detectCores() - 1, random.seed = NULL, ...) {
+doCallParallel <- function(fun, x, ..., nJobs = parallel::detectCores() - 1, random.seed = NULL) {
 
   # Argument checks
   stopifnot(if (is.character(fun)) is.function(get(fun)) else is.function(fun),

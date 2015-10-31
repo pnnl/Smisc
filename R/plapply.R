@@ -6,12 +6,13 @@
 ##' \code{plapply} applies \code{FUN} to each element of the list \code{X} by
 ##' parsing the list into \code{njobs} lists of equal (or almost equal) size
 ##' and then applies \code{FUN} to each sublist using \code{\link{lapply}}.
-##' Differences between \code{plapply} and \code{\link{parLapply}} and
-##' \code{\link{mclapply}} are discussed below.
+##' Differences between \code{plapply} and other similar functions,
+##' like \code{\link{parLapply}} and \code{\link{mclapply}}, are discussed below.
 ##'
 ##' A separate batch instance of R is launched for each sublist, thus utilizing
 ##' another core of the machine. After the jobs complete, the \code{njobs}
-##' output lists are reassembled.
+##' output lists are reassembled. The global environments for each batch instance
+##' of R are created by writing/reading data to/from disc.
 ##'
 ##' If \code{collate = TRUE} or \code{random.seed = Integer value}, the output
 ##' list returned by \code{plapply} is reordered to reflect the original
@@ -56,10 +57,11 @@
 ##' \item Warnings are printed
 ##' }
 ##'
-##' Note that steps 3, 5, and 7-9 are skipped if \code{njobs = 1}.
+##' If \code{njobs = 1}, none of the previous steps are executed, only this
+##' call is made:  \code{lapply(X, FUN, ...)} 
 ##'
 ##' This function has some additional features that may not be readily available
-##' in \code{\link{mclapply}} or \code{\link{parLapply}}:
+##' other parallization functions like \code{\link{mclapply}} and \code{\link{parLapply}}:
 ##' \itemize{
 ##'
 ##' \item The \code{.Rout} files produced by each R instance are easily accessible
@@ -192,10 +194,48 @@ plapply <- function(X, FUN, ...,
                     rout = !clean.up,
                     verbose = FALSE) {
 
+  # Add some basic parameter checks
+  stopifnot(is.vector(X),
+            is.function(FUN),
+            if (!is.null(packages)) is.character(packages) else TRUE,
+            if (!is.null(header.file)) is.character(header.file) else TRUE,
+            if (!is.null(header.file)) file.exists(header.file) else TRUE,            
+            if (!is.null(needed.objects)) is.character(needed.objects) else TRUE,
+            is.environment(needed.objects.env),
+            is.character(jobName),
+            is.numeric(njobs),
+            is.numeric(max.hours),
+            max.hours > 0,
+            is.numeric(check.interval.sec),
+            check.interval.sec > 0,
+            is.logical(collate),
+            if (!is.null(random.seed)) is.numeric(random.seed) else TRUE,
+            is.logical(clean.up),
+            is.logical(rout),
+            is.logical(verbose))
+            
+    
+  # Set njobs to an integer value
+  njobs <- as.integer(njobs)
+
+  # If njobs is negative
+  if (njobs < 1) {
+    njobs <- 1
+  }
+
+  ################################################################################
+  # Run regular lapply if only one job requested
+  ################################################################################
+  if (njobs == 1) {
+
+    return(lapply(X, FUN, ...))
+
+  } # njobs == 1
+
   # Check the platform
   os <- .Platform$OS.type
   if (!(os %in% c("unix", "windows")))
-    stop("plapply() is currently only supported on the Unix and Windows platforms\n")
+    stop("plapply() for njobs > 1 is currently only supported on the Unix and Windows platforms\n")
   os.win <- os == "windows"
 
   # Check the needed.objects for reserved names
@@ -210,61 +250,6 @@ plapply <- function(X, FUN, ...,
       stop("The following are reserved objects for 'plapply', and should not be included ",
            "in the 'needed.objects' argument:\n '", paste(conflict.objects, collapse = "', '"), "'\n")
   }
-
-  # Set njobs to an integer value
-  njobs <- as.integer(njobs)
-
-  # If njobs is negative
-  if (njobs < 1) 
-    njobs <- 1
-
-  ################################################################################
-  # Run regular lapply if only one job requested
-  ################################################################################
-  if (njobs == 1) {
-
-    # Load packages
-    if (!is.null(packages)) {
-      for (pk in packages)
-        library(pk, character.only = TRUE)
-    }
-
-    # Source the header file
-    if (!is.null(header.file))
-      source(header.file)
-
-    # Put needed objects into the global environment if they exist
-    if (!is.null(needed.objects)) {
-
-      # Verify the parent.env is not the global environment
-      if (environmentName(needed.objects.env) != "R_GlobalEnv") {
-
-        # Send the objects to the global environment
-        for (v in needed.objects) {
-
-          if (exists(v, where = .GlobalEnv, inherits = FALSE))
-            warning("'", v, "' existed in the global environment and was replaced by the object\n",
-                    "of the same name in the environment specified by the 'needed.objects.env' argument.")
-
-          assign(v, get(v, pos = needed.objects.env), pos = .GlobalEnv)
-        }
-
-      } # not global
-
-    } # getting needed objects needed
-
-    # Run and return the lapply and return the results
-    out <- lapply(X, FUN, ...)
-
-    # Remove objects from global environment if they were stored there
-    if ((!is.null(needed.objects)) & (environmentName(needed.objects.env) == "R_GlobalEnv"))
-      rm(list = needed.objects, pos = .GlobalEnv)
-
-    # Return the list and exit the function
-    return(out)
-
-  } # njobs == 1
-
 
   # Calculate the list length
   lenX <- length(X)

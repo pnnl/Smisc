@@ -1,37 +1,28 @@
-################################################################################
-#
-# Filename:   smartRbindMat.R
-# Creator:    Landon Sego
-# Date Created:  June 2007
-# Description/Purpose:  Row bind matrices whose column names may not be the
-#                       same.  Produces a matrix with a union of the
-#                       column names.  Row names are reproduced if they exist,
-#                       otherwise, unique rownames are created.
-#
-################################################################################
-
-
-
 ##' Row bind matrices whose column names may not be the same
-##'
 ##'
 ##' @export
 ##'
 ##' @param \dots matrix objects (separated by commas), a list of matrices, or a
 ##' character vector containing the names of matrix objects
+##' 
 ##' @param distinguish if \code{TRUE}, then rownames of the returned matrix are
 ##' assigned a name consisting of the object name as a prefix, followed by the
 ##' row name, separated by a ":".  Otherwise, the original rownames are used.
+##' 
 ##' @param filler The character to insert into the final matrix for those empty
 ##' elements which occur when not all the matrices have the same column names.
+##' 
 ##' @return Produces a matrix with a union of the column names.  Empty elements
 ##' resulting from different column names are set to the value of
 ##' \code{filler}.
+##' 
 ##' @author Landon Sego
+##' 
 ##' @seealso \code{\link{rbind}}
+##' 
 ##' @keywords misc
+##' 
 ##' @examples
-##'
 ##' x <- matrix(rnorm(6), ncol = 2, dimnames = list(letters[1:3],letters[4:5]))
 ##' y <- matrix(rnorm(6), ncol = 3, dimnames = list(letters[7:8],letters[4:6]))
 ##' z <- matrix(rnorm(2), nrow = 1, dimnames = list("c",letters[3:4]))
@@ -43,7 +34,7 @@
 ##' smartRbindMat(x,y,z)
 ##' smartRbindMat(list(x, y, z), distinguish = TRUE)
 ##' smartRbindMat(y,z,x, distinguish = TRUE)
-##' smartRbindMat(c("y","x","z"), filler = -20, distinguish = T)
+##' smartRbindMat(c("y","x","z"), filler = -20, distinguish = TRUE)
 ##'
 ##' w1 <- matrix(sample(letters[1:26], 6), ncol = 2,
 ##'              dimnames = list(c("3", "", "4"), c("w", "v")))
@@ -124,7 +115,7 @@ smartRbindMat <- function(..., distinguish = FALSE, filler = NA) {
   check.objects <- function(x) {
 
     # Increment the counter (and record the value outside the function)
-    assign("cnt", cnt + 1, inherits = TRUE)
+    cnt <<- cnt + 1
 
     # This allows the possibility that one of objects was NULL
     if (!is.null(x)) {
@@ -147,7 +138,7 @@ smartRbindMat <- function(..., distinguish = FALSE, filler = NA) {
         stop("'", obj.names[cnt], "' does not have unique column names\n")
 
       # Find the union of all the column names, record the value outside the function
-      assign("union.colnames", union(union.colnames, cnames), inherits = TRUE)
+      union.colnames <<- union(union.colnames, cnames)
 
       # Add in rownames if requested
       if (distinguish) {
