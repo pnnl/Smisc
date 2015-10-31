@@ -43,14 +43,14 @@
 ##'
 ##'# Call parlapply, loading the Smisc package and passing in the "b1" and "b2" objects
 ##'res.1 <- parLapplyW(a, f1, someText = "that.stuff", njobs = 2,
-##'                   expr = expression(library(Smisc)),
-##'                   varlist = c("b1", "b2"))
+##'                    expr = expression(library(Smisc)),
+##'                    varlist = c("b1", "b2"))
 ##'
 ##'print(res.1)
 ##'
 ##'# Call parlapply, note that we're sending a different value for "b2" into the worker nodes
 ##'res.2 <- parLapplyW(a, f1, someText = "that.stuff", njobs = 2,
-##'                    expr = expression({library(Smisc); b2 <- rnorm(10,10)}),
+##'                    expr = expression({library(Smisc); b2 <- rnorm(10)}),
 ##'                    varlist = c("b1"))
 ##'
 ##'# These shouldn't be equivalent
@@ -76,7 +76,7 @@ parLapplyW <- function(X, FUN, ..., njobs = parallel::detectCores() - 1,
   # Create a protected environment for try-catching errors to ensure
   # we get the cluster shut down if errors occur
   inner <- function() {
-      
+
     # Evaluate expression on the cluster
     if (!is.null(expr)) {
           
