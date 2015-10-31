@@ -1,7 +1,7 @@
 Package: Smisc
 Title: Sego Miscellaneous
-Version: 0.2.14
-Date: 2015-10-30
+Version: 0.2.15
+Date: 2015-10-31
 Author: Landon Sego and others
 Description: Sego Miscellaneous: A collection of functions for statistical
     computing and data manipulation in R.
@@ -10,5 +10,7 @@ Imports:
     utils,
     doParallel,
     foreach
+Suggests:
+    testthat
 Maintainer: Landon Sego <Landon.Sego@pnnl.gov>
 License: file LICENSE
