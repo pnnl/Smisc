@@ -2,7 +2,8 @@ context("timeIntegration()")
 
 test_that("timeIntegration() returns values that are equal to known values", {
 
-  data(PowerData)
+  # Load example data
+  data(PowerData, package = "Smisc")
 
   # Known values
   int1c <- 7.48493036166667
