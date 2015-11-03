@@ -17,7 +17,6 @@
 ##' \code{vec} may be character when \code{side='left'}.
 ##'
 ##' @export
-##'
 ##' @param vec The numeric vector to be padded
 ##' @param num The number of zeros that will be padded. If \code{NULL}, the
 ##' value is chosen based on the longest string in the vector.

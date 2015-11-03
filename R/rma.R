@@ -5,7 +5,6 @@
 ##' Alias for \code{rm(list=ls())}.
 ##'
 ##' @export
-##'
 ##' @author Landon Sego
 ##' @keywords misc
 rma <- function() {

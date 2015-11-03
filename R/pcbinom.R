@@ -18,7 +18,6 @@
 ##' other arguments have length 1.  See examples below.
 ##'
 ##' @export
-##'
 ##' @param x Real valued vector of the number of successes.
 ##' @param n Real valued vector, all elements in \code{[0, Inf)}, of the number
 ##' of trials.

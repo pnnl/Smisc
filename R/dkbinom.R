@@ -20,7 +20,6 @@
 ##' more quickly.
 ##'
 ##' @export dkbinom pkbinom
-##'
 ##' @aliases dkbinom pkbinom
 ##'
 ##' @rdname dkbinom
@@ -30,25 +29,25 @@
 ##'         method = c("butler", "fft"), checkArgs = TRUE)
 ##' pkbinom(q, size, prob, log.p = FALSE, verbose = FALSE,
 ##'         method = c("butler", "naive", "fft"))
-##' 
+##'
 ##' @param x Vector of values at which to evaluate the mass function of the sum
 ##' of the k binomial variates
 ##'
 ##' @param q Vector of quantiles (value at which to evaluate the distribution
 ##' function) of the sum of the k binomial variates
-##' 
+##'
 ##' @param size Vector of the number of trials
-##' 
+##'
 ##' @param prob Vector of the probabilities of success
-##' 
+##'
 ##' @param log,log.p logical; if TRUE, probabilities p are given as log(p).
 ##' (See NOTE in details).
-##' 
+##'
 ##' @param verbose \code{= TRUE} produces output that shows the iterations of
 ##' the convolutions and 3 arrays, A, B, and C that are used to convolve and
 ##' reconvolve the distributions.  Array C is the final result.  See the source
 ##' code in \code{dkbinom.c} for more details.
-##' 
+##'
 ##' @param method The \code{butler} (default) method is the
 ##' algorithm given by Butler, et al. The \code{naive} method is an alternative approach
 ##' that can be  much slower that can handle no more the sum of five binomials, but
@@ -58,22 +57,22 @@
 ##'
 ##' @param checkArgs \code{=TRUE} checks the incoming arguments \code{x}, \code{size},
 ##' \code{prob} for correct structure and consistency.
-##' 
+##'
 ##' @return \code{dkbinom} gives the mass function, \code{pkbinom} gives the
 ##' distribution function.  Produces errors for invalid inputs of \code{size},
 ##' \code{prob}, \code{x}, and \code{q}.
-##' 
+##'
 ##' @author Landon Sego and Alex Venzin
-##' 
+##'
 ##' @seealso \code{\link{dbinom}}, \code{\link{pbinom}}
-##' 
+##'
 ##' @references The Butler method is based on the exact algorithm discussed by
 ##' Butler, Ken and Stephens, Michael. (1993) The Distribution of a Sum of
 ##' Binomial Random Variables. Technical Report No. 467, Department of
 ##' Statistics, Stanford University.
-##' 
+##'
 ##' @keywords misc
-##' 
+##'
 ##' @examples
 ##'# A sum of 3 binomials...
 ##'dkbinom(c(0, 4, 7), c(3, 4, 2), c(0.3, 0.5, 0.8))
@@ -111,47 +110,47 @@ dkbinom <- function(x, size, prob, log = FALSE, verbose = FALSE,
   if (all(diff(prob) == 0) | (length(prob) == 1)) {
     return(dbinom(x, sum(size), prob[1], log = log))
   }
-  
+
   method <- match.arg(method)
-  
+
   if (method == "fft") {
-    
+
     dkb <- function(x, size, prob) {
-    
+
       A <- dbinom(0:x, size[1], prob[1])
-      
+
       B <- dbinom(0:x, size[2], prob[2])
-      
+
       conv <- cvolve(A, B)
-      
+
       if (length(size) > 2) {
-        
+
         for(i in 3:length(size)){
-          
-          A <- conv 
-          
+
+          A <- conv
+
           B <- dbinom(0:x, size[i], prob[i])
-          
+
           conv <- cvolve(A,B)
-          
+
         }
-  
+
         res <- conv[length(conv)]
-        
+
       } else {
-        
+
         res <- conv[length(conv)]
-        
+
       } # if length...
-      
-      # fft can produce results < 0 when value is 
+
+      # fft can produce results < 0 when value is
       # very close to zero
       res <- abs(res)
 
       return(res)
-    
+
     } # dkb
-    
+
     # So that I can call it for length(q) > 1
     res <- unlist(lapply(x, function(q) dkb(q, size, prob)))
 
@@ -170,7 +169,7 @@ dkbinom <- function(x, size, prob, log = FALSE, verbose = FALSE,
               double(max(x)+1),
               out = double(max(x)+1),
               double(1))[["out"]][x+1]
-    
+
   } # else
 
   if (log) {
@@ -182,7 +181,7 @@ dkbinom <- function(x, size, prob, log = FALSE, verbose = FALSE,
 } # dkbinom
 
 # The distribution function
-pkbinom <- function(q, size, prob, log.p = FALSE, verbose = FALSE, 
+pkbinom <- function(q, size, prob, log.p = FALSE, verbose = FALSE,
                     method = c("butler", "naive", "fft")) {
 
   x <- check.kbinom(q, size, prob)
@@ -197,18 +196,18 @@ pkbinom <- function(q, size, prob, log.p = FALSE, verbose = FALSE,
 
   # FFT method
   if (method == "fft") {
-    
+
     res <- unlist(lapply(q, function(k) {
-      
+
       sum(unlist(lapply(0:k,
                         function(x) dkbinom(x, size, prob, method = "fft",
                                             checkArgs = FALSE))))
-      
+
     }))
 
   # Butler method
   } else if ((method == "butler") | (length(size) > 5)) {
-  
+
     res <- .C("dkbinom",
               as.integer(max(x)),
               as.integer(size),
@@ -220,7 +219,7 @@ pkbinom <- function(q, size, prob, log.p = FALSE, verbose = FALSE,
               double(max(x)+1),
               out = double(max(x)+1),
               double(1))[["out"]]
-  
+
     res <- cumsum(res)[x+1]
 
   # Naive method
@@ -231,16 +230,16 @@ pkbinom <- function(q, size, prob, log.p = FALSE, verbose = FALSE,
     warning("The 'naive' method is only implemented for a single value of 'q'\n",
             "Only the first value of q[1] = ", q[1], " has been used.")
    }
-       
-      
+
+
    res <- .C("pkbinom",
              as.integer(c(rep(0, 5 - length(size)), size)),
              as.double(c(rep(1, 5 - length(prob)), prob)),
              as.integer(x),
              out = double(1))[["out"]]
-             
+
   } # else Naive
-  
+
 
   if (log.p) {
     res <- log(res)
@@ -300,19 +299,19 @@ check.kbinom <- function(x, size, prob) {
 
 # R has a convolve function, but it's not what we want.
 cvolve <- function(x, y) {
-  
+
   preLength <- length(x)
-  
+
   n <- length(x) + length(y) - 1
-  
+
   x <- c(x, rep(0, n - length(x)))
-  
+
   y <- c(y, rep(0, n - length(y)))
-  
+
   out <- Re(fft(fft(x) * fft(y), inverse = TRUE)) / n
-  
+
   return(out[1:preLength])
-  
+
 } # cvolve
 
 

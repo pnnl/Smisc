@@ -1,15 +1,17 @@
 ##' Imbeds the present datetime into a file name
 ##'
-##'
 ##' @export
-##'
 ##' @param description Character string giving the base name of the file
+##'
 ##' @param extension Character string giving the extension of the file
 ##' (excluding the period)
-##' @return Character string of the form
-##' \code{description_YYYY-MM-DD_HHMMSS.extension}
+##'
+##' @return Character string of the form \code{description_YYYY-MM-DD_HHMMSS.extension}
+##'
 ##' @author Landon Sego
+##'
 ##' @keywords misc
+##'
 ##' @examples
 ##'
 ##' timeStamp("aFilename", "txt")

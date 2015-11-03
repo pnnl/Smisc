@@ -6,29 +6,28 @@
 ##' Uses \code{\link{combn}} to identify the combinations.
 ##'
 ##' @export
-##'
 ##' @param n.pred integer indicating the number of predictors
-##' 
+##'
 ##' @param outFile text string indicating the .Rdata file to which the returned
 ##' list of predictor combinations will be saved.  If NULL, then no file is
 ##' saved.
-##' 
+##'
 ##' @param njobs Integer indicating the number of parallel jobs to be used in
 ##' calculating the combinations, using \code{\link{parLapply}}
-##' 
+##'
 ##' @param verbose \code{= TRUE} indicates that a message regarding the saving
 ##' of the output file will be printed
-##' 
+##'
 ##' @return A list of class \code{combolist} is invisibly returned with the two
 ##' components shown below.  If \code{outFile} is not \code{NULL}, this same
 ##' list is saved to \code{outFile}: \item{len}{The total number of
 ##' combinations} \item{pList}{A list where each element contains an integer
 ##' representation of one combination of the predictors}
-##' 
+##'
 ##' @author Landon Sego
-##' 
+##'
 ##' @keywords misc
-##' 
+##'
 ##' @examples
 ##' x <- comboList(4)
 ##' print(x)
@@ -47,7 +46,7 @@ comboList <- function(n.pred, outFile = NULL, njobs = 1, verbose = FALSE) {
             is.numeric(njobs),
             njobs >= 1,
             is.logical(verbose))
-    
+
   # Create the profile of counts for each category
   counts <- choose(n.pred, 1:n.pred)
   groups <- c(1:n.pred)[order(counts, decreasing = TRUE)]
@@ -90,16 +89,16 @@ comboList <- function(n.pred, outFile = NULL, njobs = 1, verbose = FALSE) {
 
   # Run jobs in serial
   if (njobs == 1) {
-      
+
     out <- lapply(cnt.list, combn.wrapper)
-    
+
   }
 
-  # Or run in parallel  
+  # Or run in parallel
   else {
-      
+
     out <- parLapplyW(cnt.list, combn.wrapper, njobs = njobs, varlist = "n.pred")
-    
+
   }
 
   # Unpack the list

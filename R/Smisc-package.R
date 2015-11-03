@@ -9,9 +9,9 @@
 ##' Date: \tab 2015-10-31\cr
 ##' License: \tab LICENSE\cr
 ##' }
-##' 
+##'
 ##' @name Smisc-package
-##' 
+##'
 ##' @aliases Smisc
 ##'
 ##' @docType package
@@ -19,7 +19,7 @@
 ##' @useDynLib Smisc
 ##'
 ##' @author Landon Sego
-##' 
+##'
 ##' Maintainer: Landon Sego <Landon.Sego@@pnnl.gov>
 ##'
 ##' @keywords package

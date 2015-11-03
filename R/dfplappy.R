@@ -7,54 +7,58 @@
 ##' especially for parallel, single-row processing of data frames.
 ##'
 ##' @export
-##'
 ##' @param X The data frame, each row of which will be processed using
 ##' \code{FUN}
-##' 
+##'
 ##' @param FUN A function whose first argument is a single-row data frame, i.e.
 ##' a single row of \code{X}.  The value returned by \code{FUN} can be any
 ##' object
-##' 
+##'
 ##' @param output.df logical indicating whether the value returned by
 ##' \code{dfplapply} should be a data frame. If \code{output.df = TRUE}, then
 ##' the value returned by \code{FUN} should be a data frame.  If
 ##' \code{output.df = FALSE}, a list is returned by \code{dfplapply}.
-##' 
+##'
 ##' @inheritParams plapply
 ##'
 ##' @return A list or data frame containing the results of processing each row
 ##' of \code{X} with \code{FUN}.
-##' 
+##'
 ##' @author Landon Sego
-##' 
+##'
 ##' @seealso \code{\link{plapply}}
-##' 
+##'
 ##' @keywords misc
-##' 
+##'
 ##' @examples
 ##' X <- data.frame(a = 1:5, b = letters[1:5])
 ##'
 ##' # Function with a single data frame as output
-##' test.1 <- function(x)
+##' test.1 <- function(x) {
 ##'   list(ab = paste(x$a, x$b, sep = "-"), a2 = x$a^2, bnew = paste(x$b, "new", sep = "."))
+##' }
 ##'
 ##' # Data frame output
-##' dfplapply(X, test.1, output.df = TRUE, njobs = 2, check.interval.sec=1)
+##' dfplapply(X, test.1, output.df = TRUE, njobs = 2, check.interval.sec = 0.5)
+##'
 ##' # List output
-##' dfplapply(X, test.1, njobs = 2, check.interval.sec = 1)
+##' dfplapply(X, test.1, njobs = 2, check.interval.sec = 0.5)
 ##'
 ##' # Function with 2 rows of output
-##' test.2 <- function(x)
+##' test.2 <- function(x) {
 ##'   data.frame(ab = rep(paste(x$a,x$b,sep="-"), 2), a2 = rep(x$a^2, 2))
+##' }
 ##'
-##' dfplapply(X, test.2, output.df = TRUE, njobs = 2, check.interval.sec = 1, verbose = TRUE)
+##' dfplapply(X, test.2, output.df = TRUE, njobs = 2, check.interval.sec = 0.5, verbose = TRUE)
 ##'
 ##' # Passing in objects
 ##' a.out <- 10
-##' test.3 <- function(x)
+##' test.3 <- function(x) {
 ##'   data.frame(a = x$a + a.out, b = paste(x$b, a.out, sep="-"))
+##' }
 ##'
-##' dfplapply(X, test.3, output.df = TRUE, needed.objects = "a.out", njobs = 2, check.interval.sec=1)
+##' dfplapply(X, test.3, output.df = TRUE, needed.objects = "a.out", njobs = 2,
+##'           check.interval.sec = 0.5)
 ##'
 dfplapply <- function(X, FUN, ...,
                       output.df = FALSE,

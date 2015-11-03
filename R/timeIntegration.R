@@ -19,89 +19,56 @@
 ##' predict the resulting data value.
 ##'
 ##' @export
-##'
 ##' @param data Vector of numerical data
+##'
 ##' @param time Vector of timestamps which correspond to \code{data}. These can
 ##' either character or POSIXct.
+##'
 ##' @param lower The time (character or POSIXct) of the lower bound of the
 ##' integration
+##'
 ##' @param upper The time (character or POSIXct) of the upper bound of the
 ##' integration
+##'
 ##' @param check.plot \code{=TRUE} makes a plot which illustrate the
 ##' integration.
+##'
 ##' @param units The units of integration, defaults to hours.  It is only
 ##' required to supply enough characters to uniquely complete the name.
+##'
 ##' @return The approximation of the integral by joining the points in the
 ##' series in a linear fashion and calculating the area under this "curve".
+##'
 ##' @author Landon Sego
+##'
 ##' @keywords misc
+##'
 ##' @examples
+##'# Some example power data
+##'data(PowerData)
 ##'
+##'par(mfrow = c(2, 1))
 ##'
-##'  # Some example power data
-##'  data(PowerData)
+##'# Calculate the kilowatt-minutes, display graph which shows how the
+##'# integration is done.  This example calculates the integral using
+##'# a contiguous subset of the data
+##'int1 <- timeIntegration(PowerData,
+##'                        # Convert to POSIXct in order to subtract time
+##'                        lower = "5/6/2008 17:00:09",
+##'                        upper = "5/6/2008 17:01:36",
+##'                        check.plot = TRUE,
+##'                        units = "m")
 ##'
-##'  # For some reason, making the graph in Unix/Linux takes forever...so I write it to a pdf
+##'# This example calculates the integral for all the data in 'powerData'
+##'int2 <- timeIntegration(PowerData, check.plot = TRUE, units = "m")
 ##'
-##'  # Open the pdf if using Unix
-##'  unix <- .Platform$OS.type == "unix"
-##'
-##'  # Save this to a file
-##'  if (unix) {
-##'   fOut <- openDevice("tmpTimeInt.pdf", height=7, width=14)
-##'  } else {
-##'    X11(height=7, width=14)
-##'  }
-##'
-##'  par(mfrow=c(1,2))
-##'
-##'  # Calculate the kilowatt-minutes, display graph which shows how the
-##'  # integration is done
-##'  int1 <- timeIntegration(PowerData,
-##'                         # Convert to POSIXct in order to subtract time
-##'                         lower = "5/6/2008 17:00:09",
-##'                         upper = "5/6/2008 17:01:36",
-##'                         check.plot=TRUE,
-##'                         units = "m")
-##'
-##'  int2 <- timeIntegration(PowerData, check.plot=TRUE, units="m")
-##'
-##'  # close the graphics device
-##'  if (unix) {
-##'    dev.off()
-##'    system(paste("acroread", fOut), wait=FALSE)
-##'  }
-##'
-##'  # Print the outcome
-##'  pvar(int1, int2)
-##'
-##'
-##'  # Some other tests:
-##'  # This should be 2
-##'  timeIntegration(c(1,3), c("07-May-2009 15:00", "07-May-2009 16:00"))
-##'  # This should be 1
-##'  timeIntegration(c(1,3), c("07-May-2009 15:30", "07-May-2009 16:00"))
-##'  # This should be 4
-##'  timeIntegration(c(1,3), c("07-May-2009 15:30", "07-May-2009 17:30"))
-##'
-##'  # clean up
-##'  z <- readline("Hit Enter when finished to close the example >>")
-##'  if (unix)
-##'    unlink(fOut)
-##'  rm(PowerData, envir=.GlobalEnv)
-##'
-##'
-timeIntegration <- function(data, time=names(data), lower=time[1], upper=time[length(time)],
+##'# Print the outcome
+##'pvar(int1, int2)
+
+timeIntegration <- function(data, time = names(data), lower = time[1], upper = time[length(time)],
                             check.plot=FALSE, units=c("hours", "minutes", "seconds")) {
 
-  # data  - Vector of numerical data
-  # time  - Corresponding timestamps (either character or Posix) which correspond to 'data'
-  # lower - the time (character or POSIX) of the lower bound of the integration
-  # upper - the time (character or POSIX) of the upper bound of the integration
-
   units <- match.arg(units)
-
-  # This uses the tseries library
 
   if (is.null(time))
     stop("'data' must either have timestamps in the names, or 'time' must be supplied explicitly")
@@ -159,7 +126,7 @@ timeIntegration <- function(data, time=names(data), lower=time[1], upper=time[le
 
   # Find linear interpolations for the endpoints
 #  nd <- approx.irts(irts(time, data), c(lower, time[window], upper), rule=1, method="linear")
-  nd <- approx(time, data, c(lower, time[window], upper), rule=1, method="linear")
+  nd <- approx(time, data, c(lower, time[window], upper), rule=1, method = "linear")
   names(nd) <- c("time", "value")
 
 
@@ -177,13 +144,13 @@ timeIntegration <- function(data, time=names(data), lower=time[1], upper=time[le
 
   if (check.plot) {
 
-    devAskNewPage(ask=FALSE)
+   #  devAskNewPage(ask=FALSE)
 
     plot(time, data, type="b", font.main=1, cex.main=0.9,
          main=paste("Black circles:  Data values\n",
                     "Blue dots: Midpoints for each trapezoid\n",
                     "Green shading:  This area is the integral"),
-         axes=FALSE, frame=TRUE)
+         axes=FALSE, frame = TRUE)
 
     polygon(c(nd$time[1], nd$time, nd$time[length(nd$time)]),
             c(0, nd$value, 0),
@@ -196,7 +163,7 @@ timeIntegration <- function(data, time=names(data), lower=time[1], upper=time[le
       lines(rep(nd$time[i], 2), c(0, nd$value[i]))
 
 
-    points(time.numeric.midpoints, midpoint.heights, col="Blue", pch=19, cex=1.2)
+    points(time.numeric.midpoints, midpoint.heights, col = "Blue", pch = 19, cex = 1.2)
 
     axis(2)
     smartTimeAxis(time, time.format="hh:mm:ss")

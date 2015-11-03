@@ -12,7 +12,6 @@
 ##' odd or even. The elements of \code{x} may be irregularly spaced.
 ##'
 ##' @export
-##'
 ##' @param y Vector of f(x) values
 ##' @param x Numeric vector of sorted x values, each element of \code{x} should
 ##' have a corresponding element of y.  Only required for the trapezoid method.

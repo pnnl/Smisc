@@ -53,12 +53,12 @@
 ##' \item The output returned by \code{lapply} is assigned to the object
 ##' \code{X.i.out}, and is saved to a temporary file
 ##' where it will be collected after all jobs have completed
-##' 
+##'
 ##' \item Warnings are printed
 ##' }
 ##'
 ##' If \code{njobs = 1}, none of the previous steps are executed, only this
-##' call is made:  \code{lapply(X, FUN, ...)} 
+##' call is made:  \code{lapply(X, FUN, ...)}
 ##'
 ##' This function has some additional features that may not be readily available
 ##' other parallization functions like \code{\link{mclapply}} and \code{\link{parLapply}}:
@@ -74,48 +74,47 @@
 ##' \item In each instance, pre-processing or post-processing steps can be performed
 ##' before and after the call to \code{\link{lapply}}
 ##' }
-##' 
-##' @export
 ##'
+##' @export
 ##' @param X The list, each element of which will be the input to \code{FUN}
-##' 
+##'
 ##' @param FUN A function whose first argument is an element of list \code{X}
-##' 
+##'
 ##' @param \dots Additional named arguments to \code{FUN}
-##' 
+##'
 ##' @param packages Character vector giving the names of packages that will be
 ##' loaded in each new instance of R, using \code{\link{library}}.
-##' 
+##'
 ##' @param header.file Text string indicating a file that will be initially
 ##' sourced prior calling \code{\link{lapply}} in order to create an
 ##' 'environment' that will satisfy all potential dependencies for \code{FUN}.
 ##' If \code{NULL}, no file is sourced.
-##' 
+##'
 ##' @param needed.objects Character vector giving the names of objects which
 ##' reside in the evironment specified by \code{needed.objects.env} that may be
 ##' needed by \code{FUN} which are loaded into the GLOBAL ENVIRONMENT of each
 ##' new instance of R that is launched.  If \code{NULL}, no additional objects
 ##' are passed.
-##' 
+##'
 ##' @param needed.objects.env Environment where \code{needed.objects} reside.
 ##' This defaults to the environment in which \code{plapply} is called.
-##' 
+##'
 ##' @param jobName Text string indicating the prefix for files that will be
 ##' created while launching the separate instances of R.
-##' 
+##'
 ##' @param njobs The number of jobs (subsets).  Defaults to one less than the
 ##' number of cores on the machine.
-##' 
+##'
 ##' @param max.hours The maximum number of hours to wait for the \code{njobs}
 ##' to complete.
-##' 
+##'
 ##' @param check.interval.sec The number of seconds to wait between checking to
 ##' see whether all \code{njobs} have completed.
-##' 
+##'
 ##' @param collate \code{=TRUE} creates a 'first-in-first-out' processing order of
 ##' the elements of the input list \code{X}.  This logical is passed to the
 ##' \code{collate} argument of \code{\link{parseJob}}.
-##' 
+##'
 ##' @param random.seed An integer setting the random seed, which will result in
 ##' randomizing the elements of the list assigned to each job. This is useful
 ##' when the computing time for each element varies significantly because it
@@ -123,24 +122,24 @@
 ##' = NULL}, no randomization is performed and the elements of the input list
 ##' are subdivided sequentially among the jobs.  This variable is passed to the
 ##' \code{random.seed} argument of \code{\link{parseJob}}.
-##' 
+##'
 ##' @param clean.up \code{=TRUE} will delete temporary workding directory.
-##' 
+##'
 ##' @param rout \code{=TRUE} will gather the \code{njobs} *.Rout files into a
 ##' single file named "jobName_YYYY-MM-DD_HHMMSS_XXXX.Rout" which will not be
 ##' deleted.
-##' 
+##'
 ##' @param verbose \code{=TRUE} prints messages which show the progress of the
 ##' jobs.
-##' 
+##'
 ##' @return A list equivalent to that returned by \code{lapply(X, FUN, ...)}.
-##' 
+##'
 ##' @author Landon Sego
-##' 
+##'
 ##' @seealso \code{\link{lapply}}, \code{\link{dfplapply}}, \code{\link{mclapply}}
-##' 
+##'
 ##' @keywords misc
-##' 
+##'
 ##' @examples
 ##'
 ##' # Create a simple list
@@ -155,7 +154,7 @@
 ##'
 ##' # Call plapply
 ##' res.1 <- plapply(a, f1, needed.objects = c("b1", "b2"), jobName = "example.1",
-##'                  njobs = 3, max.hours = 1/120, check.interval.sec = 1, verbose = TRUE)
+##'                  njobs = 3, max.hours = 1/120, check.interval.sec = 0.5, verbose = TRUE)
 ##' print(res.1)
 ##'
 ##' # Call lapply
@@ -164,7 +163,6 @@
 ##'
 ##' # Compare results--if all(quick.comp) is TRUE, then lists are equivalent
 ##' all(unlist(res.1) == unlist(res.2))
-##'
 ##'
 ##' # Here's an alternative example using the collating option
 ##' aList <- as.list(1:10 + pi)
@@ -199,7 +197,7 @@ plapply <- function(X, FUN, ...,
             is.function(FUN),
             if (!is.null(packages)) is.character(packages) else TRUE,
             if (!is.null(header.file)) is.character(header.file) else TRUE,
-            if (!is.null(header.file)) file.exists(header.file) else TRUE,            
+            if (!is.null(header.file)) file.exists(header.file) else TRUE,
             if (!is.null(needed.objects)) is.character(needed.objects) else TRUE,
             is.environment(needed.objects.env),
             is.character(jobName),
@@ -213,8 +211,8 @@ plapply <- function(X, FUN, ...,
             is.logical(clean.up),
             is.logical(rout),
             is.logical(verbose))
-            
-    
+
+
   # Set njobs to an integer value
   njobs <- as.integer(njobs)
 

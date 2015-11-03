@@ -20,14 +20,13 @@
 ##' 7: No illegal characters--however, it does't check for a backslash
 ##'
 ##' @export
-##'
 ##' @param vec Character vector of email addresses
-##' 
+##'
 ##' @return Logical vector which is \code{TRUE} when the email address is
 ##' valid.
-##' 
+##'
 ##' @author Landon Sego
-##' 
+##'
 ##' @keywords misc
 ##' @examples
 ##'

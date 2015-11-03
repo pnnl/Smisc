@@ -15,21 +15,30 @@
 ##'
 ##' @export
 ##' @param x Vector of x value on the plot around which the vertical error bar will be drawn
+##'
 ##' @param width The total width of the cross hatches on top and bottom of the bars, can
 ##' be a vector or a single value
+##'
 ##' @param center Vector of values designating the vertical center of the error bars, can
 ##' be a vector or a single value
+##'
 ##' @param height The total height of the bars, can be a vector or a single value
+##'
 ##' @param min.y Vector of values indicating the vertical bottoms of the bars
+##'
 ##' @param max.y Vector of values indicating the vertical tops of the bars
+##'
 ##' @param blankMiddle the height of a blank spot that will be produced in the middle of
 ##' the error bar.
 ##'   This is useful when the bar is placed around symbols (so as not to overwrite them).
 ##' Defaults to
 ##'   \code{NULL}, in which case a solid error bar is drawn. Can also be a vector or a
 ##' single value.
+##'
 ##' @param ... additional arguments to \code{\link{lines}}.
+##'
 ##' @author Landon Sego
+##'
 ##' @return Nothing is returned, the error bar is drawn on the plot
 ##'
 ##' @examples

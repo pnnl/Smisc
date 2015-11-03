@@ -6,9 +6,8 @@
 ##' are named o1, o2, o3, etc.
 ##'
 ##' @author Landon Sego
-##' 
+##'
 ##' @export
-##' 
 ##' @param X a list to be separated
 ##'
 ##' @param envir The environment where the objects in the list are assigned, defaults to \code{parent.frame()}, the environment that
@@ -49,7 +48,7 @@
 ##'  # Keep objects inside the local environment
 ##'  cat("Objects in the local environment before separating the list:\n")
 ##'  print(ls())
-##'  
+##'
 ##'  sepList(x)
 ##'
 ##'  cat("Objects in the local environment after separating the list:\n")
@@ -58,17 +57,17 @@
 ##'  # Place objects in the global environment instead
 ##'  cat("Objects in the global environment before separating the list:\n")
 ##'  print(ls(.GlobalEnv))
-##'  
+##'
 ##'  sepList(x, envir = .GlobalEnv)
 ##'
 ##'  cat("Objects in the local environment after separating the list:\n")
 ##'  print(ls(.GlobalEnv))
-##'  
-##'    
+##'
+##'
 ##'} # sepTest
 ##'
 ##'sepTest(list(z1 = 10, z2 = "that"))
-##' 
+##'
 ##'# Clean up example objects
 ##'rm(aList, a, b, d, objs, o1, o2, o3, sepTest, z1, z2)
 
@@ -78,7 +77,7 @@ sepList <- function(X, envir = parent.frame(), objNames = names(X), verbose = FA
   stopifnot(is.list(X),
             is.environment(envir),
             is.logical(verbose))
-  
+
   # If the list does not have names, create some
   if (is.null(objNames)) {
     objNames <- paste("o", 1:length(X), sep = "")
@@ -94,7 +93,7 @@ sepList <- function(X, envir = parent.frame(), objNames = names(X), verbose = FA
 
   # Print the names if verbose
   if (verbose) {
-      
+
     # It would be nice to actually print the name of the environment here, but I couldn't find a way to do it
     cat("The following objects were written to the specified environment:\n",
         paste(objNames, collapse = ", "), "\n")

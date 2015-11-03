@@ -8,16 +8,15 @@
 ##' An innocuous warning is thrown when \code{\link[plyr:ddply]{plyr::ddply}} is called in parallel:
 ##' \url{https://github.com/hadley/plyr/issues/203}.  This function catches and hides that warning, which looks like this:
 ##' \verb{
-##' 
+##'
 ##' Warning messages:
 ##' 1: <anonymous>: ... may be used in an incorrect context: '.fun(piece, ...)'
 ##' }
 ##'
 ##' If \code{njobs = 1}, a call to \code{\link[plyr:ddply]{plyr::ddply}} is made without parallelization, and anything
 ##' supplied to \code{.paropts} is ignored. See the documentation for \code{\link[plyr:ddply]{plyr::ddply}} for additional details.
-##' 
-##' @export
 ##'
+##' @export
 ##' @param .data data frame to be processed
 ##'
 ##' @param .variables variables to split data frame by, as 'as.quoted' variables, a formula or character vector
@@ -67,13 +66,13 @@
 ##'
 ##'f <- function(x, number2 = 10) {
 ##'  paste(x$id[1], padZero(number1, num = 2), number2, sep = "-")
-##'} 
+##'}
 ##'
 ##'# In parallel
 ##'o5 <- pddply(baseball[1:100,], "year", f, number2 = 13, njobs = 2,
 ##'             .paropts = list(.packages = "Smisc", .export = "number1"))
 ##'o5
-##' 
+##'
 ##'# Non parallel
 ##'o6 <- plyr::ddply(baseball[1:100,], "year", f, number2 = 13)
 ##'
@@ -81,7 +80,7 @@
 ##'
 
 pddply <- function(.data, .variables, .fun = NULL, ...,
-                   njobs = parallel::detectCores() - 1, .progress = "none", 
+                   njobs = parallel::detectCores() - 1, .progress = "none",
                    .inform = FALSE, .drop = TRUE, .paropts = NULL) {
 
     # Sanity check
@@ -100,8 +99,8 @@ pddply <- function(.data, .variables, .fun = NULL, ...,
     if (!requireNamespace("foreach", quietly = TRUE)) {
       stop("foreach package is required by pddply() when njobs > 1")
     }
-    
-    # Set up the cluster  
+
+    # Set up the cluster
     cl <- parallel::makeCluster(njobs)
     doParallel::registerDoParallel(cl)
 
@@ -112,12 +111,12 @@ pddply <- function(.data, .variables, .fun = NULL, ...,
 
     # Shut down the cluster
     parallel::stopCluster(cl)
-    
+
     # If we have an error, then stop
     if (is(o$value, "error")) {
       stop(o$value)
     }
-    
+
     # Extract and remove bogus warnings from the plyr package
     if (!is.null(o$warning)) {
 
@@ -142,8 +141,8 @@ pddply <- function(.data, .variables, .fun = NULL, ...,
         nothing <- lapply(o$warning[validWarnings], warning)
 
       }
-      
-    } 
+
+    }
 
     # Return the result
     return(o$value)
@@ -154,16 +153,16 @@ pddply <- function(.data, .variables, .fun = NULL, ...,
 # I got this idea from demo(error.catching).  This actually trapped the warnings,
 # whereas suppressWarnings() made them vanish completely
 tryCatchWE <- function(expr) {
-    
+
   W <- NULL
 
-  w.handler <- function(w) { 
+  w.handler <- function(w) {
  	  W <<- c(W, w = list(w))
   	invokeRestart("muffleWarning")
-  } 
+  }
 
   return(list(value = withCallingHandlers(tryCatch(expr, error = function(e) e),
  			                                    warning = w.handler),
               warning = W))
-  
+
 } # tryCatchWE

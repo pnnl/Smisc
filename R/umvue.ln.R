@@ -13,18 +13,21 @@
 ##' Calculates equations 13.3, 13.5, and 13.6 of Gilbert (1987).
 ##'
 ##' @export
-##'
 ##' @param x Vector of lognormal data
+##'
 ##' @return Returns a named vector with the following components \item{mu}{The
 ##' UMVUE of the mean} \item{se.mu}{The UMVUE standard error of the mean}
 ##' \item{sigma}{The UMVUE of the standard deviation}
+##'
 ##' @author Landon Sego
+##'
 ##' @references Gilbert, Richard O. (1987) Statistical Methods for
 ##' Environmental Pollution Monitoring, John Wiley & Sons, Inc. New York, pp
 ##' 164-167.
-##' @keywords misc
-##' @examples
 ##'
+##' @keywords misc
+##'
+##' @examples
 ##'
 ##' # Test from Gilbert 1987, Example 13.1, p 166
 ##' x <- c(3.161, 4.151, 3.756, 2.202, 1.535, 20.76, 8.42, 7.81, 2.72, 4.43)
@@ -34,7 +37,7 @@
 ##' # Results from PRO-UCL 4.00.02:
 ##'
 ##' # MVU Estimate of Mean			  5.6544289
-##' # MVU Estimate of Standard Error of Mean  1.3944504
+##' # MVU Estimate of Standard Error of Mean      1.3944504
 ##' # MVU Estimate of SD			  4.4486438
 ##'
 ##' # Compare with Gilbert's results (which have rounding error)

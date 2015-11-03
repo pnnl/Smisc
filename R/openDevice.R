@@ -12,27 +12,26 @@
 ##' called.
 ##'
 ##' @export
-##'
 ##' @param fileName Character string giving the filename for the graphics
 ##' output.  It must contain one of the extensions listed in the \code{Details}
 ##' below.
 ##'
 ##' @param \dots Named arguments to the device functions listed in
 ##' \code{Details} below.
-##' 
+##'
 ##' @return The graphics device is opened and the filename is invisibly
 ##' returned.
-##' 
+##'
 ##' @author Landon Sego
-##' 
+##'
 ##' @keywords misc
-##' 
+##'
 ##' @examples
 ##'
 ##' # Open 3 example devices
 ##' openDevice("ex1.pdf", height=6, width=12)
 ##' plot(1:10, 1:10)
-##' 
+##'
 ##' openDevice("ex1.jpg")
 ##' plot(1:10, 1:10)
 ##'
@@ -74,7 +73,7 @@ openDevice <- function(fileName, ...) {
                   tif = "tiff",
                   png = "png",
                   bmp = "bmp")
-  
+
   # Get the argument names of the function that will be called
   argNames <- names(formals(fname))
 

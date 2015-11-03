@@ -26,20 +26,24 @@
 ##' hour time)
 ##'
 ##' @export
-##'
 ##' @param dt A character vector of date values or datetime values
+##'
 ##' @param date.outformat A character string requesting the date format to be
 ##' returned.  The following date outformats are supported: "mm/dd/yyyy",
 ##' "mm-dd-yyyy", "yyyy-mm-dd", "yyyymmdd", "ddmonyyyy", and "dd-mon-yyyy".  If
 ##' \code{date.outformat=NULL}, then "mm/dd/yyyy" is used.
+##'
 ##' @param time.outformat A character string requesting the time format to be
 ##' returned.  The following time outformats are supported: "hh:mm:sspm",
 ##' "hh:mm:ss pm", "hh:mm:ss", "hh:mmpm", "hh:mm pm", and "hh:mm".  If
 ##' \code{time.outformat=NULL}, then "hh:mm:ss pm" is used.
+##'
 ##' @param posix \code{=TRUE} returns date and datetime vectors of class
 ##' POSIXct that can be used for time calculations.
+##'
 ##' @param weekday \code{=TRUE} returns a character vector denoting the day of
 ##' the week.
+##'
 ##' @return A list with these components: \item{date}{A character vector of the
 ##' form requested by \code{date.outformat}.} \item{time}{A character vector of
 ##' the form requested by \code{time.outformat} or an empty character vector of
@@ -53,8 +57,11 @@
 ##' time values are present in the argument \code{dt}.} \item{weekday}{A
 ##' character vector indicating the days of the week.  This is only returned if
 ##' \code{weekday=TRUE}.}
+##'
 ##' @author Landon Sego
+##'
 ##' @keywords misc
+##'
 ##' @examples
 ##'
 ##' # Demonstrates conversion of different datetime informats

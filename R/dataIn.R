@@ -11,18 +11,22 @@
 ##' to factors.
 ##'
 ##' @export
-##'
 ##' @param data Can be a data frame or a list of data frames (in which case,
 ##' the same data frame or list is simply returned), or one of the following
 ##' types of single text strings: (1) the name of a .csv file, (2) the name of
 ##' a .Rdata file, or (3) a data set in a particular package, using the syntax
 ##' "packageName::dataSetName".
+##'
 ##' @return A data frame (or list of data frames) containing the requested
 ##' data.
+##'
 ##' @author Landon Sego
+##'
 ##' @seealso
 ##' \code{\link{data}},\code{\link{loadObject}},\code{\link{read.csv}}
+##'
 ##' @keywords misc
+##'
 ##' @examples
 ##'
 ##'

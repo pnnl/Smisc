@@ -8,9 +8,8 @@
 ##'
 ##' Selecting no rows or no columns is possible if \code{selection = 0} or if \code{length(selection) == 0}.
 ##' In this case, a data frame or matrix with either 0 columns or 0 rows is returned.
-##'  
+##'
 ##' @export select
-##' 
 ##' @rdname select
 ##'
 ##' @param data A matrix or dataframe from whence data will be selected
@@ -76,7 +75,7 @@
 ##' select(d, 0)
 ##' select(d, which("bizarre" %in% colnames(d)))
 ##' select(d, 0, cols = FALSE)
-##'  
+##'
 ##' \dontshow{
 ##' # Running checks on select()
 ##' Smisc:::test_select()
@@ -113,7 +112,7 @@ select <- function(data, selection, cols = TRUE) {
       return(data[selection,])
     }
   }
-  
+
   # Define an error message function if wrong rows or columns are selected
   errMsg <- function(nt) {
 
@@ -236,25 +235,25 @@ test_select <- function() {
   # Consider this data frame
   d <- data.frame(a = 1:5, b = rnorm(5), c = letters[1:5], d = factor(6:10),
                   row.names = LETTERS[1:5], stringsAsFactors = FALSE)
- 
+
   # We get identical behavior when selecting more than one column
   d1 <- d[, c("d", "c")]
   d1c <- select(d, c("d", "c"))
   stopifnot(identical(d1, d1c))
- 
+
   # Selecting a single row from a data frame produces results identical to default R behavior
   d2 <- d[2,]
   d2c <- select(d, "B", cols = FALSE)
   stopifnot(identical(d2, d2c))
- 
+
   # Now consider a matrix
   m <- matrix(rnorm(20), nrow = 4, dimnames = list(LETTERS[1:4], letters[1:5]))
- 
+
   # Column selection with two or more or more columns is equivalent to default R behavior
   m1 <- m[,c(4, 3)]
   m1c <- select(m, c("d", "c"))
   stopifnot(identical(m1, m1c))
- 
+
   # Selecting a single row returns a matrix of 1 row instead of a vector
   m2 <- m["C",]
   m2c <- select(m, "C", cols = FALSE)
@@ -329,7 +328,7 @@ test_select <- function() {
             identical(select(d, character(0), cols = FALSE), d[0,]),
             identical(select(m, 0, cols = FALSE), m[0,]),
             identical(select(m, character(0), cols = FALSE), m[0,]))
-  
+
   return(print("All checks completed successfully"))
 
 }  # test_select
