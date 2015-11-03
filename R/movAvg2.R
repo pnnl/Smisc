@@ -14,7 +14,6 @@
 ##' weights as possible.
 ##'
 ##' @export
-##'
 ##' @param y The numerical vector for which the moving averages will be
 ##' calculated.  If \code{NULL}, the moving averages are not calculated.
 ##' @param bw 'bandwidth', which is roughly half the width of the moving

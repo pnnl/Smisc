@@ -10,7 +10,7 @@
 ##' If the elements of \code{vList} are lists, each list is first converted to a data frame
 ##' via \code{\link{as.data.frame}} and the resulting data frames must have the
 ##' same structure (though they may have differing numbers of rows).
-##' 
+##'
 ##' It is permissible for \code{vList} to contain \code{NULL} elements.
 ##' \code{list2df} performs numerous consistency checks to ensure that contents
 ##' of \code{vList} which are combined into the resulting data frame are
@@ -18,35 +18,34 @@
 ##' etc.
 ##'
 ##' @export
-##'
 ##' @param vList List of vectors, data frames, or lists. See Details.
 ##'
 ##' @param col.names Optional character vector of length \code{n} with column
 ##' names that will be given to the output data frame.  If \code{col.names =
 ##' NULL}, column names are extracted if possible from the column names (or
 ##' names) of the data frames (or vectors).
-##' 
+##'
 ##' @param row.names Optional character vector with length equivalent to the
 ##' length of \code{vList} containing the row names of the output data frame.
 ##' If \code{row.names = NULL}, row names from the data frames (or names of the
 ##' \code{vList} elements) if possible.
-##' 
+##'
 ##' @param convert.numeric If \code{vList} is list of vectors, \code{= TRUE}
 ##' attempts to convert each column to numeric if possible using
 ##' \code{\link{as.numericSilent}}
-##' 
+##'
 ##' @param strings.as.factors If \code{vList} is a list of vectors, \code{=
 ##' TRUE} converts character variables into factors using
 ##' \code{\link{factor2character}}.
-##' 
+##'
 ##' @return If \code{vList} is list of data frames, a data frame resulting from
 ##' efficiently row binding the data frames in \code{vList} is returned.  If
 ##' \code{vList} is a list of vectors, a data frame is returned where the first
 ##' column contains the first elements of the list vectors, the second column
 ##' contains the second elements of the list vectors, etc.
-##' 
+##'
 ##' @author Landon Sego
-##' 
+##'
 ##' @examples
 ##'
 ##' # For a list of vectors
@@ -60,7 +59,7 @@
 ##' z <- list(NULL, a = c(first = 10, second = 12), NULL, b = c(first = 15, second = 17))
 ##' z
 ##' list2df(z)
-##' 
+##'
 ##' # For a list of data frames
 ##' z <- list(d1 = data.frame(a = 1:4, b = letters[1:4]),
 ##'           d2 = data.frame(a = 5:6, b = letters[5:6]))
@@ -74,7 +73,7 @@
 ##'
 list2df <- function(vList, col.names = NULL, row.names = NULL, convert.numeric = TRUE,
                     strings.as.factors = FALSE) {
-    
+
   # Assume list is balanced.  Check for it
   lengths <- unlist(lapply(vList, function(x) ifelse(is.null(x), -1, length(x))))
   not.NULL.indicator <- lengths > -1
@@ -214,7 +213,7 @@ list2df <- function(vList, col.names = NULL, row.names = NULL, convert.numeric =
                                             collapse = ", "),
                        ")", sep="")
 
-     
+
       # Build the data frame
       out <- eval(parse(text = text.df))
 

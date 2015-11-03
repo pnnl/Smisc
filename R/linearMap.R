@@ -7,7 +7,6 @@
 ##' \eqn{f(D[2]) = R[2]}.
 ##'
 ##' @export
-##'
 ##' @param x a numeric vector
 ##' @param D a vector with 2 elements, the first being the lower endpoint of
 ##' the domain, the upper being the upper endpoint of the domain. Note

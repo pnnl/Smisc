@@ -13,7 +13,6 @@
 ##' @aliases stripExtension getExtension stripPath getPath grabLast
 ##'
 ##' @export stripExtension getExtension stripPath getPath grabLast
-##'
 ##' @usage
 ##' stripExtension(vec, split.char = ".")
 ##' getExtension(vec, split.char = ".")

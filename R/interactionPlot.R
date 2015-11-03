@@ -43,7 +43,6 @@
 ##' 1:9, 0, and the capital letters to plot the traces.
 ##'
 ##' @export
-##'
 ##' @usage interactionPlot(x.factor, trace.factor, response, fun = mean,
 ##'                        errorBar = NULL, jitterErrorBars = FALSE,
 ##'	                       type = c("l", "p", "b", "o", "c"), legend = TRUE,

@@ -3,18 +3,17 @@
 ##' Silent wrapper for coercing a vector to numeric
 ##'
 ##' @export
-##'
 ##' @param x vector of any type
-##' 
+##'
 ##' @return If \code{as.numeric(x)} produces an error or warning, \code{x} is
 ##' returned unchanged.  Otherwise, \code{as.numeric(x)} is returned.
-##' 
+##'
 ##' @author Landon Sego
-##' 
+##'
 ##' @seealso \code{\link{as.numeric}}
-##' 
+##'
 ##' @keywords misc
-##' 
+##'
 ##' @examples
 ##' as.numericSilent(c("this","that"))
 ##' as.numericSilent(c("2893.9","9423.48"))

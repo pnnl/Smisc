@@ -1,11 +1,10 @@
 ##' Display the contents of a file to the R terminal
-##' 
+##'
 ##' Display the contents of a file to the R terminal, like the \code{more} command in Unix
 ##'
 ##' @export
-##'
 ##' @param file Text string giving the file name
-##' 
+##'
 ## TODO @param method Text string indicating one of \code{"all"}, \code{"head"},
 ## or \code{"tail"}.  See Details.
 ##'
@@ -20,7 +19,7 @@
 ##' cat("Here's a file\n", "with a few lines\n", "to read.\n", sep = "", file = "tmpFile.txt")
 ##' more("tmpFile.txt")
 ##' unlink("tmpFile.txt")
-##' 
+##'
 
 more <- function(file, n = 500) {
 

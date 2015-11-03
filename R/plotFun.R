@@ -1,7 +1,9 @@
 ##'Plot one or more functions on a single plot
 ##'
+##'A convenient wrapper function for plotting one or more functions (in parallel) on a single plot.  Parallel processing can
+##'be helpful if the function is expensive to calculate.
+##'
 ##' @export
-##' 
 ##' @param fun A function or a list of functions to be plotted.  These functions should take a single, numeric vector argument and return
 ##' a corresponding vector of outputs.
 ##'
@@ -44,12 +46,12 @@
 ##' # A single function with a single argument
 ##' f <- function(x) x^2
 ##' plotFun(f, c(-2, 3), col = "Black", lty = 2, las = 1)
-##' 
+##'
 ##' # A handful of beta density functions, note how they take a single argument
 ##' fList <- list(function(x) dbeta(x, 10, 10),
 ##'               function(y) dbeta(y, 3, 3),
 ##'               function(z) dbeta(z, 0.5, 0.50))
-##' 
+##'
 ##' # Plot them all on the same plot
 ##' plotFun(fList, c(0.0001, 0.9999), ylim = c(0, 3.5),
 ##'         col = c("Red", "Black", "Blue"), lty = rep(1, 3),
@@ -63,14 +65,14 @@ plotFun <- function(fun, xlim,
                     type = "l",
                     legendLabels = NULL,
                     relX = 0.7,
-                    relY = 0.9, 
+                    relY = 0.9,
                     nPoints = 1000,
                     nJobs = 1, ...) {
-    
+
   # If fun is a single function, make it a list
-  if (is.function(fun) & length(fun) == 1) 
+  if (is.function(fun) & length(fun) == 1)
     fun <- list(fun)
-    
+
   # Check formats/conditions for arguments
   stopifnot(is.list(fun),
             all(unlist(lapply(fun, is.function))),
@@ -102,13 +104,13 @@ plotFun <- function(fun, xlim,
   graphArgs <- list(...)
 
   # Add in ylims if they're not present
-  if (!("ylim" %in% names(graphArgs))) 
+  if (!("ylim" %in% names(graphArgs)))
     graphArgs$ylim <- range(unlist(lapply(yvals, range)))
 
   # For prettier default axis labels
   x <- xvec
   y <- yvals[[1]]
-  
+
   # Default optional args
   plotArgs1 <- list(x = quote(x), y = quote(y), type = type, xlim = xlim,
                     lty = lty[1], col = col[1])
@@ -119,7 +121,7 @@ plotFun <- function(fun, xlim,
                            setdiff(unique(c(names(formals(plot.default)), names(par()))), "...")]
                else
                  list()
-    
+
   # Make the first plot
   do.call(plot, c(plotArgs1, plotArgs2))
 

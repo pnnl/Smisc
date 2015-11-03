@@ -1,27 +1,26 @@
 ##' Row bind matrices whose column names may not be the same
 ##'
 ##' @export
-##'
 ##' @param \dots matrix objects (separated by commas), a list of matrices, or a
 ##' character vector containing the names of matrix objects
-##' 
+##'
 ##' @param distinguish if \code{TRUE}, then rownames of the returned matrix are
 ##' assigned a name consisting of the object name as a prefix, followed by the
 ##' row name, separated by a ":".  Otherwise, the original rownames are used.
-##' 
+##'
 ##' @param filler The character to insert into the final matrix for those empty
 ##' elements which occur when not all the matrices have the same column names.
-##' 
+##'
 ##' @return Produces a matrix with a union of the column names.  Empty elements
 ##' resulting from different column names are set to the value of
 ##' \code{filler}.
-##' 
+##'
 ##' @author Landon Sego
-##' 
+##'
 ##' @seealso \code{\link{rbind}}
-##' 
+##'
 ##' @keywords misc
-##' 
+##'
 ##' @examples
 ##' x <- matrix(rnorm(6), ncol = 2, dimnames = list(letters[1:3],letters[4:5]))
 ##' y <- matrix(rnorm(6), ncol = 3, dimnames = list(letters[7:8],letters[4:6]))

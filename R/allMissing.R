@@ -4,15 +4,20 @@
 ##' missing (all values are NA's).
 ##'
 ##' @export
-##'
 ##' @param dframe A data frame or a matrix
+##'
 ##' @param byRow \code{= TRUE} will identify rows that have all missing values.
 ##' \code{= FALSE} identifies entire missing columns
+##'
 ##' @return A logical vector that is true if all the elements in the
 ##' corresponding row (or column) are NA's.
+##'
 ##' @author Landon Sego
+##'
 ##' @seealso \code{\link{complete.cases}}
+##'
 ##' @keywords misc
+##'
 ##' @examples
 ##'
 ##' # Start off with a simple data frame that has a few missing values
@@ -36,7 +41,7 @@
 ##' # Remove columns where all the values are missing
 ##' d2[,!allMissing(d2, byRow = FALSE)]
 ##'
-allMissing <- function(dframe, byRow=TRUE) {
+allMissing <- function(dframe, byRow = TRUE) {
 
   if ((!is.matrix(dframe)) & (!is.data.frame(dframe)))
     stop("'", deparse(substitute(dframe)),

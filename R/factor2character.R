@@ -1,7 +1,6 @@
 ##' Converts all factor variables in a dataframe to character variables
 ##'
 ##' @export
-##'
 ##' @param dframe A dataframe
 ##' @return The same dataframe with the factor variables converted to character
 ##' variables.

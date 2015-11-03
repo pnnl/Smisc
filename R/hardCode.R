@@ -6,7 +6,6 @@
 ##' vector that would be needed to create that vector.
 ##'
 ##' @export
-##' 
 ##' @param x A vector (numeric, character, or logical)
 ##'
 ##' @param vname A string indicating the name of the vector that will be "created" in the code

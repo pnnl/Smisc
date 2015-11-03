@@ -5,14 +5,13 @@
 ##' something other than the name it was saved as.
 ##'
 ##' @export
-##'
 ##' @param RdataFiles A character vector containing the '.Rdata' filenames
-##' 
+##'
 ##' @return The object(s) contained in \code{RdataFiles}, organized into lists and named as
 ##' required to distinguish them completely.  See Examples.
-##' 
+##'
 ##' @author Landon Sego
-##' 
+##'
 ##' @examples
 ##'
 ##'# Create some filenames we'll use in this example
@@ -51,7 +50,7 @@
 
 loadObject <- function(RdataFiles) {
 
-  # Verify we have a character vector 
+  # Verify we have a character vector
   stopifnot(is.character(RdataFiles))
 
   # Verify files exist
@@ -62,19 +61,19 @@ loadObject <- function(RdataFiles) {
 
   # A function for loading and processing a single file
   loadFile <- function(singleFile) {
-    
+
     # Load the objects into the environment of this function
     objIn <- load(singleFile)
-  
+
     # Create a list of the objects that were loaded
     makeListText <- paste("list(", paste(paste(objIn, "=", objIn), collapse = ", "),
                           ")", sep = "")
     outList <- eval(parse(text = makeListText))
-  
+
     # If only one object was loaded, then return that object (not as a list)
     if (length(objIn) == 1)
       outList <- outList[[1]]
-  
+
     # Return the loaded objects
     return(outList)
 

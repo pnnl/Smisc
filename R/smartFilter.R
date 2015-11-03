@@ -21,22 +21,31 @@
 ##' returned for the corresponding index.
 ##'
 ##' @export
-##'
 ##' @param y A numeric vector (can be labeled)
+##'
 ##' @param weights Vector of weights that will be used to calculate the moving
 ##' dot product.  Should be odd in length and should sum to unity.
+##'
 ##' @param min.window The minimum number of non-missing data points in a window
 ##' that are required to calculate the dot product
+##'
 ##' @param start The index of the center of the first window
+##'
 ##' @param skip The number of indexes to advance the center of the moving
 ##' window each time the dot product is calculated.
+##'
 ##' @param balance \code{=TRUE} requires that the first non-missing value in a
 ##' window occur on or before the center point of the window, and that the last
 ##' non-missing value occur on or after the center point of the window.
+##'
 ##' @return Returns the moving dot product
+##'
 ##' @author Landon Sego
+##'
 ##' @seealso \code{\link{movAvg2}}, \code{\link{filter}}
+##'
 ##' @keywords misc
+##'
 ##' @examples
 ##'
 ##'  # Define a simple vector

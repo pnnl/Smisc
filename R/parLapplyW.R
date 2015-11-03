@@ -5,15 +5,14 @@
 ##' The expression in \code{expr} is evaluated before the variables in \code{varlist} are exported.
 ##'
 ##' @export
+##' @param X  A vector (atomic or list)
 ##'
-##' @param X  A vector (atomic or list) 
-##' 
 ##' @param FUN A function or character string naming a function whose first argument will be passed the elements of \code{X}
-##' 
+##'
 ##' @param \dots Additional named arguments to \code{FUN}
 ##'
 ##' @param njobs The number of jobs (cores) to use
-##' 
+##'
 ##' @param expr An expression that will be evaluated on each worker node via a call to \code{\link{clusterEvalQ}}
 ##'
 ##' @param varlist Character vector of names of objects to export to each worker node via \code{\link{clusterExport}}
@@ -79,21 +78,21 @@ parLapplyW <- function(X, FUN, ..., njobs = parallel::detectCores() - 1,
 
     # Evaluate expression on the cluster
     if (!is.null(expr)) {
-          
+
       parallel::clusterCall(cl, eval, expr, env = .GlobalEnv)
-        
+
     }
-  
+
     # Export the variables
     if (!is.null(varlist)) {
-  
+
       parallel::clusterExport(cl, varlist, envir = envir)
-  
+
     }
-  
+
     # Run the parallel lapply
     return(parallel::parLapply(cl, X, FUN, ...))
-      
+
   } # inner
 
   # Call with the try-catch
@@ -107,5 +106,5 @@ parLapplyW <- function(X, FUN, ..., njobs = parallel::detectCores() - 1,
     stop(out)
   else
     return(out)
-    
+
 } # parLapplyW

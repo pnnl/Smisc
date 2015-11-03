@@ -24,7 +24,6 @@
 ##' @export pbb
 ##' @export qbb
 ##' @export rbb
-##'
 ##' @usage
 ##' dbb(x, N, u, v)
 ##' pbb(q, N, u, v)

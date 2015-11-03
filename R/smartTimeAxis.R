@@ -9,17 +9,24 @@
 ##' 15 seconds, etc. OR 1, 2, 5, 10, minutes etc., OR 0.5, 1, 1.5 hours, etc.
 ##'
 ##' @export
-##'
 ##' @param time.vec A time object (vector) that was used to construct the plot,
 ##' presumed to be ordered chronologically
+##'
 ##' @param nticks The target number of ticks to use in the axis
+##'
 ##' @param time.format Same as the \code{time.outformat} argument in
 ##' \code{\link{formatDT}}
+##'
 ##' @param side Same as the \code{side} argument in \code{\link{axis}}
+##'
 ##' @return Places the axis on the plot.
+##'
 ##' @author Landon Sego
+##'
 ##' @seealso \code{\link{axis.POSIXct}}
+##'
 ##' @keywords misc
+##'
 ##' @examples
 ##'
 ##' # Get data and set the options to the horizontal axis labels will be

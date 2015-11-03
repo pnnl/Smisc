@@ -6,7 +6,6 @@
 ##' point (double) addition is used.
 ##'
 ##' @export
-##'
 ##' @param x An integer or double vector
 ##' @return The vector of cumulative sums.
 ##'

@@ -24,18 +24,23 @@
 ##' \code{findDepMat} is likely to be slow for large matrices.
 ##'
 ##' @export
-##'
 ##' @param X A numeric matrix
+##'
 ##' @param rows Set \code{rows = TRUE} to identify which rows are linearly
 ##' dependent. Set \code{rows = FALSE} to identify columns that are linearly
 ##' dependent.
+##'
 ##' @param tol The tolerance used to determine whether one row (or column) is a
 ##' linear combination of another.
+##'
 ##' @return A logical vector, equal in length to the number of rows (columns)
 ##' of \code{X}, with \code{TRUE} indicating that the row (column) is linearly
 ##' dependent on a previous row (column).
+##'
 ##' @author Landon Sego
+##'
 ##' @keywords misc
+##'
 ##' @examples
 ##'
 ##' # Note how rows 1, 2, and 5 are linearly dependent

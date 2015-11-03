@@ -30,27 +30,33 @@
 ##' has the same timestamps as \code{v1}.
 ##'
 ##' @export
-##'
 ##' @param v1 A time series vector: vector with dates or datetimes for names
 ##' which are non repeating and in chronological order
+##'
 ##' @param v2 Another time series vector
+##'
 ##' @param n.ind An integer >= 1 that indicates how many elements of the longer
 ##' of the two vectors will be averaged and matched to the closest timestamp of
 ##' the shorter vector.  See details below.
+##'
 ##' @param full \code{=TRUE} returns a data frame that shows in detail how the
 ##' two vectors were matched and the difference calculated
+##'
 ##' @return if \code{full = FALSE} then the difference (after matching) of
 ##' \code{(v1 - v2)} is returned. Otherwise, a data frame is returned that
 ##' shows how the vectors were matched and the resulting difference vector.
+##'
 ##' @author Landon Sego
+##'
 ##' @keywords misc
+##'
 ##' @examples
 ##'
 ##' data(timeDiff.eg)
 ##'
 ##' # Show the objects
 ##' print(timeDiff.eg)
-##' 
+##'
 ##' # Extract the objects from the list for easier use in the example
 ##' x1 <- timeDiff.eg$x1
 ##' x2 <- timeDiff.eg$x2

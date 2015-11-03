@@ -1,3 +1,4 @@
+
 ##' Prints the name and value of one or more objects
 ##'
 ##' A convenience function for writing the names and values of objects to the
@@ -9,24 +10,30 @@
 ##' but the results won't be easily readable.
 ##'
 ##' @export
-##'
 ##' @param \dots Objects whose names and values are to be printed, separated by
 ##' commas. Can also be a simple list.
+##'
 ##' @param digits Number of digits to display for numeric objects.  Defaults to
 ##' \code{NULL}, which corresponds to no restriction on the number of digits.  This
 ##' is passed to the \code{digits} argument of \code{\link{round}}.
+##'
 ##' @param abbrev Number of characters to display for character objects.
 ##' Defaults to \code{NULL}, which corresonds to no restriction on the number
 ##' of characters.
+##'
 ##' @param sep Character string that separates the objects that are printed
+##'
 ##' @param verbose \code{=TRUE} writes the value of the object(s) to the
 ##' session window
+##'
 ##' @return Invisibly returns a character string containing the names of the
 ##' objects and their values
-##' @author Landon Sego
-##' @keywords misc
-##' @examples
 ##'
+##' @author Landon Sego
+##'
+##' @keywords misc
+##'
+##' @examples
 ##' x <- 10
 ##' y <- 20.728923
 ##' z <- "This.long.string"
@@ -62,17 +69,17 @@ pvar <- function(..., digits = NULL, abbrev = NULL, sep = ";", verbose = TRUE) {
   if (!is.null(digits))
     stopifnot(is.numeric(digits),
               length(digits) == 1)
-  
+
   if (!is.null(abbrev))
     stopifnot(is.numeric(abbrev),
               length(abbrev) == 1)
-  
+
   stopifnot(is.character(sep),
             length(sep) == 1,
             is.logical(verbose),
             length(verbose) == 1)
-              
-    
+
+
   # Grab the objects into a list
   vars <- list(...)
   vnames <- as.character(substitute(list(...)))[-1]

@@ -6,7 +6,6 @@
 ##' many objects to bind and the object names are easily represented in text.
 ##'
 ##' @export
-##' 
 ##' @param objects A character vector with the names of the objects to be bound together
 ##'
 ##' @param type The type of binding, "row" for \code{\link{rbind}} or "col" for
