@@ -55,7 +55,7 @@ explicitly as \deqn{ mu = \frac{nu}/{u+v} } and \deqn{ sigma^2 =
 \note{
 \code{dbb} and \code{qbb} do not recycle vector-valued arguments in
 the usual fashion in R.  Arguments to these functions must have length 1
-and/or one other length. See example of \code{\link{pcbinom}} for more
+and/or one other common length. See example of \code{\link{pcbinom}} for more
 information.
 
 Non integer values of \code{x} and \code{N} are rounded to the nearest
