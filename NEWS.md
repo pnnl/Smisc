@@ -1,3 +1,14 @@
+Version 0.2.16, 2015-11-30
+-----------------------------------------------------------------------------------
+
+BUG FIXES
+
+- Correction to documentation of `strings.as.factors` argument of `list2df()`
+
+FEATURES / CHANGES
+
+- Added tests for `allMissing()` and beta-binomial functions
+
 Version 0.2.15, 2015-10-31
 -----------------------------------------------------------------------------------
 

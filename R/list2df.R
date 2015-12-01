@@ -18,6 +18,7 @@
 ##' etc.
 ##'
 ##' @export
+##' 
 ##' @param vList List of vectors, data frames, or lists. See Details.
 ##'
 ##' @param col.names Optional character vector of length \code{n} with column
@@ -34,9 +35,8 @@
 ##' attempts to convert each column to numeric if possible using
 ##' \code{\link{as.numericSilent}}
 ##'
-##' @param strings.as.factors If \code{vList} is a list of vectors, \code{=
-##' TRUE} converts character variables into factors using
-##' \code{\link{factor2character}}.
+##' @param strings.as.factors If \code{vList} is a list of vectors or lists, \code{=
+##' FALSE} converts factors into characters using \code{\link{factor2character}}.
 ##'
 ##' @return If \code{vList} is list of data frames, a data frame resulting from
 ##' efficiently row binding the data frames in \code{vList} is returned.  If
