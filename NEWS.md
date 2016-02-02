@@ -1,3 +1,10 @@
+Version 0.2.17, 2016-02-01
+-----------------------------------------------------------------------------------
+
+BUG FIXES
+
+- `stopifnotMsg()` can be now be called from the global environment as well as within functions
+
 Version 0.2.16, 2016-01-25
 -----------------------------------------------------------------------------------
 

@@ -66,9 +66,9 @@ stopifnotMsg <- function(...) {
   failedIndexes <- which(!unlist(cond))
 
   if (length(failedIndexes)) {
-  
+
     # Get the call to the function from which stopifnotMsg() was called
-    fn <- deparse(sys.calls()[[sys.nframe() - 1]])
+    fn <- deparse(sys.calls()[[max(1, sys.nframe() - 1)]])
 
     # Gather a messages for the stop
     msg <- paste(c(fn, unlist(msgs)[failedIndexes]), collapse = "\n")

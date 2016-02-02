@@ -3,15 +3,16 @@
 ##' Validate selected elements from a character vector using a variety of selection mechanisms:  logical, names, or
 ##' numerical indexes
 ##'
-##' This function is useful for selecting rows or columns from data frames, while providing informative error messages
-##' if the \code{elements} for selection are specified incorrectly.  Note that logical vectors are not recycled as usual:
-##' they must be the same length as \code{cVec}.
+##' This function is especially useful for selecting rows or columns from data frames, while providing informative error messages
+##' if the \code{elements} for selection are specified incorrectly.  
 ##'
 ##' @export
+##' 
 ##' @param elements elements to select from \code{cVec}.  Can be a logical vector, a vector of numeric indexes,
-##' or a character vector of column names.  If \code{elements == NULL}, \code{NULL} is returned.
+##' or a character vector of element names.  Note that logical vectors are not recycled as usual:
+##' they must be the same length as \code{cVec}. If \code{elements == NULL}, \code{NULL} is returned.
 ##'
-##' @param cVec A character vector from which to select elements
+##' @param cVec A character vector from which to select elements (such as row names or column names)
 ##'
 ##' @return A character vector with elements that were selected from \code{cVec} using \code{elements}
 ##'
