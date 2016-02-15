@@ -1,3 +1,24 @@
+Version 0.2.17, 2016-02-01
+-----------------------------------------------------------------------------------
+
+BUG FIXES
+
+- `stopifnotMsg()` can be now be called from the global environment as well as within functions
+
+Version 0.2.16, 2016-01-25
+-----------------------------------------------------------------------------------
+
+BUG FIXES
+
+- Correction to documentation of `strings.as.factors` argument of `list2df()`
+- Correction to documentation of `.variables` argument of `pddply()`
+- `selectElements()` no longer allows the `elements` argument to be a vector of 0's and 1's because it led to logical inconsistencies
+
+FEATURES / CHANGES
+
+- Added tests for `allMissing()` and beta-binomial functions
+- Added `stopifnotMsg()` to make it easier to return error messages when checking the arguments of functions
+
 Version 0.2.15, 2015-10-31
 -----------------------------------------------------------------------------------
 

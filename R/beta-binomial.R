@@ -31,28 +31,40 @@
 ##' rbb(n, N, u, v)
 ##'
 ##' @param x vector of qauntiles
+##' 
 ##' @param q vector of quantiles
+##' 
 ##' @param p vector of probabilities
+##' 
 ##' @param n number of observations
+##' 
 ##' @param N number of trials (a positive integer)
+##' 
 ##' @param u first positive parameter of the beta distribution
+##' 
 ##' @param v second positive parameter of the beta distribution
+##' 
 ##' @return \code{dbb} gives the density, \code{pbb} gives the distribution
 ##' function, \code{qbb} gives the quantile function, and \code{rbb} generates
 ##' random deviates.
+##' 
 ##' @note \code{dbb} and \code{qbb} do not recycle vector-valued arguments in
 ##' the usual fashion in R.  Arguments to these functions must have length 1
-##' and/or one other length. See example of \code{\link{pcbinom}} for more
+##' and/or one other common length. See example of \code{\link{pcbinom}} for more
 ##' information.
 ##'
 ##' Non integer values of \code{x} and \code{N} are rounded to the nearest
 ##' integer with a warning.
+##' 
 ##' @section Warning: \code{dbb}, \code{pbb}, and \code{qbb} can be imprecise
 ##' when the probabilities for tail values are small.  This can result in
 ##' unusual behavior for \code{pbb} and \code{qbb}.
+##' 
 ##' @author Kevin R. Coombes, modified by Landon Sego
+##' 
 ##' @seealso \code{\link{dbeta}} for the beta distribution and
 ##' \code{\link{dbinom}} for the binomial distribution.
+##' 
 ##' @keywords misc
 ##' @examples
 ##'
@@ -96,15 +108,35 @@ dbb <- function(x, N, u, v) {
     stop("u must be > 0")
   if (any(v <= 0))
     stop("v must be > 0")
-  if (any(x < 0))
-    stop("x must be >= 0")
   if (any(N < 0))
     stop("N must be >= 0")
-  if (any(x > N))
-    stop("x must be <= N")
 
-  #beta(x+u, N-x+v)/beta(u,v)*choose(N,x)
-  choose(N, x) * exp(lgamma(x + u) + lgamma(N - x + v) - lgamma(N + u + v) + lgamma(u + v) - lgamma(u) - lgamma(v))
+  # Taking care of cases where x < 0
+  x.lt.0 <- x < 0
+  if (any(x.lt.0)) {
+    x[x.lt.0] <- 0
+  }
+  
+  # Taking care of cases where x > N
+  x.gt.N <- x > N
+  if (any(x.gt.N)) {
+    x[x.gt.N] <- 0
+  }
+
+  # These two calculations are equivalent, but the second is more stable
+  #out <- beta(x+u, N-x+v)/beta(u,v)*choose(N,x)
+  out <- choose(N, x) * exp(lgamma(x + u) + lgamma(N - x + v) - lgamma(N + u + v) + lgamma(u + v) - lgamma(u) - lgamma(v))
+
+  # Fixing cases that should have probability 0
+  if (any(x.lt.0)) {
+    out[x.lt.0] <- 0
+  }
+
+  if (any(x.gt.N)) {
+    out[x.gt.N] <- 0
+  }
+
+  return(out)
 
 } # dbb
 
@@ -266,7 +298,8 @@ rbb <- function(n, N, u, v) {
   N <- as.integer(round(N))
 
   p <- rbeta(n, u, v)
-  rbinom(n, N, p)
+  
+  return(rbinom(n, N, p))
 
 } # rbb
 

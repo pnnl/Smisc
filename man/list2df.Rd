@@ -24,9 +24,8 @@ If \code{row.names = NULL}, row names from the data frames (or names of the
 attempts to convert each column to numeric if possible using
 \code{\link{as.numericSilent}}}
 
-\item{strings.as.factors}{If \code{vList} is a list of vectors, \code{=
-TRUE} converts character variables into factors using
-\code{\link{factor2character}}.}
+\item{strings.as.factors}{If \code{vList} is a list of vectors or lists, \code{=
+FALSE} converts factors into characters using \code{\link{factor2character}}.}
 }
 \value{
 If \code{vList} is list of data frames, a data frame resulting from

@@ -7,11 +7,11 @@
 selectElements(elements, cVec)
 }
 \arguments{
-\item{elements}{elements to select from \code{cVec}.  Can be a logical vector, a vector of 1's and 0's (that is
-converted to Boolean), a vector of numeric indexes, or a character vector of column names.
-If \code{elements == NULL}, \code{NULL} is returned.}
+\item{elements}{elements to select from \code{cVec}.  Can be a logical vector, a vector of numeric indexes,
+or a character vector of element names.  Note that logical vectors are not recycled as usual:
+they must be the same length as \code{cVec}. If \code{elements == NULL}, \code{NULL} is returned.}
 
-\item{cVec}{A character vector from which to select elements}
+\item{cVec}{A character vector from which to select elements (such as row names or column names)}
 }
 \value{
 A character vector with elements that were selected from \code{cVec} using \code{elements}
@@ -21,9 +21,8 @@ Validate selected elements from a character vector using a variety of selection 
 numerical indexes
 }
 \details{
-This function is useful for selecting rows or columns from data frames, while providing informative error messages
-if the \code{elements} for selection are specified incorrectly.  Note that logical vectors (or binary vectors of 0's
-and 1's) are not recycled as usual: they must be the same length as \code{cVec}.
+This function is especially useful for selecting rows or columns from data frames, while providing informative error messages
+if the \code{elements} for selection are specified incorrectly.
 }
 \examples{
 # Define the column names
@@ -34,7 +33,10 @@ cnames
 selectElements(c("a", "c"), cnames)
 selectElements(c(1, 3), cnames)
 selectElements(c(TRUE, FALSE, TRUE, FALSE, FALSE), cnames)
-selectElements(c(1, 0, 1, 0, 0), cnames)
+
+# Select the 1st, 3rd, and 1st columns
+selectElements(c("a", "c", "a"), cnames)
+selectElements(c(1, 3, 1), cnames)
 
 # If you don't want to select any of them
 selectElements(NULL, cnames)

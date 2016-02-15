@@ -19,7 +19,7 @@
 ##' @export
 ##' @param .data data frame to be processed
 ##'
-##' @param .variables variables to split data frame by, as 'as.quoted' variables, a formula or character vector
+##' @param .variables character vector of variables in \code{.data} that will define how to split the data
 ##'
 ##' @param .fun function to apply to each piece
 ##'

@@ -11,7 +11,7 @@ To install:
     install_github("pnnl/Smisc")
 
 A few notes about installation:
-- The `devtools` package is available from [CRAN](http://cran.r-project.org)
+- The `devtools` package is available from [CRAN](http://cran.r-project.org/package=devtools)
 - The `Smisc` package contains C code that requires compilation:  
 On a Mac, you'll need [Xcode](https://developer.apple.com/xcode/), 
 on Windows, you'll need to install [R tools](http://cran.r-project.org/bin/windows/Rtools/), 

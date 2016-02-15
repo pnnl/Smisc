@@ -11,7 +11,7 @@ pddply(.data, .variables, .fun = NULL, ..., njobs = parallel::detectCores()
 \arguments{
 \item{.data}{data frame to be processed}
 
-\item{.variables}{variables to split data frame by, as 'as.quoted' variables, a formula or character vector}
+\item{.variables}{character vector of variables in \code{.data} that will define how to split the data}
 
 \item{.fun}{function to apply to each piece}
 
