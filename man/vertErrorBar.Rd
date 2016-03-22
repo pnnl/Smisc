@@ -2,7 +2,7 @@
 % Please edit documentation in R/vertErrorBar.R
 \name{vertErrorBar}
 \alias{vertErrorBar}
-\title{Vertical error bar drawing function}
+\title{Draw vertical error bar on a plot}
 \usage{
 vertErrorBar(x, width, center = NULL, height = NULL, min.y = NULL,
   max.y = NULL, blankMiddle = NULL, ...)
@@ -29,17 +29,17 @@ Defaults to
   \code{NULL}, in which case a solid error bar is drawn. Can also be a vector or a
 single value.}
 
-\item{...}{additional arguments to \code{\link{lines}}.}
+\item{\dots}{additional arguments to \code{\link{lines}}.}
 }
 \value{
 Nothing is returned, the error bar is drawn on the plot
 }
 \description{
-Vertical error bar drawing function
+Draw vertical error bar on a plot
 }
 \details{
 Buyer beware!  It's up to the user to determine what the statistically correct height
-of theerror bar should be.
+of the error bar should be.
 
 Note that \code{x}, \code{y} should be the same length.  \code{height}, \code{width},
 and \code{blankMiddle} should either be numeric values of length 1, or the same length

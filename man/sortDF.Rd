@@ -2,7 +2,7 @@
 % Please edit documentation in R/sortDF.R
 \name{sortDF}
 \alias{sortDF}
-\title{Sorts a dataframe by one or more variables}
+\title{Sort a dataframe}
 \usage{
 sortDF(form, dat)
 }
@@ -15,17 +15,16 @@ sortDF(form, dat)
 The sorted dataframe
 }
 \description{
-Sorts a dataframe by one or more variables, ascending or descending
- The order of the arguments \code{form} and \code{dat} is
-  interchangeable.  In the formula, use + for ascending, - for
-  decending. Sorting is left to right in the formula. 
-  For example, to sort the dataframe \code{Oats} with sorting variables \code{Block} and
-  \code{Variety}, useage is either of the following:
+Sort a dataframe by one or more ascending or descening variables
 }
 \details{
+The order of the arguments \code{form} and \code{dat} is
+interchangeable.  In the formula, use + for ascending, - for
+decending. Sorting is left to right in the formula. 
+For example, to sort the dataframe \code{Oats} with sorting variables \code{Block} and
+\code{Variety}, useage is either of the following: 
 \code{sortDF(~ Block - Variety, Oats)}  or
-  
-  \code{sortDF(Oats, ~ - Variety + Block)}
+\code{sortDF(Oats, ~ - Variety + Block)}
 }
 \examples{
 d <- data.frame(b = factor(c("Hi","Med","Hi","Low"), levels = c("Low","Med","Hi"), 
@@ -48,5 +47,8 @@ sortDF(d, ~x - y + z)
 }
 \author{
 Kevin Wright with ideas from Any Liaw and small edits by Landon Sego
+}
+\references{
+\url{https://stat.ethz.ch/pipermail/r-help/2004-September/057954.html}
 }
 

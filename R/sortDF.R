@@ -1,23 +1,25 @@
-##' Sorts a dataframe by one or more variables
+##' Sort a dataframe
+##'
+##' Sort a dataframe by one or more ascending or descening variables
 ##' 
-##' Sorts a dataframe by one or more variables, ascending or descending
-##'  The order of the arguments \code{form} and \code{dat} is
-##'   interchangeable.  In the formula, use + for ascending, - for
-##'   decending. Sorting is left to right in the formula. 
-##'   For example, to sort the dataframe \code{Oats} with sorting variables \code{Block} and
-##'   \code{Variety}, useage is either of the following: 
-##' 
-##'   \code{sortDF(~ Block - Variety, Oats)}  or
-##'   
-##'   \code{sortDF(Oats, ~ - Variety + Block)}
+##'The order of the arguments \code{form} and \code{dat} is
+##'interchangeable.  In the formula, use + for ascending, - for
+##'decending. Sorting is left to right in the formula. 
+##'For example, to sort the dataframe \code{Oats} with sorting variables \code{Block} and
+##'\code{Variety}, useage is either of the following: 
+##'\code{sortDF(~ Block - Variety, Oats)}  or
+##'\code{sortDF(Oats, ~ - Variety + Block)}
 ##'
 ##' @export
 ##' @usage sortDF(form, dat)
 ##' 
 ##' @param form A formula with the variable names to use for sorting
+##' 
 ##' @param dat The dataframe to sort
 ##' 
 ##' @return  The sorted dataframe
+##'
+##' @references \url{https://stat.ethz.ch/pipermail/r-help/2004-September/057954.html}
 ##' 
 ##' @author Kevin Wright with ideas from Any Liaw and small edits by Landon Sego
 ##' 

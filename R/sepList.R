@@ -10,7 +10,7 @@
 ##' @export
 ##' @param X a list to be separated
 ##'
-##' @param envir The environment where the objects in the list are assigned, defaults to \code{parent.frame()}, the environment that
+##' @param envir The environment where the objects in the list are assigned, defaults to \code{parent.frame()}, the environment
 ##' where \code{sepList} was called.
 ##'
 ##' @param objNames Character vector indicating the names of the objects that will be created.  The length of

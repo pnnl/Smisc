@@ -1,9 +1,9 @@
-##' Vertical error bar drawing function
+##' Draw vertical error bar on a plot
 ##'
-##' Vertical error bar drawing function
+##' Draw vertical error bar on a plot
 ##'
 ##' Buyer beware!  It's up to the user to determine what the statistically correct height
-##' of theerror bar should be.
+##' of the error bar should be.
 ##'
 ##' Note that \code{x}, \code{y} should be the same length.  \code{height}, \code{width},
 ##' and \code{blankMiddle} should either be numeric values of length 1, or the same length
@@ -35,7 +35,7 @@
 ##'   \code{NULL}, in which case a solid error bar is drawn. Can also be a vector or a
 ##' single value.
 ##'
-##' @param ... additional arguments to \code{\link{lines}}.
+##' @param \dots additional arguments to \code{\link{lines}}.
 ##'
 ##' @author Landon Sego
 ##'
@@ -131,4 +131,4 @@ vertErrorBar <- function(x, width, center = NULL, height = NULL,
 
   return(invisible())
 
-} # errorBar
+} # vertErrorBar

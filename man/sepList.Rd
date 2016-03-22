@@ -9,7 +9,7 @@ sepList(X, envir = parent.frame(), objNames = names(X), verbose = FALSE)
 \arguments{
 \item{X}{a list to be separated}
 
-\item{envir}{The environment where the objects in the list are assigned, defaults to \code{parent.frame()}, the environment that
+\item{envir}{The environment where the objects in the list are assigned, defaults to \code{parent.frame()}, the environment
 where \code{sepList} was called.}
 
 \item{objNames}{Character vector indicating the names of the objects that will be created.  The length of

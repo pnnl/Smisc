@@ -5,9 +5,10 @@
 
 
 
-##' Computes UMVUEs of lognormal data
+##' Computes UMVUEs of lognormal parameters
 ##'
-##' Computes UMVU estimates of the mean, the standard error of the mean, and
+##' Computes uniformly minimum variance unbiassed (UMVU) estimates of the mean,
+##' the standard error of the mean, and
 ##' the standard deviation of lognormally distributed data.
 ##'
 ##' Calculates equations 13.3, 13.5, and 13.6 of Gilbert (1987).
@@ -31,7 +32,7 @@
 ##'
 ##' # Test from Gilbert 1987, Example 13.1, p 166
 ##' x <- c(3.161, 4.151, 3.756, 2.202, 1.535, 20.76, 8.42, 7.81, 2.72, 4.43)
-##' y <- umvue.ln(x)
+##' y <- umvueLN(x)
 ##' print(y)
 ##'
 ##' # Results from PRO-UCL 4.00.02:
@@ -47,7 +48,7 @@
 ##' pvar(mu.1.hat, s2.mu.1.hat, s2.1.hat)
 ##'
 ##'
-umvue.ln <- function(x) {
+umvueLN <- function(x) {
 
   n <- length(x)
 
@@ -59,16 +60,16 @@ umvue.ln <- function(x) {
   y <- log(x)
   y.bar <- mean(y)
   s2.y <- var(y)
-  psi.1 <- psi.n.t(n, s2.y/2)
-  psi.2 <- psi.n.t(n, s2.y * (n - 2) / (n - 1))
+  psi.1 <- psi_n_t(n, s2.y/2)
+  psi.2 <- psi_n_t(n, s2.y * (n - 2) / (n - 1))
   e2ybar <- exp(2 * y.bar)
 
   # Return results
   return(c(mu = exp(y.bar) * psi.1,
            se.mu = sqrt(e2ybar * (psi.1^2 - psi.2)),
-           sigma = sqrt(e2ybar * (psi.n.t(n, 2 * s2.y) - psi.2))))
+           sigma = sqrt(e2ybar * (psi_n_t(n, 2 * s2.y) - psi.2))))
 
-} # umvue.ln
+} # umvueLN
 
 
 # Calculate psi_n(t) from equation 13.4 in Gilbert (1987, p 165)
@@ -76,7 +77,7 @@ umvue.ln <- function(x) {
 
 # Landon Sego,  2008-10-13
 
-psi.n.t <- function(n, tx, tol=1e-15, verbose=FALSE) {
+psi_n_t <- function(n, tx, tol = 1e-15, verbose = FALSE) {
 
   .C("psi_n_t",
      as.integer(n),
@@ -85,5 +86,5 @@ psi.n.t <- function(n, tx, tol=1e-15, verbose=FALSE) {
      as.integer(verbose),
      out = double(1))$out
 
-} # psi.n.t
+} # psi_n_t
 

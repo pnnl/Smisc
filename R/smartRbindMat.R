@@ -5,7 +5,7 @@
 ##' character vector containing the names of matrix objects
 ##'
 ##' @param distinguish if \code{TRUE}, then rownames of the returned matrix are
-##' assigned a name consisting of the object name as a prefix, followed by the
+##' assigned a name consisting of the source object name as a prefix, followed by the
 ##' row name, separated by a ":".  Otherwise, the original rownames are used.
 ##'
 ##' @param filler The character to insert into the final matrix for those empty

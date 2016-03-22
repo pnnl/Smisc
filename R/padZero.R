@@ -10,32 +10,37 @@
 ##' \code{num}.
 ##'
 ##' For \code{side='right'}, \code{num} is the number of decimal places to be
-##' displayed. If \code{num=NULL}, the number of decimals in the element with
+##' displayed. If \code{num = NULL}, the number of decimals in the element with
 ##' the largest number of decimal places is used.
 ##'
-##' Note that \code{vec} must be numeric when \code{side='right'}.  However,
-##' \code{vec} may be character when \code{side='left'}.
+##' Note that \code{vec} must be numeric when \code{side = 'right'}.  However,
+##' \code{vec} may be character when \code{side = 'left'}.
 ##'
 ##' @export
 ##' @param vec The numeric vector to be padded
+##' 
 ##' @param num The number of zeros that will be padded. If \code{NULL}, the
 ##' value is chosen based on the longest string in the vector.
+##' 
 ##' @param side The side to which the zeros are added.
+##' 
 ##' @return Character vector with the leading (or trailing) elements padded
 ##' with zeros.
+##' 
 ##' @author Landon Sego
+##' 
 ##' @keywords misc
+##' 
 ##' @examples
+##' # Examples with 0's on the left
+##' padZero(c(1,10,100))
+##' padZero(c(1,10,100), num = 4)
 ##'
-##'   # Examples with 0's on the left
-##'   padZero(c(1,10,100))
-##'   padZero(c(1,10,100), num=4)
-##'
-##'   # Examples with 0's on the right
-##'   padZero(c(1.2, 1.34, 1.399), side="r")
-##'   padZero(c(1.2, 1.34, 1.399), num=5, side="r")
-##'
-padZero <- function(vec, num=NULL, side=c("left", "right")) {
+##' # Examples with 0's on the right
+##' padZero(c(1.2, 1.34, 1.399), side = "r")
+##' padZero(c(1.2, 1.34, 1.399), num = 5, side = "r")
+
+padZero <- function(vec, num = NULL, side = c("left", "right")) {
 
   side <- match.arg(side)
 

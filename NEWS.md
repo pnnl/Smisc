@@ -1,3 +1,15 @@
+Version 0.2.18, 2016-03-02
+-----------------------------------------------------------------------------------
+
+FEATURES / CHANGES
+
+- `umvue.ln()` renamed `umvueLN()`
+- `factor2num()` renamed `factor2numeric()`
+- `validEmailAddress()` deprecated
+- Tests created for `select()`
+- Minor documentation edits/improvements
+
+
 Version 0.2.17, 2016-02-01
 -----------------------------------------------------------------------------------
 

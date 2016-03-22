@@ -40,21 +40,21 @@
 ##'  return(list(textJunk, result))
 ##'}
 ##'
-##'# Call parlapply, loading the Smisc package and passing in the "b1" and "b2" objects
+##'# Call parLapplyW(), loading the Smisc package and passing in the "b1" and "b2" objects
 ##'res.1 <- parLapplyW(a, f1, someText = "that.stuff", njobs = 2,
 ##'                    expr = expression(library(Smisc)),
 ##'                    varlist = c("b1", "b2"))
 ##'
 ##'print(res.1)
 ##'
-##'# Call parlapply, note that we're sending a different value for "b2" into the worker nodes
+##'# Call parLapplyW(), note that we're sending a different value for "b2" into the worker nodes
+##'# via the 'expr' argument
 ##'res.2 <- parLapplyW(a, f1, someText = "that.stuff", njobs = 2,
 ##'                    expr = expression({library(Smisc); b2 <- rnorm(10)}),
 ##'                    varlist = c("b1"))
 ##'
-##'# These shouldn't be equivalent
+##'# These should not be equivalent
 ##'identical(res.1, res.2)
-##'
 ##'
 ##'# Call lapply
 ##'res.3 <- lapply(a, f1, someText = "that.stuff")

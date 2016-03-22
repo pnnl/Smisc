@@ -31,7 +31,8 @@ Returns the moving dot product
 \description{
 Calculates a moving dot product over a series using a 2-sided window. It
 dynamically accounts for the incomplete windows which are caused by missing
-values and which occur at the beginning and end of the series.
+values and which occur at the beginning and end of the series.  It does not
+propogate NAs.
 }
 \details{
 \code{smartFilter} has very similar behavior to \code{\link{filter}},
