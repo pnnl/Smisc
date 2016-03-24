@@ -7,6 +7,7 @@ FEATURES / CHANGES
 - `factor2num()` renamed `factor2numeric()`
 - `validEmailAddress()` deprecated
 - Tests created for `select()`
+- `more()` gets a `display` argument to view the head, tail, or all of the file
 - Minor documentation edits/improvements
 
 
