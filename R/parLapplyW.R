@@ -1,6 +1,7 @@
 ##' A wrapper for parLapply
 ##'
-##' A wrapper to make calls to \code{\link{parLapply}} easier by initializing and shutting down the cluster.
+##' A wrapper to make calls to \code{\link{parLapply}} easier by initializing the cluster, exporting objects and expressions to the
+##' worker nodes, and shutting down the cluster.
 ##'
 ##' The expression in \code{expr} is evaluated before the variables in \code{varlist} are exported.
 ##'
@@ -66,8 +67,9 @@
 parLapplyW <- function(X, FUN, ..., njobs = parallel::detectCores() - 1,
                        expr = NULL, varlist = NULL, envir = parent.frame()) {
 
-  if (njobs < 1)
+  if (njobs < 1) {
     njobs <- 1
+  }
 
   # Start the cluster
   cl <- parallel::makeCluster(njobs)

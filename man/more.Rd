@@ -4,25 +4,34 @@
 \alias{more}
 \title{Display the contents of a file to the R terminal}
 \usage{
-more(file, n = 500)
+more(file, n = -1L, display = c("all", "head", "tail"))
 }
 \arguments{
 \item{file}{Text string giving the file name}
 
-\item{n}{Integer specifying the maximum number of lines to display.  This is passed to the
-\code{n} argument in \code{\link{readLines}}.}
+\item{n}{Integer specifying the maximum number of lines to read from the file. This is passed
+to the \code{n} argument of \code{\link{readLines}}. The default is \code{as.integer(-1)},
+which will read all the lines in the file.}
+
+\item{display}{Text string that uniquely identifies one of \code{"all"}, \code{"head"},
+or \code{"tail"}.  Defaults to \code{"all"}, which causes all lines read from the file
+to be displayed, \code{"head"} shows the first 6 lines that were read, and \code{"tail"} shows
+the last 6 lines that were read.}
 }
 \value{
-Invisibly returns the contents of the file are displayed on the R console
+Returns nothing, but it does display the contents of the file on the R console.
 }
 \description{
 Display the contents of a file to the R terminal, like the \code{more} command in Unix
 }
 \examples{
-cat("Here's a file\\n", "with a few lines\\n", "to read.\\n", sep = "", file = "tmpFile.txt")
+cat("Here's a file\\n", "with a few lines\\n",
+    "to read.\\n", sep = "", file = "tmpFile.txt")
 more("tmpFile.txt")
 unlink("tmpFile.txt")
-
+}
+\author{
+Landon Sego
 }
 \seealso{
 \code{\link{readLines}}

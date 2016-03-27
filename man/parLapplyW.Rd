@@ -26,7 +26,8 @@ parLapplyW(X, FUN, ..., njobs = parallel::detectCores() - 1, expr = NULL,
 The same result given by \code{lapply(X, FUN, ...)}
 }
 \description{
-A wrapper to make calls to \code{\link{parLapply}} easier by initializing and shutting down the cluster.
+A wrapper to make calls to \code{\link{parLapply}} easier by initializing the cluster, exporting objects and expressions to the
+worker nodes, and shutting down the cluster.
 }
 \details{
 The expression in \code{expr} is evaluated before the variables in \code{varlist} are exported.

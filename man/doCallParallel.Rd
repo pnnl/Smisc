@@ -11,7 +11,7 @@ doCallParallel(fun, x, ..., nJobs = parallel::detectCores() - 1,
 \item{fun}{A function, or a text string with the name of the function, whose first argument is a vector and
 returns a corresponding vector}
 
-\item{x}{A vector of values that is the first argument to the function}
+\item{x}{A vector of values that is the first argument to \code{fun}}
 
 \item{nJobs}{The number of parallel jobs to spawn using \code{\link{parLapply}}.}
 
@@ -44,16 +44,12 @@ y1 <- doCallParallel("pnorm", x, mean = 2, sd = 2, nJobs = 2)
 # 2 cores and randomization
 y2 <- doCallParallel(pnorm, x, mean = 2, sd = 2, nJobs = 2, random.seed = 1)
 
-# 1 core
-y3 <- doCallParallel(pnorm, x, mean = 2, sd = 2, nJobs = 1)
-
 # Without using doCallParallel()
-y4 <- pnorm(x, mean = 2, sd = 2)
+y3 <- pnorm(x, mean = 2, sd = 2)
 
 # Comparisons
 identical(y1, y2)
 identical(y1, y3)
-identical(y1, y4)
 }
 \author{
 Landon Sego

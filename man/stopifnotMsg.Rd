@@ -7,7 +7,7 @@
 stopifnotMsg(...)
 }
 \arguments{
-\item{\dots}{Pairs of logical conditions and error messages. See example.}
+\item{\dots}{Pairs of logical conditions and error messages. See Examples.}
 }
 \value{
 A call to \code{\link{stop}} with the error messages from each condition that was \code{FALSE}.  If all

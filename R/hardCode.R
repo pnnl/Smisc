@@ -1,7 +1,7 @@
 ##' Facilitate hard coding constants into R
 ##'
 ##' Hard coding isn't the best practice, but sometimes it's useful, especially in
-##' on-off scripts for analyses.  This
+##' one-off scripts for analyses.  This
 ##' function facilitate hard coding constants into R by printing the code from a
 ##' vector that would be needed to create that vector.
 ##'

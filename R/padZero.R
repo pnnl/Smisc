@@ -4,12 +4,12 @@
 ##' has 1) the same number of characters or 2) the same number of trailing
 ##' decimal places.
 ##'
-##' For \code{side='left'}, \code{num} is the number of characters that each
-##' element of the padded, output vector should have.  If \code{num=NULL}, the
+##' For \code{side = 'left'}, \code{num} is the number of characters that each
+##' element of the padded, output vector should have.  If \code{num = NULL}, the
 ##' largest number of characters that appears in the vector is chosen for
 ##' \code{num}.
 ##'
-##' For \code{side='right'}, \code{num} is the number of decimal places to be
+##' For \code{side = 'right'}, \code{num} is the number of decimal places to be
 ##' displayed. If \code{num = NULL}, the number of decimals in the element with
 ##' the largest number of decimal places is used.
 ##'

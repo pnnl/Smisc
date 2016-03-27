@@ -17,17 +17,15 @@ containing the R files to be sourced.}
 if there is an error, \code{sourceDir} will continue to the next file.  If
 \code{FALSE}, \code{sourceDir} will stop if a file sources with an error.}
 
-\item{\dots}{Additional arguments to \code{source} function}
+\item{\dots}{Additional arguments to \code{\link{source}}}
 }
 \value{
 Invisibly returns a character vector containing the files that were
-identified for sourcing.
-
-Also prints a message indicating whether each file was sourced correctly or
+identified for sourcing. Also prints a message indicating whether each file was sourced correctly or
 not.
 }
 \description{
-Sources all files with '.R' or '.r' extensions in a directory using a try-catch for each file.
+Sources all files with '.R' or '.r' extensions in a directory using a try-catch for each file
 }
 \details{
 In addition to sourcing files for general use, this function is also useful in package development to

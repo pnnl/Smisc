@@ -5,9 +5,11 @@ FEATURES / CHANGES
 
 - `umvue.ln()` renamed `umvueLN()`
 - `factor2num()` renamed `factor2numeric()`
-- `validEmailAddress()` deprecated
-- Tests created for `select()`
+- `validEmailAddress()` is deprecated
+- Stream editing functions `streamEdit()`, `sed_insert()`, `sed_replace()`, `sed_substitute()`, and `sed_comment()` become their own package: [rsed](https://pnnl.github.io/rsed)
 - `more()` gets a `display` argument to view the head, tail, or all of the file
+- `selectElements()` and `doCallParallel()` get refined error messages
+- Tests created for `select()`, `doCallParallel()`
 - Minor documentation edits/improvements
 
 
