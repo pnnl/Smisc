@@ -2,7 +2,7 @@
 ##'
 ##' Calculate the highest posterior density credible interval for a unimodal density
 ##'
-##' Parallel processing (via \code{nJobs > 1}) may be advantageous if 1) \code{pdf} is a function that is computationally expensive, 2)
+##' Parallel processing (via \code{njobs > 1}) may be advantageous if 1) \code{pdf} is a function that is computationally expensive, 2)
 ##' the \code{cdf} is not provided, in which case \code{pdf} is integrated, and/or 3) when \code{checkUnimodal = TRUE}.
 ##'
 ##' @export
@@ -23,11 +23,10 @@
 ##' If \code{NULL}, the pdf is integrated as needed to calculate probabilities
 ##' as needed.  However, when possible, it's best to provide the cdf.
 ##'
-##' @param nJobs The number of parallel jobs to spawn using \code{\link{mclapply}}. Note that \code{nJobs > 1} only works
-##' for non-Windows machines.
-##'
+##' @param njobs The number of parallel jobs to spawn using \code{\link{doCallParallel}}.
+##' 
 ##' @param checkUnimodal A logical indicating whether the function will be checked for unimodal behavior.  This involves evaluating
-##' the function at 1000 points in the \code{support} interval.  This is done in parallel if \code{nJobs > 1}.
+##' the function at 1000 points in the \code{support} interval.  This is done in parallel if \code{njobs > 1}.
 ##'
 ##@param invcdf A function that takes a single argument in [0, 1] and returns the inverse of the
 ## cumulative distribution function. This is required if \code{support} is not finite.
@@ -47,11 +46,11 @@
 ##'
 ##' @examples
 ##' # A credible interval using the standard normal
-##' int <- hpd(dnorm, c(-5,5), prob = 0.90, nJobs = 2)
+##' int <- hpd(dnorm, c(-5,5), prob = 0.90, njobs = 2)
 ##' print(int)
 ##' plot(int)
 ##'
-##' # The gamma density
+##' # A credible interval with the gamma density
 ##' int <- hpd(function(x) dgamma(x, shape = 2, rate = 0.5), c(0, 20),
 ##'            cdf = function(x) pgamma(x, shape = 2, rate = 0.5), prob = 0.8)
 ##' print(int)
@@ -64,7 +63,7 @@
 ##' print(int)
 ##' plot(int)
 
-hpd <- function(pdf, support, prob = 0.95, cdf = NULL, nJobs = 1, checkUnimodal = TRUE) { #, invcdf = NULL) {
+hpd <- function(pdf, support, prob = 0.95, cdf = NULL, njobs = 1, checkUnimodal = TRUE) { #, invcdf = NULL) {
 
   # Basic checks
   stopifnot(is.function(pdf),
@@ -77,9 +76,9 @@ hpd <- function(pdf, support, prob = 0.95, cdf = NULL, nJobs = 1, checkUnimodal 
             length(prob) == 1,
             prob > 0,
             prob <= 1,
-            is.numeric(nJobs),
-            length(nJobs) == 1,
-            nJobs >= 1,
+            is.numeric(njobs),
+            length(njobs) == 1,
+            njobs >= 1,
             is.logical(checkUnimodal))
 
   # Verify pdf is unimodal
@@ -89,7 +88,7 @@ hpd <- function(pdf, support, prob = 0.95, cdf = NULL, nJobs = 1, checkUnimodal 
     xseq <- seq(support[1], support[2], length = 1000)
 
     # Evaluate the function across xseq
-    yseq <- doCallParallel(pdf, xseq, nJobs = nJobs, random.seed = rpois(1, 1000))
+    yseq <- doCallParallel(pdf, xseq, njobs = njobs, random.seed = rpois(1, 1000))
 
     # Look for changes in sign in the local derivative
     fdiff <- sign(diff(yseq))
@@ -136,7 +135,7 @@ hpd <- function(pdf, support, prob = 0.95, cdf = NULL, nJobs = 1, checkUnimodal 
 
       # Do the calls in parallel
       pdfParallel <- function(x) {
-        doCallParallel(pdf, x, nJobs = nJobs, random.seed = rpois(1, 1000))
+        doCallParallel(pdf, x, njobs = njobs, random.seed = rpois(1, 1000))
       }
 
       return(integrate(pdfParallel, lower = max(lower, support[1]), upper = min(upper, support[2]))$value)

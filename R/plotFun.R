@@ -1,7 +1,7 @@
 ##'Plot one or more functions on a single plot
 ##'
-##'A convenient wrapper function for plotting one or more functions (in parallel) on a single plot.  Parallel processing can
-##'be helpful if the function is expensive to calculate.
+##'A convenient wrapper function for plotting one or more functions on a single plot. If the function(s) is/are expensive to 
+##'calculate, function values can be calculated in parallel.
 ##'
 ##' @export
 ##' @param fun A function or a list of functions to be plotted.  These functions should take a single, numeric vector argument and return
@@ -19,18 +19,17 @@
 ##' @param type A single character indicating the type of plotting. This is passed to the \code{type} argument of
 ##' \code{\link{plot.default}}.
 ##'
-##' @param legendLabels A text vector with descriptive labels of each function that will be provided in the legend.
-##' If \code{NULL}, no legend is drawn. This text vector is passed to the \code{legend} argument in \code{\link{legend}}
+##' @param legendLabels A character vector with descriptive names that will appear in the legend, corresponding to each function
+##' If \code{NULL}, no legend is drawn. This character vector is passed to the \code{legend} argument in \code{\link{legend}}
 ##' from the \pkg{graphics} package.
 ##'
 ##' @param relX A numeric value in [0, 1] designating the relative horizontal (x) position of the legend in the plot.
 ##'
 ##' @param relY A numeric value in [0, 1] designating the relative vertical (y) position of the legend in the plot.
 ##'
-##' @param nPoints The number of points that are evaluated and plotted for each function in \code{xlim}.
+##' @param nPoints The number of points that are evaluated and plotted for each function over the interval given by \code{xlim}.
 ##'
-##' @param nJobs The number of parallel jobs to spawn using \code{\link{mclapply}}. Note that \code{nJobs > 1} only works
-##' for non-Windows machines.
+##' @param njobs The number of parallel jobs to spawn using \code{\link{doCallParallel}}.
 ##'
 ##' @param \dots Additional graphical arguments passed to \code{\link{plot.default}}, \code{\link{lines}}, and
 ##' \code{\link{legend}}.  If an argument name specified in \code{\dots} matches an argument name in any
@@ -67,45 +66,77 @@ plotFun <- function(fun, xlim,
                     relX = 0.7,
                     relY = 0.9,
                     nPoints = 1000,
-                    nJobs = 1, ...) {
+                    njobs = 1, ...) {
 
+  # Check arguments
+  stopifnotMsg(# fun
+               if (is.list(fun)) {
+                 all(unlist(lapply(fun, is.function)))
+               } else is.function(fun),
+               "'fun' must be a function or a list of functions",
+
+               # xlim
+               if (is.numeric(xlim)) {
+                 if (length(xlim) == 2) {
+                   xlim[1] < xlim[2]
+                 } else FALSE
+               } else FALSE,
+               "'xlim' must be a numeric 2-vector with the first element less than the second",
+
+               # Length consistency
+               length(fun) == length(col),
+               "'length(col)' must equal 'length(fun)'",
+               length(fun) == length(lty),
+               "'length(lty)' must equal 'length(fun)'",               
+               if (!is.null(legendLabels)) length(legendLabels) == length(fun) else TRUE,
+               "'length(legendLabels)' must equal 'length(fun)'",
+
+               # legendLabels
+               if (!is.null(legendLabels)) is.character(legendLabels) else TRUE,
+               "'legendLabels' must be a characer vector",
+
+               # relX
+               if (is.numeric(relX)) {
+                 (length(relX) == 1) & (0 <= relX) & (relX <= 1)
+               } else FALSE,
+               "'relX' must be a single numeric value in [0, 1]",
+
+               # relY
+               if (is.numeric(relY)) {
+                 (length(relY) == 1) & (0 <= relY) & (relY <= 1)
+               } else FALSE,
+               "'relY' must be a single numeric value in [0, 1]",
+
+               # nPoints
+               if (is.numeric(nPoints)) {
+                 (length(nPoints) == 1) & (nPoints > 0) & (nPoints %% 1 == 0)
+               } else FALSE,
+               "'nPoints' must be a positive whole number",
+
+               # njobs
+               if (is.numeric(njobs)) {
+                 (length(njobs) == 1) & (njobs > 0) & (njobs %% 1 == 0)
+               } else FALSE,
+               "'njobs' must be a positive whole number")
+    
   # If fun is a single function, make it a list
-  if (is.function(fun) & length(fun) == 1)
+  if (is.function(fun) & length(fun) == 1) {
     fun <- list(fun)
-
-  # Check formats/conditions for arguments
-  stopifnot(is.list(fun),
-            all(unlist(lapply(fun, is.function))),
-            is.numeric(xlim),
-            length(xlim) == 2,
-            xlim[1] < xlim[2],
-            is.character(col),
-            is.numeric(lty),
-            length(fun) == length(col),
-            length(fun) == length(lty),
-            is.numeric(relX),
-            length(relX) == 1,
-            0 <= relX,
-            relX <= 1,
-            is.numeric(relY),
-            length(relY) == 1,
-            0 <= relY,
-            relY <= 1,
-            is.numeric(nPoints),
-            nPoints > 0)
+  }
 
   # Create a common sequence of x values
   xvec <- seq(xlim[1], xlim[2], length = nPoints)
 
   # Calculate the y values for each function
-  yvals <- lapply(fun, function(fname) doCallParallel(fname, xvec, nJobs = nJobs, random.seed = rpois(1, 1000)))
+  yvals <- lapply(fun, function(fname) doCallParallel(fname, xvec, njobs = njobs, random.seed = rpois(1, 1000)))
 
   # Create the list with args for the plot.default command
   graphArgs <- list(...)
 
   # Add in ylims if they're not present
-  if (!("ylim" %in% names(graphArgs)))
+  if (!("ylim" %in% names(graphArgs))) {
     graphArgs$ylim <- range(unlist(lapply(yvals, range)))
+  }
 
   # For prettier default axis labels
   x <- xvec
@@ -116,11 +147,10 @@ plotFun <- function(fun, xlim,
                     lty = lty[1], col = col[1])
 
   # Select arguments from graphArgs that could be used in plot.default()
-  plotArgs2 <- if (as.logical(length(graphArgs)))
+  plotArgs2 <- if (as.logical(length(graphArgs))) {
                  graphArgs[names(graphArgs) %in%
                            setdiff(unique(c(names(formals(plot.default)), names(par()))), "...")]
-               else
-                 list()
+               } else list()
 
   # Make the first plot
   do.call(plot, c(plotArgs1, plotArgs2))
@@ -129,21 +159,18 @@ plotFun <- function(fun, xlim,
   if (length(fun) > 1) {
 
     # Extract arguments that could be used for lines()
-    lineArgs <- if (as.logical(length(graphArgs)))
+    lineArgs <- if (as.logical(length(graphArgs))) {
                   graphArgs[names(graphArgs) %in% names(par())]
-                else
-                  list()
+                } else list()
 
     # Plot the additional functions
-    for (i in 2:length(fun))
+    for (i in 2:length(fun)) {
       do.call(lines, c(list(x = xvec, y = yvals[[i]], lty = lty[i], col = col[i]), lineArgs))
+    }
   }
 
   # Make the legend
   if (!is.null(legendLabels)) {
-
-    if (length(legendLabels) != length(fun))
-      stop("Length of 'legendLabels' must match the length of 'fun'")
 
     # Extract arguments that could be used for legend
     legendArgs <- if (as.logical(length(graphArgs)))
@@ -158,7 +185,6 @@ plotFun <- function(fun, xlim,
                            lty = lty,
                            col = col),
                       legendArgs))
-
   }
 
 } # plotFun

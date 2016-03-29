@@ -1,16 +1,19 @@
-Version 0.2.18, 2016-03-02
+Version 0.3.0, 2016-03-25
 -----------------------------------------------------------------------------------
 
 FEATURES / CHANGES
 
+- Stream editing functions `streamEdit()`, `sed_insert()`, `sed_replace()`, `sed_substitute()`, and `sed_comment()` become their own package: [rsed](https://pnnl.github.io/rsed)
 - `umvue.ln()` renamed `umvueLN()`
 - `factor2num()` renamed `factor2numeric()`
 - `validEmailAddress()` is deprecated
-- Stream editing functions `streamEdit()`, `sed_insert()`, `sed_replace()`, `sed_substitute()`, and `sed_comment()` become their own package: [rsed](https://pnnl.github.io/rsed)
 - `more()` gets a `display` argument to view the head, tail, or all of the file
-- `selectElements()` and `doCallParallel()` get refined error messages
-- Tests created for `select()`, `doCallParallel()`
-- Minor documentation edits/improvements
+- More descriptive error messages for `selectElements()`, `doCallParallel()`, `plapply()`, `dfplapply()`, `plotFun()`, `smartTimeAxis()`, and `vertErrorBar()`
+- Several arguments to `plapply()` and `dfplapply()` are modified:  `jobName` becomes `workDir`, `clobber` is added, `rout` can now specifiy a filename where all the `.Rout` files will be collected
+- The `nJobs` argument of `doCallParallel()`, `hpd()`, and `plotFun()` is renamed `njobs` for consistency with other 
+parallelization functions
+- Tests created for `select()`, `doCallParallel()`, `plapply()`, `dfplapply()`, `parseJob()`, `openDevice()`, `plotFun()`, `vertErrorBar()`,
+- Documentation improvements
 
 
 Version 0.2.17, 2016-02-01

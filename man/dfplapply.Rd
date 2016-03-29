@@ -4,12 +4,12 @@
 \alias{dfplapply}
 \title{Parallelized single row processing of a data frame}
 \usage{
-dfplapply(X, FUN, ..., output.df = FALSE, packages = NULL,
-  header.file = NULL, needed.objects = NULL,
-  needed.objects.env = parent.frame(), jobName = "dfplapply",
-  njobs = parallel::detectCores() - 1, max.hours = 24,
-  check.interval.sec = 30, collate = FALSE, random.seed = NULL,
-  clean.up = TRUE, rout = !clean.up, verbose = FALSE)
+dfplapply(X, FUN, ..., output.df = FALSE, njobs = parallel::detectCores() -
+  1, packages = NULL, header.file = NULL, needed.objects = NULL,
+  needed.objects.env = parent.frame(), workDir = "plapply",
+  clobber = TRUE, max.hours = 24, check.interval.sec = 1,
+  collate = FALSE, random.seed = NULL, rout = NULL, clean.up = TRUE,
+  verbose = FALSE)
 }
 \arguments{
 \item{X}{The data frame, each row of which will be processed using
@@ -26,6 +26,9 @@ object}
 the value returned by \code{FUN} should be a data frame.  If
 \code{output.df = FALSE}, a list is returned by \code{dfplapply}.}
 
+\item{njobs}{The number of jobs (subsets).  Defaults to one less than the
+number of cores on the machine.}
+
 \item{packages}{Character vector giving the names of packages that will be
 loaded in each new instance of R, using \code{\link{library}}.}
 
@@ -36,18 +39,19 @@ If \code{NULL}, no file is sourced.}
 
 \item{needed.objects}{Character vector giving the names of objects which
 reside in the evironment specified by \code{needed.objects.env} that may be
-needed by \code{FUN} which are loaded into the GLOBAL ENVIRONMENT of each
+needed by \code{FUN} which are loaded into the global environment of each
 new instance of R that is launched.  If \code{NULL}, no additional objects
 are passed.}
 
 \item{needed.objects.env}{Environment where \code{needed.objects} reside.
 This defaults to the environment in which \code{plapply} is called.}
 
-\item{jobName}{Text string indicating the prefix for files that will be
-created while launching the separate instances of R.}
+\item{workDir}{Character string giving the name of the working directory that
+will be used for for the files needed to launch the separate instances of R.}
 
-\item{njobs}{The number of jobs (subsets).  Defaults to one less than the
-number of cores on the machine.}
+\item{clobber}{Logical indicating whether the directory designated by \code{workDir}
+will be overwritten if it exists and contains files.  If \code{clobber = FALSE},
+and \code{workDir} contains files, \code{plapply} throws an error.}
 
 \item{max.hours}{The maximum number of hours to wait for the \code{njobs}
 to complete.}
@@ -55,7 +59,7 @@ to complete.}
 \item{check.interval.sec}{The number of seconds to wait between checking to
 see whether all \code{njobs} have completed.}
 
-\item{collate}{\code{=TRUE} creates a 'first-in-first-out' processing order of
+\item{collate}{\code{= TRUE} creates a 'first-in-first-out' processing order of
 the elements of the input list \code{X}.  This logical is passed to the
 \code{collate} argument of \code{\link{parseJob}}.}
 
@@ -65,15 +69,16 @@ when the computing time for each element varies significantly because it
 helps to even out the run times of the parallel jobs. If \code{random.seed
 = NULL}, no randomization is performed and the elements of the input list
 are subdivided sequentially among the jobs.  This variable is passed to the
-\code{random.seed} argument of \code{\link{parseJob}}.}
+\code{random.seed} argument of \code{\link{parseJob}}. If \code{collate = TRUE},
+no randomization is performed and \code{random.seed} is ignored.}
 
-\item{clean.up}{\code{=TRUE} will delete temporary workding directory.}
+\item{rout}{A character string giving the name of the file to where all of the \code{.Rout} files
+will be gathered.  If \code{rout = NULL}, the \code{.Rout} files are not gathered, but left
+alone in \code{workDir}.}
 
-\item{rout}{\code{=TRUE} will gather the \code{njobs} *.Rout files into a
-single file named "jobName_YYYY-MM-DD_HHMMSS_XXXX.Rout" which will not be
-deleted.}
+\item{clean.up}{\code{= TRUE} will delete the working directory.}
 
-\item{verbose}{\code{=TRUE} prints messages which show the progress of the
+\item{verbose}{\code{= TRUE} prints messages which show the progress of the
 jobs.}
 }
 \value{
@@ -82,42 +87,37 @@ of \code{X} with \code{FUN}.
 }
 \description{
 Applies a function to each row of a data frame in a parallelized fashion
-(by submitting multiple batch R jobs)
-}
-\details{
-\code{dfplapply} is a convenient wrapper for \code{plapply}, modified
+(by submitting multiple batch R jobs).  It is a convenient wrapper for \code{plapply}, modified
 especially for parallel, single-row processing of data frames.
 }
 \examples{
-X <- data.frame(a = 1:5, b = letters[1:5])
+X <- data.frame(a = 1:3, b = letters[1:3])
 
-# Function with a single data frame as output
+# Function that will operate on each of x, producing a simple list
 test.1 <- function(x) {
   list(ab = paste(x$a, x$b, sep = "-"), a2 = x$a^2, bnew = paste(x$b, "new", sep = "."))
 }
 
 # Data frame output
-dfplapply(X, test.1, output.df = TRUE, njobs = 2, check.interval.sec = 0.5)
+dfplapply(X, test.1, output.df = TRUE, njobs = 2)
 
 # List output
-dfplapply(X, test.1, njobs = 2, check.interval.sec = 0.5)
+dfplapply(X, test.1, njobs = 2)
 
 # Function with 2 rows of output
 test.2 <- function(x) {
-  data.frame(ab = rep(paste(x$a,x$b,sep="-"), 2), a2 = rep(x$a^2, 2))
+  data.frame(ab = rep(paste(x$a, x$b, sep = "-"), 2), a2 = rep(x$a^2, 2))
 }
 
-dfplapply(X, test.2, output.df = TRUE, njobs = 2, check.interval.sec = 0.5, verbose = TRUE)
+dfplapply(X, test.2, output.df = TRUE, njobs = 2, verbose = TRUE)
 
-# Passing in objects
+# Passing in other objects needed by FUN
 a.out <- 10
 test.3 <- function(x) {
   data.frame(a = x$a + a.out, b = paste(x$b, a.out, sep="-"))
 }
 
-dfplapply(X, test.3, output.df = TRUE, needed.objects = "a.out", njobs = 2,
-          check.interval.sec = 0.5)
-
+dfplapply(X, test.3, output.df = TRUE, needed.objects = "a.out", njobs = 2)
 }
 \author{
 Landon Sego

@@ -6,7 +6,7 @@
 \usage{
 plotFun(fun, xlim, col = rainbow(length(fun)), lty = 1:length(fun),
   type = "l", legendLabels = NULL, relX = 0.7, relY = 0.9,
-  nPoints = 1000, nJobs = 1, ...)
+  nPoints = 1000, njobs = 1, ...)
 }
 \arguments{
 \item{fun}{A function or a list of functions to be plotted.  These functions should take a single, numeric vector argument and return
@@ -24,18 +24,17 @@ more info about the \code{lty} graphics parameter.}
 \item{type}{A single character indicating the type of plotting. This is passed to the \code{type} argument of
 \code{\link{plot.default}}.}
 
-\item{legendLabels}{A text vector with descriptive labels of each function that will be provided in the legend.
-If \code{NULL}, no legend is drawn. This text vector is passed to the \code{legend} argument in \code{\link{legend}}
+\item{legendLabels}{A character vector with descriptive names that will appear in the legend, corresponding to each function
+If \code{NULL}, no legend is drawn. This character vector is passed to the \code{legend} argument in \code{\link{legend}}
 from the \pkg{graphics} package.}
 
 \item{relX}{A numeric value in [0, 1] designating the relative horizontal (x) position of the legend in the plot.}
 
 \item{relY}{A numeric value in [0, 1] designating the relative vertical (y) position of the legend in the plot.}
 
-\item{nPoints}{The number of points that are evaluated and plotted for each function in \code{xlim}.}
+\item{nPoints}{The number of points that are evaluated and plotted for each function over the interval given by \code{xlim}.}
 
-\item{nJobs}{The number of parallel jobs to spawn using \code{\link{mclapply}}. Note that \code{nJobs > 1} only works
-for non-Windows machines.}
+\item{njobs}{The number of parallel jobs to spawn using \code{\link{doCallParallel}}.}
 
 \item{\dots}{Additional graphical arguments passed to \code{\link{plot.default}}, \code{\link{lines}}, and
 \code{\link{legend}}.  If an argument name specified in \code{\dots} matches an argument name in any
@@ -47,8 +46,8 @@ For example, the line width, \code{lwd}, would be passed to all three (\code{\li
 The plot of the function(s)
 }
 \description{
-A convenient wrapper function for plotting one or more functions (in parallel) on a single plot.  Parallel processing can
-be helpful if the function is expensive to calculate.
+A convenient wrapper function for plotting one or more functions on a single plot. If the function(s) is/are expensive to 
+calculate, function values can be calculated in parallel.
 }
 \examples{
 # A single function with a single argument

@@ -4,7 +4,8 @@
 \alias{smartTimeAxis}
 \title{Produces a time axis with smart spacing}
 \usage{
-smartTimeAxis(time.vec, nticks = 15, time.format = "hh:mm", side = 1)
+smartTimeAxis(time.vec, nticks = 15, side = 1, time.format = c("hh:mm",
+  "hh:mm:sspm", "hh:mm:ss pm", "hh:mm:ss", "hh:mmpm", "hh:mm pm"))
 }
 \arguments{
 \item{time.vec}{A time object (vector) that was used to construct the plot,
@@ -12,10 +13,10 @@ presumed to be ordered chronologically}
 
 \item{nticks}{The target number of ticks to use in the axis}
 
-\item{time.format}{Same as the \code{time.outformat} argument in
-\code{\link{formatDT}}}
-
 \item{side}{Same as the \code{side} argument in \code{\link{axis}}}
+
+\item{time.format}{Character string indicting the time format to display on the axis. The choices are displayed in
+the Usage. Defaults to \code{hh:mm}.}
 }
 \value{
 Places the axis on the plot.
@@ -26,39 +27,41 @@ intuitive.  It is intended to be applied to periods of time that do not
 exceed 24 hours (i.e. it does not produce a date stamp in the time axis).
 }
 \details{
-Chooses a "natural" spacing for the time axis ticks that gives closest to
-\code{nticks} ticks.  Possibilities for natural spacings include 1, 5, 10,
-15 seconds, etc. OR 1, 2, 5, 10, minutes etc., OR 0.5, 1, 1.5 hours, etc.
+\code{smartTimeAxis} attempts to choose a "natural" spacing for the time axis ticks that results in the
+number of ticks being as close as possible to 
+\code{nticks}.  Possibilities for natural spacings include 1, 5, 10,
+15 seconds, etc., or 1, 2, 5, 10, minutes etc., or 0.5, 1, 1.5 hours, etc.
 }
 \examples{
-
 # Get data and set the options to the horizontal axis labels will be
 # oriented vertically
 data(timeData)
-op <- par(las=2, mfrow=c(3,1), mar=c(4,4,1,0.5))
+op <- par(las = 2, mfrow = c(3, 1), mar = c(4, 4, 2, 0.5))
 
 # Make the default plot
-plot(timeData, xlab="")
+plot(timeData, xlab = "", main = "Default intervals")
 
 # Make the plot with specialized time axis
-plot(timeData, axes=FALSE, frame.plot=TRUE, xlab="")
+plot(timeData, axes = FALSE, frame.plot = TRUE, xlab = "", main = "10 minute intervals")
 
 # Add y-axis
 axis(2)
 
 # Add the time axis
-smartTimeAxis(timeData$time, nticks=10)
+smartTimeAxis(timeData$time, nticks = 10)
 
 # Only look at a small portion of the data with a different time format
-par(mar=c(7,4,1,0.5))
-plot(timeData[200:237,], type="b", axes=FALSE, frame.plot=TRUE, xlab="")
+par(mar = c(7, 4, 2, 0.5))
+
+plot(timeData[200:237,], type = "b", axes = FALSE, frame.plot = TRUE,
+     xlab = "", main = "15 second intervals")
+
 axis(2)
-smartTimeAxis(timeData[200:237,"time"], nticks=20, time.format="hh:mm:ss pm")
+
+smartTimeAxis(timeData[200:237,"time"], nticks = 20, time.format = "hh:mm:ss pm")
 
 # Restore the original par settings
 par(op)
-
-
 }
 \author{
 Landon Sego

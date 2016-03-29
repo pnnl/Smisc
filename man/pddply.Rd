@@ -60,7 +60,7 @@ data(baseball, package = "plyr")
 o1 <- pddply(baseball, ~ year, nrow, njobs = 2)
 head(o1)
 
-#  Verify it's the same as the non-parallel version
+#  Verify it's the same as the non-parallel version of plyr::ddply()
 o2 <- plyr::ddply(baseball, ~ year, nrow)
 identical(o1, o2)
 

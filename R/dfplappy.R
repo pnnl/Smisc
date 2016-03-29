@@ -1,9 +1,7 @@
 ##' Parallelized single row processing of a data frame
 ##'
 ##' Applies a function to each row of a data frame in a parallelized fashion
-##' (by submitting multiple batch R jobs)
-##'
-##' \code{dfplapply} is a convenient wrapper for \code{plapply}, modified
+##' (by submitting multiple batch R jobs).  It is a convenient wrapper for \code{plapply}, modified
 ##' especially for parallel, single-row processing of data frames.
 ##'
 ##' @export
@@ -31,77 +29,79 @@
 ##' @keywords misc
 ##'
 ##' @examples
-##' X <- data.frame(a = 1:5, b = letters[1:5])
+##' X <- data.frame(a = 1:3, b = letters[1:3])
 ##'
-##' # Function with a single data frame as output
+##' # Function that will operate on each of x, producing a simple list
 ##' test.1 <- function(x) {
 ##'   list(ab = paste(x$a, x$b, sep = "-"), a2 = x$a^2, bnew = paste(x$b, "new", sep = "."))
 ##' }
 ##'
 ##' # Data frame output
-##' dfplapply(X, test.1, output.df = TRUE, njobs = 2, check.interval.sec = 0.5)
+##' dfplapply(X, test.1, output.df = TRUE, njobs = 2)
 ##'
 ##' # List output
-##' dfplapply(X, test.1, njobs = 2, check.interval.sec = 0.5)
+##' dfplapply(X, test.1, njobs = 2)
 ##'
 ##' # Function with 2 rows of output
 ##' test.2 <- function(x) {
-##'   data.frame(ab = rep(paste(x$a,x$b,sep="-"), 2), a2 = rep(x$a^2, 2))
+##'   data.frame(ab = rep(paste(x$a, x$b, sep = "-"), 2), a2 = rep(x$a^2, 2))
 ##' }
 ##'
-##' dfplapply(X, test.2, output.df = TRUE, njobs = 2, check.interval.sec = 0.5, verbose = TRUE)
+##' dfplapply(X, test.2, output.df = TRUE, njobs = 2, verbose = TRUE)
 ##'
-##' # Passing in objects
+##' # Passing in other objects needed by FUN
 ##' a.out <- 10
 ##' test.3 <- function(x) {
 ##'   data.frame(a = x$a + a.out, b = paste(x$b, a.out, sep="-"))
 ##' }
 ##'
-##' dfplapply(X, test.3, output.df = TRUE, needed.objects = "a.out", njobs = 2,
-##'           check.interval.sec = 0.5)
-##'
+##' dfplapply(X, test.3, output.df = TRUE, needed.objects = "a.out", njobs = 2)
+
 dfplapply <- function(X, FUN, ...,
                       output.df = FALSE,
+                      njobs = parallel::detectCores() - 1,
                       packages = NULL,
                       header.file = NULL,
                       needed.objects = NULL,
                       needed.objects.env = parent.frame(),
-                      jobName = "dfplapply",
-                      njobs = parallel::detectCores() - 1,
+                      workDir = "plapply",
+                      clobber = TRUE,
                       max.hours = 24,
-                      check.interval.sec = 30,
+                      check.interval.sec = 1,
                       collate = FALSE,
                       random.seed = NULL,
+                      rout = NULL,
                       clean.up = TRUE,
-                      rout = !clean.up,
                       verbose = FALSE) {
 
-
-  if (!is.data.frame(X))
-    stop("'", deparse(substitute(X)), "' is not a data frame\n")
+  # Check args not checked by plapply()
+  stopifnotMsg(is.data.frame(X),
+               paste("'", deparse(substitute(X)), "' is not a data frame", sep = ""),
+               is.logical(output.df) & length(output.df) == 1,
+               "'output.df' must be TRUE or FALSE")
 
   # Process it with plapply
   X.out <- plapply(df2list(X, out.type = "data.frame"), FUN, ...,
+                   njobs = njobs,
                    packages = packages,
                    header.file = header.file,
                    needed.objects = needed.objects,
                    needed.objects.env = needed.objects.env,
-                   jobName = jobName,
-                   njobs = njobs,
+                   workDir = workDir,
+                   clobber = clobber,
                    max.hours = max.hours,
                    check.interval.sec = check.interval.sec,
                    collate = collate,
                    random.seed = random.seed,
-                   clean.up = clean.up,
                    rout = rout,
+                   clean.up = clean.up,
                    verbose = verbose)
 
   # Collapse results to a data frame if requested
-  if (output.df)
+  if (output.df) {
     X.out <- list2df(X.out)
+  }
 
   return(X.out)
 
 } # dfplapply
-
-

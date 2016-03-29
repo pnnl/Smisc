@@ -2,12 +2,12 @@ context("pddply()")
 
 test_that("pddply() returns values that are identical to ddply()", {
 
-  library(plyr)
-  data(baseball)
+  loadNamespace("plyr")
+  data(baseball, package = "plyr")
   
   # First round of checks
   o1 <- pddply(baseball, ~ year, nrow, njobs = 2)
-  o2 <- ddply(baseball, ~ year, nrow)
+  o2 <- plyr::ddply(baseball, ~ year, nrow)
   o3 <- pddply(baseball, ~ year, nrow, njobs = 1)
   expect_equal(o1, o2)
   expect_equal(o2, o3)
@@ -15,9 +15,29 @@ test_that("pddply() returns values that are identical to ddply()", {
   
   # Different example
   o4 <- pddply(baseball, "lg", c("nrow", "ncol"), njobs = 2)
-  o5 <- ddply(baseball, "lg", c("nrow", "ncol"))
+  o5 <- plyr::ddply(baseball, "lg", c("nrow", "ncol"))
   expect_equal(o4, o5)
    
+})
+
+test_that("We can pass objects and packages into ddply()", {
+
+  # A nonsense example where we need to pass objects and packages into the cluster
+  number1 <- 7
+  
+  f <- function(x, number2 = 10) {
+    paste(x$id[1], padZero(number1, num = 2), number2, sep = "-")
+  }
+  
+  # In parallel
+  o5 <- pddply(baseball[1:100,], "year", f, number2 = 13, njobs = 2,
+               .paropts = list(.packages = "Smisc", .export = "number1"))
+  
+  # Non parallel
+  o6 <- plyr::ddply(baseball[1:100,], "year", f, number2 = 13)
+  
+  expect_equal(o5, o6)
+    
 })
 
 test_that("ppdply() catches errors", {

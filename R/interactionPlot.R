@@ -1,4 +1,4 @@
-# Landon's mods to interaction.plot.  Included the argument errorBar and jitterErrorBars.
+# Landon's mods to interaction.plot().  Included the arguments errorBar and jitterErrorBars.
 # My additions are clearly bracketed
 
 #  File src/library/stats/R/interaction.plot.R
@@ -21,13 +21,12 @@
 ##'
 ##' Plots the mean (or other summary) of the response for two-way combinations
 ##' of factors, thereby illustrating possible interactions.
-##'
-## %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-##' This modification of \code{\link{interaction.plot}} adds the \code{errorBar} and
+## %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+##' This modifies \code{\link{interaction.plot}} by adding the \code{errorBar} and
 ##' \code{jitterErrorBars} arguments.
 ## %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 ##'
-##' By default the levels of \code{x.factor} are plotted on the x axis in their
+##' @details By default the levels of \code{x.factor} are plotted on the x axis in their
 ##' given order, with extra space left at the right for the legend (if
 ##' specified). If \code{x.factor} is an ordered factor and the levels are
 ##' numeric, these numeric values are used for the x axis.
@@ -43,76 +42,103 @@
 ##' 1:9, 0, and the capital letters to plot the traces.
 ##'
 ##' @export
-##' @usage interactionPlot(x.factor, trace.factor, response, fun = mean,
-##'                        errorBar = NULL, jitterErrorBars = FALSE,
-##'	                       type = c("l", "p", "b", "o", "c"), legend = TRUE,
-##'                        trace.label = deparse(substitute(trace.factor)), fixed = FALSE,
-##'                        xlab = deparse(substitute(x.factor)), ylab = ylabel,
-##'                        ylim = range(cells, na.rm=TRUE),
-##'                        lty = nc:1, col = 1, pch = c(1L:9, 0, letters),
-##'                        xpd = NULL, leg.bg = par("bg"), leg.bty = "n",
-##'                        xtick = FALSE, xaxt = par("xaxt"), axes = TRUE, ...)
-##'
+## @usage interactionPlot(x.factor, trace.factor, response, fun = mean,
+##                        errorBar = NULL, jitterErrorBars = FALSE,
+##	                       type = c("l", "p", "b", "o", "c"), legend = TRUE,
+##                        trace.label = deparse(substitute(trace.factor)), fixed = FALSE,
+##                        xlab = deparse(substitute(x.factor)), ylab = ylabel,
+##                        ylim = range(cells, na.rm=TRUE),
+##                        lty = nc:1, col = 1, pch = c(1L:9, 0, letters),
+##                        xpd = NULL, leg.bg = par("bg"), leg.bty = "n",
+##                        xtick = FALSE, xaxt = par("xaxt"), axes = TRUE, ...)
+##
 ##' @param x.factor a factor whose levels will form the x axis.
+##' 
 ##' @param trace.factor another factor whose levels will form the traces.
+##' 
 ##' @param response a numeric variable giving the response
+##' 
 ##' @param fun the function to compute the summary. Should return a single real
 ##' value.
+##' 
 ##' @param errorBar A list with required elements \code{height} and
 ##' \code{width}, and optional element \code{blankMiddle}. These correspond to
 ##' the arguments of \code{\link{vertErrorBar}}.  Defaults to \code{NULL}, in
 ##' which case no error bars are drawn
+##' 
 ##' @param jitterErrorBars Logical indicating whether the x-values of the points
 ##' (and the error bars) should be jittered for easier readability. This
 ##' argument is ignored if \code{errorBar = NULL}.
+##' 
 ##' @param type the type of plot (see \code{\link{plot.default}}): lines or
 ##' points or both.
+##' 
 ##' @param legend logical. Should a legend be included?
+##' 
 ##' @param trace.label overall label for the legend.
+##' 
 ##' @param fixed logical.  Should the legend be in the order of the levels of
 ##' \code{trace.factor} or in the order of the traces at their right-hand ends?
+##' 
 ##' @param xlab,ylab the x and y label of the plot each with a sensible
 ##' default.
+##' 
 ##' @param ylim numeric of length 2 giving the y limits for the plot.
+##' 
 ##' @param lty line type for the lines drawn, with sensible default.
+##' 
 ##' @param col the color to be used for plotting.
+##' 
 ##' @param pch a vector of plotting symbols or characters, with sensible
 ##' default.
+##' 
 ##' @param xpd determines clipping behaviour for the \code{\link{legend}} used,
 ##' see \code{\link{par}(xpd)}.  Per default, the legend is \emph{not} clipped
 ##' at the figure border.
+##' 
 ##' @param leg.bg,leg.bty arguments passed to \code{\link{legend}()}.
+##' 
 ##' @param xtick logical. Should tick marks be used on the x axis?
+##' 
 ##' @param xaxt,axes graphics parameters to be passed to the plotting
 ##' routines.
+##' 
 ##' @param \dots graphics parameters to be passed to the plotting routines.
+##' 
 ##' @note Some of the argument names and the precise behaviour are chosen for
 ##' S-compatibility.
+##' 
 ##' @author Originates in the \code{stats} package in the R distribution,
 ##' modifications by Landon Sego
+##' 
 ##' @seealso \code{\link{interaction.plot}}
+##' 
 ##' @references Chambers, J. M., Freeny, A and Heiberger, R. M. (1992)
 ##' \emph{Analysis of variance; designed experiments.} Chapter 5 of
 ##' \emph{Statistical Models in S} eds J. M. Chambers and T. J. Hastie,
 ##' Wadsworth & Brooks/Cole.
+##' 
 ##' @keywords hplot
+##' 
 ##' @examples
-##'
 ## %%% BEGIN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-##' require(graphics)
-##'
 ##' with(ToothGrowth, {
-##' interactionPlot(dose, supp, len, fixed=TRUE)
-##' dose <- ordered(dose)
-##' interactionPlot(dose, supp, len, fixed=TRUE, col = 2:3, leg.bty = "o")
 ##'
-##' interactionPlot(dose, supp, len, fixed=TRUE, col = 2:3, type = "p",
+##' # Basic interaction plot
+##' interactionPlot(dose, supp, len, fixed = TRUE)
+##'
+##' # Ordered dose
+##' dose <- ordered(dose)
+##' interactionPlot(dose, supp, len, fixed = TRUE, col  =  2:3, leg.bty = "o")
+##'
+##' # Add error bars
+##' interactionPlot(dose, supp, len, fixed = TRUE, col  =  2:3, type = "p",
 ##'                 errorBar = list(height = 3, width = 0.05, blankMiddle = 1),
 ##'                 jitterErrorBars = TRUE,
 ##'                 main = "Error bars have no meaning--just for illustration")
 ##' })
 ## %%% END %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-##'
+
 interactionPlot <-
     function(x.factor, trace.factor, response, fun = mean,
 

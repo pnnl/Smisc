@@ -1,23 +1,18 @@
 ##' Opens a graphics device based on the filename extension
 ##'
-##' Opens the appropriate graphics device based on the filename extension
-##'
-##' Will open a \code{ps}, \code{pdf}, \code{jpg}, \code{tif}, \code{png}, or
-##' \code{bmp} device using one of the respective graphics functions:
+##' Based on the filename extension, will open plotting device  using one of the
+##' following graphics functions:
 ##' \code{\link{postscript}}, \code{\link{pdf}}, \code{\link{jpeg}},
 ##' \code{\link{tiff}}, \code{\link{png}}, or \code{\link{bmp}}.
 ##'
-##' \code{openDevice} silently ignores named arguments in \code{\dots{}} which
-##' do not match the named arguments in the graphics device function that is
-##' called.
-##'
 ##' @export
 ##' @param fileName Character string giving the filename for the graphics
-##' output.  It must contain one of the extensions listed in the \code{Details}
-##' below.
+##' output. The following are acceptable filename extensions:
+##' \code{ps}, \code{pdf}, \code{jpg}, \code{jpeg}, \code{tif}, \code{png}, or
+##' \code{bmp}.
 ##'
-##' @param \dots Named arguments to the device functions listed in
-##' \code{Details} below.
+##' @param \dots Named arguments to the device functions listed above.  Arguments
+##' that do not match are silently ignored.
 ##'
 ##' @return The graphics device is opened and the filename is invisibly
 ##' returned.
@@ -27,7 +22,6 @@
 ##' @keywords misc
 ##'
 ##' @examples
-##'
 ##' # Open 3 example devices
 ##' openDevice("ex1.pdf", height=6, width=12)
 ##' plot(1:10, 1:10)
@@ -43,8 +37,9 @@
 ##' dir(pattern = "ex1")
 ##'
 ##' # Turn each of the 3 devices off
-##' for (i in 1:3)
+##' for (i in 1:3) {
 ##'   dev.off(dev.list()[length(dev.list())])
+##' }
 ##'
 ##' # Delete the created files
 ##' unlink(c("ex1.pdf","ex1.png","ex1.jpg"))
@@ -54,11 +49,14 @@
 ##'
 openDevice <- function(fileName, ...) {
 
+  stopifnotMsg(is.character(fileName) & (length(fileName) == 1),
+               "'fileName' must be a character string of a valid filename")
+    
   fileName <- path.expand(fileName)
 
   ext <- tolower(getExtension(fileName))
 
-  supported.extensions <- c("ps","pdf","jpg","tif","png","bmp")
+  supported.extensions <- c("ps", "pdf", "jpg", "jpeg", "tif", "png", "bmp")
 
   if (!(ext %in% supported.extensions)) {
     stop("Filename must have one of the following extensions: '",
@@ -70,6 +68,7 @@ openDevice <- function(fileName, ...) {
                   ps = "postscript",
                   pdf = "pdf",
                   jpg = "jpeg",
+                  jpeg = "jpeg",
                   tif = "tiff",
                   png = "png",
                   bmp = "bmp")

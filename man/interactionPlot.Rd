@@ -5,14 +5,12 @@
 \title{Two-way Interaction Plot with Error Bar}
 \usage{
 interactionPlot(x.factor, trace.factor, response, fun = mean,
-                       errorBar = NULL, jitterErrorBars = FALSE,
-                       type = c("l", "p", "b", "o", "c"), legend = TRUE,
-                       trace.label = deparse(substitute(trace.factor)), fixed = FALSE,
-                       xlab = deparse(substitute(x.factor)), ylab = ylabel,
-                       ylim = range(cells, na.rm=TRUE),
-                       lty = nc:1, col = 1, pch = c(1L:9, 0, letters),
-                       xpd = NULL, leg.bg = par("bg"), leg.bty = "n",
-                       xtick = FALSE, xaxt = par("xaxt"), axes = TRUE, ...)
+  errorBar = NULL, jitterErrorBars = FALSE, type = c("l", "p", "b", "o",
+  "c"), legend = TRUE, trace.label = deparse(substitute(trace.factor)),
+  fixed = FALSE, xlab = deparse(substitute(x.factor)), ylab = ylabel,
+  ylim = range(cells, na.rm = TRUE), lty = nc:1, col = 1, pch = c(1L:9,
+  0, letters), xpd = NULL, leg.bg = par("bg"), leg.bty = "n",
+  xtick = FALSE, xaxt = par("xaxt"), axes = TRUE, ...)
 }
 \arguments{
 \item{x.factor}{a factor whose levels will form the x axis.}
@@ -71,11 +69,10 @@ routines.}
 \description{
 Plots the mean (or other summary) of the response for two-way combinations
 of factors, thereby illustrating possible interactions.
+This modifies \code{\link{interaction.plot}} by adding the \code{errorBar} and
+\code{jitterErrorBars} arguments.
 }
 \details{
-This modification of \code{\link{interaction.plot}} adds the \code{errorBar} and
-\code{jitterErrorBars} arguments.
-
 By default the levels of \code{x.factor} are plotted on the x axis in their
 given order, with extra space left at the right for the legend (if
 specified). If \code{x.factor} is an ordered factor and the levels are
@@ -96,20 +93,21 @@ Some of the argument names and the precise behaviour are chosen for
 S-compatibility.
 }
 \examples{
-
-require(graphics)
-
 with(ToothGrowth, {
-interactionPlot(dose, supp, len, fixed=TRUE)
-dose <- ordered(dose)
-interactionPlot(dose, supp, len, fixed=TRUE, col = 2:3, leg.bty = "o")
 
-interactionPlot(dose, supp, len, fixed=TRUE, col = 2:3, type = "p",
+# Basic interaction plot
+interactionPlot(dose, supp, len, fixed = TRUE)
+
+# Ordered dose
+dose <- ordered(dose)
+interactionPlot(dose, supp, len, fixed = TRUE, col  =  2:3, leg.bty = "o")
+
+# Add error bars
+interactionPlot(dose, supp, len, fixed = TRUE, col  =  2:3, type = "p",
                 errorBar = list(height = 3, width = 0.05, blankMiddle = 1),
                 jitterErrorBars = TRUE,
                 main = "Error bars have no meaning--just for illustration")
 })
-
 }
 \author{
 Originates in the \code{stats} package in the R distribution,

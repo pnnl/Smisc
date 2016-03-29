@@ -4,7 +4,7 @@
 \alias{doCallParallel}
 \title{Call a function with a vectorized input in parallel}
 \usage{
-doCallParallel(fun, x, ..., nJobs = parallel::detectCores() - 1,
+doCallParallel(fun, x, ..., njobs = parallel::detectCores() - 1,
   random.seed = NULL)
 }
 \arguments{
@@ -13,7 +13,7 @@ returns a corresponding vector}
 
 \item{x}{A vector of values that is the first argument to \code{fun}}
 
-\item{nJobs}{The number of parallel jobs to spawn using \code{\link{parLapply}}.}
+\item{njobs}{The number of parallel jobs to spawn using \code{\link{parLapplyW}}.}
 
 \item{random.seed}{If a numeric value is provided, \code{x} is randomized to better distribute the work among
 the jobs if some values of \code{x} take longer to evaluate than others.
@@ -39,10 +39,10 @@ to \code{c(fun(x1), fun(x2))} in order for \code{doCallParallel} to work properl
 x <- rnorm(18, mean = 2, sd = 2)
 
 # 2 cores
-y1 <- doCallParallel("pnorm", x, mean = 2, sd = 2, nJobs = 2)
+y1 <- doCallParallel("pnorm", x, mean = 2, sd = 2, njobs = 2)
 
 # 2 cores and randomization
-y2 <- doCallParallel(pnorm, x, mean = 2, sd = 2, nJobs = 2, random.seed = 1)
+y2 <- doCallParallel(pnorm, x, mean = 2, sd = 2, njobs = 2, random.seed = 1)
 
 # Without using doCallParallel()
 y3 <- pnorm(x, mean = 2, sd = 2)
