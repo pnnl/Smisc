@@ -1,15 +1,15 @@
 ##' Draw vertical error bar(s) on a plot
 ##'
-##' @details Buyer beware!  It's up to the user to determine what the statistically correct height
+##' @details Buyer beware!  It's up to the user to determine what the statistically correct length
 ##' of the error bar should be.
 ##'
-##' Either \code{center} and \code{height} must be specified, or \code{min.y} and
+##' Either \code{center} and \code{barLength} must be specified, or \code{min.y} and
 ##' \code{max.y} must be specifed.
 ##'
-##' Note that \code{width}, \code{center}, \code{height}, \code{min.y}, \code{max.y}, 
-##' and \code{blankMiddle} should either NULL, numeric values of length 1, or numeric values with
+##' Note that \code{width}, \code{center}, \code{barLength}, \code{min.y}, \code{max.y}, 
+##' and \code{blankMiddle} should be \code{NULL}, numeric values of length 1, or numeric values with
 ##' the same length as \code{x}.  If they have the same length of \code{x}, the bars can have
-##' different heights, widths, and \code{blankMiddle} values if desired.
+##' different vertical lengths, widths, and \code{blankMiddle} values if desired.
 ##'
 ##' @export
 ##' @param x Vector of x value on the plot around which the vertical error bar will be drawn
@@ -20,13 +20,13 @@
 ##' @param center Vector of values designating the vertical center of the error bars, can
 ##' be a vector or a single value
 ##'
-##' @param height The total height of the bars, can be a vector or a single value
+##' @param barLength The total vertical length of the bars, can be a vector or a single value
 ##'
 ##' @param min.y Vector of values indicating the vertical bottoms of the bars
 ##'
 ##' @param max.y Vector of values indicating the vertical tops of the bars
 ##'
-##' @param blankMiddle the height of a blank spot that will be produced in the middle of
+##' @param blankMiddle the vertical length of a blank spot that will be produced in the middle of
 ##' the error bar. This is useful when the bar is placed around symbols (so as not to overwrite them).
 ##' Defaults to \code{NULL}, in which case a solid error bar is drawn. Can also be a vector or a
 ##' single value.
@@ -48,9 +48,9 @@
 ##'      ylab = "Z", xlab = "Indexes")
 ##'
 ##' # Draw the error bars
-##' vertErrorBar(x, 0.3, center = y, height = 2 * 1.96, blankMiddle = 0.25)
+##' vertErrorBar(x, 0.3, center = y, barLength = 2 * 1.96, blankMiddle = 0.25)
 
-vertErrorBar <- function(x, width, center = NULL, height = NULL,
+vertErrorBar <- function(x, width, center = NULL, barLength = NULL,
                          min.y = NULL, max.y = NULL, blankMiddle = NULL, ...) {
 
   # Function that checks for numeric
@@ -66,7 +66,7 @@ vertErrorBar <- function(x, width, center = NULL, height = NULL,
   stopifnotMsg(is.numeric(x), "'x' must be numeric",
                is.numeric(width), "'width' must be numeric",
                cNum(center), cMsg("center"),
-               cNum(height), cMsg("height"),
+               cNum(barLength), cMsg("barLength"),
                cNum(min.y), cMsg("min.y"),
                cNum(max.y), cMsg("max.y"),
                cNum(blankMiddle), cMsg("blankMiddle"))
@@ -86,15 +86,15 @@ vertErrorBar <- function(x, width, center = NULL, height = NULL,
   # Checks for length
   stopifnotMsg(cLen(width), cMsg("width"),
                cLen(center), cMsg("center"),
-               cLen(height), cMsg("height"),
+               cLen(barLength), cMsg("barLength"),
                cLen(min.y), cMsg("min.y"),
                cLen(max.y), cMsg("max.y"),
                cLen(blankMiddle), cMsg("blankMiddle"))
   
   # Logical checks
-  cenHeight <- as.numeric(!is.null(center)) + as.numeric(!is.null(height))
-  if (cenHeight == 1) {
-    stop("'center' and 'height' must be specified together")
+  cenBarLength <- as.numeric(!is.null(center)) + as.numeric(!is.null(barLength))
+  if (cenBarLength == 1) {
+    stop("'center' and 'barLength' must be specified together")
   }
 
   minMax <- as.numeric(!is.null(min.y)) + as.numeric(!is.null(max.y))
@@ -102,15 +102,15 @@ vertErrorBar <- function(x, width, center = NULL, height = NULL,
     stop("'min.y' and 'max.y' must be specified together")
   }
 
-  if ((cenHeight == 0) & (minMax == 0)) {
-    stop("Either 'center' and 'height' must be specified, or 'min.y' and 'max.y' must be specified")
+  if ((cenBarLength == 0) & (minMax == 0)) {
+    stop("Either 'center' and 'barLength' must be specified, or 'min.y' and 'max.y' must be specified")
   }
-  else if ((cenHeight == 2) & (minMax == 2)) {
-    warning("'center', 'height', 'min.y', and 'max.y' were all specified. 'min.y' and 'max.y' will be ignored")
+  else if ((cenBarLength == 2) & (minMax == 2)) {
+    warning("'center', 'barLength', 'min.y', and 'max.y' were all specified. 'min.y' and 'max.y' will be ignored")
   }
 
   # Convert min.y and max.y to and y as needed
-  if (cenHeight == 0) {
+  if (cenBarLength == 0) {
 
     stopifnotMsg(all(min.y <= max.y),
                  "All elements of 'min.y' must be less than or equal to the corresponding elements of 'max.y'")
@@ -118,23 +118,23 @@ vertErrorBar <- function(x, width, center = NULL, height = NULL,
     # Get the midpoints
     center <- (min.y + max.y) / 2
 
-    # Get the height
-    height <- max.y - min.y
+    # Get the barLength
+    barLength <- max.y - min.y
 
   }
 
   # Last checks
   stopifnotMsg(all(width >= 0),
                "all values of 'width' must be non-negative",
-               all(height >= 0),
-               "all values of 'height' must be non-negative")
+               all(barLength >= 0),
+               "all values of 'barLength' must be non-negative")
 
   # Get the length
   n <- length(x)
 
   # Replicate if necessary
-  if (length(height) == 1) {
-    height <- rep(height, n)
+  if (length(barLength) == 1) {
+    barLength <- rep(barLength, n)
   }
   if (length(width) == 1) {
     width <- rep(width, n)
@@ -144,7 +144,7 @@ vertErrorBar <- function(x, width, center = NULL, height = NULL,
   if (is.null(blankMiddle)) {
 
     for (i in 1:n) {
-      lines(rep(x[i], 2), c(center[i] - height[i] / 2, center[i] + height[i] / 2), ...)
+      lines(rep(x[i], 2), c(center[i] - barLength[i] / 2, center[i] + barLength[i] / 2), ...)
     }
     
   }
@@ -158,15 +158,15 @@ vertErrorBar <- function(x, width, center = NULL, height = NULL,
 
     # Add in lines to create an empty space around plotted points
     for (i in 1:n) {
-      lines(rep(x[i], 2), c(center[i] - height[i] / 2, center[i] - min(height[i] / 2, blankMiddle[i] / 2)), ...)
-      lines(rep(x[i], 2), c(center[i] + height[i] / 2, center[i] + min(blankMiddle[i] / 2, height[i] / 2)), ...)
+      lines(rep(x[i], 2), c(center[i] - barLength[i] / 2, center[i] - min(barLength[i] / 2, blankMiddle[i] / 2)), ...)
+      lines(rep(x[i], 2), c(center[i] + barLength[i] / 2, center[i] + min(blankMiddle[i] / 2, barLength[i] / 2)), ...)
     }
   }
 
   # Make the cross hatches
   for (i in 1:n) {
-    lines(c(x[i] - width[i] / 2, x[i] + width[i] / 2), rep(center[i] + height[i] / 2, 2), ...)
-    lines(c(x[i] - width[i] / 2, x[i] + width[i] / 2), rep(center[i] - height[i] / 2, 2), ...)
+    lines(c(x[i] - width[i] / 2, x[i] + width[i] / 2), rep(center[i] + barLength[i] / 2, 2), ...)
+    lines(c(x[i] - width[i] / 2, x[i] + width[i] / 2), rep(center[i] - barLength[i] / 2, 2), ...)
   }
 
   return(invisible())

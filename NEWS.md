@@ -8,12 +8,14 @@ FEATURES / CHANGES
 - `factor2num()` renamed `factor2numeric()`
 - `validEmailAddress()` is deprecated
 - `more()` gets a `display` argument to view the head, tail, or all of the file
-- More descriptive error messages for `selectElements()`, `doCallParallel()`, `plapply()`, `dfplapply()`, `plotFun()`, `smartTimeAxis()`, and `vertErrorBar()`
+- More descriptive error messages for `selectElements()`, `doCallParallel()`, `plapply()`, `dfplapply()`, `plotFun()`, `smartTimeAxis()`, `vertErrorBar()`, and `interactionPlot()`
 - Several arguments to `plapply()` and `dfplapply()` are modified:  `jobName` becomes `workDir`, `clobber` is added, `rout` can now specifiy a filename where all the `.Rout` files will be collected
 - The `nJobs` argument of `doCallParallel()`, `hpd()`, and `plotFun()` is renamed `njobs` for consistency with other 
 parallelization functions
-- Tests created for `select()`, `doCallParallel()`, `plapply()`, `dfplapply()`, `parseJob()`, `openDevice()`, `plotFun()`, `vertErrorBar()`,
-- Documentation improvements
+- The `height` argument of `vertErrorBar()` is changed to `barLength`
+- The `jitterErrorBars` argument of `interactionPlot()` is now a list that passes arguments to `jitter()`, giving more control of the jittering
+- Tests created for `select()`, `doCallParallel()`, `plapply()`, `dfplapply()`, `parseJob()`, `openDevice()`, `plotFun()`, `vertErrorBar()`, `interactionPlot()`,
+- Numerous documentation improvements
 
 
 Version 0.2.17, 2016-02-01
