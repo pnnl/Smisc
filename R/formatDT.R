@@ -31,17 +31,17 @@
 ##' @param date.outformat A character string requesting the date format to be
 ##' returned.  The following date outformats are supported: "mm/dd/yyyy",
 ##' "mm-dd-yyyy", "yyyy-mm-dd", "yyyymmdd", "ddmonyyyy", and "dd-mon-yyyy".  If
-##' \code{date.outformat=NULL}, then "mm/dd/yyyy" is used.
+##' \code{date.outformat = NULL}, then "mm/dd/yyyy" is used.
 ##'
 ##' @param time.outformat A character string requesting the time format to be
 ##' returned.  The following time outformats are supported: "hh:mm:sspm",
 ##' "hh:mm:ss pm", "hh:mm:ss", "hh:mmpm", "hh:mm pm", and "hh:mm".  If
-##' \code{time.outformat=NULL}, then "hh:mm:ss pm" is used.
+##' \code{time.outformat = NULL}, then "hh:mm:ss pm" is used.
 ##'
-##' @param posix \code{=TRUE} returns date and datetime vectors of class
+##' @param posix \code{= TRUE} returns date and datetime vectors of class
 ##' POSIXct that can be used for time calculations.
 ##'
-##' @param weekday \code{=TRUE} returns a character vector denoting the day of
+##' @param weekday \code{= TRUE} returns a character vector denoting the day of
 ##' the week.
 ##'
 ##' @return A list with these components: \item{date}{A character vector of the
@@ -52,11 +52,11 @@
 ##' requested formats.  If time is not present in the input vector \code{dt},
 ##' then simply the date is returned.} \item{date.posix}{A vector of class
 ##' "POSIXt POSIXct" containing the date.  This is only returned if
-##' \code{posix=TRUE}.} \item{dt.posix}{A vector of class "POSIXt POSIXct"
-##' containing the datetime.  This is only returned if \code{posix=TRUE} and
+##' \code{posix = TRUE}.} \item{dt.posix}{A vector of class "POSIXt POSIXct"
+##' containing the datetime.  This is only returned if \code{posix = TRUE} and
 ##' time values are present in the argument \code{dt}.} \item{weekday}{A
 ##' character vector indicating the days of the week.  This is only returned if
-##' \code{weekday=TRUE}.}
+##' \code{weekday = TRUE}.}
 ##'
 ##' @author Landon Sego
 ##'
@@ -65,19 +65,19 @@
 ##' @examples
 ##'
 ##' # Demonstrates conversion of different datetime informats
-##' formatDT("03/12/2004 04:31:17pm", posix=FALSE)
-##' formatDT("12Mar2004 04:31pm", posix=FALSE)
-##' formatDT("2004-3-12 16:31:17", posix=FALSE)
+##' formatDT("03/12/2004 04:31:17pm", posix = FALSE)
+##' formatDT("12Mar2004 04:31pm", posix = FALSE)
+##' formatDT("2004-3-12 16:31:17", posix = FALSE)
 ##' formatDT("7-5-1998 22:13")
 ##'
 ##' # Specifying different types of outformats
-##' formatDT("03/12/2004", date.outformat="dd-mon-yyyy", posix=FALSE)
-##' formatDT("17-Sep-1782 12:31am", date.outformat="yyyy-mm-dd", time.outformat="hh:mm", posix=FALSE)
+##' formatDT("03/12/2004", date.outformat = "dd-mon-yyyy", posix = FALSE)
+##' formatDT("17-Sep-1782 12:31am", date.outformat = "yyyy-mm-dd", time.outformat = "hh:mm", posix = FALSE)
 ##'
 ##' # Processing datetime vectors
-##' formatDT(c("03/12/2004 04:31pm","03/12/2005 04:32:18pm"), posix=FALSE)
+##' formatDT(c("03/12/2004 04:31pm","03/12/2005 04:32:18pm"), posix = FALSE)
 ##' formatDT(c("03/12/2004 04:31:17pm","03/12/2005 04:32:18pm"))
-##' formatDT(c("03/12/2004 04:31:17pm","03/12/2005 04:32:18pm"), weekday=TRUE)
+##' formatDT(c("03/12/2004 04:31:17pm","03/12/2005 04:32:18pm"), weekday = TRUE)
 ##'
 ##' # An incorrect date (will produce an error)
 ##' try(formatDT("29-Feb-2001"))
@@ -87,13 +87,13 @@
 ##' formatDT("28-Feb-2001 12:00:00 AM")
 ##'
 ##' # Illustrate the handling of missing values
-##' formatDT(c(NA,"","2010-10-23 3:47PM"), weekday=TRUE)
+##' formatDT(c(NA,"","2010-10-23 3:47PM"), weekday = TRUE)
 ##'
 formatDT <- function(dt,
-                     date.outformat=NULL,
-                     time.outformat=NULL,
-                     posix=TRUE,
-                     weekday=FALSE) {
+                     date.outformat = NULL,
+                     time.outformat = NULL,
+                     posix = TRUE,
+                     weekday = FALSE) {
 
   # Assumptions:
   # 'dt' is a character vector with a date or datetime.
@@ -107,22 +107,22 @@ formatDT <- function(dt,
   # determined by using the first entry of the vector.
   # Missing values are set to NA.
 
-  if (class(dt)!="character") stop("Date or datetime is not a character string.\n")
+  if (class(dt) != "character") stop("Date or datetime is not a character string.\n")
 
   # Identify the requested date outformats
   if (is.null(date.outformat)) date.outformat <- "%m/%d/%Y" # <-- the Excel format
   else {
      # User can intuitively request date outformats
-          if (tolower(date.outformat)=="mm/dd/yyyy")  date.outformat <- "%m/%d/%Y"
-     else if (tolower(date.outformat)=="yyyy-mm-dd")  date.outformat <- "%Y-%m-%d"
-     else if (tolower(date.outformat)=="mm-dd-yyyy")  date.outformat <- "%m-%d-%Y"
-     else if (tolower(date.outformat)=="ddmonyyyy")   date.outformat <- "%d%b%Y"
-     else if (tolower(date.outformat)=="dd-mon-yyyy") date.outformat <- "%d-%b-%Y"
-     else if (tolower(date.outformat)=="yyyymmdd")    date.outformat <- "%Y%m%d"
+          if (tolower(date.outformat) == "mm/dd/yyyy")  date.outformat <- "%m/%d/%Y"
+     else if (tolower(date.outformat) == "yyyy-mm-dd")  date.outformat <- "%Y-%m-%d"
+     else if (tolower(date.outformat) == "mm-dd-yyyy")  date.outformat <- "%m-%d-%Y"
+     else if (tolower(date.outformat) == "ddmonyyyy")   date.outformat <- "%d%b%Y"
+     else if (tolower(date.outformat) == "dd-mon-yyyy") date.outformat <- "%d-%b-%Y"
+     else if (tolower(date.outformat) == "yyyymmdd")    date.outformat <- "%Y%m%d"
      else {
         cat("Warning in formatDT(): '",date.outformat,"' is not ",
             "a supported date outformat. 'mm/dd/yyyy' will be used ",
-            "instead.\n",sep="")
+            "instead.\n",sep = "")
         date.outformat <- "%m/%d/%Y"
       }
   }
@@ -131,18 +131,18 @@ formatDT <- function(dt,
   if (is.null(time.outformat)) time.outformat <- "%I:%M:%S %p"
   else {
       # User can intuitively request time outformats
-          if (tolower(time.outformat)=="hh:mm:sspm")  time.outformat <- "%I:%M:%S%p"
-     else if (tolower(time.outformat)=="hh:mm:ss pm") time.outformat <- "%I:%M:%S %p"
-     else if (tolower(time.outformat)=="hh:mm:ss")    time.outformat <- "%H:%M:%S"
-     else if (tolower(time.outformat)=="hh:mmpm")     time.outformat <- "%I:%M%p"
-     else if (tolower(time.outformat)=="hh:mm pm")    time.outformat <- "%I:%M %p"
-     else if (tolower(time.outformat)=="hh:mm")       time.outformat <- "%H:%M"
-     else if (tolower(time.outformat)=="hhmm")        time.outformat <- "%H%M"
-     else if (tolower(time.outformat)=="hhmmss")      time.outformat <- "%H%M%S"
+          if (tolower(time.outformat) == "hh:mm:sspm")  time.outformat <- "%I:%M:%S%p"
+     else if (tolower(time.outformat) == "hh:mm:ss pm") time.outformat <- "%I:%M:%S %p"
+     else if (tolower(time.outformat) == "hh:mm:ss")    time.outformat <- "%H:%M:%S"
+     else if (tolower(time.outformat) == "hh:mmpm")     time.outformat <- "%I:%M%p"
+     else if (tolower(time.outformat) == "hh:mm pm")    time.outformat <- "%I:%M %p"
+     else if (tolower(time.outformat) == "hh:mm")       time.outformat <- "%H:%M"
+     else if (tolower(time.outformat) == "hhmm")        time.outformat <- "%H%M"
+     else if (tolower(time.outformat) == "hhmmss")      time.outformat <- "%H%M%S"
      else {
         cat("Warning in formatDT(): '",time.outformat,"' is not ",
             "a supported time outformat. 'hh:mm pm' will be used ",
-            "instead.\n",sep="")
+            "instead.\n",sep = "")
         time.outformat <- "%I:%M %p"
      }
   }
@@ -202,7 +202,7 @@ formatDT <- function(dt,
         else if (grepl("PM", x))
           out <- gsub("PM", ":00PM", x)
         else
-          out <- paste(x, "00", sep=":")
+          out <- paste(x, "00", sep = ":")
 
         return(out)
 
@@ -243,13 +243,13 @@ formatDT <- function(dt,
         stop("Date or datetime '",dt[1],"' has more than 3 strings",
              " that are separated by spaces.\n")
 
-     else if (dtl==3) {
+     else if (dtl == 3) {
         if (!(tolower(dt.split[3]) %in% c("am","pm")))
            stop("Date or datetime '",dt[1],"' has 3 strings that ",
                 "are separated by spaces\nand the 3rd string ",
                 "is not AM or PM.\n")
         # Grab time (assuming time is separated from "AM" or "PM" by a space)
-        else  time.string <- paste(dt.split[2],dt.split[3],sep=" ")
+        else  time.string <- paste(dt.split[2],dt.split[3],sep = " ")
      }
 
      # Grab time (assuming time is not separated from "AM" or "PM" by a space)
@@ -280,7 +280,7 @@ formatDT <- function(dt,
 #            if (date.informat != "%m/%d/%Y")
 #               cat("Note in formatDT():  date.informat that will be used is '",
 #                   easy.date.informats[j],
-#                   "'.\n\tPlease verify that this is the correct date format.\n", sep="")
+#                   "'.\n\tPlease verify that this is the correct date format.\n", sep = "")
             break
          }
      }
@@ -310,8 +310,8 @@ formatDT <- function(dt,
               time.informat <- time.informats[j]
 #               if (time.informat != "%I:%M:%S %p")
 #                  cat("Note in formatDT():  time.informat that will be used is '",
-#                      easy.time.informats[which(time.informat==time.informats)],
-#                      "'.\n\tPlease verify that this is the correct time format.\n", sep="")
+#                      easy.time.informats[which(time.informat == time.informats)],
+#                      "'.\n\tPlease verify that this is the correct time format.\n", sep = "")
               break
            }
        }

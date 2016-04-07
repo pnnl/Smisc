@@ -6,8 +6,7 @@
 \alias{print.hpd}
 \title{Calculate the highest posterior density credible interval for a unimodal density}
 \usage{
-hpd(pdf, support, prob = 0.95, cdf = NULL, njobs = 1,
-  checkUnimodal = TRUE)
+hpd(pdf, support, prob = 0.95, cdf = NULL, njobs = 1, checkUnimodal = 0)
 
 \method{print}{hpd}(x, ...)
 
@@ -27,12 +26,14 @@ interval.}
 
 \item{cdf}{A function that takes a single (not necessarily vector) argument and returns the cumulative probability.
 If \code{NULL}, the pdf is integrated as needed to calculate probabilities
-as needed.  However, when possible, it's best to provide the cdf.}
+as needed.  However, providing the \code{cdf} will speed up calculations.}
 
-\item{njobs}{The number of parallel jobs to spawn using \code{\link{doCallParallel}}.}
+\item{njobs}{The number of parallel jobs to spawn (where possible) using \code{\link{doCallParallel}}.  This is helpful if \code{pdf} is
+expensive.}
 
-\item{checkUnimodal}{A logical indicating whether the function will be checked for unimodal behavior.  This involves evaluating
-the function at 1000 points in the \code{support} interval.  This is done in parallel if \code{njobs > 1}.}
+\item{checkUnimodal}{An integer that, when greater than 0, indicates the number of points in \code{support} for which \code{pdf} is
+evaluated to determine whether the function appears unimodal. This is done in parallel if \code{njobs > 1}.
+If \code{checkUnimodal} is not 0, it should be a large number (like 1000 or more).}
 
 \item{x}{object of class \code{hpd}, returned by \code{hpd}}
 
@@ -56,7 +57,7 @@ Calculate the highest posterior density credible interval for a unimodal density
 }
 \details{
 Parallel processing (via \code{njobs > 1}) may be advantageous if 1) \code{pdf} is a function that is computationally expensive, 2)
-the \code{cdf} is not provided, in which case \code{pdf} is integrated, and/or 3) when \code{checkUnimodal = TRUE}.
+the \code{cdf} is not provided, in which case \code{pdf} is integrated, and/or 3) when \code{checkUnimodal} is large.
 }
 \section{Methods (by generic)}{
 \itemize{

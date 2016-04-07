@@ -7,16 +7,19 @@
 ##'
 ##' @export
 ##' @param x An integer or double vector
+##' 
 ##' @return The vector of cumulative sums.
 ##'
 ##' Elements in \code{x} that were \code{NA} will continue to be \code{NA}, but
 ##' the \code{NA} will not be propogated.
+##' 
 ##' @author Landon Sego
+##' 
 ##' @seealso \code{\link{cumsum}}
+##' 
 ##' @keywords misc
+##' 
 ##' @examples
-##'
-##'
 ##' # Compare to cumsum()
 ##' x <- as.integer(c(5, 2, 7, 9, 0, -1))
 ##' cumsum(x)
@@ -30,6 +33,8 @@
 ##'
 cumsumNA <- function(x) {
 
+  stopifnot(is.numeric(x))
+    
   if (all(is.na(x)))
     return(x)
 

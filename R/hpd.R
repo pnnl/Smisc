@@ -1,9 +1,8 @@
 ##' Calculate the highest posterior density credible interval for a unimodal density
 ##'
-##' Calculate the highest posterior density credible interval for a unimodal density
-##'
+##' @details
 ##' Parallel processing (via \code{njobs > 1}) may be advantageous if 1) \code{pdf} is a function that is computationally expensive, 2)
-##' the \code{cdf} is not provided, in which case \code{pdf} is integrated, and/or 3) when \code{checkUnimodal = TRUE}.
+##' the \code{cdf} is not provided, in which case \code{pdf} is integrated, and/or 3) when \code{checkUnimodal} is large.
 ##'
 ##' @export
 ##' @rdname hpd
@@ -21,12 +20,14 @@
 ##'
 ##' @param cdf A function that takes a single (not necessarily vector) argument and returns the cumulative probability.
 ##' If \code{NULL}, the pdf is integrated as needed to calculate probabilities
-##' as needed.  However, when possible, it's best to provide the cdf.
+##' as needed.  However, providing the \code{cdf} will speed up calculations.
 ##'
-##' @param njobs The number of parallel jobs to spawn using \code{\link{doCallParallel}}.
+##' @param njobs The number of parallel jobs to spawn (where possible) using \code{\link{doCallParallel}}.  This is helpful if \code{pdf} is
+##' expensive.
 ##' 
-##' @param checkUnimodal A logical indicating whether the function will be checked for unimodal behavior.  This involves evaluating
-##' the function at 1000 points in the \code{support} interval.  This is done in parallel if \code{njobs > 1}.
+##' @param checkUnimodal An integer that, when greater than 0, indicates the number of points in \code{support} for which \code{pdf} is
+##' evaluated to determine whether the function appears unimodal. This is done in parallel if \code{njobs > 1}.
+##' If \code{checkUnimodal} is not 0, it should be a large number (like 1000 or more). 
 ##'
 ##@param invcdf A function that takes a single argument in [0, 1] and returns the inverse of the
 ## cumulative distribution function. This is required if \code{support} is not finite.
@@ -63,29 +64,41 @@
 ##' print(int)
 ##' plot(int)
 
-hpd <- function(pdf, support, prob = 0.95, cdf = NULL, njobs = 1, checkUnimodal = TRUE) { #, invcdf = NULL) {
+hpd <- function(pdf, support, prob = 0.95, cdf = NULL, njobs = 1, checkUnimodal = 0) { #, invcdf = NULL) {
 
   # Basic checks
-  stopifnot(is.function(pdf),
-            is.numeric(support),
-            is.vector(support),
-            length(support) == 2,
-            support[2] > support[1],
-            if (!is.null(cdf)) is.function(cdf) else TRUE,
-            is.numeric(prob),
-            length(prob) == 1,
-            prob > 0,
-            prob <= 1,
-            is.numeric(njobs),
-            length(njobs) == 1,
-            njobs >= 1,
-            is.logical(checkUnimodal))
+  stopifnotMsg(# pdf
+               is.function(pdf),
+               "'pdf' must be a function",
+               # support
+               if (is.numeric(support) & length(support) == 2) {
+                 support[1] < support[2]
+               } else FALSE,
+               "'support' must be a numeric vector of length 2, with the first element less than the second",
+               # cdf
+               if (!is.null(cdf)) is.function(cdf) else TRUE,
+               "'cdf' must be NULL or a function",
+               # prob
+               if (is.numeric(prob) & length(prob) == 1) {
+                 (prob > 0) & (prob <= 1)
+               } else FALSE,
+               "'prob' must be a single numeric value in (0, 1]",
+               # njobs
+               if (is.numeric(njobs) & length(njobs) == 1) {
+                 (njobs >= 1) & (njobs %% 1 == 0)
+               } else FALSE,
+               "'njobs' must be a single value in {1, 2, 3, ...}",
+               # checkUnimodal
+               if (is.numeric(checkUnimodal) & length(checkUnimodal) == 1) {
+                 (checkUnimodal >= 0) & (checkUnimodal %% 1 == 0)
+               } else FALSE,
+               "'checkUnimodal' must be a single value in {0, 1, 2, ...}")
 
   # Verify pdf is unimodal
-  if (checkUnimodal) {
+  if (checkUnimodal > 0) {
 
     # Define a sequence over which to check the function
-    xseq <- seq(support[1], support[2], length = 1000)
+    xseq <- seq(support[1], support[2], length = checkUnimodal)
 
     # Evaluate the function across xseq
     yseq <- doCallParallel(pdf, xseq, njobs = njobs, random.seed = rpois(1, 1000))
@@ -94,14 +107,16 @@ hpd <- function(pdf, support, prob = 0.95, cdf = NULL, njobs = 1, checkUnimodal 
     fdiff <- sign(diff(yseq))
 
     # Remove flat spots
-    if (any(fdiff == 0))
+    if (any(fdiff == 0)) {
       fdiff <- fdiff[-which(fdiff == 0)]
+    }
 
     # Count the number of changes in the sign of the derivative
     numChanges <- sum(diff(fdiff) != 0)
 
-    if ((numChanges > 1) | (fdiff[100] < 0) | (fdiff[900] > 0))
-      warning("'pdf' may not be unimodal, in which case there are no guarantees!")
+    if ((numChanges > 1) | (fdiff[100] < 0) | (fdiff[900] > 0)) {
+      warning("'pdf' may not be unimodal, in which case the resulting credible interval may not be the shortest possible")
+    }
 
   }
 

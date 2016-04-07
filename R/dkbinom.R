@@ -6,7 +6,7 @@
 ##' The mass and distribution functions of the sum of k independent binomial
 ##' random variables, with possibly different probabilities.
 ##'
-##' \code{size[1]} and \code{prob[1]} are the size and probability of the first
+##' @details \code{size[1]} and \code{prob[1]} are the size and probability of the first
 ##' binomial variate, \code{size[2]} and \code{prob[2]} are the size and
 ##' probability of the second binomial variate, etc.
 ##'
@@ -52,8 +52,8 @@
 ##' algorithm given by Butler, et al. The \code{naive} method is an alternative approach
 ##' that can be  much slower that can handle no more the sum of five binomials, but
 ##' is useful for validating the other methods. The \code{naive} method only works
-##' for a single value of \code{q}. The \code{fft} method (default) uses the fast Fourier
-##' transform to compuation of the convolution of k binomial random variates.
+##' for a single value of \code{q}. The \code{fft} method uses the fast Fourier
+##' transform to compuate the convolution of k binomial random variates.
 ##'
 ##' @param checkArgs \code{=TRUE} checks the incoming arguments \code{x}, \code{size},
 ##' \code{prob} for correct structure and consistency.

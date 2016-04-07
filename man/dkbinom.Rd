@@ -30,8 +30,8 @@ code in \code{dkbinom.c} for more details.}
 algorithm given by Butler, et al. The \code{naive} method is an alternative approach
 that can be  much slower that can handle no more the sum of five binomials, but
 is useful for validating the other methods. The \code{naive} method only works
-for a single value of \code{q}. The \code{fft} method (default) uses the fast Fourier
-transform to compuation of the convolution of k binomial random variates.}
+for a single value of \code{q}. The \code{fft} method uses the fast Fourier
+transform to compuate the convolution of k binomial random variates.}
 
 \item{checkArgs}{\code{=TRUE} checks the incoming arguments \code{x}, \code{size},
 \code{prob} for correct structure and consistency.}

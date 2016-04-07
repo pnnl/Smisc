@@ -1,7 +1,7 @@
 ##' Subtracts two time series by matching irregular time indexes
 ##'
 ##' Subtracts two time series by matching irregular time indexes.  Can also be
-##' used to snap, or match, the indexes of a time series to a set of standard
+##' used to align the indexes of a time series to a set of standard
 ##' time indexes.
 ##'
 ##' The format for the timestamps (in the vector names) can be virtually any
@@ -51,24 +51,20 @@
 ##' @keywords misc
 ##'
 ##' @examples
-##'
 ##' data(timeDiff.eg)
 ##'
 ##' # Show the objects
 ##' print(timeDiff.eg)
 ##'
 ##' # Extract the objects from the list for easier use in the example
-##' x1 <- timeDiff.eg$x1
-##' x2 <- timeDiff.eg$x2
-##' x1.d <- timeDiff.eg$x1.d
-##' x2.d <- timeDiff.eg$x2.d
-##'
+##' sepList(timeDiff.eg)
+##' 
 ##' # Print warnings as they occur
-##' op <- options(warn=1)
+##' op <- options(warn = 1)
 ##'
 ##' # Show various differences
-##' timeDiff(x1, x2, full=TRUE)
-##' timeDiff(x2.d, x1.d, full=TRUE)
+##' timeDiff(x1, x2, full = TRUE)
+##' timeDiff(x2.d, x1.d, full = TRUE)
 ##' timeDiff(x1, x1)
 ##'
 ##' options(op)
@@ -78,28 +74,28 @@
 ##' # Create the vector that will be averaged, with time stamps occuring
 ##' # about every 10 seconds
 ##' v1.names <- seq(formatDT("2009-09-12 3:20:31")$dt.posix,
-##'                 formatDT("2009-09-12 3:29:15")$dt.posix, by=10)
+##'                 formatDT("2009-09-12 3:29:15")$dt.posix, by = 10)
 ##'
 ##' # Now jitter the times a bit and look at the time spacing
-##' v1.names <- v1.names + round(rnorm(length(v1.names), sd=1.5))
+##' v1.names <- v1.names + round(rnorm(length(v1.names), sd = 1.5))
 ##' diff(v1.names)
 ##'
 ##' # Create the vector
-##' v1 <- abs(rnorm(length(v1.names), mean=7, sd=3))
+##' v1 <- abs(rnorm(length(v1.names), mean = 7, sd = 3))
 ##' names(v1) <- v1.names
 ##'
 ##' # Now create a standard vector with values of 0 with time stamps every 30 seconds
 ##' standard.names <- seq(formatDT("2009-09-12 3:21:30")$dt.posix,
-##'                       formatDT("2009-09-12 3:28:30")$dt.posix, by=30)
+##'                       formatDT("2009-09-12 3:28:30")$dt.posix, by = 30)
 ##' standard <- double(length(standard.names))
 ##' names(standard) <- standard.names
 ##'
 ##' # Now average the v1 values by matching the 3 closest values to each standard time:
-##' timeDiff(v1, standard, n.ind=3, full=TRUE)
-##' v1.avg <- timeDiff(v1, standard, n.ind=3)
+##' timeDiff(v1, standard, n.ind = 3, full = TRUE)
+##' v1.avg <- timeDiff(v1, standard, n.ind = 3)
 ##'
 ##' # Check that every 3 obs were averaged
-##' v1.avg.check <- tapply(v1[6:50], rep(1:15, each=3), mean)
+##' v1.avg.check <- tapply(v1[6:50], rep(1:15, each = 3), mean)
 ##' max(abs(v1.avg.check - v1.avg))
 ##'
 ##'
@@ -156,8 +152,8 @@ timeDiff <- function(v1, v2, n.ind = 1, full = FALSE) {
 
   # Environment for recording selected indexes
   subEnv <- new.env()
-  assign("index.vec", NULL, envir=subEnv)
-  assign("t.index.vec", NULL, envir=subEnv)
+  assign("index.vec", NULL, envir = subEnv)
+  assign("t.index.vec", NULL, envir = subEnv)
 
   # Function to identify the index that is closest to time stamp
   # As a convention, if there is a tie, then choose the closest one in the past (which would be positive)
@@ -202,8 +198,8 @@ timeDiff <- function(v1, v2, n.ind = 1, full = FALSE) {
 #    pvar(names(v.long)[indexes])
 
     # Accumulate the indexes
-    assign("index.vec", c(get("index.vec", envir=subEnv), indexes), envir=subEnv)
-    assign("t.index.vec", c(get("t.index.vec", envir=subEnv), paste(indexes, collapse=",")), envir=subEnv)
+    assign("index.vec", c(get("index.vec", envir = subEnv), indexes), envir = subEnv)
+    assign("t.index.vec", c(get("t.index.vec", envir = subEnv), paste(indexes, collapse = ",")), envir = subEnv)
 
     # Return the mean of the times
     return(mean(v.long[indexes]))
@@ -215,11 +211,11 @@ timeDiff <- function(v1, v2, n.ind = 1, full = FALSE) {
   matched.means <- unlist(tapply(v.short.t, v.short.n, id.index))
 
   # Look for overlapping windows from n.ind being too large
-  selected.indexes <- get("index.vec", envir=subEnv)
-  text.selected.indexes <- get("t.index.vec", envir=subEnv)
+  selected.indexes <- get("index.vec", envir = subEnv)
+  text.selected.indexes <- get("t.index.vec", envir = subEnv)
 
   if ((n.ind > 1) & any(diff(selected.indexes) <= 0))
-    warning(pvar(n.ind, verbose=FALSE), " may be too large. Averaging windows may be overlapping or values\n",
+    warning(pvar(n.ind, verbose = FALSE), " may be too large. Averaging windows may be overlapping or values\n",
             "of the longer vector may be matched (averaged) to more than one index of the shorter vector")
 
 ##   cat("\n")
@@ -263,17 +259,17 @@ timeDiff <- function(v1, v2, n.ind = 1, full = FALSE) {
     dv2 <- deparse(substitute(v2))
     s.name <- ifelse(shorter == "v1", dv1, dv2)
     l.name <- ifelse(longer == "v1", dv1, dv2)
-    i.name <- paste("original", l.name, "index", sep=".")
-    t.name <- paste(stripExtension(i.name), "time", sep=".")
+    i.name <- paste("original", l.name, "index", sep = ".")
+    t.name <- paste(stripExtension(i.name), "time", sep = ".")
     if (n.ind > 1)
-      l.name <- paste(l.name, "average", sep=".")
+      l.name <- paste(l.name, "average", sep = ".")
 
-    colnames(show.match) <- c(paste(s.name, "timestamps", sep="."),
+    colnames(show.match) <- c(paste(s.name, "timestamps", sep = "."),
                               t.name,
                               i.name,
                               s.name,
                               l.name,
-                              paste("diff", dv1, dv2, sep="."))
+                              paste("diff", dv1, dv2, sep = "."))
 
     rownames(show.match) <- 1:NROW(show.match)
 
