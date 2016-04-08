@@ -1,8 +1,6 @@
 ##' Identify linearly dependent rows or columns in a matrix
 ##'
-##' Identify which rows or columns are linearly dependent in a numeric matrix
-##'
-##' A row (or column) is considered to be a linear combination of another if
+##' @details A row (or column) is considered to be a linear combination of another if
 ##' the maximum of the absolute succesive differences of the ratios of the two
 ##' rows (columns) exceeds the tolerance, \code{tol}.  This is a fairly crude
 ##' criterion and may need improvement--but it at least will identify the
@@ -42,48 +40,52 @@
 ##' @keywords misc
 ##'
 ##' @examples
+##' # A matrix
+##' Y <- matrix(c(1, 3, 4,
+##'               2, 6, 8,
+##'               7, 2, 9,
+##'               4, 1, 7,
+##'               3.5, 1, 4.5), byrow = TRUE, ncol = 3)
 ##'
-##' # Note how rows 1, 2, and 5 are linearly dependent
-##' Y <- matrix(c(1,3,4,
-##'               2,6,8,
-##'               7,2,9,
-##'               4,1,7,
-##'               3.5,1,4.5), byrow=TRUE, ncol=3)
-##'
+##' # Note how row 2 is multiple of row 1, row 5 is a multiple of row 3
 ##' print(Y)
 ##'
 ##' findDepMat(Y)
-##' findDepMat(t(Y), rows=FALSE)
-##'
-findDepMat <- function(X, rows=TRUE, tol=1e-10) {
+##' findDepMat(t(Y), rows = FALSE)
+
+findDepMat <- function(X, rows = TRUE, tol = 1e-10) {
 
   if (!is.matrix(X))
     stop("'X' is not a matrix")
   if (!is.numeric(X))
     stop("'X' is not numeric")
 
-  if (!rows)
+  if (!rows) {
     X <- t(X)
+  }
 
   depends <- logical(NROW(X))
 
-  for (i in 1:(NROW(X)-1)) {
+  for (i in 1:(NROW(X) - 1)) {
 
-    for (j in (i+1):NROW(X)) {
+    for (j in (i + 1):NROW(X)) {
 
       # Only check it if a dependency has not been established
-      if (!depends[j])
+      if (!depends[j]) {
         depends[j] <- (max(abs(diff(X[i,] / X[j,]))) < tol)
+      }
 
     }
 
   } # for (i
 
   # Check with qr
-  qr.rank <- qr(X, tol=tol)$rank
-  if (sum(!depends) != qr.rank)
+  qr.rank <- qr(X, tol = tol)$rank
+  
+  if (sum(!depends) != qr.rank) {
     warning("Number of linearly independent rows (or columns), ",
             sum(!depends), ", do not agree with rank of X, ", qr.rank, ".\n")
+  }
 
   return(depends)
 

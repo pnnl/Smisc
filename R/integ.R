@@ -12,44 +12,52 @@
 ##' odd or even. The elements of \code{x} may be irregularly spaced.
 ##'
 ##' @export
+##' 
 ##' @param y Vector of f(x) values
+##' 
 ##' @param x Numeric vector of sorted x values, each element of \code{x} should
-##' have a corresponding element of y.  Only required for the trapezoid method.
+##' have a corresponding element in \code{y}.  Only required for the trapezoid method.
 ##' Not required for the Simpson method.
+##' 
 ##' @param a The lower limit of integration, only required for the Simpson
 ##' method.
+##' 
 ##' @param b The upper limit of integration, only required for the Simpson
 ##' method.
+##' 
 ##' @param method The method of integration (can use just the first letter).
 ##' Defaults to \code{simpson}.
+##' 
 ##' @return A single numeric estimate of the integral of f(x) over [a, b]
 ##' (Simpson) or over the range of \code{x} (trapezoid).
+##' 
 ##' @author Landon Sego
+##' 
 ##' @references Ellis R, Gulick D. "Calculus: One and Several Variables,"
 ##' Harcourt Brace Jovanovich, Publishers: New York, 1991; 479-482.
+##' 
 ##' @keywords math
 ##' @examples
+##' # The Beta density from 0 to 0.7
+##' integ(dbeta(seq(0, 0.7, length = 401), 2, 5), a = 0, b = 0.7)
 ##'
-##'   # The Beta density from 0 to 0.7
-##'   integ(dbeta(seq(0, 0.7, length=401), 2, 5), a = 0, b = 0.7)
+##' # Checking result with the cdf
+##' pbeta(0.7, 2, 5)
 ##'
-##'   # Checking result with the cdf
-##'   pbeta(0.7, 2, 5)
+##' # f(x) = x^2 from 0 to 3
+##' integ(seq(0, 3, length=21)^2, a = 0, b = 3)
 ##'
-##'   # f(x) = x^2 from 0 to 3
-##'   integ(seq(0, 3, length=21)^2, a = 0, b = 3)
+##' # A quadratic function with both methods
+##' x <- seq(0, 3, length = 51)
+##' integ(x^2, x = x, method = "t")
+##' integ(x^2, a = 0, b = 3, method = "s")
 ##'
-##'   # A quadratic function with both methods
-##'   x <- seq(0, 3, length = 51)
-##'   integ(x^2, x = x, method = "t")
-##'   integ(x^2, a = 0, b = 3, method = "s")
-##'
-##'   # Now a linear function
-##'   x <- seq(0, 2, length = 3)
-##'   y <- 2 * x + 3
-##'   integ(y, x = x, method = "t")
-##'   integ(y, a = 0, b = 2)
-##'
+##' # Now a linear function
+##' x <- seq(0, 2, length = 3)
+##' y <- 2 * x + 3
+##' integ(y, x = x, method = "t")
+##' integ(y, a = 0, b = 2)
+
 integ <- function(y, x = NULL, a = NULL, b = NULL, method = c("simpson", "trapezoid")) {
 
   # Match args of the methos
