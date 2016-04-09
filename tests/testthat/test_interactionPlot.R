@@ -20,7 +20,7 @@ test_that("Errors work as expected for 'errorBar'", {
     
   # errorBar not a list
   expect_error(with(d, interactionPlot(Factor_1, Factor_2, response, las = 1,
-                                       errorBar = "something",))
+                                       errorBar = "something")),
                err1)
 
   # errorBar missing non-atomic elements
@@ -40,7 +40,7 @@ test_that("Errors work as expected for 'errorBar'", {
                                        errorBar = list(barLength = LSD, width = 0.05, fake = 7))),
                err1)
 
-  # errorBar with non-numeric args
+  # errorBar gwith non-numeric args
   expect_error(with(d, interactionPlot(Factor_1, Factor_2, response, las = 1,
                                        errorBar = list(barLength = LSD, width = "a"),
                                        jitterErrorBars = list(factor = 1))),

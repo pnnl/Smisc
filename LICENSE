@@ -1,6 +1,6 @@
 Smisc
 
-Copyright 2015, Battelle Memorial Institute
+Copyright 2016, Battelle Memorial Institute
 All rights reserved.
 
 1.	Battelle Memorial Institute (hereinafter Battelle) hereby grants 
@@ -27,9 +27,9 @@ written consent of Battelle.
 work performed using the software should include the following citation 
 as a reference:
 
-Sego LH. 2015. Smisc: Sego Miscellaneous. A collection of functions for 
+Sego LH. 2016. Smisc: Sego Miscellaneous. A collection of functions for 
 statistical computing and data manipulation in R. Pacific Northwest 
-National Laboratory. http://github.com/pnnl/Smisc.
+National Laboratory. http://pnnl.github.io/Smisc.
 
 2.	THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
 "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED 

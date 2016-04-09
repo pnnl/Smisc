@@ -5,11 +5,11 @@ citEntry(entry = "Manual",
   author       = personList(as.person("Landon Sego")),
   organization = "{Pacific Northwest National Laboratory}",
   address      = "Richland, WA",
-  year         = "2015",
+  year         = "2016",
   url          = "http://github.com/pnnl/Smisc",
 
   textVersion  =
-  paste("Sego LH. 2015. Smisc: Sego Miscellaneous. A collection of functions for statistical",
+  paste("Sego LH. 2016. Smisc: Sego Miscellaneous. A collection of functions for statistical",
         "computing and data manipulation in R. Pacific Northwest National Laboratory.",
         "http://github.com/pnnl/Smisc.")
 )

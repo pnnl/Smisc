@@ -16,7 +16,7 @@
 ##' @export
 ##' @param y The numerical vector for which the moving averages will be
 ##' calculated.  If \code{NULL}, the moving averages are not calculated--but this can
-##' be useful for visualizing the weights. See \code{plot}.
+##' be useful for visualizing the weights. See the \code{plot} argument.
 ##' 
 ##' @param bw 'bandwidth', which is roughly half the width of the moving
 ##' window.  The total width of the window is \code{2 * bw + 1}.

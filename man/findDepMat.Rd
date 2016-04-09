@@ -22,7 +22,7 @@ of \code{X}, with \code{TRUE} indicating that the row (column) is linearly
 dependent on a previous row (column).
 }
 \description{
-Identify which rows or columns are linearly dependent in a numeric matrix
+Identify linearly dependent rows or columns in a matrix
 }
 \details{
 A row (or column) is considered to be a linear combination of another if
@@ -47,19 +47,18 @@ Currently this uses nested 'for' loops within R (not C).  Consequently,
 \code{findDepMat} is likely to be slow for large matrices.
 }
 \examples{
+# A matrix
+Y <- matrix(c(1, 3, 4,
+              2, 6, 8,
+              7, 2, 9,
+              4, 1, 7,
+              3.5, 1, 4.5), byrow = TRUE, ncol = 3)
 
-# Note how rows 1, 2, and 5 are linearly dependent
-Y <- matrix(c(1,3,4,
-              2,6,8,
-              7,2,9,
-              4,1,7,
-              3.5,1,4.5), byrow=TRUE, ncol=3)
-
+# Note how row 2 is multiple of row 1, row 5 is a multiple of row 3
 print(Y)
 
 findDepMat(Y)
-findDepMat(t(Y), rows=FALSE)
-
+findDepMat(t(Y), rows = FALSE)
 }
 \author{
 Landon Sego

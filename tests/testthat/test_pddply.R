@@ -20,15 +20,21 @@ test_that("pddply() returns values that are identical to ddply()", {
    
 })
 
+
 test_that("We can pass objects and packages into ddply()", {
 
   # A nonsense example where we need to pass objects and packages into the cluster
-  number1 <- 7
-  
+
   f <- function(x, number2 = 10) {
     paste(x$id[1], padZero(number1, num = 2), number2, sep = "-")
   }
-  
+
+  # This assignment is so crazy--it's required by testthat.  For some reason, if I just do this:
+  # number1 <- 7
+  # "number1" isn't found later on in the .export argument.  Assigning it to the global environment
+  # doesn't work either
+  assign("number1", 7, envir = environment())
+    
   # In parallel
   o5 <- pddply(baseball[1:100,], "year", f, number2 = 13, njobs = 2,
                .paropts = list(.packages = "Smisc", .export = "number1"))

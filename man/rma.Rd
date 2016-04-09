@@ -7,10 +7,7 @@
 rma()
 }
 \description{
-Remove all objects from the global environment
-}
-\details{
-Alias for \code{rm(list=ls())}.
+An alias for \code{rm(list = ls())}.
 }
 \author{
 Landon Sego

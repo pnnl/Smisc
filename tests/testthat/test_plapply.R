@@ -17,7 +17,7 @@ test_that("plapply() and lapply() agree", {
                   clean.up = FALSE, rout = "example1.Rout")
 
   # Verify existence of directories and files, then delete
-  expect_true(length(dir("example1.R")) == 8)
+  expect_true(length(dir("example1")) == 8)
   expect_true(file.exists("example1.Rout"))
   expect_true(length(readLines("example1.Rout")) > 10)
 
