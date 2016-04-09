@@ -95,7 +95,7 @@ dframeEquiv(x, y)
 Landon Sego
 }
 \references{
-http://www.cygnus-software.com/papers/comparingfloats/comparingfloats.htm
+\url{http://www.cygnus-software.com/papers/comparingfloats/comparingfloats.htm}
 }
 \seealso{
 \code{\link{all.equal}}, \code{\link{identical}}

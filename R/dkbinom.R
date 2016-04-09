@@ -53,7 +53,7 @@
 ##' that can be  much slower that can handle no more the sum of five binomials, but
 ##' is useful for validating the other methods. The \code{naive} method only works
 ##' for a single value of \code{q}. The \code{fft} method uses the fast Fourier
-##' transform to compuate the convolution of k binomial random variates.
+##' transform to compute the convolution of k binomial random variates.
 ##'
 ##' @param checkArgs \code{=TRUE} checks the incoming arguments \code{x}, \code{size},
 ##' \code{prob} for correct structure and consistency.
@@ -66,10 +66,10 @@
 ##'
 ##' @seealso \code{\link{dbinom}}, \code{\link{pbinom}}
 ##'
-##' @references The Butler method is based on the exact algorithm discussed by
+##' @references The Butler method is based on the exact algorithm discussed by: 
 ##' Butler, Ken and Stephens, Michael. (1993) The Distribution of a Sum of
 ##' Binomial Random Variables. Technical Report No. 467, Department of
-##' Statistics, Stanford University.
+##' Statistics, Stanford University. \url{http://www.dtic.mil/dtic/tr/fulltext/u2/a266969.pdf}
 ##'
 ##' @keywords misc
 ##'

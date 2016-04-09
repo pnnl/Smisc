@@ -19,5 +19,3 @@ Then type the follwing in R:
     install.packages("devtools") 
 
     devtools::install_github("pnnl/Smisc")
-
-

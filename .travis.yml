@@ -7,6 +7,7 @@ env:
     - _R_CHECK_FORCE_SUGGESTS_=FALSE
 
 r_binary_packages:
+  - plyr
   - doParallel
   - foreach
   - testthat
