@@ -63,7 +63,6 @@
 ##' @keywords misc
 ##'
 ##' @examples
-##'
 ##' # Demonstrates conversion of different datetime informats
 ##' formatDT("03/12/2004 04:31:17pm", posix = FALSE)
 ##' formatDT("12Mar2004 04:31pm", posix = FALSE)
@@ -72,7 +71,8 @@
 ##'
 ##' # Specifying different types of outformats
 ##' formatDT("03/12/2004", date.outformat = "dd-mon-yyyy", posix = FALSE)
-##' formatDT("17-Sep-1782 12:31am", date.outformat = "yyyy-mm-dd", time.outformat = "hh:mm", posix = FALSE)
+##' formatDT("17-Sep-1782 12:31am", date.outformat = "yyyy-mm-dd",
+##'          time.outformat = "hh:mm", posix = FALSE)
 ##'
 ##' # Processing datetime vectors
 ##' formatDT(c("03/12/2004 04:31pm","03/12/2005 04:32:18pm"), posix = FALSE)
@@ -88,7 +88,7 @@
 ##'
 ##' # Illustrate the handling of missing values
 ##' formatDT(c(NA,"","2010-10-23 3:47PM"), weekday = TRUE)
-##'
+
 formatDT <- function(dt,
                      date.outformat = NULL,
                      time.outformat = NULL,

@@ -1,4 +1,4 @@
-Version 0.3.0, 2016-04-08
+Version 0.3.0, 2016-04-09
 -----------------------------------------------------------------------------------
 
 FEATURES / CHANGES
@@ -16,7 +16,7 @@ parallelization functions
 - The `verbose` argument of `comboList()` is removed, as it served no purpose
 - If a `csv` file is passed to `dataIn()`, character strings are now converted to factors, consitent with R's default behavior
 - The `jitterErrorBars` argument of `interactionPlot()` is now a list that passes arguments to `jitter()`, giving more control of the jittering
-- Tests created for `select()`, `doCallParallel()`, `plapply()`, `dfplapply()`, `parseJob()`, `openDevice()`, `plotFun()`, `vertErrorBar()`, `interactionPlot()`,
+- Tests created for `select()`, `doCallParallel()`, `plapply()`, `dfplapply()`, `parseJob()`, `openDevice()`, `plotFun()`, `vertErrorBar()`, and `interactionPlot()`
 - Numerous documentation improvements
 
 

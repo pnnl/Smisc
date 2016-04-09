@@ -23,21 +23,43 @@ test_that("pddply() returns values that are identical to ddply()", {
 
 test_that("We can pass objects and packages into ddply()", {
 
-  # A nonsense example where we need to pass objects and packages into the cluster
+  ## The following code runs just fine in the console and for 'source("testthat.R")'
+  ## Furthore more, it works fine in 'example(pddply)', and it runs fine in the
+  ## R CMD check --as-cran testing of the examples.  But it fails for some unknown
+  ## reason when R CMD check runs 'testhat.R'.
+
+  ## data(baseball, package = "plyr")
+
+  ### Only this was required to get it to run on the command line
+  ## number1 <- 7
+  ### But this was required to get 'source("testthat.R")' to run
+  ## assign("number1", 7, envir = environment())  
+
+  ## f <- function(x, number2 = 10) {
+  ##   paste(x$id[1], padZero(number1, num = 2), number2, sep = "-")
+  ## }
+
+  ## # In parallel
+  ## o5 <- pddply(baseball[1:100,], "year", f, number2 = 13, njobs = 2,
+  ##              .paropts = list(.packages = "Smisc", .export = "number1"))
+  
+  ## # Non parallel
+  ## o6 <- plyr::ddply(baseball[1:100,], "year", f, number2 = 13)
+
+  ## identical(o5, o6)
+
+    
+  # I had to modify the code above (noted by #?#) because
+  # otherwise the tests executed during the CRAN build test failed
 
   f <- function(x, number2 = 10) {
+    number1 <- 7  #?#
     paste(x$id[1], padZero(number1, num = 2), number2, sep = "-")
   }
-
-  # This assignment is so crazy--it's required by testthat.  For some reason, if I just do this:
-  # number1 <- 7
-  # "number1" isn't found later on in the .export argument.  Assigning it to the global environment
-  # doesn't work either
-  assign("number1", 7, envir = environment())
     
   # In parallel
   o5 <- pddply(baseball[1:100,], "year", f, number2 = 13, njobs = 2,
-               .paropts = list(.packages = "Smisc", .export = "number1"))
+               .paropts = list(.packages = "Smisc")) #?#, .export = "number1"))
   
   # Non parallel
   o6 <- plyr::ddply(baseball[1:100,], "year", f, number2 = 13)
@@ -58,3 +80,4 @@ test_that("ppdply() catches errors", {
   expect_error(pddply(d, "g", f, njobs = 2), "object 'nonExistentObject' not found")
   
 })
+
