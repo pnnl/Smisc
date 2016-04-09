@@ -15,7 +15,7 @@ Before you get started, the source code of the `Smisc` package contains C code t
 - Windows: you'll need to install [R tools](http://cran.r-project.org/bin/windows/Rtools/)
 - Linux/Unix: compilation should take place automatically
 
-Then type the follwing in R:
+Then type the following in R:
 
     # Install the 'devtools' package if needed
     install.packages("devtools") 
