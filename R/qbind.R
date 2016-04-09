@@ -12,7 +12,7 @@
 ##' \code{\link{cbind}}, and "c" for concatenating using \code{\link{c}}.  Defaults to
 ##' "row".
 ##'
-##' @return The bound (binded?) object
+##' @return The bound object
 ##'
 ##' @author Landon Sego
 ##'

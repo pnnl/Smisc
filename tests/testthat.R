@@ -7,4 +7,8 @@ Sys.setenv("R_TESTS" = "")
 library(testthat)
 library(Smisc)
 
+# There shouldn't be any files in the tmp folder
+unlink("testthat/tmp", recursive = TRUE, force = TRUE)
+dir.create("testthat/tmp")
+
 test_check("Smisc")

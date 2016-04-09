@@ -4,17 +4,20 @@
 \alias{plapply}
 \title{Simple parallelization of lapply}
 \usage{
-plapply(X, FUN, ..., packages = NULL, header.file = NULL,
-  needed.objects = NULL, needed.objects.env = parent.frame(),
-  jobName = "plapply", njobs = parallel::detectCores() - 1,
-  max.hours = 24, check.interval.sec = 30, collate = FALSE,
-  random.seed = NULL, clean.up = TRUE, rout = !clean.up,
+plapply(X, FUN, ..., njobs = parallel::detectCores() - 1, packages = NULL,
+  header.file = NULL, needed.objects = NULL,
+  needed.objects.env = parent.frame(), workDir = "plapply",
+  clobber = TRUE, max.hours = 24, check.interval.sec = 1,
+  collate = FALSE, random.seed = NULL, rout = NULL, clean.up = TRUE,
   verbose = FALSE)
 }
 \arguments{
-\item{X}{The list, each element of which will be the input to \code{FUN}}
+\item{X}{A list or vector, each element of which will be the input to \code{FUN}}
 
-\item{FUN}{A function whose first argument is an element of list \code{X}}
+\item{FUN}{A function whose first argument is an element of \code{X}}
+
+\item{njobs}{The number of jobs (subsets).  Defaults to one less than the
+number of cores on the machine.}
 
 \item{packages}{Character vector giving the names of packages that will be
 loaded in each new instance of R, using \code{\link{library}}.}
@@ -26,18 +29,19 @@ If \code{NULL}, no file is sourced.}
 
 \item{needed.objects}{Character vector giving the names of objects which
 reside in the evironment specified by \code{needed.objects.env} that may be
-needed by \code{FUN} which are loaded into the GLOBAL ENVIRONMENT of each
+needed by \code{FUN} which are loaded into the global environment of each
 new instance of R that is launched.  If \code{NULL}, no additional objects
 are passed.}
 
 \item{needed.objects.env}{Environment where \code{needed.objects} reside.
 This defaults to the environment in which \code{plapply} is called.}
 
-\item{jobName}{Text string indicating the prefix for files that will be
-created while launching the separate instances of R.}
+\item{workDir}{Character string giving the name of the working directory that
+will be used for for the files needed to launch the separate instances of R.}
 
-\item{njobs}{The number of jobs (subsets).  Defaults to one less than the
-number of cores on the machine.}
+\item{clobber}{Logical indicating whether the directory designated by \code{workDir}
+will be overwritten if it exists and contains files.  If \code{clobber = FALSE},
+and \code{workDir} contains files, \code{plapply} throws an error.}
 
 \item{max.hours}{The maximum number of hours to wait for the \code{njobs}
 to complete.}
@@ -45,7 +49,7 @@ to complete.}
 \item{check.interval.sec}{The number of seconds to wait between checking to
 see whether all \code{njobs} have completed.}
 
-\item{collate}{\code{=TRUE} creates a 'first-in-first-out' processing order of
+\item{collate}{\code{= TRUE} creates a 'first-in-first-out' processing order of
 the elements of the input list \code{X}.  This logical is passed to the
 \code{collate} argument of \code{\link{parseJob}}.}
 
@@ -55,15 +59,16 @@ when the computing time for each element varies significantly because it
 helps to even out the run times of the parallel jobs. If \code{random.seed
 = NULL}, no randomization is performed and the elements of the input list
 are subdivided sequentially among the jobs.  This variable is passed to the
-\code{random.seed} argument of \code{\link{parseJob}}.}
+\code{random.seed} argument of \code{\link{parseJob}}. If \code{collate = TRUE},
+no randomization is performed and \code{random.seed} is ignored.}
 
-\item{clean.up}{\code{=TRUE} will delete temporary workding directory.}
+\item{rout}{A character string giving the name of the file to where all of the \code{.Rout} files
+will be gathered.  If \code{rout = NULL}, the \code{.Rout} files are not gathered, but left
+alone in \code{workDir}.}
 
-\item{rout}{\code{=TRUE} will gather the \code{njobs} *.Rout files into a
-single file named "jobName_YYYY-MM-DD_HHMMSS_XXXX.Rout" which will not be
-deleted.}
+\item{clean.up}{\code{= TRUE} will delete the working directory.}
 
-\item{verbose}{\code{=TRUE} prints messages which show the progress of the
+\item{verbose}{\code{= TRUE} prints messages which show the progress of the
 jobs.}
 
 \item{\dots}{Additional named arguments to \code{FUN}}
@@ -72,15 +77,26 @@ jobs.}
 A list equivalent to that returned by \code{lapply(X, FUN, ...)}.
 }
 \description{
-Parses a large list into subsets and submits a separate R job using lapply
-for each subset.
+Parses a large list into subsets and submits a separate batch R job that calls \code{\link{lapply}}
+on the  subset.  \code{plapply} has some features that may not be readily available in
+other parallelization functions like \code{\link{mclapply}} and \code{\link{parLapply}}:
+\itemize{
+\item The \code{.Rout} files produced by each R instance are easily accessible
+for convenient debugging of errors or warnings.  The \code{.Rout} files
+can also serve as an explicit record of the work that
+was performed by the workers
+\item Three options are available for the ordering of the processing of the list elements:
+the original list order, randomized, or collated (first-in-first-out).
+\item In each R instance, pre-processing or post-processing steps can be performed
+before and after the call to \code{\link{lapply}}}
+These pre-processing and post-processing steps can depend
+on instance of R, such that each instance can be treated differently, if desired.
+These features give greater control over the computing process, which can be especially useful for large jobs.
 }
 \details{
 \code{plapply} applies \code{FUN} to each element of the list \code{X} by
 parsing the list into \code{njobs} lists of equal (or almost equal) size
 and then applies \code{FUN} to each sublist using \code{\link{lapply}}.
-Differences between \code{plapply} and other similar functions,
-like \code{\link{parLapply}} and \code{\link{mclapply}}, are discussed below.
 
 A separate batch instance of R is launched for each sublist, thus utilizing
 another core of the machine. After the jobs complete, the \code{njobs}
@@ -98,8 +114,6 @@ R.
 Each instance of R runs a script that performs the following steps:
 
 \enumerate{
-
-\item The \code{Smisc} package is loaded:  \code{library(Smisc)}
 
 \item Any other packages indicated in the \code{packages} argument are
 loaded via calls to \code{library()}
@@ -132,26 +146,11 @@ where it will be collected after all jobs have completed
 
 If \code{njobs = 1}, none of the previous steps are executed, only this
 call is made:  \code{lapply(X, FUN, ...)}
-
-This function has some additional features that may not be readily available
-other parallization functions like \code{\link{mclapply}} and \code{\link{parLapply}}:
-\itemize{
-
-\item The \code{.Rout} files produced by each R instance are easily accessible
-for convenient debugging of errors or warnings.  The \code{.Rout} files
-can also serve as an explicit record of the work that
-was performed by the worker nodes
-
-\item The ordering of the processing can be randomized or collated (first-in-first-out)
-
-\item In each instance, pre-processing or post-processing steps can be performed
-before and after the call to \code{\link{lapply}}
-}
 }
 \examples{
-
 # Create a simple list
-a <- list(a = rnorm(10), b = rnorm(20), c = rnorm(15), d = rnorm(13), e = rnorm(15), f = rnorm(22))
+a <- list(a = rnorm(10), b = rnorm(20), c = rnorm(15), d = rnorm(13),
+          e = rnorm(15), f = rnorm(22))
 
 # Some objects that will be needed by f1:
 b1 <- rexp(20)
@@ -161,35 +160,34 @@ b2 <- rpois(10, 20)
 f1 <- function(x) mean(x) + max(b1) - min(b2)
 
 # Call plapply
-res.1 <- plapply(a, f1, needed.objects = c("b1", "b2"), jobName = "example.1",
-                 njobs = 3, max.hours = 1/120, check.interval.sec = 0.5, verbose = TRUE)
-print(res.1)
+res1 <- plapply(a, f1, njobs = 2, needed.objects = c("b1", "b2"),
+                check.interval.sec = 0.5, max.hours = 1/120,
+                workDir = "example1", rout = "example1.Rout",
+                clean.up = FALSE)
 
-# Call lapply
-res.2 <- lapply(a, f1)
-print(res.2)
+print(res1)
 
-# Compare results--if all(quick.comp) is TRUE, then lists are equivalent
-all(unlist(res.1) == unlist(res.2))
+# Look at the collated 'Rout' file
+more("example1.Rout")
 
-# Here's an alternative example using the collating option
-aList <- as.list(1:10 + pi)
+# Look at the contents of the working directory
+dir("example1")
 
-f2 <- function(x, a = 2) x^2 + a
+# Remove working directory and Rout file
+unlink("example1", recursive = TRUE, force = TRUE)
+unlink("example1.Rout")
+ 
+# Verify the result with lapply
+res2 <- lapply(a, f1)
 
-res.3 <- plapply(aList, f2, a = exp(1), njobs = 3, jobName = "example.2",
-                 max.hours = 1/120, check.interval.sec = 0.5, collate = TRUE)
-
-res.4 <- lapply(aList, f2, a = exp(1))
-
-all(unlist(res.3) == unlist(res.4))
-
+# Compare results
+identical(res1, res2)
 }
 \author{
 Landon Sego
 }
 \seealso{
-\code{\link{lapply}}, \code{\link{dfplapply}}, \code{\link{mclapply}}
+\code{\link{parLapplyW}}, \code{\link{dfplapply}}, \code{\link{parLapply}}, \code{\link{mclapply}}
 }
 \keyword{misc}
 

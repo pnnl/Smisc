@@ -24,28 +24,26 @@ has 1) the same number of characters or 2) the same number of trailing
 decimal places.
 }
 \details{
-For \code{side='left'}, \code{num} is the number of characters that each
-element of the padded, output vector should have.  If \code{num=NULL}, the
+For \code{side = 'left'}, \code{num} is the number of characters that each
+element of the padded, output vector should have.  If \code{num = NULL}, the
 largest number of characters that appears in the vector is chosen for
 \code{num}.
 
-For \code{side='right'}, \code{num} is the number of decimal places to be
-displayed. If \code{num=NULL}, the number of decimals in the element with
+For \code{side = 'right'}, \code{num} is the number of decimal places to be
+displayed. If \code{num = NULL}, the number of decimals in the element with
 the largest number of decimal places is used.
 
-Note that \code{vec} must be numeric when \code{side='right'}.  However,
-\code{vec} may be character when \code{side='left'}.
+Note that \code{vec} must be numeric when \code{side = 'right'}.  However,
+\code{vec} may be character when \code{side = 'left'}.
 }
 \examples{
+# Examples with 0's on the left
+padZero(c(1,10,100))
+padZero(c(1,10,100), num = 4)
 
-  # Examples with 0's on the left
-  padZero(c(1,10,100))
-  padZero(c(1,10,100), num=4)
-
-  # Examples with 0's on the right
-  padZero(c(1.2, 1.34, 1.399), side="r")
-  padZero(c(1.2, 1.34, 1.399), num=5, side="r")
-
+# Examples with 0's on the right
+padZero(c(1.2, 1.34, 1.399), side = "r")
+padZero(c(1.2, 1.34, 1.399), num = 5, side = "r")
 }
 \author{
 Landon Sego

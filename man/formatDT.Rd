@@ -13,17 +13,17 @@ formatDT(dt, date.outformat = NULL, time.outformat = NULL, posix = TRUE,
 \item{date.outformat}{A character string requesting the date format to be
 returned.  The following date outformats are supported: "mm/dd/yyyy",
 "mm-dd-yyyy", "yyyy-mm-dd", "yyyymmdd", "ddmonyyyy", and "dd-mon-yyyy".  If
-\code{date.outformat=NULL}, then "mm/dd/yyyy" is used.}
+\code{date.outformat = NULL}, then "mm/dd/yyyy" is used.}
 
 \item{time.outformat}{A character string requesting the time format to be
 returned.  The following time outformats are supported: "hh:mm:sspm",
 "hh:mm:ss pm", "hh:mm:ss", "hh:mmpm", "hh:mm pm", and "hh:mm".  If
-\code{time.outformat=NULL}, then "hh:mm:ss pm" is used.}
+\code{time.outformat = NULL}, then "hh:mm:ss pm" is used.}
 
-\item{posix}{\code{=TRUE} returns date and datetime vectors of class
+\item{posix}{\code{= TRUE} returns date and datetime vectors of class
 POSIXct that can be used for time calculations.}
 
-\item{weekday}{\code{=TRUE} returns a character vector denoting the day of
+\item{weekday}{\code{= TRUE} returns a character vector denoting the day of
 the week.}
 }
 \value{
@@ -35,11 +35,11 @@ the form "" if the time is not present in the input vector \code{dt}.}
 requested formats.  If time is not present in the input vector \code{dt},
 then simply the date is returned.} \item{date.posix}{A vector of class
 "POSIXt POSIXct" containing the date.  This is only returned if
-\code{posix=TRUE}.} \item{dt.posix}{A vector of class "POSIXt POSIXct"
-containing the datetime.  This is only returned if \code{posix=TRUE} and
+\code{posix = TRUE}.} \item{dt.posix}{A vector of class "POSIXt POSIXct"
+containing the datetime.  This is only returned if \code{posix = TRUE} and
 time values are present in the argument \code{dt}.} \item{weekday}{A
 character vector indicating the days of the week.  This is only returned if
-\code{weekday=TRUE}.}
+\code{weekday = TRUE}.}
 }
 \description{
 Can be used to convert date-time character vectors into other types of
@@ -69,21 +69,21 @@ pm}, \code{hh:mm:ss} (24 hour time), \code{hh:mmpm}, \code{hh:mm pm},
 hour time)
 }
 \examples{
-
 # Demonstrates conversion of different datetime informats
-formatDT("03/12/2004 04:31:17pm", posix=FALSE)
-formatDT("12Mar2004 04:31pm", posix=FALSE)
-formatDT("2004-3-12 16:31:17", posix=FALSE)
+formatDT("03/12/2004 04:31:17pm", posix = FALSE)
+formatDT("12Mar2004 04:31pm", posix = FALSE)
+formatDT("2004-3-12 16:31:17", posix = FALSE)
 formatDT("7-5-1998 22:13")
 
 # Specifying different types of outformats
-formatDT("03/12/2004", date.outformat="dd-mon-yyyy", posix=FALSE)
-formatDT("17-Sep-1782 12:31am", date.outformat="yyyy-mm-dd", time.outformat="hh:mm", posix=FALSE)
+formatDT("03/12/2004", date.outformat = "dd-mon-yyyy", posix = FALSE)
+formatDT("17-Sep-1782 12:31am", date.outformat = "yyyy-mm-dd",
+         time.outformat = "hh:mm", posix = FALSE)
 
 # Processing datetime vectors
-formatDT(c("03/12/2004 04:31pm","03/12/2005 04:32:18pm"), posix=FALSE)
+formatDT(c("03/12/2004 04:31pm","03/12/2005 04:32:18pm"), posix = FALSE)
 formatDT(c("03/12/2004 04:31:17pm","03/12/2005 04:32:18pm"))
-formatDT(c("03/12/2004 04:31:17pm","03/12/2005 04:32:18pm"), weekday=TRUE)
+formatDT(c("03/12/2004 04:31:17pm","03/12/2005 04:32:18pm"), weekday = TRUE)
 
 # An incorrect date (will produce an error)
 try(formatDT("29-Feb-2001"))
@@ -93,8 +93,7 @@ try(formatDT("28-Feb-2001 00:00:00 AM"))
 formatDT("28-Feb-2001 12:00:00 AM")
 
 # Illustrate the handling of missing values
-formatDT(c(NA,"","2010-10-23 3:47PM"), weekday=TRUE)
-
+formatDT(c(NA,"","2010-10-23 3:47PM"), weekday = TRUE)
 }
 \author{
 Landon Sego

@@ -1,29 +1,36 @@
 ##' The Beta-Binomial Distribution
 ##'
 ##' Density, distribution function, quantile function, and random generation
-##' for the beta-binomial distribution.  A variable with a beta-binomial
-##' distribution is distributed as binomial distribution with parameters
+##' for the beta-binomial distribution.  A beta-binomial variate
+##' follows the binomial distribution with parameters
 ##' \code{N} and \code{p}, where the probability \code{p} of success itself has
 ##' a beta distribution with parameters \code{u} and \code{v}.
 ##'
-##' The beta-binomial distribution with parameters \eqn{N}, \eqn{u}, and
-##' \eqn{v} has density given by \deqn{ choose(N, x) * Beta(x + u, N - x + v) /
-##' Beta(u,v) } for \eqn{u > 0}, \eqn{v > 0}, a positive integer \eqn{N}, and
-##' any nonnegative integer \eqn{x}. Although one can express the integral in
+##' @details The beta-binomial distribution with parameters \emph{N}, \emph{u}, and
+##' \emph{v} has mass function given by \emph{choose(N, x) * Beta(x + u, N - x + v) /
+##' Beta(u, v)} for \emph{u > 0}, \emph{v > 0}, a positive integer \emph{N}, and
+##' any nonnegative integer \emph{x}. Although one can express the integral in
 ##' closed form using generalized hypergeometric functions, the implementation
 ##' of distribution function used here simply relies on the cumulative sum of
-##' the density.
+##' the mass function.
 ##'
-##' The mean and variance of the beta-binomial distribution can be computed
-##' explicitly as \deqn{ mu = \frac{nu}/{u+v} } and \deqn{ sigma^2 =
-##' \frac{nuv(n+u+v)}{(u+v)^2 (1+u+v)} }
+##' The mean, \emph{mu}, and variance, \emph{sigma^2}, of the beta-binomial distribution
+##' can be computed explicitly as \emph{mu = N * u / (u + v)} and
+##' \emph{sigma^2 = (N * u * v * (N + u + v)) / ((u + v)^2 * (1 + u + v))}.
 ##'
+##' \code{dbb} and \code{qbb} do not recycle vector-valued arguments in
+##' the usual fashion in R.  Arguments to these functions must have length 1
+##' and/or one other common length. See example of \code{\link{pcbinom}} for more
+##' information.
+##'
+##' Non-integer values of \code{x} and \code{N} are rounded to the nearest
+##' integer with a warning.
+##' 
+##' @export dbb pbb qbb rbb
 ##' @aliases dbb pbb qbb rbb
-##'
-##' @export dbb
-##' @export pbb
-##' @export qbb
-##' @export rbb
+##' 
+##' @rdname dbb
+##'  
 ##' @usage
 ##' dbb(x, N, u, v)
 ##' pbb(q, N, u, v)
@@ -48,30 +55,24 @@
 ##' function, \code{qbb} gives the quantile function, and \code{rbb} generates
 ##' random deviates.
 ##' 
-##' @note \code{dbb} and \code{qbb} do not recycle vector-valued arguments in
-##' the usual fashion in R.  Arguments to these functions must have length 1
-##' and/or one other common length. See example of \code{\link{pcbinom}} for more
-##' information.
-##'
-##' Non integer values of \code{x} and \code{N} are rounded to the nearest
-##' integer with a warning.
-##' 
 ##' @section Warning: \code{dbb}, \code{pbb}, and \code{qbb} can be imprecise
 ##' when the probabilities for tail values are small.  This can result in
 ##' unusual behavior for \code{pbb} and \code{qbb}.
 ##' 
 ##' @author Kevin R. Coombes, modified by Landon Sego
+##'
+##' @references \url{http://bioinformatics.mdanderson.org/Software/OOMPA/Current/TailRank-manual.pdf}
 ##' 
 ##' @seealso \code{\link{dbeta}} for the beta distribution and
 ##' \code{\link{dbinom}} for the binomial distribution.
 ##' 
 ##' @keywords misc
+##' 
 ##' @examples
-##'
 ##' # set up parameters
 ##' w <- 10
-##' u <- 0.3*w
-##' v <- 0.7*w
+##' u <- 0.3 *w
+##' v <- 0.7 * w
 ##' N <- 12
 ##'
 ##' # generate random values from the beta-binomial
@@ -82,16 +83,21 @@
 ##' qbb(c(0.25, 0.50, 0.75), N, u, v)
 ##'
 ##' # check that the empirical histogram matches the theoretical density
-##' hist(x, breaks=seq(-0.5, N + 0.55), prob=TRUE)
-##' lines(0:N, dbb(0:N, N, u,v), type='b')
+##' hist(x, breaks=seq(-0.5, N + 0.55), prob = TRUE)
+##' lines(0:N, dbb(0:N, N, u,v), type = "b")
 ##'
 ##' # An example of the imprecision in pbb and qbb:  we would expect
 ##' # this to return 0:29
 ##' qbb(pbb(0:29, 29, 1, 33), 29, 1, 33)
-##'
 
 dbb <- function(x, N, u, v) {
 
+  # Basic checks
+  stopifnotMsg(is.numeric(x), "'x' must be numeric",
+               is.numeric(N), "'N' must be numeric",
+               is.numeric(u), "'u' must be numeric",
+               is.numeric(v), "'v' must be numeric")
+    
   # Convert x and N to integers with warning
   x.r <- round(x, 14)
   if (any((x.r %% 1) != 0))
@@ -142,6 +148,13 @@ dbb <- function(x, N, u, v) {
 
 pbb <- function(q, N, u, v) {
 
+  # Basic checks
+  stopifnotMsg(is.numeric(q), "'q' must be numeric",
+               is.numeric(N), "'N' must be numeric",
+               is.numeric(u), "'u' must be numeric",
+               is.numeric(v), "'v' must be numeric")
+
+    
   # Checking and adjusting N
   N.r <- round(N, 14)
   if (any((N.r %% 1) != 0))
@@ -215,6 +228,12 @@ pbb <- function(q, N, u, v) {
 
 qbb <- function(p, N, u, v) {
 
+  # Basic checks
+  stopifnotMsg(is.numeric(p), "'p' must be numeric",
+               is.numeric(N), "'N' must be numeric",
+               is.numeric(u), "'u' must be numeric",
+               is.numeric(v), "'v' must be numeric")
+    
   # Checking and adjusting N
   N.r <- round(N, 14)
   if (any((N.r %% 1) != 0))
@@ -282,8 +301,13 @@ qbb <- function(p, N, u, v) {
 
 } # qbb
 
-# I Assume these recycle properly?...
 rbb <- function(n, N, u, v) {
+
+  # Basic checks
+  stopifnotMsg(is.numeric(n) & length(n) == 1, "'n' must be numeric and of length 1",
+               is.numeric(N) & length(N) == 1, "'N' must be numeric and of length 1",
+               is.numeric(u) & length(u) == 1, "'u' must be numeric and of length 1",
+               is.numeric(v) & length(v) == 1, "'v' must be numeric and of length 1")
 
   # Verify arguments are correct
   if (any(u <= 0))
@@ -302,5 +326,3 @@ rbb <- function(n, N, u, v) {
   return(rbinom(n, N, p))
 
 } # rbb
-
-

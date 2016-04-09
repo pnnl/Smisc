@@ -1,6 +1,6 @@
-##' Parses a collection  of elements into (almost) equal sized groups
+##' Parses a collection  of elements into (almost) equal-sized groups
 ##'
-##' Parses a collection of elements into (almost) equal sized groups.
+##' Parses a collection of elements into (almost) equal-sized groups.
 ##' Useful for splitting up an R job that operates over a large dataframe or list
 ##' into multiple jobs.
 ##'
@@ -9,7 +9,7 @@
 ##'
 ##' @param njobs The number of groups
 ##'
-##' @param collate \code{=TRUE} alternative ordering of the grouping. See example below.
+##' @param collate \code{= TRUE} alternative ordering of the grouping. See example below.
 ##'
 ##' @param random.seed An integer setting the random seed, which will result in randomizing the
 ##' elements among the jobs.  If \code{NULL}, no randomization is performed. Randomization
@@ -19,8 +19,7 @@
 ##'
 ##' @param text.to.eval If \code{= TRUE}, a text expression is returned, that when
 ##' evaluated, will produce the sequence of elements for that group.
-##'     This is especially useful when \code{n}
-##'     is very large. (See \code{Value} section below).
+##' This is especially useful when \code{n} is very large. (See \code{Value} section below).
 ##'
 ##' @return When \code{text.to.eval = FALSE},
 ##'   a list with \code{njobs} elements is returned, each element containing a numeric
@@ -40,24 +39,42 @@
 ##' lapply(x, range)
 ##'
 ##' # To see the length of each group
-##' lapply(x, length)
+##' lengths(x)
 ##'
 ##' # Randomize the outcome
 ##' parseJob(32, 5, random.seed = 231)
 ##'
-##' # Example of text.to.eval
-##' parseJob(11, 3, text.to.eval = TRUE)
-##' lapply(parseJob(11, 3, text.to.eval = TRUE), function(x) eval(parse(text = x)))
+##' # Example of 'text.to.eval = TRUE'
+##' out <- parseJob(11, 3, text.to.eval = TRUE)
+##' out
+##' lapply(out, function(x) eval(parse(text = x)))
 ##'
-##' # Example of collated and text.to.eval
+##' # Example of 'collate = TRUE' and 'text.to.eval = TRUE'
 ##' parseJob(11, 3, collate = TRUE)
 ##' parseJob(11, 3, collate = TRUE, text.to.eval = TRUE)
+
 parseJob <- function(n, njobs, collate = FALSE, random.seed = NULL, text.to.eval = FALSE) {
 
-  # Sanity checks
-  if ((n <= 0) | (njobs <= 0))
-    stop("'n' must be greater than or equal to 'njobs', and both must be positive\n")
+  stopifnotMsg(# n
+               if (is.numeric(n)) (n > 0) & (n %% 1 == 0) else FALSE,
+               "'n' must be a positive, whole number",
 
+               # njobs
+               if (is.numeric(njobs)) (njobs > 0) & (njobs %% 1 == 0) else FALSE,
+               "'njobs' must be a positive, whole number",
+               
+               # collate
+               is.logical(collate) & (length(collate) == 1),
+               "'collate' must be TRUE or FALSE",
+
+               # random.seed
+               if (!is.null(random.seed)) is.numeric(random.seed) & (length(random.seed) == 1) else TRUE,
+               "'random.seed' must be numeric or NULL",
+
+               # text.to.eval
+               is.logical(text.to.eval) & (length(text.to.eval) == 1),
+               "'text.to.eval' must be TRUE or FALSE")
+    
   # If njobs is too large
   if (n < njobs) {
     warning("'n' must be greater than or equal to 'njobs'\n",
@@ -92,16 +109,19 @@ parseJob <- function(n, njobs, collate = FALSE, random.seed = NULL, text.to.eval
     n.left.over <- n %% njobs
 
     # Check 1
-    if (n != (n.per.job[1] * njobs + n.left.over))
+    if (n != (n.per.job[1] * njobs + n.left.over)) {
       stop("Algorithm failure 1")
+    }
 
     # Add 1 to the first elements of n.per.job
-    if (n.left.over)
+    if (n.left.over) {
       n.per.job[1:n.left.over] <- n.per.job[1:n.left.over] + 1
+    }
 
     # Check 2
-    if (sum(n.per.job) != n)
+    if (sum(n.per.job) != n) {
       stop("Algorithm failure 2")
+    }
 
     if (is.null(random.seed)) {
 
@@ -136,23 +156,28 @@ parseJob <- function(n, njobs, collate = FALSE, random.seed = NULL, text.to.eval
 
       # Check 3
       check.out <- unlist(out)
-      if (!is.null(random.seed))
+      
+      if (!is.null(random.seed)) {
         check.out <- sort(check.out)
+      }
 
-      if (!all(check.out == 1:n))
+      if (!all(check.out == 1:n)) {
         stop("Algorithm failure 3")
+      }
 
     } # else randomization
 
   } # else no collating
 
   # Convert from text if text.to.eval == FALSE
-  if (!text.to.eval & is.null(random.seed))
+  if (!text.to.eval & is.null(random.seed)) {
     out <- lapply(out, function(x) eval(parse(text = x)))
+  }
 
   # Verify that the length of the list is equal to njobs
-  if (length(out) != njobs)
+  if (length(out) != njobs) {
     stop("Algorithm failure 4")
+  }
 
   return(out)
 

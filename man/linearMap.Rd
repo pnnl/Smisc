@@ -2,7 +2,7 @@
 % Please edit documentation in R/linearMap.R
 \name{linearMap}
 \alias{linearMap}
-\title{Linear mapping of a numerical vector or scalar}
+\title{Linear mapping of a numeric vector or scalar}
 \usage{
 linearMap(x, D = range(x), R = c(0, 1))
 }
@@ -21,7 +21,7 @@ mapping. \code{R[1]} is mapped to \code{D[1]}, and \code{R[2]} is mapped to
 The linear mapping of \code{x} from \code{D} to \code{R}
 }
 \description{
-Linear mapping of a numerical vector or scalar from one contiguous interval
+Linear mapping of a numeric vector or scalar from one contiguous interval
 to another
 }
 \details{
@@ -29,7 +29,6 @@ The mapping is \eqn{f : D \rightarrow R}, where \eqn{f(D[1]) = R[1]} and
 \eqn{f(D[2]) = R[2]}.
 }
 \examples{
-
 x <- seq(0, 1, length = 5)
 
 # An increasing linear map
@@ -44,7 +43,6 @@ linearMap(x, R = c(-1, 0))
 # The identity map:
 y <- linearMap(x, D = c(0, 1), R = c(0, 1))
 identical(y, x)
-
 }
 \author{
 Landon Sego

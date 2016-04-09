@@ -1,3 +1,25 @@
+Version 0.3.0, 2016-04-09
+-----------------------------------------------------------------------------------
+
+FEATURES / CHANGES
+
+- Stream editing functions `streamEdit()`, `sed_insert()`, `sed_replace()`, `sed_substitute()`, and `sed_comment()` become their own package: [rsed](https://pnnl.github.io/rsed)
+- `umvue.ln()` renamed `umvueLN()`, and it gets `tol` and `verbose` arguments
+- `factor2num()` renamed `factor2numeric()`
+- `validEmailAddress()` is deprecated
+- `more()` gets a `display` argument to view the head, tail, or all of the file
+- More descriptive error messages for `selectElements()`, `doCallParallel()`, `plapply()`, `dfplapply()`, `plotFun()`, `smartTimeAxis()`, `vertErrorBar()`, `interactionPlot()`, `hpd()`, and `umvueLN()`
+- Several arguments to `plapply()` and `dfplapply()` are modified:  `jobName` becomes `workDir`, `clobber` is added, `rout` can now specifiy a filename where all the `.Rout` files will be collected
+- The `nJobs` argument of `doCallParallel()`, `hpd()`, and `plotFun()` is renamed `njobs` for consistency with other 
+parallelization functions
+- The `height` argument of `vertErrorBar()` is changed to `barLength`
+- The `verbose` argument of `comboList()` is removed, as it served no purpose
+- If a `csv` file is passed to `dataIn()`, character strings are now converted to factors, consitent with R's default behavior
+- The `jitterErrorBars` argument of `interactionPlot()` is now a list that passes arguments to `jitter()`, giving more control of the jittering
+- Tests created for `select()`, `doCallParallel()`, `plapply()`, `dfplapply()`, `parseJob()`, `openDevice()`, `plotFun()`, `vertErrorBar()`, and `interactionPlot()`
+- Numerous documentation improvements
+
+
 Version 0.2.17, 2016-02-01
 -----------------------------------------------------------------------------------
 

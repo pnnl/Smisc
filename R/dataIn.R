@@ -1,14 +1,10 @@
 ##' A flexible way to import data into R.
 ##'
 ##' Imports .Rdata, .csv, package data sets, and regular data frames
-##'
 ##' This is expecially useful when a function requires data as an argument--and
 ##' in some cases the data frame already exists as an object, ready to be
 ##' passed into the function, but in other cases it may be more convenient to
 ##' read the data from a file.
-##'
-##' If a .csv file is supplied, none of the character variables are converted
-##' to factors.
 ##'
 ##' @export
 ##' @param data Can be a data frame or a list of data frames (in which case,
@@ -28,8 +24,6 @@
 ##' @keywords misc
 ##'
 ##' @examples
-##'
-##'
 ##' # Write a simple data set
 ##' some.data <-data.frame(a=rnorm(10), b=rpois(10, 5))
 ##' write.csv(some.data, file="tmp.file.csv", row.names=FALSE)
@@ -75,8 +69,8 @@ dataIn <- function(data) {
         dat <- splt[[1]][2]
 
         e1 <- new.env()
-        val <- data(list=dat, package=pkg, envir=e1)
-        d <- get(val, envir=e1)
+        val <- data(list = dat, package = pkg, envir = e1)
+        d <- get(val, envir = e1)
 
       }
 
@@ -86,10 +80,11 @@ dataIn <- function(data) {
         ext <- tolower(getExtension(data))
 
         if (ext == "csv")
-          d <- factor2character(read.csv(data))
+          d <- read.csv(data)
 
-        else if (ext == "rdata")
+        else if (ext == "rdata") {
           d <- loadObject(data)
+        }
 
         else
           fail <- TRUE

@@ -22,7 +22,8 @@ can then be copied into other source code.  Returns nothing.
 }
 \description{
 Hard coding isn't the best practice, but sometimes it's useful, especially in
-on-off scripts for analyses.  This
+one-off scripts for analyses. An typical example would be to select a large
+number of columns in a dataset by their names.  This
 function facilitate hard coding constants into R by printing the code from a
 vector that would be needed to create that vector.
 }

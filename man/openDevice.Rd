@@ -8,31 +8,24 @@ openDevice(fileName, ...)
 }
 \arguments{
 \item{fileName}{Character string giving the filename for the graphics
-output.  It must contain one of the extensions listed in the \code{Details}
-below.}
+output. The following are acceptable filename extensions:
+\code{ps}, \code{pdf}, \code{jpg}, \code{jpeg}, \code{tif}, \code{png}, or
+\code{bmp}.}
 
-\item{\dots}{Named arguments to the device functions listed in
-\code{Details} below.}
+\item{\dots}{Named arguments to the device functions listed above.  Arguments
+that do not match are silently ignored.}
 }
 \value{
 The graphics device is opened and the filename is invisibly
 returned.
 }
 \description{
-Opens the appropriate graphics device based on the filename extension
-}
-\details{
-Will open a \code{ps}, \code{pdf}, \code{jpg}, \code{tif}, \code{png}, or
-\code{bmp} device using one of the respective graphics functions:
+Based on the filename extension, will open plotting device  using one of the
+following graphics functions:
 \code{\link{postscript}}, \code{\link{pdf}}, \code{\link{jpeg}},
 \code{\link{tiff}}, \code{\link{png}}, or \code{\link{bmp}}.
-
-\code{openDevice} silently ignores named arguments in \code{\dots{}} which
-do not match the named arguments in the graphics device function that is
-called.
 }
 \examples{
-
 # Open 3 example devices
 openDevice("ex1.pdf", height=6, width=12)
 plot(1:10, 1:10)
@@ -48,8 +41,9 @@ dev.list()
 dir(pattern = "ex1")
 
 # Turn each of the 3 devices off
-for (i in 1:3)
+for (i in 1:3) {
   dev.off(dev.list()[length(dev.list())])
+}
 
 # Delete the created files
 unlink(c("ex1.pdf","ex1.png","ex1.jpg"))

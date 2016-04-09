@@ -2,17 +2,22 @@
 
 An R package containing a collection of functions for statistical computing and data manipulation.  Please cite it as follows:
 
-Sego LH. 2015. Smisc: Sego Miscellaneous. A collection of functions for statistical computing and data manipulation in R.
-Pacific Northwest National Laboratory. http://github.com/pnnl/Smisc.
+Sego LH. 2016. Smisc: Sego Miscellaneous. A collection of functions for statistical computing and data manipulation in R.
+Pacific Northwest National Laboratory. http://pnnl.github.io/Smisc.
 
-To install:
+#### To install:
 
-    library(devtools)
-    install_github("pnnl/Smisc")
+Before you get started, the source code of the `Smisc` package contains C code that requires compilation:
+  
+- Mac: you'll need [Xcode](https://developer.apple.com/xcode/)
+- Windows: you'll need to install [R tools](http://cran.r-project.org/bin/windows/Rtools/)
+- Linux/Unix: compilation should take place automatically
 
-A few notes about installation:
-- The `devtools` package is available from [CRAN](http://cran.r-project.org/package=devtools)
-- The `Smisc` package contains C code that requires compilation:  
-On a Mac, you'll need [Xcode](https://developer.apple.com/xcode/), 
-on Windows, you'll need to install [R tools](http://cran.r-project.org/bin/windows/Rtools/), 
-and on Linux, compilation should take place "automatically."
+Then type the follwing in R:
+
+    # If devtools is not already installed
+    install.packages("devtools") 
+
+    devtools::install_github("pnnl/Smisc")
+
+

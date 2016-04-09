@@ -25,7 +25,7 @@ This function is especially useful for selecting rows or columns from data frame
 if the \code{elements} for selection are specified incorrectly.
 }
 \examples{
-# Define the column names
+# Define some "column names"
 cnames <- letters[1:5]
 cnames
 

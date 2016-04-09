@@ -2,7 +2,7 @@
 % Please edit documentation in R/smartFilter.R
 \name{smartFilter}
 \alias{smartFilter}
-\title{Calculates a moving dot product (or filter) over a series}
+\title{Calculate a moving dot product (or filter) over a numeric vector}
 \usage{
 smartFilter(y, weights, min.window = 1, start = 1, skip = 1,
   balance = TRUE)
@@ -21,7 +21,7 @@ that are required to calculate the dot product}
 \item{skip}{The number of indexes to advance the center of the moving
 window each time the dot product is calculated.}
 
-\item{balance}{\code{=TRUE} requires that the first non-missing value in a
+\item{balance}{\code{ = TRUE} requires that the first non-missing value in a
 window occur on or before the center point of the window, and that the last
 non-missing value occur on or after the center point of the window.}
 }
@@ -29,9 +29,10 @@ non-missing value occur on or after the center point of the window.}
 Returns the moving dot product
 }
 \description{
-Calculates a moving dot product over a series using a 2-sided window. It
+Calculate a moving dot product over a vector (typically a time series). It
 dynamically accounts for the incomplete windows which are caused by missing
-values and which occur at the beginning and end of the series.
+values and which occur at the beginning and end of the series.  It does not
+propogate NAs.
 }
 \details{
 \code{smartFilter} has very similar behavior to \code{\link{filter}},
@@ -44,7 +45,7 @@ corresponding to the non-missing data points are re-normalized and the
 dotproduct is calculated using the available data.  If the number of
 non-missing data points in the window is less than \code{min.window}, an
 \code{NA} is produced for the corresponding index.  Likewise, if
-\code{balance=TRUE}, and the required conditions (described above in the
+\code{balance = TRUE}, and the required conditions (described above in the
 argument description of \code{balance}) are not met, an \code{NA} is
 returned for the corresponding index.
 }
@@ -56,11 +57,18 @@ returned for the corresponding index.
 
  # Define weights for a simple moving average of 3 points
  # (1 point in the past, the present point, and 1 point in the future)
- wts <- rep(1, 3)/3
+ wts <- rep(1, 3) / 3
 
  # Note how they are the same, except at the edges of the series.
  smartFilter(x, wts)
  filter(x, wts)
+
+ # filter() and smartFilter() apply the weights in reverse order of each other,
+ # which makes a difference if the weights are not symmetric. Note how these
+ # two statements produce the same result (with the exception of the first and
+ # last elements)
+ filter(x, 1:3 / 6)
+ smartFilter(x, 3:1 / 6)
 
  # Notice how filter() propogates missing values
  y <- 3^(0:8)
@@ -70,15 +78,15 @@ returned for the corresponding index.
 
  # Compare starting on the second value and skip every other point
  smartFilter(x, wts)
- smartFilter(x, wts, start=2, skip=2)
+ smartFilter(x, wts, start = 2, skip = 2)
 
  # Demonstrate how the 'min.window' and 'balance' work
  y <- round(rnorm(1:20),2)
  names(y) <- letters[1:20]
  y[7:9] <- NA
  y
- smartFilter(y, rep(1,5)/5, min.window=2, balance=TRUE)
- smartFilter(y, rep(1,5)/5, min.window=2, balance=FALSE)
+ smartFilter(y, rep(1,5)/5, min.window = 2, balance = TRUE)
+ smartFilter(y, rep(1,5)/5, min.window = 2, balance = FALSE)
 
 }
 \author{

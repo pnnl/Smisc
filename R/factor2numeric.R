@@ -14,13 +14,13 @@
 ##' as.numeric(y)
 ##'
 ##' # correctly convert
-##' factor2num(y)
+##' factor2numeric(y)
 ##'
 
-factor2num <- function(x) {
+factor2numeric <- function(x) {
 
   stopifnot(is.factor(x))
 
   return(as.numeric(levels(x))[x])
 
-} # factor2num
+} # factor2numeric

@@ -51,7 +51,7 @@
 ##'o1 <- pddply(baseball, ~ year, nrow, njobs = 2)
 ##'head(o1)
 ##'
-##'#  Verify it's the same as the non-parallel version
+##'#  Verify it's the same as the non-parallel version of plyr::ddply()
 ##'o2 <- plyr::ddply(baseball, ~ year, nrow)
 ##'identical(o1, o2)
 ##'
@@ -97,7 +97,7 @@ pddply <- function(.data, .variables, .fun = NULL, ...,
 
     # Make sure the foreach package is available
     if (!requireNamespace("foreach", quietly = TRUE)) {
-      stop("foreach package is required by pddply() when njobs > 1")
+      stop("The 'foreach' package is required by pddply() when 'njobs > 1'")
     }
 
     # Set up the cluster

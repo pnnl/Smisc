@@ -2,7 +2,7 @@
 % Please edit documentation in R/parseJob.R
 \name{parseJob}
 \alias{parseJob}
-\title{Parses a collection  of elements into (almost) equal sized groups}
+\title{Parses a collection  of elements into (almost) equal-sized groups}
 \usage{
 parseJob(n, njobs, collate = FALSE, random.seed = NULL,
   text.to.eval = FALSE)
@@ -12,7 +12,7 @@ parseJob(n, njobs, collate = FALSE, random.seed = NULL,
 
 \item{njobs}{The number of groups}
 
-\item{collate}{\code{=TRUE} alternative ordering of the grouping. See example below.}
+\item{collate}{\code{= TRUE} alternative ordering of the grouping. See example below.}
 
 \item{random.seed}{An integer setting the random seed, which will result in randomizing the
 elements among the jobs.  If \code{NULL}, no randomization is performed. Randomization
@@ -22,8 +22,7 @@ because it helps to even out the run times of parallel jobs.}
 
 \item{text.to.eval}{If \code{= TRUE}, a text expression is returned, that when
 evaluated, will produce the sequence of elements for that group.
-    This is especially useful when \code{n}
-    is very large. (See \code{Value} section below).}
+This is especially useful when \code{n} is very large. (See \code{Value} section below).}
 }
 \value{
 When \code{text.to.eval = FALSE},
@@ -35,7 +34,7 @@ When \code{text.to.eval = FALSE},
   numbers corresponding to the group.
 }
 \description{
-Parses a collection of elements into (almost) equal sized groups.
+Parses a collection of elements into (almost) equal-sized groups.
 Useful for splitting up an R job that operates over a large dataframe or list
 into multiple jobs.
 }
@@ -47,16 +46,17 @@ print(x)
 lapply(x, range)
 
 # To see the length of each group
-lapply(x, length)
+lengths(x)
 
 # Randomize the outcome
 parseJob(32, 5, random.seed = 231)
 
-# Example of text.to.eval
-parseJob(11, 3, text.to.eval = TRUE)
-lapply(parseJob(11, 3, text.to.eval = TRUE), function(x) eval(parse(text = x)))
+# Example of 'text.to.eval = TRUE'
+out <- parseJob(11, 3, text.to.eval = TRUE)
+out
+lapply(out, function(x) eval(parse(text = x)))
 
-# Example of collated and text.to.eval
+# Example of 'collate = TRUE' and 'text.to.eval = TRUE'
 parseJob(11, 3, collate = TRUE)
 parseJob(11, 3, collate = TRUE, text.to.eval = TRUE)
 }

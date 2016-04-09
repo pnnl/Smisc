@@ -1,4 +1,4 @@
 1. checkArgs argument for pkbinom()
-2. Add testthat checks...
-3. Add pddply(), a parallelized wrapper for ddply
+2. Finish adding testthat checks for all functions
+3. Add matrix support for list2df (or perhaps, a new function called list2matrix)
 

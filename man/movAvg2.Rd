@@ -2,7 +2,7 @@
 % Please edit documentation in R/movAvg2.R
 \name{movAvg2}
 \alias{movAvg2}
-\title{Calculate the moving average using a 2-sided window}
+\title{Calculate the moving average using a 2-sided, symmetric window}
 \usage{
 movAvg2(y = NULL, bw = 30, type = c("gaussian", "exponential", "linear",
   "uniform"), furthest.weight = 0.01, center.weight = 1, plot = FALSE,
@@ -10,7 +10,8 @@ movAvg2(y = NULL, bw = 30, type = c("gaussian", "exponential", "linear",
 }
 \arguments{
 \item{y}{The numerical vector for which the moving averages will be
-calculated.  If \code{NULL}, the moving averages are not calculated.}
+calculated.  If \code{NULL}, the moving averages are not calculated--but this can
+be useful for visualizing the weights. See the \code{plot} argument.}
 
 \item{bw}{'bandwidth', which is roughly half the width of the moving
 window.  The total width of the window is \code{2 * bw + 1}.}
@@ -25,13 +26,13 @@ right edges of the window}
 \item{center.weight}{The unnormalized value of the weights at the center of
 the window}
 
-\item{plot}{\code{=TRUE} produces a plot which shows the weights.}
+\item{plot}{\code{ = TRUE} produces a plot which shows the weights.}
 
 \item{\dots}{additional arguments to \code{\link{smartFilter}}}
 }
 \value{
 If \code{y} is not \code{NULL}, returns the moving average of the
-series.  Also produces a plot of the weights if \code{plot=TRUE}.
+series.  Also produces a plot of the weights if \code{plot = TRUE}.
 }
 \description{
 Wrapper for \code{smartFilter} that creates a set of symmetric weights for
@@ -49,20 +50,18 @@ neighborhood of missing values are calculated using as much of the window
 weights as possible.
 }
 \examples{
+x <- rnorm(25)
+movAvg2(x, bw = 10, type = "e", center.weight = 2)
 
-   x <- rnorm(25)
-   movAvg2(x, bw=10, type="e", center.weight=2)
+# Note how it produces the same values as filter (except at the edge
+# of the series
+x <- rnorm(10)
+movAvg2(x, bw = 2, type = "u")
+filter(x, rep(1,5)/5)
 
-   # Note how it produces the same values as filter (except at the edge
-   # of the series
-   x <- rnorm(10)
-   movAvg2(x, bw=2, type="u")
-   filter(x, rep(1,5)/5)
-
-   # These are also the same, except at the edge.
-   movAvg2(x, bw=1, type="l", furthest.weight=0.5, center.weight=1)
-   filter(x, c(0.5, 1, 0.5)/2)
-
+# These are also the same, except at the edge.
+movAvg2(x, bw = 1, type = "l", furthest.weight = 0.5, center.weight = 1)
+filter(x, c(0.5, 1, 0.5)/2)
 }
 \author{
 Landon Sego

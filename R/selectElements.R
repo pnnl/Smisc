@@ -17,7 +17,7 @@
 ##' @return A character vector with elements that were selected from \code{cVec} using \code{elements}
 ##'
 ##' @examples
-##' # Define the column names
+##' # Define some "column names"
 ##' cnames <- letters[1:5]
 ##' cnames
 ##'
@@ -59,9 +59,17 @@ selectElements <- function(elements, cVec) {
 
      # If it is character, the names must be in the column names
      if (!all(elements %in% cVec)) {
-        stop("Invalid values for 'elements':  '",
-             paste(setdiff(elements, cVec), collapse = "', '"),
-             "' are not in 'cVec'")
+
+       incorrect <- setdiff(elements, cVec)
+
+       p0 <- ifelse(length(incorrect) == 1, "An i", "I")
+       p1 <- ifelse(length(incorrect) == 1, "","s")
+       p2 <- ifelse(length(incorrect) == 1, "was","were")
+       p3 <- ifelse(length(incorrect) == 1, "is", "are")
+     
+       stop(p0, "nvalid value", p1, " ", p2, " chosen in 'elements': '",
+            paste(incorrect, collapse = "', '"),
+            "' ", p3, " not in 'cVec'")
     }
 
     return(elements)
@@ -81,8 +89,14 @@ selectElements <- function(elements, cVec) {
 
     # Otherwise, we should have indexes that are in the set 1:length(cVec)
     if (!all(elements %in% 1:length(cVec))) {
-      stop("The following numeric indexes provided to 'elements' are outside the range of indexes for 'cVec': ",
-           paste(setdiff(elements, 1:length(cVec)), collapse = ", "))
+
+      incorrect <- setdiff(elements, 1:length(cVec))
+       
+      p1 <- ifelse(length(incorrect) == 1, "","es")
+      p2 <- ifelse(length(incorrect) == 1, "is","are")
+        
+      stop("The following numeric index", p1, " provided to 'elements' ", p2, " outside the range of indexes for 'cVec': ",
+           paste(incorrect, collapse = ", "))
     }
 
   } # If it's numeric

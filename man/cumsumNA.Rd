@@ -23,8 +23,6 @@ If \code{x} is integer, then integer addition is used.  Otherwise, floating
 point (double) addition is used.
 }
 \examples{
-
-
 # Compare to cumsum()
 x <- as.integer(c(5, 2, 7, 9, 0, -1))
 cumsum(x)

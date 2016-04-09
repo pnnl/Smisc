@@ -5,33 +5,33 @@
 \title{Two-way Interaction Plot with Error Bar}
 \usage{
 interactionPlot(x.factor, trace.factor, response, fun = mean,
-                       errorBar = NULL, jitterErrorBars = FALSE,
-                       type = c("l", "p", "b", "o", "c"), legend = TRUE,
-                       trace.label = deparse(substitute(trace.factor)), fixed = FALSE,
-                       xlab = deparse(substitute(x.factor)), ylab = ylabel,
-                       ylim = range(cells, na.rm=TRUE),
-                       lty = nc:1, col = 1, pch = c(1L:9, 0, letters),
-                       xpd = NULL, leg.bg = par("bg"), leg.bty = "n",
-                       xtick = FALSE, xaxt = par("xaxt"), axes = TRUE, ...)
+  errorBar = NULL, jitterErrorBars = NULL, type = c("l", "p", "b", "o",
+  "c"), legend = TRUE, trace.label = deparse(substitute(trace.factor)),
+  fixed = FALSE, xlab = deparse(substitute(x.factor)), ylab = ylabel,
+  ylim = range(cells, na.rm = TRUE), lty = nc:1, col = 1, pch = c(1L:9,
+  0, letters), xpd = NULL, leg.bg = par("bg"), leg.bty = "n",
+  xtick = FALSE, xaxt = par("xaxt"), axes = TRUE, ...)
 }
 \arguments{
 \item{x.factor}{a factor whose levels will form the x axis.}
 
 \item{trace.factor}{another factor whose levels will form the traces.}
 
-\item{response}{a numeric variable giving the response}
+\item{response}{a numeric variable giving the response.}
 
 \item{fun}{the function to compute the summary. Should return a single real
 value.}
 
-\item{errorBar}{A list with required elements \code{height} and
+\item{errorBar}{A list with required elements \code{barLength} and
 \code{width}, and optional element \code{blankMiddle}. These correspond to
 the arguments of \code{\link{vertErrorBar}}.  Defaults to \code{NULL}, in
-which case no error bars are drawn}
+which case no error bars are drawn.  Currently, error bars must all be the same
+length and have the same width. Thus, elements in the list should be atomic (of length 1).}
 
-\item{jitterErrorBars}{Logical indicating whether the x-values of the points
-(and the error bars) should be jittered for easier readability. This
-argument is ignored if \code{errorBar = NULL}.}
+\item{jitterErrorBars}{A list with the \code{factor} and/or \code{amount} arguments that will be
+passed to \code{\link{jitter}}, indicating the amount (and/or factor) by which the x-values of the points
+(and the error bars) should be jittered for easier readibility. No jittering is performed if
+\code{jitterErrorBars = NULL}. This argument is ignored if \code{errorBar = NULL}.}
 
 \item{type}{the type of plot (see \code{\link{plot.default}}): lines or
 points or both.}
@@ -71,11 +71,11 @@ routines.}
 \description{
 Plots the mean (or other summary) of the response for two-way combinations
 of factors, thereby illustrating possible interactions.
+This modifies \code{\link{interaction.plot}} by adding the \code{errorBar} and
+\code{jitterErrorBars} arguments, making it possible to add error bars of the
+same length to the plot.
 }
 \details{
-This modification of \code{\link{interaction.plot}} adds the \code{errorBar} and
-\code{jitterErrorBars} arguments.
-
 By default the levels of \code{x.factor} are plotted on the x axis in their
 given order, with extra space left at the right for the legend (if
 specified). If \code{x.factor} is an ordered factor and the levels are
@@ -96,20 +96,21 @@ Some of the argument names and the precise behaviour are chosen for
 S-compatibility.
 }
 \examples{
-
-require(graphics)
-
 with(ToothGrowth, {
-interactionPlot(dose, supp, len, fixed=TRUE)
+
+# Basic interaction plot
+interactionPlot(dose, supp, len, fixed = TRUE)
+
+# Ordered dose
 dose <- ordered(dose)
-interactionPlot(dose, supp, len, fixed=TRUE, col = 2:3, leg.bty = "o")
+interactionPlot(dose, supp, len, fixed = TRUE, col  =  2:3, leg.bty = "o")
 
-interactionPlot(dose, supp, len, fixed=TRUE, col = 2:3, type = "p",
-                errorBar = list(height = 3, width = 0.05, blankMiddle = 1),
-                jitterErrorBars = TRUE,
-                main = "Error bars have no meaning--just for illustration")
+# Add error bars
+interactionPlot(dose, supp, len, fixed = TRUE, col  =  2:3, type = "p",
+                errorBar = list(barLength = 3, width = 0.05, blankMiddle = 1),
+                jitterErrorBars = list(factor = 1.5),
+                main = "Error bars have no meaning: just for illustration")
 })
-
 }
 \author{
 Originates in the \code{stats} package in the R distribution,

@@ -19,19 +19,12 @@ data.
 }
 \description{
 Imports .Rdata, .csv, package data sets, and regular data frames
-}
-\details{
 This is expecially useful when a function requires data as an argument--and
 in some cases the data frame already exists as an object, ready to be
 passed into the function, but in other cases it may be more convenient to
 read the data from a file.
-
-If a .csv file is supplied, none of the character variables are converted
-to factors.
 }
 \examples{
-
-
 # Write a simple data set
 some.data <-data.frame(a=rnorm(10), b=rpois(10, 5))
 write.csv(some.data, file="tmp.file.csv", row.names=FALSE)

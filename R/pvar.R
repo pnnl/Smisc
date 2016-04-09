@@ -39,15 +39,15 @@
 ##' z <- "This.long.string"
 ##'
 ##' pvar(x,y,z)
-##' pvar(x,y,z, digits=2)
-##' pvar(x,y,z, abbrev=4)
-##' pvar(x,y,z, digits=2, abbrev=4)
+##' pvar(x,y,z, digits = 2)
+##' pvar(x,y,z, abbrev = 4)
+##' pvar(x,y,z, digits = 2, abbrev = 4)
 ##' pvar(x,y,z, sep = ",")
 ##'
 ##' # values can be vectors too
 ##' x <- 10:12
 ##' y <- c("This","That")
-##' v2 <- pvar(x, y, verbose=FALSE)
+##' v2 <- pvar(x, y, verbose = FALSE)
 ##' v2
 ##'
 ##' # Or a simple list
@@ -66,13 +66,15 @@
 pvar <- function(..., digits = NULL, abbrev = NULL, sep = ";", verbose = TRUE) {
 
   # Basic checks on arguments
-  if (!is.null(digits))
+  if (!is.null(digits)) {
     stopifnot(is.numeric(digits),
               length(digits) == 1)
+  }  
 
-  if (!is.null(abbrev))
+  if (!is.null(abbrev)) {
     stopifnot(is.numeric(abbrev),
               length(abbrev) == 1)
+  }
 
   stopifnot(is.character(sep),
             length(sep) == 1,
@@ -123,8 +125,9 @@ pvar <- function(..., digits = NULL, abbrev = NULL, sep = ";", verbose = TRUE) {
   out <- paste(paste(vnames, lapply(vars, paste, collapse=", "),
                      sep = " = "), collapse = paste(sep, " ", sep = ""))
 
-  if (verbose)
+  if (verbose) {
     cat(out, "\n")
+  }
 
   invisible(out)
 

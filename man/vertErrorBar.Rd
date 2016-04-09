@@ -2,9 +2,9 @@
 % Please edit documentation in R/vertErrorBar.R
 \name{vertErrorBar}
 \alias{vertErrorBar}
-\title{Vertical error bar drawing function}
+\title{Draw vertical error bar(s) on a plot}
 \usage{
-vertErrorBar(x, width, center = NULL, height = NULL, min.y = NULL,
+vertErrorBar(x, width, center = NULL, barLength = NULL, min.y = NULL,
   max.y = NULL, blankMiddle = NULL, ...)
 }
 \arguments{
@@ -16,48 +16,49 @@ be a vector or a single value}
 \item{center}{Vector of values designating the vertical center of the error bars, can
 be a vector or a single value}
 
-\item{height}{The total height of the bars, can be a vector or a single value}
+\item{barLength}{The total vertical length of the bars, can be a vector or a single value}
 
 \item{min.y}{Vector of values indicating the vertical bottoms of the bars}
 
 \item{max.y}{Vector of values indicating the vertical tops of the bars}
 
-\item{blankMiddle}{the height of a blank spot that will be produced in the middle of
-the error bar.
-  This is useful when the bar is placed around symbols (so as not to overwrite them).
-Defaults to
-  \code{NULL}, in which case a solid error bar is drawn. Can also be a vector or a
+\item{blankMiddle}{the vertical length of a blank spot that will be produced in the middle of
+the error bar. This is useful when the bar is placed around symbols (so as not to overwrite them).
+Defaults to \code{NULL}, in which case a solid error bar is drawn. Can also be a vector or a
 single value.}
 
-\item{...}{additional arguments to \code{\link{lines}}.}
+\item{\dots}{additional arguments to \code{\link{lines}}.}
 }
 \value{
-Nothing is returned, the error bar is drawn on the plot
+Nothing is returned, the error bar(s) is/are drawn on the plot
 }
 \description{
-Vertical error bar drawing function
+Draw vertical error bar(s) on a plot
 }
 \details{
-Buyer beware!  It's up to the user to determine what the statistically correct height
-of theerror bar should be.
+Buyer beware!  It's up to the user to determine what the statistically correct length
+of the error bar should be.
 
-Note that \code{x}, \code{y} should be the same length.  \code{height}, \code{width},
-and \code{blankMiddle} should either be numeric values of length 1, or the same length
-as \code{x}, in which case the bars could have
-different heights, widths, and blankMiddle values if desired.
-
-Either \code{center} and \code{height} must be specified, or \code{min.y} and
+Either \code{center} and \code{barLength} must be specified, or \code{min.y} and
 \code{max.y} must be specifed.
+
+Note that \code{width}, \code{center}, \code{barLength}, \code{min.y}, \code{max.y}, 
+and \code{blankMiddle} should be \code{NULL}, numeric values of length 1, or numeric values with
+the same length as \code{x}.  If they have the same length of \code{x}, the bars can have
+different vertical lengths, widths, and \code{blankMiddle} values if desired.
 }
 \examples{
 set.seed(343)
 
-# Make a plot
-plot(x <- 1:10, y <- rnorm(10), pch = as.character(1:10), ylim = 2.5 * range(y),
+# Make a plot of some standard normal observations
+x <- 1:9
+y <- rnorm(9)
+
+plot(x, y, pch = as.character(1:9), ylim = c(-2, 2) + range(y),
      ylab = "Z", xlab = "Indexes")
 
 # Draw the error bars
-vertErrorBar(x, 0.3, center = y, height = 1.96, blankMiddle = 0.25)
+vertErrorBar(x, 0.3, center = y, barLength = 2 * 1.96, blankMiddle = 0.25)
 }
 \author{
 Landon Sego

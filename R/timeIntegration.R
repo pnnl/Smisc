@@ -12,7 +12,9 @@
 ##' Approximate the integral of a vector of data over time
 ##'
 ##' Integrate a series over time by calculating the area under the "curve" of
-##' the linear interpolation of the series.
+##' the linear interpolation of the series (akin to the Trapezoid rule).
+##' This is especially useful in calculating
+##' energy usage: kilowatt-hours, watt-seconds, etc.
 ##'
 ##' If \code{upper} or \code{lower} does not correspond to a data point, a
 ##' linear interpolation is made between the two neighboring time points to
@@ -30,14 +32,14 @@
 ##' @param upper The time (character or POSIXct) of the upper bound of the
 ##' integration
 ##'
-##' @param check.plot \code{=TRUE} makes a plot which illustrate the
+##' @param check.plot \code{=TRUE} makes a plot which illustrates the
 ##' integration.
 ##'
 ##' @param units The units of integration, defaults to hours.  It is only
 ##' required to supply enough characters to uniquely complete the name.
 ##'
 ##' @return The approximation of the integral by joining the points in the
-##' series in a linear fashion and calculating the area under this "curve".
+##' series in a linear fashion and calculating the area under this "curve". 
 ##'
 ##' @author Landon Sego
 ##'
@@ -56,9 +58,8 @@
 ##'                        # Convert to POSIXct in order to subtract time
 ##'                        lower = "5/6/2008 17:00:09",
 ##'                        upper = "5/6/2008 17:01:36",
-##'                        check.plot = TRUE,
-##'                        units = "m")
-##'
+##'                        check.plot = TRUE, units = "m")
+##' 
 ##'# This example calculates the integral for all the data in 'powerData'
 ##'int2 <- timeIntegration(PowerData, check.plot = TRUE, units = "m")
 ##'
@@ -66,12 +67,16 @@
 ##'pvar(int1, int2)
 
 timeIntegration <- function(data, time = names(data), lower = time[1], upper = time[length(time)],
-                            check.plot=FALSE, units=c("hours", "minutes", "seconds")) {
+                            check.plot = FALSE, units = c("hours", "minutes", "seconds")) {
 
   units <- match.arg(units)
 
   if (is.null(time))
     stop("'data' must either have timestamps in the names, or 'time' must be supplied explicitly")
+
+  # Assume all values are non-negative
+  if (!all(data > 0))
+    stop("All the values of data must be non-negative")
 
   if (length(time) != length(data))
     stop("length(time) != length(data)")
@@ -126,7 +131,7 @@ timeIntegration <- function(data, time = names(data), lower = time[1], upper = t
 
   # Find linear interpolations for the endpoints
 #  nd <- approx.irts(irts(time, data), c(lower, time[window], upper), rule=1, method="linear")
-  nd <- approx(time, data, c(lower, time[window], upper), rule=1, method = "linear")
+  nd <- approx(time, data, c(lower, time[window], upper), rule = 1, method = "linear")
   names(nd) <- c("time", "value")
 
 
@@ -144,29 +149,37 @@ timeIntegration <- function(data, time = names(data), lower = time[1], upper = t
 
   if (check.plot) {
 
-   #  devAskNewPage(ask=FALSE)
+    op <- par(mar = c(3, 3, 5, 0.5))
 
-    plot(time, data, type="b", font.main=1, cex.main=0.9,
-         main=paste("Black circles:  Data values\n",
-                    "Blue dots: Midpoints for each trapezoid\n",
-                    "Green shading:  This area is the integral"),
-         axes=FALSE, frame = TRUE)
+    ry <- diff(range(data))
+    
+    plot(time, data, type = "b", font.main = 1, cex.main = 0.9,
+         ylim = ry * c(-0.05, 0.05) + range(data),
+         main = paste("Black open circles:  Data values\n",
+                      "Blue dots: Midpoints for each trapezoid\n",
+                      "Red lines: Vertical edges of trapezoids\n",
+                      "The integral is the area of the trapezoids"),
+         axes = FALSE, frame = TRUE)
 
-    polygon(c(nd$time[1], nd$time, nd$time[length(nd$time)]),
-            c(0, nd$value, 0),
-            density=10, col="Green")
+    ## For some reason, this was hanging the plots completely
+    ## polygon(c(nd$time[1], nd$time, nd$time[length(nd$time)]),
+    ##         c(0, nd$value, 0),
+    ##         density = 10, col = "Green")
 
+    lines(time, data, type = "b")
 
-    lines(time, data, type="b")
-
-    for (i in 1:length(nd$time))
-      lines(rep(nd$time[i], 2), c(0, nd$value[i]))
+    # Trapezoid lines
+    for (i in 1:length(nd$time)) {
+      lines(rep(nd$time[i], 2), c(0, nd$value[i]), col = "Red")
+    }
 
 
     points(time.numeric.midpoints, midpoint.heights, col = "Blue", pch = 19, cex = 1.2)
 
     axis(2)
-    smartTimeAxis(time, time.format="hh:mm:ss")
+    smartTimeAxis(time, time.format = "hh:mm:ss")
+
+    par(op)
 
   }
 

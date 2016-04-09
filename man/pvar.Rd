@@ -43,15 +43,15 @@ y <- 20.728923
 z <- "This.long.string"
 
 pvar(x,y,z)
-pvar(x,y,z, digits=2)
-pvar(x,y,z, abbrev=4)
-pvar(x,y,z, digits=2, abbrev=4)
+pvar(x,y,z, digits = 2)
+pvar(x,y,z, abbrev = 4)
+pvar(x,y,z, digits = 2, abbrev = 4)
 pvar(x,y,z, sep = ",")
 
 # values can be vectors too
 x <- 10:12
 y <- c("This","That")
-v2 <- pvar(x, y, verbose=FALSE)
+v2 <- pvar(x, y, verbose = FALSE)
 v2
 
 # Or a simple list

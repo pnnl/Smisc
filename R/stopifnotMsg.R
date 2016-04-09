@@ -4,7 +4,7 @@
 ##' each condition that doesn't test true
 ##'
 ##' @export
-##' @param \dots Pairs of logical conditions and error messages. See example.
+##' @param \dots Pairs of logical conditions and error messages. See Examples.
 ##'
 ##' @return A call to \code{\link{stop}} with the error messages from each condition that was \code{FALSE}.  If all
 ##' conditions are \code{TRUE}, returns \code{NULL}.

@@ -14,7 +14,7 @@ qbind(objects, type = c("row", "col", "c"))
 "row".}
 }
 \value{
-The bound (binded?) object
+The bound object
 }
 \description{
 A wrapper for \code{\link{rbind}} and \code{\link{cbind}} to quickly bind

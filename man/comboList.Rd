@@ -4,7 +4,7 @@
 \alias{comboList}
 \title{Produces all possible combinations of a set of linear model predictors}
 \usage{
-comboList(n.pred, outFile = NULL, njobs = 1, verbose = FALSE)
+comboList(n.pred, outFile = NULL, njobs = 1)
 }
 \arguments{
 \item{n.pred}{integer indicating the number of predictors}
@@ -15,9 +15,6 @@ saved.}
 
 \item{njobs}{Integer indicating the number of parallel jobs to be used in
 calculating the combinations, using \code{\link{parLapply}}}
-
-\item{verbose}{\code{= TRUE} indicates that a message regarding the saving
-of the output file will be printed}
 }
 \value{
 A list of class \code{combolist} is invisibly returned with the two

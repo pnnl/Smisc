@@ -15,9 +15,6 @@
 ##' @param njobs Integer indicating the number of parallel jobs to be used in
 ##' calculating the combinations, using \code{\link{parLapply}}
 ##'
-##' @param verbose \code{= TRUE} indicates that a message regarding the saving
-##' of the output file will be printed
-##'
 ##' @return A list of class \code{combolist} is invisibly returned with the two
 ##' components shown below.  If \code{outFile} is not \code{NULL}, this same
 ##' list is saved to \code{outFile}: \item{len}{The total number of
@@ -37,15 +34,14 @@
 ##'
 ##' # Should be equal
 ##' identical(x, y)
-comboList <- function(n.pred, outFile = NULL, njobs = 1, verbose = FALSE) {
+comboList <- function(n.pred, outFile = NULL, njobs = 1) {
 
   # Basic checks on the arguments
   stopifnot(is.numeric(n.pred),
             n.pred >= 1,
             if (!is.null(outFile)) is.character(outFile) else TRUE,
             is.numeric(njobs),
-            njobs >= 1,
-            is.logical(verbose))
+            njobs >= 1)
 
   # Create the profile of counts for each category
   counts <- choose(n.pred, 1:n.pred)
@@ -114,8 +110,6 @@ comboList <- function(n.pred, outFile = NULL, njobs = 1, verbose = FALSE) {
   # Write an output file if requested
   if (!is.null(outFile)) {
     save(cList, file = outFile)
-    if (verbose)
-      cat("Output list saved to", outFile, "\n")
   }
 
   # Invisibly return the list

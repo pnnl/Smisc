@@ -1,8 +1,8 @@
 Package: Smisc
 Title: Sego Miscellaneous
-Version: 0.2.17
-Date: 2016-02-01
-Author: Landon Sego and others
+Version: 0.3.0
+Date: 2016-04-09
+Author: Landon Sego
 Description: Sego Miscellaneous: A collection of functions for statistical
     computing and data manipulation in R.
 Imports:

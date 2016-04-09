@@ -47,13 +47,12 @@
 ##' @author Landon Sego
 ##'
 ##' @examples
-##'
 ##' # For a list of vectors
 ##' x <- c("r1c1 1", "r2c1 2", "r3c1 3", "r4c4 4")
 ##' y <- strsplit(x, "\ ")
 ##' y
 ##' list2df(y)
-##' list2df(y, col.names=LETTERS[1:2])
+##' list2df(y, col.names = LETTERS[1:2])
 ##'
 ##' # Here's another list of vectors
 ##' z <- list(NULL, a = c(first = 10, second = 12), NULL, b = c(first = 15, second = 17))

@@ -27,10 +27,10 @@ consists of a named list (or a named vector) containing a single row of the
 data frame.
 }
 \examples{
-d <- data.frame(a=1:3, b=letters[1:3])
+d <- data.frame(a = 1:3, b = letters[1:3])
 df2list(d)
 
-d1 <- data.frame(a=1:3, b=7:9)
+d1 <- data.frame(a = 1:3, b = 7:9)
 df2list(d1, out.type = "v")
 
 }

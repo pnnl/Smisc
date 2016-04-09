@@ -11,9 +11,9 @@
 ##' @param fun A function, or a text string with the name of the function, whose first argument is a vector and
 ##' returns a corresponding vector
 ##'
-##' @param x A vector of values that is the first argument to the function
+##' @param x A vector of values that is the first argument to \code{fun}
 ##'
-##' @param nJobs The number of parallel jobs to spawn using \code{\link{parLapply}}.
+##' @param njobs The number of parallel jobs to spawn using \code{\link{parLapplyW}}.
 ##'
 ##' @param random.seed If a numeric value is provided, \code{x} is randomized to better distribute the work among
 ##' the jobs if some values of \code{x} take longer to evaluate than others.
@@ -31,36 +31,34 @@
 ##' x <- rnorm(18, mean = 2, sd = 2)
 ##'
 ##' # 2 cores
-##' y1 <- doCallParallel("pnorm", x, mean = 2, sd = 2, nJobs = 2)
+##' y1 <- doCallParallel("pnorm", x, mean = 2, sd = 2, njobs = 2)
 ##'
 ##' # 2 cores and randomization
-##' y2 <- doCallParallel(pnorm, x, mean = 2, sd = 2, nJobs = 2, random.seed = 1)
-##'
-##' # 1 core
-##' y3 <- doCallParallel(pnorm, x, mean = 2, sd = 2, nJobs = 1)
+##' y2 <- doCallParallel(pnorm, x, mean = 2, sd = 2, njobs = 2, random.seed = 1)
 ##'
 ##' # Without using doCallParallel()
-##' y4 <- pnorm(x, mean = 2, sd = 2)
+##' y3 <- pnorm(x, mean = 2, sd = 2)
 ##'
 ##' # Comparisons
 ##' identical(y1, y2)
 ##' identical(y1, y3)
-##' identical(y1, y4)
 
-doCallParallel <- function(fun, x, ..., nJobs = parallel::detectCores() - 1, random.seed = NULL) {
+doCallParallel <- function(fun, x, ..., njobs = parallel::detectCores() - 1, random.seed = NULL) {
 
   # Argument checks
-  stopifnot(if (is.character(fun)) is.function(get(fun)) else is.function(fun),
-            is.vector(x),
-            is.numeric(nJobs),
-            length(nJobs) == 1,
-            if (!is.null(random.seed)) is.numeric(random.seed) else TRUE)
+  stopifnotMsg(if (is.character(fun)) is.function(get(fun)) else is.function(fun),
+               "'fun' must be a function or the character string of the name of the function",
+               is.vector(x), "'x' must be a vector",
+               is.numeric(njobs) & (njobs >= 1), "'njobs' must be a positive numeric (integer) value",
+               length(njobs) == 1, "'njobs' must have length 1",
+               if (!is.null(random.seed)) is.numeric(random.seed) else TRUE,
+               "'random.seed' must be numeric or NULL")
 
   # Make sure the number of jobs is no larger than the length of x, and no smaller than 1
-  nJobs <- max(1, min(length(x), nJobs))
+  njobs <- as.integer(max(1, min(length(x), njobs)))
 
   # If only 1 job
-  if (nJobs == 1) {
+  if (njobs == 1) {
 
     return(do.call(fun, list(x, ...)))
 
@@ -68,7 +66,7 @@ doCallParallel <- function(fun, x, ..., nJobs = parallel::detectCores() - 1, ran
   } else {
 
     # Create the job ordering
-    xparse <- parseJob(length(x), njobs = nJobs, random.seed = random.seed)
+    xparse <- parseJob(length(x), njobs = njobs, random.seed = random.seed)
 
     # Get the extra arguments
     args <- list(...)
@@ -79,7 +77,7 @@ doCallParallel <- function(fun, x, ..., nJobs = parallel::detectCores() - 1, ran
     }
 
     # Run the calculation in parallel
-    out <- unlist(parLapplyW(xparse, doCall, njobs = nJobs, varlist = c("fun", "x", "args")))
+    out <- unlist(parLapplyW(xparse, doCall, njobs = njobs, varlist = c("fun", "x", "args")))
 
     # Reorder if needed
     if (is.null(random.seed))

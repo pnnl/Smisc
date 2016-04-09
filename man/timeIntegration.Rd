@@ -20,7 +20,7 @@ integration}
 \item{upper}{The time (character or POSIXct) of the upper bound of the
 integration}
 
-\item{check.plot}{\code{=TRUE} makes a plot which illustrate the
+\item{check.plot}{\code{=TRUE} makes a plot which illustrates the
 integration.}
 
 \item{units}{The units of integration, defaults to hours.  It is only
@@ -32,7 +32,9 @@ series in a linear fashion and calculating the area under this "curve".
 }
 \description{
 Integrate a series over time by calculating the area under the "curve" of
-the linear interpolation of the series.
+the linear interpolation of the series (akin to the Trapezoid rule).
+This is especially useful in calculating
+energy usage: kilowatt-hours, watt-seconds, etc.
 }
 \details{
 If \code{upper} or \code{lower} does not correspond to a data point, a
@@ -52,8 +54,7 @@ int1 <- timeIntegration(PowerData,
                        # Convert to POSIXct in order to subtract time
                        lower = "5/6/2008 17:00:09",
                        upper = "5/6/2008 17:01:36",
-                       check.plot = TRUE,
-                       units = "m")
+                       check.plot = TRUE, units = "m")
 
 # This example calculates the integral for all the data in 'powerData'
 int2 <- timeIntegration(PowerData, check.plot = TRUE, units = "m")

@@ -80,11 +80,6 @@ is.matrix(m2c)
 select(d, 0)
 select(d, which("bizarre" \%in\% colnames(d)))
 select(d, 0, cols = FALSE)
-
-\dontshow{
-# Running checks on select()
-Smisc:::test_select()
-}
 }
 \author{
 Landon Sego
