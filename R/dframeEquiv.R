@@ -53,8 +53,10 @@
 ##' @seealso \code{\link{all.equal}}, \code{\link{identical}}
 ##'
 ##' @references
-##' http://www.cygnus-software.com/papers/comparingfloats/comparingfloats.htm
+##' \url{http://www.cygnus-software.com/papers/comparingfloats/comparingfloats.htm}
+##' 
 ##' @keywords misc
+##' 
 ##' @examples
 ##'
 ##' # Number of rows different

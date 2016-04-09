@@ -140,8 +140,6 @@ integ <- function(y, x = NULL, a = NULL, b = NULL, method = c("simpson", "trapez
     if (!all(diff(x) > 0))
       stop("'x' must be sorted in ascending order and not have duplicate values")
 
-    # Algorithm from http://rgm2.lab.nig.ac.jp/RGM2/func.php?rd_id=caTools:trapz
-
     idx <- 2:length(x)
 
     return(as.double((x[idx] - x[idx-1]) %*% (y[idx] + y[idx-1]) / 2))
