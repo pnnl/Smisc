@@ -48,7 +48,7 @@ integ(dbeta(seq(0, 0.7, length = 401), 2, 5), a = 0, b = 0.7)
 pbeta(0.7, 2, 5)
 
 # f(x) = x^2 from 0 to 3
-integ(seq(0, 3, length=21)^2, a = 0, b = 3)
+integ(seq(0, 3, length = 21)^2, a = 0, b = 3)
 
 # A quadratic function with both methods
 x <- seq(0, 3, length = 51)

@@ -1,9 +1,9 @@
-##' Imbeds the present datetime into a file name
+##' Embeds the present datetime into a file name
 ##'
 ##' @export
-##' @param description Character string giving the base name of the file
+##' @param description Character vector giving the base name(s) of the file(s)
 ##'
-##' @param extension Character string giving the extension of the file
+##' @param extension Character vector giving the extension(s) of the file(s)
 ##' (excluding the period)
 ##'
 ##' @return Character string of the form \code{description_YYYY-MM-DD_HHMMSS.extension}
@@ -15,18 +15,19 @@
 ##' @examples
 ##'
 ##' timeStamp("aFilename", "txt")
-##'
-timeStamp <- function(description,extension) {
+
+timeStamp <- function(description, extension) {
 
   # Verify that inputs are character
-  if (!(is.character(description) & is.character(extension)))
-    stop("Arguments to timeStamp() must be character.\n")
+  stopifnotMsg(is.character(description) &
+               is.character(extension),
+               "Arguments must be character")
 
   # Returns a text string of the form:
   # description_YYYY-MM-DD_HHMMSS.extension
 
   dtime <- format(Sys.time(), "%Y-%m-%d_%H%M%S")
 
-  return(paste(description, "_", dtime, ".", extension,sep=""))
+  return(paste(description, "_", dtime, ".", extension, sep = ""))
 
 }  # timeStamp

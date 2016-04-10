@@ -1,6 +1,4 @@
-##' Silent wrapper for coercing a vector to numeric
-##'
-##' Silent wrapper for coercing a vector to numeric
+##' Convert any vector to numeric, if possible
 ##'
 ##' @export
 ##' @param x vector of any type

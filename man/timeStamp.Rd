@@ -2,26 +2,25 @@
 % Please edit documentation in R/timeStamp.R
 \name{timeStamp}
 \alias{timeStamp}
-\title{Imbeds the present datetime into a file name}
+\title{Embeds the present datetime into a file name}
 \usage{
 timeStamp(description, extension)
 }
 \arguments{
-\item{description}{Character string giving the base name of the file}
+\item{description}{Character vector giving the base name(s) of the file(s)}
 
-\item{extension}{Character string giving the extension of the file
+\item{extension}{Character vector giving the extension(s) of the file(s)
 (excluding the period)}
 }
 \value{
 Character string of the form \code{description_YYYY-MM-DD_HHMMSS.extension}
 }
 \description{
-Imbeds the present datetime into a file name
+Embeds the present datetime into a file name
 }
 \examples{
 
 timeStamp("aFilename", "txt")
-
 }
 \author{
 Landon Sego
