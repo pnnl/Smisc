@@ -2,7 +2,7 @@
 % Please edit documentation in R/select.R
 \name{select}
 \alias{select}
-\title{Select rows or columns from data frames or matrices}
+\title{Select rows or columns from data frames or matrices while always returning a data frame or a matrix}
 \usage{
 select(data, selection, cols = TRUE)
 }
@@ -19,13 +19,11 @@ If \code{FALSE}, rows will be selected.}
 The matrix or data frame is returned with the selected columns or rows.
 }
 \description{
-Select rows or columns from data frames or matrices while always returning a data frame or a matrix
-}
-\details{
 The primary contribution of this function is that if a single row or column is selected, the
 object that is returned will be a matrix or a dataframe---and it will not be collapsed into a
 single vector, as is the usual behavior in R.
-
+}
+\details{
 Selecting no rows or no columns is possible if \code{selection = 0} or if \code{length(selection) == 0}.
 In this case, a data frame or matrix with either 0 columns or 0 rows is returned.
 }

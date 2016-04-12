@@ -15,8 +15,8 @@ getExtension(vec, split.char = ".")
 Character vector of filename extensions
 }
 \description{
-Get the extension of a vector of filenames, assuming that the extension is the set of characters that follows the last
-\code{.}.  A wrapper for \code{\link{grabLast}}.
+Get the extension of a vector of filenames, assuming that the extension is the set of characters that
+follows the last \code{"."}.  A wrapper for \code{\link{grabLast}}.
 }
 \details{
 Assumes paths are delineated using forward slashes.  If an \code{NA} is

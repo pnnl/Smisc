@@ -1,5 +1,3 @@
-##' Select rows or columns from data frames or matrices
-##'
 ##' Select rows or columns from data frames or matrices while always returning a data frame or a matrix
 ##'
 ##' The primary contribution of this function is that if a single row or column is selected, the

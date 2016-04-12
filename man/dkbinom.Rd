@@ -6,7 +6,7 @@
 \title{Probability functions for the sum of k independent binomials}
 \usage{
 dkbinom(x, size, prob, log = FALSE, verbose = FALSE,
-        method = c("butler", "fft"), checkArgs = TRUE)
+        method = c("butler", "fft"))
 pkbinom(q, size, prob, log.p = FALSE, verbose = FALSE,
         method = c("butler", "naive", "fft"))
 }
@@ -18,31 +18,28 @@ of the k binomial variates}
 
 \item{prob}{Vector of the probabilities of success}
 
-\item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).
-(See NOTE in details).}
+\item{log, log.p}{logical; if TRUE, probabilities \emph{p} are given as \emph{log(p)} (see Note).}
 
 \item{verbose}{\code{= TRUE} produces output that shows the iterations of
 the convolutions and 3 arrays, A, B, and C that are used to convolve and
 reconvolve the distributions.  Array C is the final result.  See the source
 code in \code{dkbinom.c} for more details.}
 
-\item{method}{The \code{butler} (default) method is the
+\item{method}{A character string that uniquely indicates the method. \code{butler} is the
+preferred (and default) method, which uses the
 algorithm given by Butler, et al. The \code{naive} method is an alternative approach
 that can be  much slower that can handle no more the sum of five binomials, but
 is useful for validating the other methods. The \code{naive} method only works
 for a single value of \code{q}. The \code{fft} method uses the fast Fourier
-transform to compute the convolution of k binomial random variates.}
-
-\item{checkArgs}{\code{=TRUE} checks the incoming arguments \code{x}, \code{size},
-\code{prob} for correct structure and consistency.}
+transform to compute the convolution of k binomial random variates, and is also useful for
+checking the other methods.}
 
 \item{q}{Vector of quantiles (value at which to evaluate the distribution
 function) of the sum of the k binomial variates}
 }
 \value{
 \code{dkbinom} gives the mass function, \code{pkbinom} gives the
-distribution function.  Produces errors for invalid inputs of \code{size},
-\code{prob}, \code{x}, and \code{q}.
+distribution function.
 }
 \description{
 The mass and distribution functions of the sum of k independent binomial
@@ -56,8 +53,9 @@ probability of the second binomial variate, etc.
 If the elements of \code{prob} are all the same, then \code{pbinom} or
 \code{dbinom} is used.  Otherwise, repeating convolutions of the k
 binomials are used to calculate the mass or the distribution functions.
-
-NOTE: When \code{log.p} or \code{log} is \code{TRUE}, these functions do
+}
+\note{
+When \code{log.p} or \code{log} is \code{TRUE}, these functions do
 not have the same precision as \code{dbinom} or \code{pbinom} when the
 probabilities are very small, i.e, the values tend to go to \code{-Inf}
 more quickly.

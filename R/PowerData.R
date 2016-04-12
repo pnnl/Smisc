@@ -1,7 +1,7 @@
 ##' An example of power data
 ##'
 ##' A small, altered, subset of total rack power for one of the racks in a data
-##' center, to be used for illustration.
+##' center.  Used for illustration of \code{\link{timeIntegration}}
 ##'
 ##' @name PowerData
 ##' @docType data

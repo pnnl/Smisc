@@ -1,7 +1,7 @@
 ##' Get the extension of a vector of filenames
 ##' 
-##' Get the extension of a vector of filenames, assuming that the extension is the set of characters that follows the last
-##' \code{.}.  A wrapper for \code{\link{grabLast}}.
+##' Get the extension of a vector of filenames, assuming that the extension is the set of characters that
+##' follows the last \code{"."}.  A wrapper for \code{\link{grabLast}}.
 ##'
 ##' Assumes paths are delineated using forward slashes.  If an \code{NA} is
 ##' supplied, then an \code{NA} is returned.  If the desired string doesn't

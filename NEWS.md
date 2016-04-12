@@ -1,9 +1,16 @@
 Version 0.3.1, 2016-04-??
 -----------------------------------------------------------------------------------
 
+BUG FIXES
+
+- `pkbinom()` and `dkbinom()` now gracefully handle NAs as well as values outside the support of the the sum of the binomial variates
+
 FEATURES / CHANGES
 
-- Tests created for `integ()`, `cumMax()`, `as.numericSilent()`, `cumsumNA()`, `umvueLN()`, `rma()`, `timeStamp()`
+- `checkArgs` argument removed from `dkbinom()` and `pkbinom()`
+- `stopifnotMsg()` gets a `level` argument 
+- Tests created for `integ()`, `cumMax()`, `as.numericSilent()`, `cumsumNA()`, `umvueLN()`, `rma()`, `timeStamp()`, `dkbinom()`, `pkbinom()`, `pvar()`
+- Minor documentation edits
 
 Version 0.3.0, 2016-04-09
 -----------------------------------------------------------------------------------

@@ -6,6 +6,10 @@
 ##' @export
 ##' @param \dots Pairs of logical conditions and error messages. See Examples.
 ##'
+##' @param level Whole number indicating how far back in the call stack the error should be attributed to.
+##' \code{level = 1} goes back to the calling function, \code{level = 2} goes back 2 levels, etc.
+##' See examples.
+##'
 ##' @return A call to \code{\link{stop}} with the error messages from each condition that was \code{FALSE}.  If all
 ##' conditions are \code{TRUE}, returns \code{NULL}.
 ##'
@@ -35,8 +39,37 @@
 ##' # And this should produce an error with 1 message:
 ##' aFunction(33, a = "bad")
 ##' }
+##'
+##' ### This illustrates how the 'level' argument works
+##' 
+##' # A check function that will be called within another
+##' check <- function(a, lev) {
+##'   stopifnotMsg(is.numeric(a), "a must be numeric", level = lev)
+##' }
+##' 
+##' # A function that uses the check.
+##' f <- function(a, lev = 1) {
+##'   check(a, lev)
+##'   return(a + 10)
+##' }
+##' 
+##' \dontrun{
+##' # Note how the error is attributed to 'check'
+##' f("a")
+##' 
+##' # But if we change the level to 2, the error will be attributed to 'f'
+##' f("a", lev = 2)
+##' }
 
-stopifnotMsg <- function(...) {
+stopifnotMsg <- function(..., level = 1) {
+
+  levelGood <- if (is.numeric(level)) {
+                 (level > 0) & (level %% 1 == 0)
+               } else FALSE
+
+  if (!levelGood) {
+    stop("'level' must be a whole number: 1, 2, 3, ...")
+  }
 
   # Gather inputs to a list
   inputs <- list(...)
@@ -68,7 +101,7 @@ stopifnotMsg <- function(...) {
   if (length(failedIndexes)) {
 
     # Get the call to the function from which stopifnotMsg() was called
-    fn <- deparse(sys.calls()[[max(1, sys.nframe() - 1)]])
+    fn <- deparse(sys.calls()[[max(1, sys.nframe() - level)]])
 
     # Gather a messages for the stop
     msg <- paste(c(fn, unlist(msgs)[failedIndexes]), collapse = "\n")

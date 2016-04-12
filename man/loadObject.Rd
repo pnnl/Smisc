@@ -7,7 +7,7 @@
 loadObject(RdataFiles)
 }
 \arguments{
-\item{RdataFiles}{A character vector containing the '.Rdata' filenames}
+\item{RdataFiles}{A character vector containing the '.Rdata' filename(s)}
 }
 \value{
 The object(s) contained in \code{RdataFiles}, organized into lists and named as
@@ -19,7 +19,6 @@ for naming the object(s) in the ".Rdata" file
 something other than the name it was saved as.
 }
 \examples{
-
 # Create some filenames we'll use in this example
 fileName1 <- "demo_load_object_1.Rdata"
 fileName2 <- "demo_load_object_2.Rdata"

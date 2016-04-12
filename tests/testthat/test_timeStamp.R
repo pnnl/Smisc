@@ -22,7 +22,8 @@ test_that("timeStamp() returns values as expected", {
   out <- sub("this_", "", out)
 
   # Make sure the remaining date stamp follows the format we expect
-  expect_true(all(grepl("[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]_[0-9][0-9][0-9][0-9][0-9][0-9]", out)))
+                    #     Y  Y   Y    Y  -  M    M  -  D    D  _  H    H    M    M    S    S 
+  expect_true(all(grepl("[2][0][1-5][0-9]-[0-1][0-9]-[0-3][0-9]_[0-2][0-9][0-5][0-9][0-5][0-9]", out)))
 
   # Check error
   expect_error(timeStamp("this", 7), "Arguments must be character")
