@@ -2,15 +2,15 @@
 % Please edit documentation in R/more.R
 \name{more}
 \alias{more}
-\title{Display the contents of a file to the R terminal}
+\title{Display the contents of a file to the R console}
 \usage{
-more(file, n = -1L, display = c("all", "head", "tail"))
+more(file, n = -1, display = c("all", "head", "tail"))
 }
 \arguments{
 \item{file}{Text string giving the file name}
 
 \item{n}{Integer specifying the maximum number of lines to read from the file. This is passed
-to the \code{n} argument of \code{\link{readLines}}. The default is \code{as.integer(-1)},
+to the \code{n} argument of \code{\link{readLines}}. The default is \code{-1},
 which will read all the lines in the file.}
 
 \item{display}{Text string that uniquely identifies one of \code{"all"}, \code{"head"},
@@ -22,7 +22,7 @@ the last 6 lines that were read.}
 Returns nothing, but it does display the contents of the file on the R console.
 }
 \description{
-Display the contents of a file to the R terminal, like the \code{more} command in Unix
+Display the contents of a file to the R console
 }
 \examples{
 cat("Here's a file\\n", "with a few lines\\n",

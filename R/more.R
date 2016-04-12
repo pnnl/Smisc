@@ -1,12 +1,10 @@
-##' Display the contents of a file to the R terminal
-##'
-##' Display the contents of a file to the R terminal, like the \code{more} command in Unix
+##' Display the contents of a file to the R console
 ##'
 ##' @export
 ##' @param file Text string giving the file name
 ##'
 ##' @param n Integer specifying the maximum number of lines to read from the file. This is passed
-##' to the \code{n} argument of \code{\link{readLines}}. The default is \code{as.integer(-1)},
+##' to the \code{n} argument of \code{\link{readLines}}. The default is \code{-1},
 ##' which will read all the lines in the file.
 ##'
 ##' @param display Text string that uniquely identifies one of \code{"all"}, \code{"head"},
@@ -26,12 +24,20 @@
 ##' more("tmpFile.txt")
 ##' unlink("tmpFile.txt")
 
-more <- function(file, n = -1L, display = c("all", "head", "tail")) {
+more <- function(file, n = -1, display = c("all", "head", "tail")) {
 
   # Check inputs
-  stopifnot(is.character(file),
-            file.exists(file),
-            is.numeric(n))
+  stopifnotMsg(# file
+               if (is.character(file) & (length(file) == 1)) {
+                 file.exists(file)
+               } else FALSE,
+               "'file' must be a character string and the file must exist",
+
+               # n
+               if (is.numeric(n) & (length(n) == 1)) {
+                 (n >= -1) & (n %% 1 == 0)
+               } else FALSE,
+               "'n' must be in one of -1, 0, 1, 2, ...")
 
   if (!is.integer(n)) {
     n <- as.integer(n)

@@ -9,7 +9,7 @@ FEATURES / CHANGES
 
 - `checkArgs` argument removed from `dkbinom()` and `pkbinom()`
 - `stopifnotMsg()` gets a `level` argument 
-- Tests created for `integ()`, `cumMax()`, `as.numericSilent()`, `cumsumNA()`, `umvueLN()`, `rma()`, `timeStamp()`, `dkbinom()`, `pkbinom()`, `pvar()`
+- Tests created for `integ()`, `cumMax()`, `as.numericSilent()`, `cumsumNA()`, `umvueLN()`, `rma()`, `timeStamp()`, `dkbinom()`, `pkbinom()`, `pvar()`, `hardCode()`, `more()`
 - Minor documentation edits
 
 Version 0.3.0, 2016-04-09

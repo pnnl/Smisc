@@ -7,7 +7,7 @@
 ##' vector that would be needed to create that vector.
 ##'
 ##' @export
-##' @param x A vector (numeric, character, or logical)
+##' @param x A vector (numeric, character, logical, or complex)
 ##'
 ##' @param vname A string indicating the name of the vector that will be "created" in the code
 ##'
@@ -37,15 +37,17 @@
 ##'hardCode(c(FALSE, TRUE), vert = FALSE)
 ##'hardCode(c(TRUE, FALSE, TRUE), vname = "newLogical")
 
-
 hardCode <- function(x, vname = "x", vert = TRUE, ...) {
 
   # Basic checks
-  stopifnot(is.vector(x),
-            is.character(vname),
-            length(vname) == 1,
-            is.logical(vert),
-            length(vert) == 1)
+  stopifnotMsg(if (is.vector(x)) {
+                 is.numeric(x) | is.character(x) | is.logical(x) | is.complex(x)
+               } else FALSE,
+               "'x' must be a numeric, character, logical, or complex vector",
+               is.character(vname) & (length(vname) == 1),
+               "'vname' must be a character string",
+               is.logical(vert) & (length(vert) == 1),
+               "'vert' must be TRUE or FALSE")
 
   # Switches for vertical or horizontal layout
   vs <- ifelse(rep(vert, 3),
