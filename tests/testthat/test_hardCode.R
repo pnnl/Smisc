@@ -11,6 +11,34 @@ test_that("hardCode() returns messages as expected", {
   expect_output(hardCode(c(TRUE, FALSE)), "x <- c(TRUE,\n       FALSE)", fixed = TRUE)
 
   expect_output(hardCode(c(4 + 3i, 2 - 2i), vert = FALSE), "x <- c(4+3i, 2-2i)", fixed = TRUE)
+
+  expect_output(hardCode(c("4", "NA", "3"), vert = FALSE), 'x <- c("4", "NA", "3")', fixed = TRUE)
+
+  expect_output(hardCode(c("4", NA, "3"), vert = FALSE), 'x <- c("4", NA, "3")', fixed = TRUE)
+  
+  expect_output(hardCode(c(4, NA, 33), vert = FALSE), "x <- c(4, NA, 33)", fixed = TRUE)
+  
+  expect_output(hardCode(c(TRUE, NA, FALSE), vert = FALSE), 'x <- c(TRUE, NA, FALSE)', fixed = TRUE)
+  
+  expect_output(hardCode(c(4+3i, NA, 2-12i), vert = FALSE), 'x <- c(4+3i, NA, 2-12i)', fixed = TRUE)
+
+  expect_output(hardCode(as.character(rep(NA, 2))), "x <- c(NA,\n       NA)", fixed = TRUE)
+
+  expect_output(hardCode(rep("NA", 2)), 'x <- c("NA",\n       "NA")', fixed = TRUE)
+
+  expect_output(hardCode(c("NA", NA), vert = FALSE), 'x <- c("NA", NA)', fixed = TRUE)
+
+  expect_output(hardCode(7, vert = FALSE), "x <- 7", fixed = TRUE)
+  
+  expect_output(hardCode("this", vert = FALSE), 'x <- "this"', fixed = TRUE)
+  
+  expect_output(hardCode("this"), 'x <- "this"', fixed = TRUE)
+  
+  expect_output(hardCode(as.character(NA), vert = FALSE), "x <- NA", fixed = TRUE)
+  
+  expect_output(hardCode(as.character(NA)), "x <- NA", fixed = TRUE)
+
+  expect_output(hardCode(FALSE), "x <- FALSE", fixed = TRUE)
   
 })
 

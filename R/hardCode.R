@@ -55,7 +55,10 @@ hardCode <- function(x, vname = "x", vert = TRUE, ...) {
                c("", " ", ""))
 
   # Switches for including quotations for character strings
-  qu <- ifelse(is.character(x), "\"", "")
+  qu <- ifelse(is.character(x) & (!is.na(x)), "\"", "")
+
+  # Bracket the output with quote or no quotes, as needed
+  xquoted <- paste(qu, x, qu, sep = "")
 
   # Construct the ending portion of the string
   if (length(x) == 1) {
@@ -65,12 +68,12 @@ hardCode <- function(x, vname = "x", vert = TRUE, ...) {
   else {
     beginString <- "c("
     endString <- paste(",", vs[1],
-                       paste(paste(vs[2], qu, x[-1], sep = ""),
-                             collapse = paste(qu, ",", vs[3], sep = "")),
-                       qu, ")\n", sep = "")
+                       paste(paste(vs[2], xquoted[-1], sep = ""),
+                             collapse = paste(",", vs[3], sep = "")),
+                       ")\n", sep = "")
   }
 
-  # Write the final result
-  cat(vname, " <- ", beginString, qu, x[1], qu, endString, sep = "", ...)
+  # Final string
+  cat(vname, " <- ", beginString, xquoted[1], endString, sep = "", ...)
 
 } # hardCode

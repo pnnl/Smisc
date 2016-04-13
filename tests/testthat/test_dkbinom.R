@@ -124,6 +124,25 @@ test_that("dkbinom() and pkbinom() agree at x = q = 0", {
     
 })
 
+test_that("dkbinom() and pkbinom() agree generally", {
+
+  x1 <- dkbinom(0:14, c(5, 7, 2), c(0.4, 0.1, 0.5))
+  x2 <- pkbinom(0:14, c(5, 7, 2), c(0.4, 0.1, 0.5))
+
+  x1.compare <- c(x2[1], diff(x2))
+
+  expect_equal(x1, x1.compare, tol = 1e-13)
+
+  
+  x3 <- dkbinom(0:100, c(50, 35, 15), c(0.1, 0.7, 0.2))
+  x4 <- pkbinom(0:100, c(50, 35, 15), c(0.1, 0.7, 0.2))
+
+  x3.compare <- c(x4[1], diff(x4))
+
+  expect_equal(x3, x3.compare, tol = 1e-13)
+
+})
+
 test_that("errors and warnings for dkbinom() and pkbinom() work as expected", {
 
   expect_error(pkbinom("3", c(3, 4, 2), c(0.3, 0.5, 0.8)), "'q' must be numeric")
