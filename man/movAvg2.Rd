@@ -35,7 +35,7 @@ If \code{y} is not \code{NULL}, returns the moving average of the
 series.  Also produces a plot of the weights if \code{plot = TRUE}.
 }
 \description{
-Wrapper for \code{smartFilter} that creates a set of symmetric weights for
+Wrapper for \code{\link{smartFilter}} that creates a set of symmetric weights for
 the 2-sided window based on the Gaussian kernel, exponetial decay, linear
 decay, or simple uniform weights, and then calculates the moving average
 using those weights.

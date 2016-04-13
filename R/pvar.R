@@ -1,4 +1,3 @@
-
 ##' Prints the name and value of one or more objects
 ##'
 ##' A convenience function for writing the names and values of objects to the
@@ -38,11 +37,11 @@
 ##' y <- 20.728923
 ##' z <- "This.long.string"
 ##'
-##' pvar(x,y,z)
-##' pvar(x,y,z, digits = 2)
-##' pvar(x,y,z, abbrev = 4)
-##' pvar(x,y,z, digits = 2, abbrev = 4)
-##' pvar(x,y,z, sep = ",")
+##' pvar(x, y, z)
+##' pvar(x, y, z, digits = 2)
+##' pvar(x, y, z, abbrev = 4)
+##' pvar(x, y, z, digits = 2, abbrev = 4)
+##' pvar(x, y, z, sep = ",")
 ##'
 ##' # values can be vectors too
 ##' x <- 10:12
@@ -54,34 +53,41 @@
 ##' pvar(list(x = 1:2, y = "this", z = TRUE))
 ##'
 ##' # Can be useful for keeping track of iterations in loops
-##' for (i in 1:3) {
+##' for (i in 1:2) {
 ##'   for (j in letters[1:2]) {
 ##'     for (k in c("this","that")) {
 ##'       pvar(i, j, k)
 ##'     }
 ##'   }
 ##' }
-##'
-##'
+
 pvar <- function(..., digits = NULL, abbrev = NULL, sep = ";", verbose = TRUE) {
 
-  # Basic checks on arguments
-  if (!is.null(digits)) {
-    stopifnot(is.numeric(digits),
-              length(digits) == 1)
-  }  
+  # Check arguments
+  stopifnotMsg(# digits
+               if (!is.null(digits)) {
+                 if (is.numeric(digits) & (length(digits) == 1)) {
+                   digits %% 1 == 0
+                 } else FALSE
+               } else TRUE,
+               "'digits' must be NULL or an integer",
+               
+               # abbrev
+               if (!is.null(abbrev)) {
+                 if (is.numeric(abbrev) & (length(abbrev) == 1)) {
+                   (abbrev %% 1 == 0) & (abbrev >= 1)
+                 } else FALSE
+               } else TRUE,
+               "'abbrev' must be NULL or 1, 2, 3, ...",
 
-  if (!is.null(abbrev)) {
-    stopifnot(is.numeric(abbrev),
-              length(abbrev) == 1)
-  }
+               # sep
+               is.character(sep) & (length(sep) == 1),
+               "'sep' must be a character string",
 
-  stopifnot(is.character(sep),
-            length(sep) == 1,
-            is.logical(verbose),
-            length(verbose) == 1)
-
-
+               # verbose
+               is.logical(verbose) & (length(verbose) == 1),
+               "'verbose' must be TRUE or FALSE")
+               
   # Grab the objects into a list
   vars <- list(...)
   vnames <- as.character(substitute(list(...)))[-1]
@@ -97,28 +103,16 @@ pvar <- function(..., digits = NULL, abbrev = NULL, sep = ";", verbose = TRUE) {
   }
 
   # If an element of the list is NULL, replace it with a text string
-  vars <- lapply(vars, function(x) {if (is.null(x))
-                                      return("NULL")
-                                    else
-                                      return(x)})
-
-  # Get length of the whole list
-  len <- length(vars)
+  vars <- lapply(vars, function(x) if (is.null(x)) "NULL" else x)
 
   # Make abbreviations
   if (!is.null(abbrev)) {
-    for (i in 1:len) {
-      if (is.character(vars[[i]]))
-        vars[[i]] <- substr(vars[[i]], 1, abbrev)
-    }
+    vars <- lapply(vars, function(x) if (is.character(x)) substr(x, 1, abbrev) else x)
   }
 
   # Truncate to desired digits
   if (!is.null(digits)) {
-    for (i in 1:len) {
-      if (is.numeric(vars[[i]]))
-        vars[[i]] <- round(vars[[i]], digits)
-    }
+    vars <- lapply(vars, function(x) if (is.numeric(x)) round(x, digits) else x)
   }
 
   # Collapse the text into a single string

@@ -70,7 +70,6 @@ sepTest <- function(x) {
  cat("Objects in the local environment after separating the list:\\n")
  print(ls(.GlobalEnv))
 
-
 } # sepTest
 
 sepTest(list(z1 = 10, z2 = "that"))

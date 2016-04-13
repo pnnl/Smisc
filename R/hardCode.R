@@ -7,7 +7,7 @@
 ##' vector that would be needed to create that vector.
 ##'
 ##' @export
-##' @param x A vector (numeric, character, or logical)
+##' @param x A vector (numeric, character, logical, or complex)
 ##'
 ##' @param vname A string indicating the name of the vector that will be "created" in the code
 ##'
@@ -37,15 +37,17 @@
 ##'hardCode(c(FALSE, TRUE), vert = FALSE)
 ##'hardCode(c(TRUE, FALSE, TRUE), vname = "newLogical")
 
-
 hardCode <- function(x, vname = "x", vert = TRUE, ...) {
 
   # Basic checks
-  stopifnot(is.vector(x),
-            is.character(vname),
-            length(vname) == 1,
-            is.logical(vert),
-            length(vert) == 1)
+  stopifnotMsg(if (is.vector(x)) {
+                 is.numeric(x) | is.character(x) | is.logical(x) | is.complex(x)
+               } else FALSE,
+               "'x' must be a numeric, character, logical, or complex vector",
+               is.character(vname) & (length(vname) == 1),
+               "'vname' must be a character string",
+               is.logical(vert) & (length(vert) == 1),
+               "'vert' must be TRUE or FALSE")
 
   # Switches for vertical or horizontal layout
   vs <- ifelse(rep(vert, 3),
@@ -53,7 +55,10 @@ hardCode <- function(x, vname = "x", vert = TRUE, ...) {
                c("", " ", ""))
 
   # Switches for including quotations for character strings
-  qu <- ifelse(is.character(x), "\"", "")
+  qu <- ifelse(is.character(x) & (!is.na(x)), "\"", "")
+
+  # Bracket the output with quote or no quotes, as needed
+  xquoted <- paste(qu, x, qu, sep = "")
 
   # Construct the ending portion of the string
   if (length(x) == 1) {
@@ -63,12 +68,12 @@ hardCode <- function(x, vname = "x", vert = TRUE, ...) {
   else {
     beginString <- "c("
     endString <- paste(",", vs[1],
-                       paste(paste(vs[2], qu, x[-1], sep = ""),
-                             collapse = paste(qu, ",", vs[3], sep = "")),
-                       qu, ")\n", sep = "")
+                       paste(paste(vs[2], xquoted[-1], sep = ""),
+                             collapse = paste(",", vs[3], sep = "")),
+                       ")\n", sep = "")
   }
 
-  # Write the final result
-  cat(vname, " <- ", beginString, qu, x[1], qu, endString, sep = "", ...)
+  # Final string
+  cat(vname, " <- ", beginString, xquoted[1], endString, sep = "", ...)
 
 } # hardCode

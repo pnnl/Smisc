@@ -2,7 +2,7 @@
 % Please edit documentation in R/cumsumNA.R
 \name{cumsumNA}
 \alias{cumsumNA}
-\title{Computes the cummulative sum of a vector without propogating NAs}
+\title{Computes the cummulative sum of a vector without propagating NAs}
 \usage{
 cumsumNA(x)
 }
@@ -11,16 +11,14 @@ cumsumNA(x)
 }
 \value{
 The vector of cumulative sums.
-
-Elements in \code{x} that were \code{NA} will continue to be \code{NA}, but
-the \code{NA} will not be propogated.
 }
 \description{
-Computes the cummulative sum of a vector without propogating NA's.
+Computes the cummulative sum of a vector without propagating NAs
 }
 \details{
 If \code{x} is integer, then integer addition is used.  Otherwise, floating
-point (double) addition is used.
+point (double) addition is used. Elements in \code{x} that were \code{NA} will continue
+to be \code{NA}, but the \code{NA} will not be propagated.
 }
 \examples{
 # Compare to cumsum()
@@ -33,7 +31,6 @@ x[c(2,4)] <- NA
 print(x)
 cumsum(x)
 cumsumNA(x)
-
 }
 \author{
 Landon Sego

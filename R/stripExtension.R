@@ -1,7 +1,7 @@
 ##' Remove the extension of a vector of filenames
 ##' 
-##' Remove the extension of a vector of filenames, assuming that the extension is the set of characters that follows the last
-##' "."
+##' Remove the extension of a vector of filenames, assuming that the extension is the set of characters
+##' that follows the last \code{"."}
 ##'
 ##' Assumes paths are delineated using forward slashes.  If an \code{NA} is
 ##' supplied, then an \code{NA} is returned.  If the desired string doesn't
@@ -36,7 +36,7 @@
 ##' # output easier to read.  This example demonstrates a number of
 ##' # pathological cases.
 ##' stripExtension(c(a = NA, b = ".doc", c = "this.pdf", d = "this.file.", e = ".",
-##'                  f= "noExtension", g = "direc.name/filename.txt", h = ""))
+##'                  f = "noExtension", g = "direc.name/filename.txt", h = ""))
 ##' 
 ##' # An example with 'real' files
 ##' files <- dir(file.path(path.package(package = "Smisc"), "data"), full.names = TRUE)
@@ -46,15 +46,14 @@
 
 stripExtension <- function(vec, split.char = ".") {
 
-  # Verify that 'vec' is a character vector
-  if (!is.character(vec)) {
-    stop("'", deparse(substitute(vec)), "' must be a character vector")
-  }
-
-  if ((nchar(split.char) > 1) | (!is.character(split.char))) {
-    stop("'split.char' must be a single character")
-  }
-
+  # Check arguments
+  stopifnotMsg(is.character(vec),
+               "'vec' must be a character vector",
+               if (is.character(split.char) & (length(split.char) == 1)) {
+                 nchar(split.char) == 1
+               } else FALSE,
+               "'split.char' must be a single character")
+  
   # If the last character is the split character then flag it so that nothing will be returned
   check.for.ending.period <- function(x) {
 

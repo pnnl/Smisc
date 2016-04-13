@@ -1,3 +1,18 @@
+Version 0.3.1, 2016-04-13
+-----------------------------------------------------------------------------------
+
+BUG FIXES
+
+- `pkbinom()` and `dkbinom()` now gracefully handle NAs as well as values outside the support of the the sum of the binomial variates
+- `hardCode()` now correctly handles NA's for character vector inputs
+
+FEATURES / CHANGES
+
+- `checkArgs` argument removed from `dkbinom()` and `pkbinom()`
+- `stopifnotMsg()` gets a `level` argument 
+- Tests created for `integ()`, `cumMax()`, `as.numericSilent()`, `cumsumNA()`, `umvueLN()`, `rma()`, `timeStamp()`, `dkbinom()`, `pkbinom()`, `pvar()`, `hardCode()`, `more()`, and `stripExtension()`
+- Minor documentation edits
+
 Version 0.3.0, 2016-04-09
 -----------------------------------------------------------------------------------
 

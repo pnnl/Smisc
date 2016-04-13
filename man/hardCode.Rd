@@ -7,7 +7,7 @@
 hardCode(x, vname = "x", vert = TRUE, ...)
 }
 \arguments{
-\item{x}{A vector (numeric, character, or logical)}
+\item{x}{A vector (numeric, character, logical, or complex)}
 
 \item{vname}{A string indicating the name of the vector that will be "created" in the code}
 

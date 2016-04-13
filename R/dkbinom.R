@@ -1,6 +1,3 @@
-## TODO:  remove the checkargs argument--and if the calling frame of dkbinom is pkbinom, then
-## don't run the checks
-
 ##' Probability functions for the sum of k independent binomials
 ##'
 ##' The mass and distribution functions of the sum of k independent binomial
@@ -14,7 +11,7 @@
 ##' \code{dbinom} is used.  Otherwise, repeating convolutions of the k
 ##' binomials are used to calculate the mass or the distribution functions.
 ##'
-##' NOTE: When \code{log.p} or \code{log} is \code{TRUE}, these functions do
+##' @note When \code{log.p} or \code{log} is \code{TRUE}, these functions do
 ##' not have the same precision as \code{dbinom} or \code{pbinom} when the
 ##' probabilities are very small, i.e, the values tend to go to \code{-Inf}
 ##' more quickly.
@@ -26,7 +23,7 @@
 ##'
 ##' @usage
 ##' dkbinom(x, size, prob, log = FALSE, verbose = FALSE,
-##'         method = c("butler", "fft"), checkArgs = TRUE)
+##'         method = c("butler", "fft"))
 ##' pkbinom(q, size, prob, log.p = FALSE, verbose = FALSE,
 ##'         method = c("butler", "naive", "fft"))
 ##'
@@ -40,28 +37,25 @@
 ##'
 ##' @param prob Vector of the probabilities of success
 ##'
-##' @param log,log.p logical; if TRUE, probabilities p are given as log(p).
-##' (See NOTE in details).
+##' @param log,log.p logical; if TRUE, probabilities \emph{p} are given as \emph{log(p)} (see Note).
 ##'
 ##' @param verbose \code{= TRUE} produces output that shows the iterations of
 ##' the convolutions and 3 arrays, A, B, and C that are used to convolve and
 ##' reconvolve the distributions.  Array C is the final result.  See the source
 ##' code in \code{dkbinom.c} for more details.
 ##'
-##' @param method The \code{butler} (default) method is the
+##' @param method A character string that uniquely indicates the method. \code{butler} is the
+##' preferred (and default) method, which uses the
 ##' algorithm given by Butler, et al. The \code{naive} method is an alternative approach
 ##' that can be  much slower that can handle no more the sum of five binomials, but
 ##' is useful for validating the other methods. The \code{naive} method only works
 ##' for a single value of \code{q}. The \code{fft} method uses the fast Fourier
-##' transform to compute the convolution of k binomial random variates.
-##'
-##' @param checkArgs \code{=TRUE} checks the incoming arguments \code{x}, \code{size},
-##' \code{prob} for correct structure and consistency.
+##' transform to compute the convolution of k binomial random variates, and is also useful for
+##' checking the other methods.
 ##'
 ##' @return \code{dkbinom} gives the mass function, \code{pkbinom} gives the
-##' distribution function.  Produces errors for invalid inputs of \code{size},
-##' \code{prob}, \code{x}, and \code{q}.
-##'
+##' distribution function.
+##' 
 ##' @author Landon Sego and Alex Venzin
 ##'
 ##' @seealso \code{\link{dbinom}}, \code{\link{pbinom}}
@@ -97,14 +91,11 @@
 
 # The mass function
 dkbinom <- function(x, size, prob, log = FALSE, verbose = FALSE,
-                    method = c("butler", "fft"), checkArgs = TRUE) {
+                    method = c("butler", "fft")) {
 
-## TODO:  remove the checkargs argument--and if the calling frame of dkbinom is pkbinom, then
-## don't run the checks, since pkbinom already runs the checks
-  if (checkArgs) {
-    x <- check.kbinom(x, size, prob)
-  }
-
+  # Check the arguments
+  check_kbinom(x, size, prob, log, verbose)
+  
   # If only one type of variate was requested or if the probs are equal:
   # If the probs are all equal
   if (all(diff(prob) == 0) | (length(prob) == 1)) {
@@ -113,6 +104,22 @@ dkbinom <- function(x, size, prob, log = FALSE, verbose = FALSE,
 
   method <- match.arg(method)
 
+  # If any of the x's are NA's
+  xNA <- is.na(x)
+
+  if (any(xNA)) {
+    x[xNA] <- 0
+  }
+  
+  # Values of x for which the mass function will be 0
+  massZero <- (x < 0) | (x > sum(size)) | (x %% 1 != 0)
+
+  # Set x to 0 where massZero is TRUE.  Result will be fixed later.
+  if (any(massZero)) {
+    x[massZero] <- 0
+  }
+
+  # fft method
   if (method == "fft") {
 
     dkb <- function(x, size, prob) {
@@ -165,15 +172,26 @@ dkbinom <- function(x, size, prob, log = FALSE, verbose = FALSE,
               as.integer(length(size)),
               as.integer(FALSE),
               as.integer(verbose),
-              double(max(x)+1),
-              double(max(x)+1),
-              out = double(max(x)+1),
-              double(1))[["out"]][x+1]
+              double(max(x) + 1),
+              double(max(x) + 1),
+              out = double(max(x) + 1),
+              double(1))[["out"]][x + 1]
 
   } # else
 
+  # Now set mass to 0 where needed
+  if (any(massZero)) {
+    res[massZero] <- 0
+  }
+
+  # Log transform if requested
   if (log) {
     res <- log(res)
+  }
+
+  # Insert NA's where needed
+  if (any(xNA)) {
+    res[xNA] <- NA
   }
 
   return(res)
@@ -184,117 +202,136 @@ dkbinom <- function(x, size, prob, log = FALSE, verbose = FALSE,
 pkbinom <- function(q, size, prob, log.p = FALSE, verbose = FALSE,
                     method = c("butler", "naive", "fft")) {
 
-  x <- check.kbinom(q, size, prob)
+  # Check the arguments
+  check_kbinom(q, size, prob, log.p, verbose)
 
   # If only one type of variate was requested or if the probs are equal:
   # If the probs are all equal
   if (all(diff(prob) == 0) | (length(prob) == 1)) {
-    return(pbinom(x, sum(size), prob[1], log.p = log.p))
+    return(pbinom(q, sum(size), prob[1], log.p = log.p))
   }
 
   method <- match.arg(method)
 
+  # check for NA's and fill in q with 0, to be fixed later
+  qNA <- is.na(q)
+
+  if (any(qNA)) {
+    q[qNA] <- 0
+  }
+
+  # Check for values that will be 0 or 1, fill in q with 0, to be fixed later
+  q0 <- q < 0
+  q1 <- q >= sum(size)
+
+  if (any(q0 | q1)) {
+    q[q0 | q1] <- 0
+  }
+
   # FFT method
   if (method == "fft") {
 
-    res <- unlist(lapply(q, function(k) {
+    dkCall <- function(x) dkbinom(x, size, prob, method = "fft")
 
-      sum(unlist(lapply(0:k,
-                        function(x) dkbinom(x, size, prob, method = "fft",
-                                            checkArgs = FALSE))))
-
-    }))
-
+    res <- unlist(lapply(q, function(k) sum(unlist(lapply(0:k, dkCall)))))
+    
+  }
   # Butler method
-  } else if ((method == "butler") | (length(size) > 5)) {
+  else if ((method == "butler") | (length(size) > 5)) {
 
     res <- .C("dkbinom",
-              as.integer(max(x)),
+              as.integer(max(q)),
               as.integer(size),
               as.double(prob),
               as.integer(length(size)),
               as.integer(FALSE),
               as.integer(verbose),
-              double(max(x)+1),
-              double(max(x)+1),
-              out = double(max(x)+1),
+              double(max(q) + 1),
+              double(max(q) + 1),
+              out = double(max(q) + 1),
               double(1))[["out"]]
 
-    res <- cumsum(res)[x+1]
+    res <- cumsum(res)[q + 1]
 
   # Naive method
-  }  else {
+  } else {
 
-   if (length(x) > 1) {
-    x <- x[1]
-    warning("The 'naive' method is only implemented for a single value of 'q'\n",
-            "Only the first value of q[1] = ", q[1], " has been used.")
-   }
+    if (length(q) > 1) {
+      q <- q[1]
+      warning("The 'naive' method is only implemented for a single value of 'q'\n",
+              "Only the first value of q[1] = ", q[1], " has been used.")
+    }
 
 
-   res <- .C("pkbinom",
-             as.integer(c(rep(0, 5 - length(size)), size)),
-             as.double(c(rep(1, 5 - length(prob)), prob)),
-             as.integer(x),
-             out = double(1))[["out"]]
+    res <- .C("pkbinom",
+              as.integer(c(rep(0, 5 - length(size)), size)),
+              as.double(c(rep(1, 5 - length(prob)), prob)),
+              as.integer(q),
+              out = double(1))[["out"]]
 
   } # else Naive
 
+  # Restore correct values as needed
+  if (any(q0)) {
+    res[q0] <- 0
+  }
+  if (any(q1)) {
+    res[q1] <- 1
+  }
 
+  # Log transform
   if (log.p) {
     res <- log(res)
   }
 
+  # Restoring NA's
+  if (any(qNA)) {
+    res[qNA] <- NA
+  }
+  
   return(res)
 
 } # pkbinom
 
 # Function for checking inputs of dkbinom and pkbinom
-check.kbinom <- function(x, size, prob) {
+check_kbinom <- function(x, size, prob, log, verbose) {
 
   x.name <- deparse(substitute(x))
+  log.name <- deparse(substitute(log))
 
-  # Verify x is an integer
-  x.good <- FALSE
-  if (is.numeric(x)) {
-   if (all(x >= 0))
-     x.good <- TRUE
-  }
-  if (!x.good)
-    stop("'", x.name, "' should be a vector of non-negative integers")
+  stopifnotMsg(# x and q
+               is.numeric(x),
+               paste("'", x.name, "' must be numeric", sep = ""),
 
-  # Change it to an integer if necessary
-  if (any(as.logical(x %% 1))) {
-    warning("non-integer values of '", x.name,
-            "' will be set to integers using 'as.integer()'")
-    x <- as.integer(x)
-  }
+               # size
+               if (is.numeric(size)) {
+                 all(size %% 1 == 0) & all(size > 0)
+               } else FALSE,
+               "'size' must be a vector of positive integers",
 
-  # size and prob should be the same length
-  if (length(size) != length(prob))
-    stop("'size' and 'prob' should be the same length")
+               # prob
+               if (is.numeric(prob)) {
+                 all(prob >= 0) & all(prob <= 1)
+               } else FALSE,
+               "'prob' must be a vector of numeric values in [0, 1]",
+               
+               # size and prob must be same length
+               length(size) == length(prob),
+               "'size' and 'prob' should be the same length",
 
-  # Check that size are postive integers
-  size.good <- FALSE
-  if (is.numeric(size)) {
-    if (all(size %% 1 == 0) & all(size > 0))
-      size.good <- TRUE
-  }
-  if (!size.good)
-    stop("'size' must be a vector of positive integers")
+               # log must be a logical
+               is.logical(log) & length(log) == 1,
+               paste("'", log.name, "' must be TRUE or FALSE", sep = ""),
 
-  # Check on probabilities
-  prob.good <- FALSE
-  if (is.numeric(prob)) {
-    if (all(prob >= 0) & all(prob <= 1))
-      prob.good <- TRUE
-  }
-  if (!prob.good)
-    stop("'prob' must be a vector of numeric values in [0, 1]")
+               # verbose must be logical
+               is.logical(verbose) & length(verbose) == 1,
+               "'verbose' must be TRUE or FALSE",
 
-  return(x)
+               # Make sure error message is attributed to pkbinom or dkbinom,
+               # not check_kbinom
+               level = 2)
 
-} # check.kbinom
+} # check_kbinom
 
 
 # R has a convolve function, but it's not what we want.

@@ -9,7 +9,7 @@ attr(*, "names")= chr [1:12] "2008-05-06 17:00:01" "2008-05-06 17:00:17"
 "2008-05-06 17:00:21" "2008-05-06 17:00:32" ...}
 \description{
 A small, altered, subset of total rack power for one of the racks in a data
-center, to be used for illustration.
+center.  Used for illustration of \code{\link{timeIntegration}}
 }
 \examples{
 

@@ -17,8 +17,8 @@ filename extension removed.  Alternatively, another split character could
 be used.
 }
 \description{
-Remove the extension of a vector of filenames, assuming that the extension is the set of characters that follows the last
-"."
+Remove the extension of a vector of filenames, assuming that the extension is the set of characters
+that follows the last \code{"."}
 }
 \details{
 Assumes paths are delineated using forward slashes.  If an \code{NA} is
@@ -37,7 +37,7 @@ stripExtension(c("this old file*doc", "that young file*rtf",
 # output easier to read.  This example demonstrates a number of
 # pathological cases.
 stripExtension(c(a = NA, b = ".doc", c = "this.pdf", d = "this.file.", e = ".",
-                 f= "noExtension", g = "direc.name/filename.txt", h = ""))
+                 f = "noExtension", g = "direc.name/filename.txt", h = ""))
 
 # An example with 'real' files
 files <- dir(file.path(path.package(package = "Smisc"), "data"), full.names = TRUE)

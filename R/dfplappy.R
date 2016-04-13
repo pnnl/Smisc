@@ -1,7 +1,7 @@
 ##' Parallelized single row processing of a data frame
 ##'
 ##' Applies a function to each row of a data frame in a parallelized fashion
-##' (by submitting multiple batch R jobs).  It is a convenient wrapper for \code{plapply}, modified
+##' (by submitting multiple batch R jobs).  It is a convenient wrapper for \code{\link{plapply}}, modified
 ##' especially for parallel, single-row processing of data frames.
 ##'
 ##' @export

@@ -45,7 +45,7 @@
 ##' pbeta(0.7, 2, 5)
 ##'
 ##' # f(x) = x^2 from 0 to 3
-##' integ(seq(0, 3, length=21)^2, a = 0, b = 3)
+##' integ(seq(0, 3, length = 21)^2, a = 0, b = 3)
 ##'
 ##' # A quadratic function with both methods
 ##' x <- seq(0, 3, length = 51)
@@ -77,13 +77,13 @@ integ <- function(y, x = NULL, a = NULL, b = NULL, method = c("simpson", "trapez
 
     # Checks
     if (a > b)
-      stop("a must be less than or equal to b.\n")
+      stop("a must be less than or equal to b\n")
 
     if ((length(y) + 1) %% 2)
       stop("length(y) must be odd.\n")
 
     if (length(y) < 3)
-      stop("length(y) must be an odd number >= 3.\n")
+      stop("length(y) must be an odd number >= 3\n")
 
     # Degenerate integral
     if (a == b)

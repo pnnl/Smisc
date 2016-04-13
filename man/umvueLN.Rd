@@ -43,7 +43,6 @@ print(y, digits = 8)
 # Compare these to Gilbert's printed results (which have rounding error)
 Gilbert <- c(5.66, sqrt(1.97), sqrt(19.8))
 print(round(abs(y - Gilbert), 2))
-
 }
 \author{
 Landon Sego

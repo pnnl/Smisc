@@ -4,9 +4,13 @@
 \alias{stopifnotMsg}
 \title{Check multiple conditions and return coresponding error messages}
 \usage{
-stopifnotMsg(...)
+stopifnotMsg(..., level = 1)
 }
 \arguments{
+\item{level}{Whole number indicating how far back in the call stack the error should be attributed to.
+\code{level = 1} goes back to the calling function, \code{level = 2} goes back 2 levels, etc.
+See examples.}
+
 \item{\dots}{Pairs of logical conditions and error messages. See Examples.}
 }
 \value{
@@ -40,6 +44,27 @@ aFunction("new", a = 7, b = 5)
 
 # And this should produce an error with 1 message:
 aFunction(33, a = "bad")
+}
+
+### This illustrates how the 'level' argument works
+
+# A check function that will be called within another
+check <- function(a, lev) {
+  stopifnotMsg(is.numeric(a), "a must be numeric", level = lev)
+}
+
+# A function that uses the check.
+f <- function(a, lev = 1) {
+  check(a, lev)
+  return(a + 10)
+}
+
+\dontrun{
+# Note how the error is attributed to 'check'
+f("a")
+
+# But if we change the level to 2, the error will be attributed to 'f'
+f("a", lev = 2)
 }
 }
 \author{

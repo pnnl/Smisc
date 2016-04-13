@@ -47,7 +47,7 @@
 ##' # Compare these to Gilbert's printed results (which have rounding error)
 ##' Gilbert <- c(5.66, sqrt(1.97), sqrt(19.8))
 ##' print(round(abs(y - Gilbert), 2))
-##'
+
 umvueLN <- function(x, tol = 1e-15, verbose = FALSE) {
 
   stopifnotMsg(is.numeric(x), "'x' must be numeric",

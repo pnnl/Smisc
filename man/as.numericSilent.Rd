@@ -2,7 +2,7 @@
 % Please edit documentation in R/as.numericSilent.R
 \name{as.numericSilent}
 \alias{as.numericSilent}
-\title{Silent wrapper for coercing a vector to numeric}
+\title{Convert any vector to numeric, if possible}
 \usage{
 as.numericSilent(x)
 }
@@ -14,7 +14,7 @@ If \code{as.numeric(x)} produces an error or warning, \code{x} is
 returned unchanged.  Otherwise, \code{as.numeric(x)} is returned.
 }
 \description{
-Silent wrapper for coercing a vector to numeric
+Convert any vector to numeric, if possible
 }
 \examples{
 as.numericSilent(c("this","that"))
