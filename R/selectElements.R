@@ -40,19 +40,17 @@ selectElements <- function(elements, cVec) {
     return(NULL)
   }
 
-  # Basic checks
-  if (!is.vector(elements)) {
-    stop("'", deparse(substitute(elements)),
-         "', the object provided to the 'elements' argument of Smisc::selectElements(), is not a vector")
-  }
-  if (!is.vector(cVec)) {
-    stop("'", deparse(substitute(cVec)),
-         "', the object provided to the 'cVec' argument of Smisc::selectElements(), is not a vector")
-  }
-  if (!is.character(cVec)) {
-    stop("'", deparse(substitute(cVec)),
-         "', the object provided to the 'cVec' argument of Smisc::selectElements(), is not character")
-  }
+  stopifnotMsg(# elements
+               if (is.vector(elements) & (length(elements) > 0)) {
+                 if (is.numeric(elements)) {
+                    all(elements %% 1 == 0) & all(elements > 0) 
+                 } else is.character(elements) | is.logical(elements)
+               } else FALSE,
+               "'elements' must be a character, logical, or numeric (whole number) vector",
+
+               # cvec
+               is.vector(cVec) & is.character(cVec) & (length(cVec) > 0),
+               "'cVec' must be a character vector")
 
   # If elements is character
   if (is.character(elements)) {
@@ -62,14 +60,11 @@ selectElements <- function(elements, cVec) {
 
        incorrect <- setdiff(elements, cVec)
 
-       p0 <- ifelse(length(incorrect) == 1, "An i", "I")
-       p1 <- ifelse(length(incorrect) == 1, "","s")
-       p2 <- ifelse(length(incorrect) == 1, "was","were")
-       p3 <- ifelse(length(incorrect) == 1, "is", "are")
-     
-       stop(p0, "nvalid value", p1, " ", p2, " chosen in 'elements': '",
-            paste(incorrect, collapse = "', '"),
-            "' ", p3, " not in 'cVec'")
+       inc <- paste("'", paste(incorrect, collapse = "', '"), "'", sep = "")
+       cvvals <- paste("c('", paste(cVec, collapse = "', '"), "')", sep = "")
+
+       stop(inc, if (length(incorrect) > 1) " are " else " is ", "not in ", cvvals) 
+       
     }
 
     return(elements)
@@ -100,13 +95,6 @@ selectElements <- function(elements, cVec) {
     }
 
   } # If it's numeric
-
-  # If elements didn't conform
-  else {
-
-    stop("'elements' must be a character, numeric, or a logical (boolean) vector to select column names")
-
-  }
 
   # Convert to character string
  return(cVec[elements])
