@@ -19,7 +19,7 @@
 ##' @export
 ##' @param vec The numeric vector to be padded
 ##' 
-##' @param num The number of zeros that will be padded. If \code{NULL}, the
+##' @param num The maximum number of zeros that will be added. If \code{NULL}, the
 ##' value is chosen based on the longest string in the vector.
 ##' 
 ##' @param side The side to which the zeros are added.
@@ -33,8 +33,8 @@
 ##' 
 ##' @examples
 ##' # Examples with 0's on the left
-##' padZero(c(1,10,100))
-##' padZero(c(1,10,100), num = 4)
+##' padZero(c(1, 10, 100))
+##' padZero(c(1, 10, 100), num = 4)
 ##'
 ##' # Examples with 0's on the right
 ##' padZero(c(1.2, 1.34, 1.399), side = "r")
@@ -42,6 +42,21 @@
 
 padZero <- function(vec, num = NULL, side = c("left", "right")) {
 
+  # Check arguments
+  stopifnotMsg(# vec
+               if (is.vector(vec) & (length(vec) >= 1)) {
+                 is.numeric(vec) | is.character(vec) 
+               } else FALSE,
+               "'x' must be a numeric or character vector",
+
+               # num
+               if (!is.null(num)) {
+                 if (is.numeric(num) & (length(num) == 1)) {
+                    (num >= 0) & (num %% 1 == 0)
+                 } else FALSE
+               } else TRUE,
+               "'num' must be NULL or a whole number: 1, 2, 3, ...")
+    
   side <- match.arg(side)
 
   c.vec <- as.character(vec)
@@ -53,10 +68,10 @@ padZero <- function(vec, num = NULL, side = c("left", "right")) {
     if (is.null(num))
       num <- m.nchar.vec
     else if (num < m.nchar.vec)
-      warning("num = ", num, " is less than the largest number of characters, ", m.nchar.vec, ".\n")
+      warning("'num = ", num, "' is less than the largest number of characters, ", m.nchar.vec)
 
     # Create the 0 vector
-    zV <- tapply(nchar.vec, 1:length(nchar.vec), function(x) paste(rep(0, max(0, num - x)), collapse=""))
+    zV <- tapply(nchar.vec, 1:length(nchar.vec), function(x) paste(rep(0, max(0, num - x)), collapse = ""))
 
     out <- paste(zV, c.vec, sep="")
 
@@ -66,7 +81,7 @@ padZero <- function(vec, num = NULL, side = c("left", "right")) {
   else {
 
     if (!is.numeric(vec))
-      stop("'vec' should be numeric when side='right'\n")
+      stop("'vec' should be numeric when \"side = 'right'\"")
 
     # Grab the decimal portion of the vector and identify the maximum length
     m.dec.length <- max(nchar(getExtension(c.vec)))
@@ -75,7 +90,7 @@ padZero <- function(vec, num = NULL, side = c("left", "right")) {
       num <- m.dec.length
     else if (num < m.dec.length)
       warning("num = ", num, " is less than the largest number of decimals, ", m.dec.length,
-              ", so rounding will occur.\n")
+              ", so rounding will occur")
 
     out <- sprintf(paste("%.", num, "f", sep=""), vec)
 

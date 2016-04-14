@@ -1,3 +1,11 @@
+Version 0.3.2, 2016-??-??
+-----------------------------------------------------------------------------------
+
+FEATURES / CHANGES
+
+- Tests created for `padZero()`
+
+
 Version 0.3.1, 2016-04-13
 -----------------------------------------------------------------------------------
 
@@ -12,6 +20,7 @@ FEATURES / CHANGES
 - `stopifnotMsg()` gets a `level` argument 
 - Tests created for `integ()`, `cumMax()`, `as.numericSilent()`, `cumsumNA()`, `umvueLN()`, `rma()`, `timeStamp()`, `dkbinom()`, `pkbinom()`, `pvar()`, `hardCode()`, `more()`, and `stripExtension()`
 - Minor documentation edits
+
 
 Version 0.3.0, 2016-04-09
 -----------------------------------------------------------------------------------

@@ -9,7 +9,7 @@ padZero(vec, num = NULL, side = c("left", "right"))
 \arguments{
 \item{vec}{The numeric vector to be padded}
 
-\item{num}{The number of zeros that will be padded. If \code{NULL}, the
+\item{num}{The maximum number of zeros that will be added. If \code{NULL}, the
 value is chosen based on the longest string in the vector.}
 
 \item{side}{The side to which the zeros are added.}
@@ -38,8 +38,8 @@ Note that \code{vec} must be numeric when \code{side = 'right'}.  However,
 }
 \examples{
 # Examples with 0's on the left
-padZero(c(1,10,100))
-padZero(c(1,10,100), num = 4)
+padZero(c(1, 10, 100))
+padZero(c(1, 10, 100), num = 4)
 
 # Examples with 0's on the right
 padZero(c(1.2, 1.34, 1.399), side = "r")
