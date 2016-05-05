@@ -4,7 +4,7 @@ Version 0.3.2, 2016-??-??
 FEATURES / CHANGES
 
 - Tests created for `padZero()`
-- Error message refinement for `selectElements()`
+- Error message refinement for `selectElements()`, `select()`
 
 
 Version 0.3.1, 2016-04-13

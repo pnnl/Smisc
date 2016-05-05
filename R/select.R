@@ -75,11 +75,18 @@
 select <- function(data, selection, cols = TRUE) {
 
   # Check types
-  stopifnot(is.matrix(data) | is.data.frame(data),
-            is.numeric(selection) | is.character(selection),
-            is.vector(selection),
-            is.logical(cols),
-            length(cols) == 1)
+  stopifnotMsg(is.matrix(data) | is.data.frame(data),
+               "'data' should be a matrix or a data frame",
+               if (!is.character(selection)) {
+                 if (is.numeric(selection)) {
+                   if (length(selection)) {
+                     all(selection >= 0) & all(selection %% 1 == 0)
+                   } else TRUE
+                 } else FALSE
+               } else TRUE,
+               "'selection' should be a character vector, a numeric vector of whole numbers, or the value 0",
+               is.logical(cols) & (length(cols) == 1),
+               "'cols' should be TRUE or FALSE")
 
   # Special case of 0 columns or rows being selected
   degenerate <- FALSE
