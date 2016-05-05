@@ -10,7 +10,8 @@ Imports:
     parallel,
     utils,
     plyr,
-    doParallel
+    doParallel,
+    methods
 Suggests:
     testthat,
     foreach

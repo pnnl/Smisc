@@ -8,6 +8,7 @@ test_that("openDevice() opens all the requested device types", {
     openDevice(fname, ...)
     plot(1:10, 1:10)
     dev.off()
+    print(dir("tmp"))
     expect_true(file.exists(fname))
     unlink(fname)
   }
