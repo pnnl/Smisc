@@ -1,4 +1,4 @@
-Version 0.3.2, 2016-??-??
+Version 0.3.2, 2016-05-04
 -----------------------------------------------------------------------------------
 
 FEATURES / CHANGES
@@ -10,7 +10,7 @@ FEATURES / CHANGES
 Version 0.3.1, 2016-04-13
 -----------------------------------------------------------------------------------
 
-BUG FIXES
+FIXES
 
 - `pkbinom()` and `dkbinom()` now gracefully handle NAs as well as values outside the support of the the sum of the binomial variates
 - `hardCode()` now correctly handles NA's for character vector inputs
@@ -48,14 +48,14 @@ parallelization functions
 Version 0.2.17, 2016-02-01
 -----------------------------------------------------------------------------------
 
-BUG FIXES
+FIXES
 
 - `stopifnotMsg()` can be now be called from the global environment as well as within functions
 
 Version 0.2.16, 2016-01-25
 -----------------------------------------------------------------------------------
 
-BUG FIXES
+FIXES
 
 - Correction to documentation of `strings.as.factors` argument of `list2df()`
 - Correction to documentation of `.variables` argument of `pddply()`
@@ -95,7 +95,7 @@ FEATURES / CHANGES
 Version 0.2.12, 2015-09-15
 -----------------------------------------------------------------------------------
 
-BUG FIXES
+FIXES
 
 - `plotFun()` was making calls to a deprecated function, `ifelse1()`.  This was
    changed to `if (cond) x else y`.
@@ -130,7 +130,7 @@ FEATURES / CHANGES
 
 - Added flexbility to `select()` by permitting the selection of 0 rows or columns
 
-BUG FIXES
+FIXES
 
 - Corrected one of the error messages in `select()`
 
@@ -144,7 +144,7 @@ FEATURES / CHANGES
   once. If only a single file is provided, it behaves just as it did before, so
   it is backward compatible.
 
-BUG FIXES
+FIXES
 
 - `list2df()` now correctly handles a list of lists
 - fixed `qbind()` to work properly when called from inside another function
