@@ -16,7 +16,7 @@ test_that("openDevice() opens all the requested device types", {
   pf("pdf", height = 10, width = 12)
   pf("ps", height = 7, width = 2)
   pf("jpg", quality = 100)
-  pf("tif")
+#  pf("tif")
   pf("png")
   pf("bmp")
 
