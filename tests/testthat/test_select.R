@@ -4,7 +4,7 @@ context("select()")
 d <- data.frame(a = 1:5, b = rnorm(5), c = letters[1:5], d = factor(6:10),
                 row.names = LETTERS[1:5], stringsAsFactors = FALSE)
 
-test_that("We get identical behavior when selecting more than one column", {
+test_that("In select(), we get identical behavior when selecting more than one column", {
 
   d1 <- d[, c("d", "c")]
   d1c <- select(d, c("d", "c"))
@@ -12,7 +12,7 @@ test_that("We get identical behavior when selecting more than one column", {
 
 })
 
-test_that("Selecting a single row from a data frame produces results identical to default R behavior", {
+test_that("In select(), selecting a single row from a data frame produces results identical to default R behavior", {
 
   d2 <- d[2,]
   d2c <- select(d, "B", cols = FALSE)
@@ -23,7 +23,7 @@ test_that("Selecting a single row from a data frame produces results identical t
 # Now consider a matrix
 m <- matrix(rnorm(20), nrow = 4, dimnames = list(LETTERS[1:4], letters[1:5]))
 
-test_that("Column selection with two or more or more columns is equivalent to default R behavior", {
+test_that("In select(), column selection with two or more or more columns is equivalent to default R behavior", {
   
   m1 <- m[,c(4, 3)]
   m1c <- select(m, c("d", "c"))
@@ -31,7 +31,7 @@ test_that("Column selection with two or more or more columns is equivalent to de
 
 })
 
-test_that("Selecting a single row returns a matrix of 1 row instead of a vector", {
+test_that("In select(), selecting a single row returns a matrix of 1 row instead of a vector", {
     
   m2 <- m["C",]
   m2c <- select(m, "C", cols = FALSE)
@@ -40,7 +40,7 @@ test_that("Selecting a single row returns a matrix of 1 row instead of a vector"
 
 })
 
-test_that("Selecting a dataframe using indexes and names achieves the same result", {
+test_that("In select(), selecting a dataframe using indexes and names achieves the same result", {
 
   # Name selections
   a1 <- select(d, "a")
@@ -82,7 +82,7 @@ test_that("Selecting a dataframe using indexes and names achieves the same resul
 
  })
 
-test_that("Selecting a matrix using indexes and names achieves the same result", {
+test_that("In select(), selecting a matrix using indexes and names achieves the same result", {
 
   # Checks for the matrix stuff
   m3 <- select(m, c("d", "c"))
@@ -102,7 +102,7 @@ test_that("Selecting a matrix using indexes and names achieves the same result",
 
 })
 
-test_that("Check 0 rows and 0 column results", {
+test_that("In select(), check 0 rows and 0 column results", {
     
   dn <- data.frame(a = 1:10, b = 11:20, c = 21:30)
   rownames(dn) <- letters[1:10]
@@ -111,11 +111,32 @@ test_that("Check 0 rows and 0 column results", {
   # Check results
   expect_equal(select(dn, 0), dn[,0])
   expect_equal(select(dn, character(0)), dn[,0])
+  expect_equal(select(dn, numeric(0)), dn[,0])
   expect_equal(select(mn, 0), mn[,0])
   expect_equal(select(mn, character(0)), mn[,0])
+  expect_equal(select(mn, numeric(0)), mn[,0])
   expect_equal(select(dn, 0, cols = FALSE), dn[0,])
   expect_equal(select(dn, character(0), cols = FALSE), dn[0,])
+  expect_equal(select(dn, numeric(0), cols = FALSE), dn[0,])
   expect_equal(select(mn, 0, cols = FALSE), mn[0,])
   expect_equal(select(mn, character(0), cols = FALSE), mn[0,])
+  expect_equal(select(mn, numeric(0), cols = FALSE), mn[0,])
+
+})
+
+
+test_that("select() returns errors as expected", {
+    
+  dn <- data.frame(a = 1:10, b = 11:20, c = 21:30)
+  rownames(dn) <- letters[1:10]
+  
+  # Check errors
+  expect_error(select("nogood", "a"), "'data' should be")
+  expect_error(select(dn, TRUE), "'selection' should be")
+  expect_error(select(dn, -1), "'selection' should be")
+  expect_error(select(dn, 4.2), "'selection' should be")
+  expect_error(select(dn, 5), "are not present")
+  expect_error(select(dn, "e"), "are not present")
+  expect_error(select(dn, "a", "this"), "should be TRUE")
 
 })
