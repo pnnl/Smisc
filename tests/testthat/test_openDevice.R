@@ -4,6 +4,7 @@ test_that("openDevice() opens all the requested device types", {
 
   pf <- function(ext, ...) {
     fname <- paste("tmp/plot_out", ext, sep = ".")
+    pvar(getwd(), fname)
     openDevice(fname, ...)
     plot(1:10, 1:10)
     dev.off()
