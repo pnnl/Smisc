@@ -18,33 +18,33 @@
 ##' @param y The numerical vector for which the moving averages will be
 ##' calculated.  If \code{NULL}, the moving averages are not calculated, but the
 ##' weights are calculated and included in the attributes of the returned object.
-##' 
+##'
 ##' @param bw A single, positive whole number that indicates the 'bandwidth' of the window,
 ##' which is roughly half the width of the moving window.  The total width of the window is \code{2 * bw + 1}.
-##' 
+##'
 ##' @param type Character string which uniquely indentifies the type of weights
 ##' to use, corresponding to the Gaussian kernel, exponential decay, linear
 ##' decay, or uniform weights. Defaults to \code{gaussian}.
-##' 
+##'
 ##' @param furthest.weight A single, positive number corresponding to the unormalized value of
 ##' the weights at the left and right edges of the window.  Ignored when \code{type = 'uniform'}.
-##' 
+##'
 ##' @param center.weight A single, positive number corresponding to the unnormalized value of
 ##' the weights at the center of the window.
-##' 
+##'
 ##' @param \dots For \code{movAvg2}, these are additional arguments to \code{\link{smartFilter}}.
 ##' For the \code{print} and \code{plot} methods, the "\dots" are additional arguments passed to
 ##' \code{\link{print.default}} and \code{\link{plot.default}}, respectively.
-##' 
+##'
 ##' @return An object class \code{movAvg2}, which is a numeric vector containing the moving average (dot product) of the
 ##' series, with attributes that describe the weights.  If \code{y = NULL}, \code{numeric(0)} is returned.
-##' 
+##'
 ##' @author Landon Sego
-##' 
+##'
 ##' @seealso \code{\link{smartFilter}}, \code{\link{filter}}
-##' 
+##'
 ##' @keywords misc
-##' 
+##'
 ##' @examples
 ##' x <- rnorm(25)
 ##' z <- movAvg2(x, bw = 10, type = "e", center.weight = 2)
@@ -60,7 +60,7 @@
 ##' w <- movAvg2(bw = 20, type = "g", center.weight = 1)
 ##' w
 ##' plot(w, las = 1)
-##' 
+##'
 ##' # Note how it produces the same values as filter (except at the edge
 ##' # of the series
 ##' x <- rnorm(10)
@@ -75,7 +75,7 @@ movAvg2 <- function(y = NULL, bw = 30, type = c("gaussian", "exponential", "line
                     furthest.weight = 0.01, center.weight = 1, ...) {
 
   # Check arguments
-    
+
   stopifnotMsg(# y
                if (!is.null(y)) {
                  (length(y) > 0) & is.numeric(y)
@@ -99,7 +99,7 @@ movAvg2 <- function(y = NULL, bw = 30, type = c("gaussian", "exponential", "line
                  center.weight > 0
                } else FALSE,
                "'center.weight' must be a single, positive number")
-                   
+
   type <- match.arg(type)
 
   # Define the weights
@@ -116,7 +116,7 @@ movAvg2 <- function(y = NULL, bw = 30, type = c("gaussian", "exponential", "line
   else if (type == "linear") {
     wts <- (furthest.weight - center.weight) * abs(-bw:bw) / bw + center.weight
   }
-  
+
   else {
     wts <- rep(center.weight, 2 * bw + 1)
   }
@@ -133,14 +133,14 @@ movAvg2 <- function(y = NULL, bw = 30, type = c("gaussian", "exponential", "line
   else {
     out <- numeric(0)
   }
-  
+
   # Add the class
   class(out) <- c("movAvg2", class(out))
 
   # Add attributes (the weights, type, and parameters)
   attributes(out) <- c(attributes(out),
                        list(type = type,
-                            bw = bw, 
+                            bw = bw,
                             furthest.weight = furthest.weight,
                             center.weight = center.weight,
                             wts = wts))
@@ -161,7 +161,7 @@ print.movAvg2 <- function(x, ...) {
   y <- x
   attributes(y) <- list(names = names(x))
   print(y, ...)
-    
+
 } # print.movAvg2
 
 ##' @method plot movAvg2
@@ -174,18 +174,19 @@ plot.movAvg2 <- function(x, ...) {
 
   bw <- attributes(x)$bw
   wts <- attributes(x)$wts
-  
+  type <- attributes(x)$type
+
   # Default arguments
   defaultArgs <- list(x = -bw:bw,
-                      y = wts, 
+                      y = wts,
                       xlim = c(-(bw + 3), (bw + 3)),
                       ylim = c(0, max(wts)),
                       lwd = 2,
                       col = "Blue",
                       type = "b",
                       xlab = "Data Index",
-                      ylab = "Window weights",
-                      main = "Unormalized weights for moving window",
+                      ylab = "Window Weights",
+                      main = sub("gauss", "Gauss", paste("Unnormalized", type, "weights")),
                       font.main = 1)
 
   # Find names in ... that exist in defaultArgs that will replace those in defaultArgs
@@ -196,12 +197,12 @@ plot.movAvg2 <- function(x, ...) {
   if (length(toReplace)) {
     defaultArgs <- defaultArgs[-which(names(defaultArgs) %in% toReplace)]
   }
-  
+
   # Make the plot
   do.call(plot, c(defaultArgs, suppliedArgs))
-  
+
   # Add in a horiztonal line at the bottom
   abline(h = 0)
-  
+
 } # plot.movAvg2
 
