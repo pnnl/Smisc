@@ -26,10 +26,10 @@ to use, corresponding to the Gaussian kernel, exponential decay, linear
 decay, or uniform weights. Defaults to \code{gaussian}.}
 
 \item{furthest.weight}{A single, positive number corresponding to the unormalized value of
-the weights at the left and right edges of the window}
+the weights at the left and right edges of the window.  Ignored when \code{type = 'uniform'}.}
 
 \item{center.weight}{A single, positive number corresponding to the unnormalized value of
-the weights at the center of the window}
+the weights at the center of the window.}
 
 \item{\dots}{For \code{movAvg2}, these are additional arguments to \code{\link{smartFilter}}.
 For the \code{print} and \code{plot} methods, the "\dots" are additional arguments passed to

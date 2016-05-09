@@ -27,10 +27,10 @@
 ##' decay, or uniform weights. Defaults to \code{gaussian}.
 ##' 
 ##' @param furthest.weight A single, positive number corresponding to the unormalized value of
-##' the weights at the left and right edges of the window
+##' the weights at the left and right edges of the window.  Ignored when \code{type = 'uniform'}.
 ##' 
 ##' @param center.weight A single, positive number corresponding to the unnormalized value of
-##' the weights at the center of the window
+##' the weights at the center of the window.
 ##' 
 ##' @param \dots For \code{movAvg2}, these are additional arguments to \code{\link{smartFilter}}.
 ##' For the \code{print} and \code{plot} methods, the "\dots" are additional arguments passed to
@@ -118,7 +118,7 @@ movAvg2 <- function(y = NULL, bw = 30, type = c("gaussian", "exponential", "line
   }
   
   else {
-    wts <- rep(1, 2 * bw + 1)
+    wts <- rep(center.weight, 2 * bw + 1)
   }
 
   if (any(wts < 0)) {
