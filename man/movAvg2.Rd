@@ -62,8 +62,7 @@ weights as possible.
 \item \code{plot}: Plots the unnormalized weights.
 }}
 \examples{
-x <- rnorm(25)
-z <- movAvg2(x, bw = 10, type = "e", center.weight = 2)
+z <- movAvg2(rnorm(25), bw = 10, type = "e", center.weight = 2)
 z
 
 # Look at the attributes
@@ -72,10 +71,8 @@ attributes(z)
 # Plot the weights
 plot(z)
 
-# If we just want to see the weights, and we don't have data
-w <- movAvg2(bw = 20, type = "g", center.weight = 1)
-w
-plot(w, las = 1)
+# If we just want to see the weights (without supplying data)
+plot(movAvg2(bw = 20, type = "g", center.weight = 1))
 
 # Note how it produces the same values as filter (except at the edge
 # of the series

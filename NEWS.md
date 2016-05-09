@@ -3,6 +3,7 @@ Version 0.3.3, 2016-??-??
 
 FEATURES / CHANGES
 
+- Addition of `cusum()`, which calculates all the statistics needed for the upper one-sided CUSUM chart
 - Revision of `movAvg2()`:  Addition of `print()` and `plot()` methods for the object returned by `movAvg2()`.  The `plot` argument is dropped, and argument checks with descriptive error messages are added. Documentation revisions.
 
 
