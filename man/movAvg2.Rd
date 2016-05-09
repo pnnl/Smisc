@@ -2,66 +2,90 @@
 % Please edit documentation in R/movAvg2.R
 \name{movAvg2}
 \alias{movAvg2}
+\alias{plot.movAvg2}
+\alias{print.movAvg2}
 \title{Calculate the moving average using a 2-sided, symmetric window}
 \usage{
 movAvg2(y = NULL, bw = 30, type = c("gaussian", "exponential", "linear",
-  "uniform"), furthest.weight = 0.01, center.weight = 1, plot = FALSE,
-  ...)
+  "uniform"), furthest.weight = 0.01, center.weight = 1, ...)
+
+\method{print}{movAvg2}(x, ...)
+
+\method{plot}{movAvg2}(x, ...)
 }
 \arguments{
 \item{y}{The numerical vector for which the moving averages will be
-calculated.  If \code{NULL}, the moving averages are not calculated--but this can
-be useful for visualizing the weights. See the \code{plot} argument.}
+calculated.  If \code{NULL}, the moving averages are not calculated, but the
+weights are calculated and included in the attributes of the returned object.}
 
-\item{bw}{'bandwidth', which is roughly half the width of the moving
-window.  The total width of the window is \code{2 * bw + 1}.}
+\item{bw}{A single, positive whole number that indicates the 'bandwidth' of the window,
+which is roughly half the width of the moving window.  The total width of the window is \code{2 * bw + 1}.}
 
 \item{type}{Character string which uniquely indentifies the type of weights
 to use, corresponding to the Gaussian kernel, exponential decay, linear
-decay, or uniform weights. Defaults to 'gaussian'.}
+decay, or uniform weights. Defaults to \code{gaussian}.}
 
-\item{furthest.weight}{The unormalized value of the weights at the left and
-right edges of the window}
+\item{furthest.weight}{A single, positive number corresponding to the unormalized value of
+the weights at the left and right edges of the window}
 
-\item{center.weight}{The unnormalized value of the weights at the center of
-the window}
+\item{center.weight}{A single, positive number corresponding to the unnormalized value of
+the weights at the center of the window}
 
-\item{plot}{\code{ = TRUE} produces a plot which shows the weights.}
-
-\item{\dots}{additional arguments to \code{\link{smartFilter}}}
+\item{\dots}{For \code{movAvg2}, these are additional arguments to \code{\link{smartFilter}}.
+For the \code{print} and \code{plot} methods, the "\dots" are additional arguments passed to
+\code{\link{print.default}} and \code{\link{plot.default}}, respectively.}
 }
 \value{
-If \code{y} is not \code{NULL}, returns the moving average of the
-series.  Also produces a plot of the weights if \code{plot = TRUE}.
+An object class \code{movAvg2}, which is a numeric vector containing the moving average (dot product) of the
+series, with attributes that describe the weights.  If \code{y = NULL}, \code{numeric(0)} is returned.
 }
 \description{
 Wrapper for \code{\link{smartFilter}} that creates a set of symmetric weights for
 the 2-sided window based on the Gaussian kernel, exponetial decay, linear
-decay, or simple uniform weights, and then calculates the moving average
+decay, or simple uniform weights, and then calculates the moving average (dot product)
 using those weights.
 }
 \details{
 All the weights are normalized (so that they sum to 1) prior to calculating
-the moving average.
+the moving average.  The moving "average" is really the moving dot product of the
+normalized weights and the corresponding elements of \code{y}.
 
 Since it uses \code{\link{smartFilter}} to calculate the moving average,
 the moving average for points near the edge of the series or in the
 neighborhood of missing values are calculated using as much of the window
 weights as possible.
 }
+\section{Methods (by generic)}{
+\itemize{
+\item \code{print}: Prints the \code{movAvg2} object by only showing the series of dot products and suppressing the attributes.
+
+\item \code{plot}: Plots the unnormalized weights.
+}}
 \examples{
 x <- rnorm(25)
-movAvg2(x, bw = 10, type = "e", center.weight = 2)
+z <- movAvg2(x, bw = 10, type = "e", center.weight = 2)
+z
+
+# Look at the attributes
+attributes(z)
+
+# Plot the weights
+plot(z)
+
+# If we just want to see the weights, and we don't have data
+w <- movAvg2(bw = 20, type = "g", center.weight = 1)
+w
+plot(w, las = 1)
 
 # Note how it produces the same values as filter (except at the edge
 # of the series
 x <- rnorm(10)
 movAvg2(x, bw = 2, type = "u")
-filter(x, rep(1,5)/5)
+filter(x, rep(1, 5) / 5)
 
 # These are also the same, except at the edge.
 movAvg2(x, bw = 1, type = "l", furthest.weight = 0.5, center.weight = 1)
-filter(x, c(0.5, 1, 0.5)/2)
+filter(x, c(0.5, 1, 0.5) / 2)
 }
 \author{
 Landon Sego

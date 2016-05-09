@@ -1,3 +1,11 @@
+Version 0.3.3, 2016-??-??
+-----------------------------------------------------------------------------------
+
+FEATURES / CHANGES
+
+- Revision of `movAvg2()`:  Addition of `print()` and `plot()` methods for the object returned by `movAvg2()`.  The `plot` argument is dropped, and argument checks with descriptive error messages are added. Documentation revisions.
+
+
 Version 0.3.2, 2016-05-04
 -----------------------------------------------------------------------------------
 
