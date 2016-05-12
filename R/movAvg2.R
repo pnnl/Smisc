@@ -1,7 +1,7 @@
 ##' Calculate the moving average using a 2-sided, symmetric window
 ##'
 ##' Wrapper for \code{\link{smartFilter}} that creates a set of symmetric weights for
-##' the 2-sided window based on the Gaussian kernel, exponetial decay, linear
+##' the 2-sided window based on the Gaussian kernel, exponential decay, linear
 ##' decay, or simple uniform weights, and then calculates the moving average (dot product)
 ##' using those weights.
 ##'

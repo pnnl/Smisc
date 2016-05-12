@@ -6,9 +6,9 @@
 ##' @export
 ##' @param x A numeric or integer vector
 ##'
-##' @return In the sequence \code{x[1], x[2], ..., x[n]}, \code{cumMax}
-##' returns the vector \code{y} such that for each \code{i = 1,...,n},
-##' \code{y[i] = max(x[j]; j = 1,...,i)}
+##' @return In the sequence \emph{x[1], x[2], ..., x[n]}, \code{cumMax}
+##' returns the vector \emph{y} such that for each \emph{i = 1,...,n},
+##' \emph{y[i] = max(x[j]; j = 1,...,i)}
 ##'
 ##' @author Landon Sego
 ##'
@@ -21,23 +21,26 @@
 
 cumMax <- function(x) {
 
+  stopifnotMsg(is.numeric(x), "'x' must be 'numeric' or 'integer'")
+
   n <- length(x)
-
-  if (n == 1)
+    
+  if (n == 1) {
     return(x)
+  }
 
-  else if (is.integer(x))
+  else if (is.integer(x)) {
     return(.C("max_le_i_INT",
               as.integer(x),
               as.integer(n),
               y = integer(n))$y)
+  }
 
-  else if (is.numeric(x))
+  else {
     return(.C("max_le_i_DOUBLE",
               as.double(x),
               as.integer(n),
               y = double(n))$y)
-  else
-    stop("'x' must be a numeric or integer vector\n")
+  }
 
 } # cumMax

@@ -107,12 +107,32 @@ cusum <- function(X, k, h, initial = 0, reset = TRUE) {
 ##'
 ##' @describeIn cusum Prints the \code{cusum} object by only showing the CUSUM statistics and suppressing the attributes.
 ##'
-##' @param \dots Additional arguments to \code{\link{print.default}}
+##' @param \dots Additional arguments to \code{\link{print.default}} or \code{\link{plot.default}}
 ##'
 ##' @export
 
 print.cusum <- function(x, ...) {
 
+  y <- x
+  attributes(y) <- list(names = names(x))
+  print(y, ...)
+
+} # print.movAvg2
+
+
+##' @method plot cusum
+##'
+##' @describeIn cusum Prints the \code{cusum} object by only showing the CUSUM statistics and suppressing the attributes.
+##'
+##' @param indexes A vector of indexes that select the elements of \code{X} that will be plotted
+##'
+##' @param overlayData A logical indicating whether the data are overlaid on the plot
+##'
+##' @export
+
+plot.cusum <- function(x, indexes = NULL, overlayData = FALSE, ...) {
+
+    
   y <- x
   attributes(y) <- list(names = names(x))
   print(y, ...)
