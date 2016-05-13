@@ -5,7 +5,7 @@
 ##' < 2 hours, use minutes. Else if < 2 days, use hours.  Otherwise, use days.
 ##'
 ##' @export
-##' @param expr Any R expression
+##' @param expr Any R expression.
 ##'
 ##' @param units A character expression long enough to uniquely identify one of
 ##' "automatic", "seconds", "minutes", or "hours".  Defaults to "automatic".
@@ -13,14 +13,14 @@
 ##' @param return.time \code{= TRUE} returns the elapsed time as one of the
 ##' elements in a list.  See "Value" below.
 ##'
-##' @param verbose \code{= TRUE} prints the elapsed time in the requested units
+##' @param verbose \code{= TRUE} prints the elapsed time in the requested units.
 ##'
 ##' @return If \code{return.time = FALSE}, invisibly returns the evaluation of
 ##' \code{expr}.  If \code{return.time = TRUE}, invisibly returns a list with
 ##' the following components:
-##'
-##' \item{out}{The evaluation of \code{expr}} \item{elapsed}{The elapsed time
-##' to evaluate \code{expr}} \item{units}{The time units of the elapsed time}
+##' \item{out}{The evaluation of \code{expr}}
+##' \item{elapsed}{The elapsed time to evaluate \code{expr}}
+##' \item{units}{The time units of the elapsed time}
 ##'
 ##' @author Landon Sego
 ##'

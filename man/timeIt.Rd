@@ -8,7 +8,7 @@ timeIt(expr, units = c("automatic", "seconds", "minutes", "hours", "days"),
   return.time = FALSE, verbose = TRUE)
 }
 \arguments{
-\item{expr}{Any R expression}
+\item{expr}{Any R expression.}
 
 \item{units}{A character expression long enough to uniquely identify one of
 "automatic", "seconds", "minutes", or "hours".  Defaults to "automatic".}
@@ -16,15 +16,15 @@ timeIt(expr, units = c("automatic", "seconds", "minutes", "hours", "days"),
 \item{return.time}{\code{= TRUE} returns the elapsed time as one of the
 elements in a list.  See "Value" below.}
 
-\item{verbose}{\code{= TRUE} prints the elapsed time in the requested units}
+\item{verbose}{\code{= TRUE} prints the elapsed time in the requested units.}
 }
 \value{
 If \code{return.time = FALSE}, invisibly returns the evaluation of
 \code{expr}.  If \code{return.time = TRUE}, invisibly returns a list with
 the following components:
-
-\item{out}{The evaluation of \code{expr}} \item{elapsed}{The elapsed time
-to evaluate \code{expr}} \item{units}{The time units of the elapsed time}
+\item{out}{The evaluation of \code{expr}}
+\item{elapsed}{The elapsed time to evaluate \code{expr}}
+\item{units}{The time units of the elapsed time}
 }
 \description{
 Times the execution of an expression.

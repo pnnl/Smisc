@@ -1,10 +1,10 @@
-##' Calculates a sequence of CUSUM statistics
+##' Calculates a sequence of Cusum statistics
 ##'
-##' Calculates a sequence of one-sided upper CUSUM statistics given the reference value and
+##' Calculates a sequence of one-sided upper Cusum statistics given the reference value and
 ##' the control limit.
 ##'
-##' @details CUSUM is assumed to be of the form: \emph{C[i] = max(0, C[i-1] + X[i] - k)},
-##' where the signal occurs when \emph{C[i] > h}.  Note that \code{X} can be the CUSUM scores, or weights,
+##' @details Cusum is assumed to be of the form: \emph{C[i] = max(0, C[i-1] + X[i] - k)},
+##' where the signal occurs when \emph{C[i] > h}.  Note that \code{X} can be the Cusum scores, or weights,
 ##' given by the log-likelihood ratio, in which case \code{k = 0} would make sense.
 ##' 
 ##' @export
@@ -14,14 +14,20 @@
 ##'
 ##' @param h The upper control limit.
 ##'
-##' @param initial The starting value of the CUSUM (\emph{C[0]}).
+##' @param initial The starting value of the Cusum (\emph{C[0]}).
 ##'
-##' @param reset Logical indicating whether the CUSUM is reset to 0 after crossing the control limit.
+##' @param reset Logical indicating whether the Cusum is reset to 0 after crossing the control limit.
 ##'
-##' @return A object of class 'cusum', which is a vector of the CUSUM statistics, along with the following attributes:
+##' @param x Object of class \code{cusum}
+##'
+##' @param object Object of class \code{cusum}
+##' 
+##' @param \dots Additional arguments to \code{\link{print.default}} or \code{\link{plot.default}}.  Ignored by the \code{signal} method.
+##'
+##' @return A object of class \code{cusum}, which is a vector of the Cusum statistics, along with the following attributes:
 ##' \code{X}, \code{k}, \code{h}, \code{initial}, and \code{reset} (which correspond to the original arguments provided to
 ##' the function) and \code{resetCounter}, a vector of integers corresponding to \code{cusum} that indicates when the 
-##' CUSUM resets.
+##' Cusum resets.
 ##'
 ##' @references Hawkins DM and Olwell DH. (1998) Cumulative Sum Charts and Charting for Quality Improvement. Springer.
 ##' 
@@ -31,13 +37,16 @@
 ##'
 ##' # Plot the cusum
 ##' plot(y)
+##'
+##' # Show the indexes where the chart signaled
+##' signal(y)
 ##' 
 ##' # A look at the attributes
 ##' attributes(y)
 
 # A Wrapper for the c method 'cusum'
-# Calculates the CUSUM for a vector of data
-# CUSUM of the form: C[i] = max(0, C[i-1] + X[i] - k)
+# Calculates the Cusum for a vector of data
+# Cusum of the form: C[i] = max(0, C[i-1] + X[i] - k)
 # Signal occurs when C[i] > h
 
 cusum <- function(X, k, h, initial = 0, reset = TRUE) {
@@ -106,9 +115,7 @@ cusum <- function(X, k, h, initial = 0, reset = TRUE) {
 
 ##' @method print cusum
 ##'
-##' @describeIn cusum Prints the \code{cusum} object by only showing the CUSUM statistics and suppressing the attributes.
-##'
-##' @param \dots Additional arguments to \code{\link{print.default}} or \code{\link{plot.default}}
+##' @describeIn cusum Prints the \code{cusum} object by only showing the Cusum statistics and suppressing the attributes.
 ##'
 ##' @export
 
@@ -204,3 +211,14 @@ plot.cusum <- function(x, indexes = NULL, emphOOC = TRUE, ...) {
 
 } # plot.cusum
 
+##' @method signal cusum
+##'
+##' @describeIn cusum Prints the indexes that exceed the control limit
+##'
+##' @export
+
+signal.cusum <- function(object, ...) {
+
+  which(object > attributes(object)$h)
+    
+} # signal.cusum

@@ -32,6 +32,8 @@
 ##' @param center.weight A single, positive number corresponding to the unnormalized value of
 ##' the weights at the center of the window.
 ##'
+##' @param x Object of class \code{movAvg2}.
+##'
 ##' @param \dots For \code{movAvg2}, these are additional arguments to \code{\link{smartFilter}}.
 ##' For the \code{print} and \code{plot} methods, the "\dots" are additional arguments passed to
 ##' \code{\link{print.default}} and \code{\link{plot.default}}, respectively.
