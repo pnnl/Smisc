@@ -6,8 +6,6 @@
 ##' @details CUSUM is assumed to be of the form: \emph{C[i] = max(0, C[i-1] + X[i] - k)},
 ##' where the signal occurs when \emph{C[i] > h}.  Note that \code{X} can be the CUSUM scores, or weights,
 ##' given by the log-likelihood ratio, in which case \code{k = 0} would make sense.
-##'
-##' Plot method to come...
 ##' 
 ##' @export
 ##' @param X A numeric vector.
@@ -18,7 +16,7 @@
 ##'
 ##' @param initial The starting value of the CUSUM (\emph{C[0]}).
 ##'
-##' @param reset Logical indicating whether the CUSUM is reset to  0 after crossing the control limit.
+##' @param reset Logical indicating whether the CUSUM is reset to 0 after crossing the control limit.
 ##'
 ##' @return A object of class 'cusum', which is a vector of the CUSUM statistics, along with the following attributes:
 ##' \code{X}, \code{k}, \code{h}, \code{initial}, and \code{reset} (which correspond to the original arguments provided to
@@ -31,6 +29,9 @@
 ##' y <- cusum(rnorm(50), 0.2, 2)
 ##' y
 ##'
+##' # Plot the cusum
+##' plot(y)
+##' 
 ##' # A look at the attributes
 ##' attributes(y)
 
@@ -113,29 +114,93 @@ cusum <- function(X, k, h, initial = 0, reset = TRUE) {
 
 print.cusum <- function(x, ...) {
 
-  y <- x
-  attributes(y) <- list(names = names(x))
-  print(y, ...)
+  printWithoutAttributes(x, ...)
 
-} # print.movAvg2
+} # print.cusum
 
 
 ##' @method plot cusum
 ##'
-##' @describeIn cusum Prints the \code{cusum} object by only showing the CUSUM statistics and suppressing the attributes.
+##' @describeIn cusum Plots the \code{cusum} object.
 ##'
-##' @param indexes A vector of indexes that select the elements of \code{X} that will be plotted
+##' @param indexes A vector of indexes that select the elements of the cusum statistics that will be plotted.
 ##'
-##' @param overlayData A logical indicating whether the data are overlaid on the plot
+##' @param emphOOC A logical indicating whether out of control points should be emphasized in red.
 ##'
 ##' @export
 
-plot.cusum <- function(x, indexes = NULL, overlayData = FALSE, ...) {
+plot.cusum <- function(x, indexes = NULL, emphOOC = TRUE, ...) {
 
-    
-  y <- x
-  attributes(y) <- list(names = names(x))
-  print(y, ...)
+  # Check inputs
+  stopifnotMsg(if (!is.null(indexes)) {
+                 if (is.numeric(indexes) & (length(indexes) <= length(x)) & (length(indexes) > 0)) {
+                   all(indexes %in% 1:length(x))
+                 } else FALSE
+               } else TRUE,
+               "'indexes' must be whole numbers in the set '1:length(x)', or NULL",
+               is.logical(emphOOC) & (length(emphOOC) == 1),
+               "'emphOOC' must be TRUE or FALSE")
 
-} # print.movAvg2
+  # If indexes are NULL, set to all possible to make selection easier
+  if (is.null(indexes)) {
+    indexes <- 1:length(x)
+  }
+
+  # Get the set of data points that will be plotted
+  xvals <- indexes
+  yvals <- x[indexes]
+
+  # Get the control limit, as it is used often
+  h <- attributes(x)$h
+     
+  # Set the default plot args
+  defaultArgs <- list(x = indexes,
+                      y = yvals,
+                      xlab = "Index",
+                      ylab = "Cusum Statistic",
+                      ylim = range(yvals, h),
+                      type = "b",
+                      col = "Blue",
+                      pch = 1,
+                      cex = 1)
+
+  # Blend in the supplied plot arguments from ...
+  finalArgs <- blendArgs(defaultArgs, ...)
+
+  # Create the plot if no reset
+  if (!attributes(x)$reset) {
+    do.call(plot, finalArgs)
+  }
+  else {
+
+    # Make a blank plot and then add in the lines for each cusum run
+    finalArgsReset <- finalArgs
+    finalArgsReset$type <- "n"
+
+    do.call(plot, finalArgsReset)
+
+    # Add a connected line segment for each run
+    cnt <- attributes(x)$resetCounter[indexes]
+
+    for (i in unique(cnt)) {
+
+      runInd <- cnt == i
+ 
+      # Add data points first if they were requested
+      do.call(lines, c(list(x = indexes[runInd], y = yvals[runInd]), finalArgs[c("type", "col", "pch", "cex")]))
+        
+    }
+
+  }
+
+  # Add in the control limit
+  abline(h = h, col = "Red")
+
+  # Color the signal points red
+  if (emphOOC) {
+    signalInd <- which(yvals > h)
+    points(indexes[signalInd], yvals[signalInd], col = "Red", pch = finalArgs$pch, cex = finalArgs$cex)
+  }
+
+} # plot.cusum
 

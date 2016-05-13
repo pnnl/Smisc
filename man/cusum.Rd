@@ -2,12 +2,15 @@
 % Please edit documentation in R/cusum.R
 \name{cusum}
 \alias{cusum}
+\alias{plot.cusum}
 \alias{print.cusum}
 \title{Calculates a sequence of CUSUM statistics}
 \usage{
 cusum(X, k, h, initial = 0, reset = TRUE)
 
 \method{print}{cusum}(x, ...)
+
+\method{plot}{cusum}(x, indexes = NULL, emphOOC = TRUE, ...)
 }
 \arguments{
 \item{X}{A numeric vector.}
@@ -18,9 +21,13 @@ cusum(X, k, h, initial = 0, reset = TRUE)
 
 \item{initial}{The starting value of the CUSUM (\emph{C[0]}).}
 
-\item{reset}{Logical indicating whether the CUSUM is reset to  0 after crossing the control limit.}
+\item{reset}{Logical indicating whether the CUSUM is reset to 0 after crossing the control limit.}
 
-\item{\dots}{Additional arguments to \code{\link{print.default}}}
+\item{indexes}{A vector of indexes that select the elements of the cusum statistics that will be plotted.}
+
+\item{emphOOC}{A logical indicating whether out of control points should be emphasized in red.}
+
+\item{\dots}{Additional arguments to \code{\link{print.default}} or \code{\link{plot.default}}}
 }
 \value{
 A object of class 'cusum', which is a vector of the CUSUM statistics, along with the following attributes:
@@ -36,16 +43,19 @@ the control limit.
 CUSUM is assumed to be of the form: \emph{C[i] = max(0, C[i-1] + X[i] - k)},
 where the signal occurs when \emph{C[i] > h}.  Note that \code{X} can be the CUSUM scores, or weights,
 given by the log-likelihood ratio, in which case \code{k = 0} would make sense.
-
-Plot method to come...
 }
 \section{Methods (by generic)}{
 \itemize{
 \item \code{print}: Prints the \code{cusum} object by only showing the CUSUM statistics and suppressing the attributes.
+
+\item \code{plot}: Plots the \code{cusum} object.
 }}
 \examples{
 y <- cusum(rnorm(50), 0.2, 2)
 y
+
+# Plot the cusum
+plot(y)
 
 # A look at the attributes
 attributes(y)

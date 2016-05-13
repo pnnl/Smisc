@@ -155,9 +155,7 @@ movAvg2 <- function(y = NULL, bw = 30, type = c("gaussian", "exponential", "line
 
 print.movAvg2 <- function(x, ...) {
 
-  y <- x
-  attributes(y) <- list(names = names(x))
-  print(y, ...)
+  printWithoutAttributes(x, ...)
 
 } # print.movAvg2
 
@@ -186,20 +184,13 @@ plot.movAvg2 <- function(x, ...) {
                       main = sub("gauss", "Gauss", paste("Unnormalized", type, "weights")),
                       font.main = 1)
 
-  # Find names in ... that exist in defaultArgs that will replace those in defaultArgs
-  suppliedArgs <- list(...)
-  toReplace <- intersect(names(defaultArgs), names(suppliedArgs))
-
-  # Remove args from defaultArgs that are provided to ...
-  if (length(toReplace)) {
-    defaultArgs <- defaultArgs[-which(names(defaultArgs) %in% toReplace)]
-  }
-
   # Make the plot
-  do.call(plot, c(defaultArgs, suppliedArgs))
+  do.call(plot, blendArgs(defaultArgs, ...))
 
   # Add in a horiztonal line at the bottom
   abline(h = 0)
 
 } # plot.movAvg2
+
+
 

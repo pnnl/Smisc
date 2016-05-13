@@ -41,7 +41,7 @@ series, with attributes that describe the weights.  If \code{y = NULL}, \code{nu
 }
 \description{
 Wrapper for \code{\link{smartFilter}} that creates a set of symmetric weights for
-the 2-sided window based on the Gaussian kernel, exponetial decay, linear
+the 2-sided window based on the Gaussian kernel, exponential decay, linear
 decay, or simple uniform weights, and then calculates the moving average (dot product)
 using those weights.
 }
