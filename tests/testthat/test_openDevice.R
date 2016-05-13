@@ -4,11 +4,11 @@ test_that("openDevice() opens all the requested device types", {
 
   pf <- function(ext, ...) {
     fname <- paste("tmp/plot_out", ext, sep = ".")
-    pvar(getwd(), fname)
+#    pvar(getwd(), fname)
     openDevice(fname, ...)
     plot(1:10, 1:10)
     dev.off()
-    print(dir("tmp"))
+#    print(dir("tmp"))
     expect_true(file.exists(fname))
     unlink(fname)
   }
@@ -16,7 +16,8 @@ test_that("openDevice() opens all the requested device types", {
   pf("pdf", height = 10, width = 12)
   pf("ps", height = 7, width = 2)
   pf("jpg", quality = 100)
-#  pf("tif")
+  # This fails for some weird reason on the Travis checks
+  # pf("tif")  
   pf("png")
   pf("bmp")
 

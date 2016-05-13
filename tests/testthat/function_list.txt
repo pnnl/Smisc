@@ -1,6 +1,13 @@
+# These are the functions that still need tests written for them
 S3method(plot,hpd)
 S3method(print,hpd)
+S3method(print,movAvg2)
+S3method(plot,movAvg2)
+S3method(print,cusum)
+S3method(plot,cusum)
+S3method(signal,cusum)
 export(comboList)
+export(cusum)
 export(dataIn)
 export(df2list)
 export(dframeEquiv)

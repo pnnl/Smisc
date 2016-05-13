@@ -8,6 +8,6 @@ test_that("cumMax returns the correct values", {
 
   expect_true(all(cumMax(c(3, -2.7, 0.5, 4.1)) == c(3, 3, 3, 4.1)))
 
-  expect_error(cumMax(c("this", "that")), "'x' must be a numeric or integer")
+  expect_error(cumMax(c("this", "that")), "'x' must be 'numeric' or 'integer'")
   
 })
