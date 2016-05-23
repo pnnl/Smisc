@@ -173,7 +173,7 @@ plot.cusum <- function(x, indexes = NULL, emphOOC = TRUE, ...) {
 
   # Blend in the supplied plot arguments from ...
   finalArgs <- blendArgs(defaultArgs, ...)
-
+  
   # Create the plot if no reset
   if (!attributes(x)$reset) {
     do.call(plot, finalArgs)
