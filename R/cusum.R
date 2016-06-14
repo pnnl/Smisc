@@ -213,7 +213,7 @@ plot.cusum <- function(x, indexes = NULL, emphOOC = TRUE, ...) {
 
 ##' @method signal cusum
 ##'
-##' @describeIn cusum Prints the indexes that exceed the control limit
+##' @describeIn cusum Prints the indexes in a \code{cusum} object that exceed the control limit
 ##'
 ##' @export
 
