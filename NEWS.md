@@ -1,7 +1,10 @@
 Version 0.3.4, 2016-06-15
 -----------------------------------------------------------------------------------
 
-- Removed `sortDF()`, `dbb()`, `qbb()`, `pbb()`, `rbb()`, and `interactionPlot()` due to licensing issues.  
+FEATURES / CHANGES
+
+- Removed `sortDF()`, `dbb()`, `qbb()`, `pbb()`, `rbb()`, and `interactionPlot()` due to licensing prior to submission to CRAN
+
 
 Version 0.3.3, 2016-05-13
 -----------------------------------------------------------------------------------
