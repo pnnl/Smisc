@@ -5,8 +5,8 @@
 ##' \tabular{ll}{
 ##' Package: \tab Smisc\cr
 ##' Type: \tab Package\cr
-##' Version: \tab 0.3.3\cr
-##' Date: \tab 2016-05-13\cr
+##' Version: \tab 0.3.4\cr
+##' Date: \tab 2016-06-15\cr
 ##' License: \tab file LICENSE\cr
 ##' }
 ##'
@@ -18,11 +18,11 @@
 ##'
 ##' @useDynLib Smisc
 ##'
-##' @importFrom graphics abline axis axis.POSIXct legend lines matplot par plot plot.default points text
-##' @importFrom grDevices dev.flush dev.hold rainbow
-##' @importFrom methods is
-##' @importFrom stats approx dbinom fft integrate optimize pbeta pbinom rbeta rbinom rpois uniroot var
-##' @importFrom utils head read.csv tail
+## @importFrom graphics abline axis axis.POSIXct legend lines matplot par plot plot.default points text
+## @importFrom grDevices dev.flush dev.hold rainbow
+## @importFrom methods is
+## @importFrom stats approx dbinom fft integrate optimize pbeta pbinom rbeta rbinom rpois uniroot var
+## @importFrom utils head read.csv tail
 ##'
 ##' @author Landon Sego
 ##'

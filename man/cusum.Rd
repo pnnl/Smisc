@@ -57,7 +57,7 @@ given by the log-likelihood ratio, in which case \code{k = 0} would make sense.
 
 \item \code{plot}: Plots the \code{cusum} object.
 
-\item \code{signal}: Prints the indexes that exceed the control limit
+\item \code{signal}: Prints the indexes in a \code{cusum} object that exceed the control limit
 }}
 \examples{
 y <- cusum(rnorm(50), 0.2, 2)

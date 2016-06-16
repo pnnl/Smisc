@@ -43,9 +43,4 @@ LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
 NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS 
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-All functions in the Smisc package follow the above licence,
-except `interactionPlot()`, `dbb()`, `pbb()`, `qbb()`, and `rbb()`, which are 
-GNU General Public License version 2, as published by the Free Software Foundation.
-`interactionPlot()` is derived from `interaction.plot()` in the `stats` package 
-that is distributed with R, and the others come from the `tailRank` package
-by Kevin R. Coombes.
+

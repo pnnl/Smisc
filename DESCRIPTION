@@ -1,7 +1,7 @@
 Package: Smisc
 Title: Sego Miscellaneous
-Version: 0.3.3
-Date: 2016-05-13
+Version: 0.3.4
+Date: 2016-06-15
 Authors@R: c(person("Landon", "Sego", role = c("aut", "cre"), email = "Landon.Sego@pnnl.gov"))
 URL:  http://pnnl.github.io/Smisc
 Description: Sego Miscellaneous: A collection of functions for statistical
