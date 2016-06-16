@@ -1,11 +1,12 @@
 Package: Smisc
 Title: Sego Miscellaneous
-Version: 0.3.3
-Date: 2016-05-13
-Author: Landon Sego
+Version: 0.3.4
+Date: 2016-06-15
+Authors@R: c(person("Landon", "Sego", role = c("aut", "cre"), email = "Landon.Sego@pnnl.gov"))
 URL:  http://pnnl.github.io/Smisc
 Description: Sego Miscellaneous: A collection of functions for statistical
     computing and data manipulation in R.
+NeedsCompilation: yes
 Imports:
     parallel,
     utils,
@@ -15,6 +16,5 @@ Imports:
 Suggests:
     testthat,
     foreach
-Maintainer: Landon Sego <Landon.Sego@pnnl.gov>
 License: file LICENSE
 RoxygenNote: 5.0.1

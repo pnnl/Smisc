@@ -1,6 +1,8 @@
 ##' Generic for \code{signal}
 ##'
-## @aliases missingpreds
+# The missingpreds method is here as an example of adding another generic to this file.  It doesn't have any relevance to Smisc
+#
+## @aliases missingpreds 
 ##' 
 ##' @usage signal(object, ...)
 ## missingpreds(object, ...)
