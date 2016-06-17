@@ -75,7 +75,7 @@ test_that("pkbinom() behaves properly at endpoints and with NAs", {
   expect_identical(pkbinom(c(-1, 11), c(3, 7), c(0.25, 0.05)), c(0, 1))
 
   # Endpoints
-  expect_equal(pkbinom(100, c(23, 28, 47, 3), c(0.01, 0.4, 0.05, 0.8)), 1, tol = 1e-16)
+  expect_equal(pkbinom(100, c(23, 28, 47, 3), c(0.01, 0.4, 0.05, 0.8)), 1, tol = 1e-14)
   expect_identical(pkbinom(c(-5, 50, 101), c(50, 47, 3), c(0.01, 0.05, 0.8))[c(1, 3)], c(0, 1))
 
   # NA's
