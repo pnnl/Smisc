@@ -1,3 +1,15 @@
+Version 0.3.5, 2016-06-20
+-----------------------------------------------------------------------------------
+
+FIXES
+
+- `select()` modified to correctly handle selecting from (n x 1) or (1 x n) dataframes and matrices.  Additional tests added.
+
+FEATURES / CHANGES
+
+- Licence modified to BSD_3_clause + file LICENSE
+
+
 Version 0.3.4, 2016-06-15
 -----------------------------------------------------------------------------------
 

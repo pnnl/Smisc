@@ -135,8 +135,198 @@ test_that("select() returns errors as expected", {
   expect_error(select(dn, TRUE), "'selection' should be")
   expect_error(select(dn, -1), "'selection' should be")
   expect_error(select(dn, 4.2), "'selection' should be")
-  expect_error(select(dn, 5), "are not present")
-  expect_error(select(dn, "e"), "are not present")
+  expect_error(select(dn, 5), "is not present")
+  expect_error(select(dn, "e"), "is not present")
+  expect_error(select(dn, c("e", "f")), "are not present")  
   expect_error(select(dn, "a", "this"), "should be TRUE")
 
 })
+
+
+test_that("select() selects correctly from n x m for 1 row or 1 column", {
+
+  c1 <- matrix(1:9, nrow = 3, dimnames = list(c("a", "b", "c"), c("v1", "v2", "v3")))
+  c2 <- data.frame(v1 = 1:3, v2 = as.character(4:6), v3 = factor(7:9),
+                   row.names = letters[1:3], stringsAsFactors = FALSE)
+
+  c1c <- select(c1, 2)
+  c1r <- select(c1, 2, cols = FALSE)
+
+  c2c <- select(c2, 2)
+  c2r <- select(c2, 2, cols = FALSE)
+
+  expect_true(is.matrix(c1c))
+  expect_true(is.matrix(c1r))
+  expect_true(all(dim(c1c) == c(3, 1)))
+  expect_true(all(dim(c1r) == c(1, 3)))
+
+  expect_true(is.data.frame(c2c))
+  expect_true(is.data.frame(c2r))
+  expect_true(all(dim(c2c) == c(3, 1)))
+  expect_true(all(dim(c2r) == c(1, 3)))
+
+  expect_true(is.numeric(select(c2, 1)[,1]))
+  expect_true(is.character(select(c2, 2)[,1]))
+  expect_true(is.factor(select(c2, 3)[,1]))
+  
+})
+
+
+test_that("select() selects correctly from n x 1", {
+
+  # Data frames
+  c3 <- data.frame(v1 = 1:4, row.names = letters[1:4])
+  c3.1 <- data.frame(v1 = as.factor(1:4), row.names = letters[1:4])
+  c3.2 <- data.frame(v1 = as.character(1:4), row.names = letters[1:4], stringsAsFactors = FALSE)
+
+  c31 <- select(c3, 2, cols = FALSE)
+
+  expect_true(is.data.frame(c31))
+  expect_true(all(dim(c31) == c(1, 1)))
+  expect_true(is.numeric(c31[1, 1]))
+  
+  c32 <- select(c3, c(2, 4), cols = FALSE)
+
+  expect_true(is.data.frame(c32))
+  expect_true(all(dim(c32) == c(2, 1)))
+  expect_true(is.numeric(c31[,1]))
+  
+  expect_true(is.factor(select(c3.1, 2, cols = FALSE)[1,1]))
+  expect_true(is.character(select(c3.2, 2, cols = FALSE)[1,1]))
+
+  # Matrices
+  c4 <- matrix(1:4, ncol = 1, dimnames = list(letters[1:4], "v1"))
+
+  c41 <- select(c4, 2, cols = FALSE)
+  
+  expect_true(is.matrix(c41))
+  expect_true(all(dim(c41) == c(1, 1)))
+  
+  expect_true(all(dim(select(c4, c(2, 4), cols = FALSE)) == c(2, 1)))
+  
+  expect_true(all(dim(select(c4, 1)) == c(4, 1)))
+    
+})
+
+
+
+test_that("select() selects correctly from 1 x n", {
+
+  # Data frames
+  c5 <- data.frame(a = 1, b = "2", c = factor("a"), stringsAsFactors = FALSE, row.names = "a")
+
+  c51 <- select(c5, 1, cols = FALSE)
+
+  expect_true(is.data.frame(c51))
+  expect_true(all(dim(c51) == c(1, 3)))
+  expect_equal(c5, c51)
+  
+  expect_true(all(sapply(select(c5, c("a", "c")), class) == c("numeric", "factor")))
+  expect_true(all(sapply(select(c5, c("a", "b")), class) == c("numeric", "character")))
+  expect_true(all(sapply(select(c5, c("b", "c")), class) == c("character", "factor")))
+  
+  c52 <- select(c5, "a")
+  expect_true(is.data.frame(c52))
+  expect_true(all(dim(c52) == c(1, 1)))
+  expect_true(is.numeric(c52[1,1]))
+
+  expect_true(is.character(select(c5, "b")[1,1]))
+  expect_true(is.factor(select(c5, "c")[1,1]))
+
+  expect_equal(select(c5, letters[1:3]), c5)
+
+  # Matrices
+  c6 <- matrix(1:3, nrow = 1, dimnames = list("A", letters[1:3]))
+          
+  c61 <- select(c6, 1, cols = FALSE)
+
+  expect_true(is.matrix(c61))
+  expect_true(all(dim(c61) == c(1, 3)))
+  expect_equal(c6, c61)
+
+  expect_true(all(dim(select(c6, c("a", "b"))) == c(1, 2)))
+          
+  expect_equal(select(c6, letters[1:3]), c6)
+          
+})
+
+
+
+## Example cases used to develop tests
+
+## # Case 1: n x m, select > 1 col or > 1 row
+## c1 <- matrix(1:9, nrow = 3, dimnames = list(c("a", "b", "c"), c("v1", "v2", "v3")))
+## select(c1, 1:2)
+## select(c1, 1:2, cols = FALSE)
+## c2 <- data.frame(v1 = 1:3, v2 = as.character(4:6), v3 = factor(7:9),
+##                  row.names = letters[1:3], stringsAsFactors = FALSE)
+## select(c2, 1:2)
+## select(c2, 1:2, cols = FALSE)
+
+## # Case 2:  n x m, select 1 row or 1 column
+## select(c1, 2)
+## select(c1, 2, cols = FALSE)
+
+## select(c2, 2)
+## select(c2, 2, cols = FALSE)
+
+## # Case 3: n x 1, select 1 row, select multiple rows, select 1 col
+## c3 <- data.frame(v1 = 1:4, row.names = letters[1:4])
+## c3.1 <- data.frame(v1 = as.factor(1:4), row.names = letters[1:4])
+## c3.2 <- data.frame(v1 = as.character(1:4), row.names = letters[1:4], stringsAsFactors = FALSE)
+## select(c3, 2, cols = FALSE)
+## select(c3, c(2,4), cols = FALSE)
+## select(c3, 1)
+## str(select(c3.1, 2, cols = FALSE))
+## str(select(c3.2, 2, cols = FALSE))
+## select(c3, c("this","that"))
+
+
+## c4 <- matrix(1:4, ncol = 1, dimnames = list(letters[1:4], "v1"))
+## select(c4, 2, cols = FALSE)
+## select(c4, c(2,4), cols = FALSE)
+## select(c4, 1)
+
+
+## # Case 4:  1 x n, select 1 row, select 1 or multiple cols
+## c5 <- data.frame(a = 1, b = "2", c = factor("a"), stringsAsFactors = FALSE, row.names = "a")
+
+## select(c5, 1, cols = FALSE)
+## select(c5, 2, cols = FALSE)
+## str(select(c5, c("a", "c")))
+## str(select(c5, c("a", "b")))
+## str(select(c5, c("b", "c")))
+## str(select(c5, "a"))
+## str(select(c5, "b"))
+## str(select(c5, "c"))
+## str(select(c5, letters[1:3]))
+## str(select(c5, letters[1:5]))
+
+## c6 <- matrix(1:3, nrow = 1, dimnames = list("A", letters[1:3]))
+## select(c6, 1, cols = FALSE)
+## select(c6, 2, cols = FALSE)
+## select(c6, c("a", "b"))
+## is.matrix(select(c6, c("a", "b")))
+## select(c6, letters[1:3])
+## select(c6, "c")
+## is.matrix(select(c6, "c"))
+
+## # No selection cases
+## select(c1, 0)
+## select(c1, 0, cols = F)
+## str(select(c2, integer(0)))
+## str(select(c2, 0, cols = F))
+## select(c3, 0)
+## select(c3, 0, cols = F)
+## select(c4, 0)
+## select(c4, 0, cols = F)
+## select(c5, 0)
+## select(c5, 0, cols = F)
+
+## select(c6, 0)
+## select(c6, 0, cols = F)
+
+## # Case 5:
+## is.matrix(select(matrix(1, nrow = 1), 1))
+## select(data.frame(a=1), "a")
+## select(data.frame(a=1), 1, cols = F)
