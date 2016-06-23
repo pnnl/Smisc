@@ -67,10 +67,12 @@ probabilty of that interval.
 \item \code{plot}: Plots the density, overlaying the lower and upper limits of the credible interval
 }}
 \examples{
+\donttest{
 # A credible interval using the standard normal
 int <- hpd(dnorm, c(-5,5), prob = 0.90, njobs = 2)
 print(int)
 plot(int)
+}
 
 # A credible interval with the gamma density
 int <- hpd(function(x) dgamma(x, shape = 2, rate = 0.5), c(0, 20),
@@ -78,12 +80,14 @@ int <- hpd(function(x) dgamma(x, shape = 2, rate = 0.5), c(0, 20),
 print(int)
 plot(int)
 
+\donttest{
 # A credible interval using the Beta density
 dens <- function(x) dbeta(x, 7, 12)
 dist <- function(x) pbeta(x, 7, 12)
 int <- hpd(dens, c(0, 1), cdf = dist)
 print(int)
 plot(int)
+}
 }
 \author{
 Landon Sego

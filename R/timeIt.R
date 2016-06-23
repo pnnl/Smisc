@@ -28,9 +28,10 @@
 ##'
 ##' @examples
 ##'# We can assign the object within the call to timeIt():
-##'timeIt(x1 <- rnorm(10^7))
+##'timeIt(x1 <- rnorm(10^6))
 ##'str(x1)
 ##'
+##'\donttest{
 ##'# We can just run the expression without assigning it to anything
 ##'timeIt(rnorm(10^7), units = "m")
 ##'
@@ -41,6 +42,7 @@
 ##'# To store the elapsed time:
 ##'x3 <- timeIt(rnorm(10^7), verbose = FALSE, return.time = TRUE)
 ##'x3[c("elapsed","units")]
+##'}
 
 timeIt <- function(expr,
                    units = c("automatic","seconds","minutes","hours","days"),
