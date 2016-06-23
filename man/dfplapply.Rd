@@ -93,6 +93,7 @@ especially for parallel, single-row processing of data frames.
 \examples{
 X <- data.frame(a = 1:3, b = letters[1:3])
 
+\donttest{
 # Function that will operate on each of x, producing a simple list
 test.1 <- function(x) {
   list(ab = paste(x$a, x$b, sep = "-"), a2 = x$a^2, bnew = paste(x$b, "new", sep = "."))
@@ -110,6 +111,7 @@ test.2 <- function(x) {
 }
 
 dfplapply(X, test.2, output.df = TRUE, njobs = 2, verbose = TRUE)
+}
 
 # Passing in other objects needed by FUN
 a.out <- 10

@@ -56,6 +56,7 @@ supplied to \code{.paropts} is ignored. See the documentation for \code{\link[pl
 \examples{
 data(baseball, package = "plyr")
 
+\donttest{
 # Summarize the number of entries for each year in the baseball dataset with 2 jobs
 o1 <- pddply(baseball, ~ year, nrow, njobs = 2)
 head(o1)
@@ -64,11 +65,14 @@ head(o1)
 o2 <- plyr::ddply(baseball, ~ year, nrow)
 identical(o1, o2)
 
+
 # Another possibility
 o3 <- pddply(baseball, "lg", c("nrow", "ncol"), njobs = 2)
 o3
+
 o4 <- plyr::ddply(baseball, "lg", c("nrow", "ncol"))
 identical(o3, o4)
+}
 
 # A nonsense example where we need to pass objects and packages into the cluster
 number1 <- 7
@@ -82,11 +86,11 @@ o5 <- pddply(baseball[1:100,], "year", f, number2 = 13, njobs = 2,
             .paropts = list(.packages = "Smisc", .export = "number1"))
 o5
 
+\donttest{
 # Non parallel
 o6 <- plyr::ddply(baseball[1:100,], "year", f, number2 = 13)
-
 identical(o5, o6)
-
+}
 }
 \seealso{
 \code{\link[plyr:ddply]{plyr::ddply}}
