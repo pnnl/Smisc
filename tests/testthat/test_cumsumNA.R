@@ -4,7 +4,7 @@ test_that("cumsumNA() is the same as cumsum() when no NAs are present", {
 
   set.seed(38) 
   x <- rnorm(100)
-  expect_true(max(abs(cumsumNA(x) - cumsum(x))) < 1e-14)
+  expect_true(max(abs(cumsumNA(x) - cumsum(x))) < 1e-12)
     
 })
 

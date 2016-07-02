@@ -39,7 +39,7 @@ test_that("dkbinom() methods agree", {
   x1 <- dkbinom(4, c(3, 4, 2), c(0.3, 0.5, 0.8), method = "fft")
   x2 <- dkbinom(4, c(3, 4, 2), c(0.3, 0.5, 0.8), method = "butler")
 
-  expect_equal(x1, x2, tol = 1e-15)
+  expect_equal(x1, x2, tol = 1e-12)
   
 })
 
@@ -49,33 +49,33 @@ test_that("pkbinom() methods agree", {
   x2 <- pkbinom(4, c(3, 4, 2), c(0.3, 0.5, 0.8), method = "butler")
   x3 <- pkbinom(4, c(3, 4, 2), c(0.3, 0.5, 0.8), method = "naive")
 
-  expect_equal(x1, x2, tol = 1e-15)
-  expect_equal(x2, x3, tol = 1e-15)
-  expect_equal(x1, x3, tol = 1e-15)
+  expect_equal(x1, x2, tol = 1e-12)
+  expect_equal(x2, x3, tol = 1e-12)
+  expect_equal(x1, x3, tol = 1e-12)
   
 })
 
 test_that("dkbinom() sums to 1", {
 
   x1 <- sum(dkbinom(0:10, c(3, 7), c(0.7, 0.2)))
-  expect_equal(x1, 1, tol = 1e-15)
+  expect_equal(x1, 1, tol = 1e-10)
 
   x2 <- sum(dkbinom(0:20, c(3, 10, 7), c(0.05, 0.01, 0.1)))  
-  expect_equal(x2, 1, tol = 1e-15)
+  expect_equal(x2, 1, tol = 1e-10)
 
   x3 <- sum(dkbinom(0:100, c(30, 22, 20, 28), c(0.99, 0.5, 0.25, 0.1)))
-  expect_equal(x3, 1, tol = 1e-11)
+  expect_equal(x3, 1, tol = 1e-10)
   
 })
 
 test_that("pkbinom() behaves properly at endpoints and with NAs", {
 
   # Endpoints    
-  expect_equal(pkbinom(10, c(3, 7), c(0.25, 0.05)), 1, tol = 1e-16)
+  expect_equal(pkbinom(10, c(3, 7), c(0.25, 0.05)), 1, tol = 1e-12)
   expect_identical(pkbinom(c(-1, 11), c(3, 7), c(0.25, 0.05)), c(0, 1))
 
   # Endpoints
-  expect_equal(pkbinom(100, c(23, 28, 47, 3), c(0.01, 0.4, 0.05, 0.8)), 1, tol = 1e-14)
+  expect_equal(pkbinom(100, c(23, 28, 47, 3), c(0.01, 0.4, 0.05, 0.8)), 1, tol = 1e-12)
   expect_identical(pkbinom(c(-5, 50, 101), c(50, 47, 3), c(0.01, 0.05, 0.8))[c(1, 3)], c(0, 1))
 
   # NA's
@@ -116,11 +116,11 @@ test_that("dkbinom() and pkbinom() agree at x = q = 0", {
 
   x1 <- dkbinom(0, c(10, 15, 17), c(0.3, 0.7, 0.5))
   x2 <- pkbinom(0, c(10, 15, 17), c(0.3, 0.7, 0.5))
-  expect_equal(x1, x2, tol = 1e-16)
+  expect_equal(x1, x2, tol = 1e-12)
     
   x3 <- dkbinom(0, c(20, 10, 15, 17), c(0.05, 0.02, 0.07, 0.1))
   x4 <- pkbinom(0, c(20, 10, 15, 17), c(0.05, 0.02, 0.07, 0.1))
-  expect_equal(x3, x4, tol = 1e-16)
+  expect_equal(x3, x4, tol = 1e-12)
     
 })
 
@@ -131,7 +131,7 @@ test_that("dkbinom() and pkbinom() agree generally", {
 
   x1.compare <- c(x2[1], diff(x2))
 
-  expect_equal(x1, x1.compare, tol = 1e-13)
+  expect_equal(x1, x1.compare, tol = 1e-12)
 
   
   x3 <- dkbinom(0:100, c(50, 35, 15), c(0.1, 0.7, 0.2))
@@ -139,7 +139,7 @@ test_that("dkbinom() and pkbinom() agree generally", {
 
   x3.compare <- c(x4[1], diff(x4))
 
-  expect_equal(x3, x3.compare, tol = 1e-13)
+  expect_equal(x3, x3.compare, tol = 1e-12)
 
 })
 
