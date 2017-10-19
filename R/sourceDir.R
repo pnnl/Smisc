@@ -3,7 +3,7 @@
 ##' Sources all files with '.R' or '.r' extensions in a directory using a try-catch for each file
 ##'
 ##' In addition to sourcing files for general use, this function is also useful in package development to
-##' verify there are no syntax errors prior to building and compliation.
+##' verify there are no syntax errors prior to building and compilation.
 ##'
 ##' @export
 ##' @param directory Character string indicating the path of the directory

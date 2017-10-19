@@ -13,7 +13,7 @@
 ##' \item In each R instance, pre-processing or post-processing steps can be performed
 ##' before and after the call to \code{\link{lapply}}}
 ##' These pre-processing and post-processing steps can depend
-##' on instance of R, such that each instance can be treated differently, if desired.
+##' on the instance of R, such that each instance can be treated differently, if desired.
 ##' These features give greater control over the computing process, which can be especially useful for large jobs.
 ##'
 ##' @details  \code{plapply} applies \code{FUN} to each element of the list \code{X} by
