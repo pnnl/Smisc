@@ -32,11 +32,10 @@ print(x)
 cumsum(x)
 cumsumNA(x)
 }
-\author{
-Landon Sego
-}
 \seealso{
 \code{\link{cumsum}}
 }
+\author{
+Landon Sego
+}
 \keyword{misc}
-

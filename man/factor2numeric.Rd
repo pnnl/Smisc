@@ -27,4 +27,3 @@ as.numeric(y)
 factor2numeric(y)
 
 }
-

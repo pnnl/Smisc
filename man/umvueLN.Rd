@@ -44,13 +44,12 @@ print(y, digits = 8)
 Gilbert <- c(5.66, sqrt(1.97), sqrt(19.8))
 print(round(abs(y - Gilbert), 2))
 }
-\author{
-Landon Sego
-}
 \references{
 Gilbert, Richard O. (1987) Statistical Methods for
 Environmental Pollution Monitoring, John Wiley & Sons, Inc. New York, pp
 164-167.
 }
+\author{
+Landon Sego
+}
 \keyword{misc}
-

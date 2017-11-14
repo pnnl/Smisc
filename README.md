@@ -22,7 +22,7 @@ Then type the following in R:
 
 
     # Or from GitHub
-    install.packages("devtools") # if needed
+    install.packages("devtools") # if the `devtools` package not already installed
     devtools::install_github("pnnl/Smisc")
 
 #### Acknowledgements:

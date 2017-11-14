@@ -19,4 +19,3 @@ data(timeData)
 
 }
 \keyword{datasets}
-

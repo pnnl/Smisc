@@ -14,4 +14,3 @@ signal(object, ...)
 \description{
 Generic for \code{signal}
 }
-

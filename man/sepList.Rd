@@ -80,4 +80,3 @@ rm(aList, a, b, d, objs, o1, o2, o3, sepTest, z1, z2)
 \author{
 Landon Sego
 }
-

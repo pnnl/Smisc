@@ -46,4 +46,3 @@ qbind(c("a1", "a2"), type = "c")
 \author{
 Landon Sego
 }
-

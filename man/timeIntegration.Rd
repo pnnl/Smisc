@@ -66,4 +66,3 @@ pvar(int1, int2)
 Landon Sego
 }
 \keyword{misc}
-

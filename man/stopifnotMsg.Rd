@@ -7,11 +7,11 @@
 stopifnotMsg(..., level = 1)
 }
 \arguments{
+\item{\dots}{Pairs of logical conditions and error messages. See Examples.}
+
 \item{level}{Whole number indicating how far back in the call stack the error should be attributed to.
 \code{level = 1} goes back to the calling function, \code{level = 2} goes back 2 levels, etc.
 See examples.}
-
-\item{\dots}{Pairs of logical conditions and error messages. See Examples.}
 }
 \value{
 A call to \code{\link{stop}} with the error messages from each condition that was \code{FALSE}.  If all
@@ -70,4 +70,3 @@ f("a", lev = 2)
 \author{
 Landon Sego
 }
-

@@ -12,6 +12,8 @@ parLapplyW(X, FUN, ..., njobs = parallel::detectCores() - 1, expr = NULL,
 
 \item{FUN}{A function or character string naming a function whose first argument will be passed the elements of \code{X}}
 
+\item{\dots}{Additional named arguments to \code{FUN}}
+
 \item{njobs}{The number of jobs (cores) to use}
 
 \item{expr}{An expression that will be evaluated on each worker node via a call to \code{\link{clusterEvalQ}}}
@@ -19,8 +21,6 @@ parLapplyW(X, FUN, ..., njobs = parallel::detectCores() - 1, expr = NULL,
 \item{varlist}{Character vector of names of objects to export to each worker node via \code{\link{clusterExport}}}
 
 \item{envir}{The environment containing the variables in \code{varlist} that will be exported}
-
-\item{\dots}{Additional named arguments to \code{FUN}}
 }
 \value{
 The same result given by \code{lapply(X, FUN, ...)}
@@ -70,10 +70,9 @@ res.3 <- lapply(a, f1, someText = "that.stuff")
 identical(res.1, res.3)
 
 }
-\author{
-Landon Sego
-}
 \seealso{
 \code{\link{lapply}}, \code{\link{parLapply}}, \code{\link{plapply}}
 }
-
+\author{
+Landon Sego
+}

@@ -44,4 +44,3 @@ identical(x, y)
 Landon Sego
 }
 \keyword{misc}
-

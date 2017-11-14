@@ -41,4 +41,3 @@ selectElements(c(1, 3, 1), cnames)
 # If you don't want to select any of them
 selectElements(NULL, cnames)
 }
-

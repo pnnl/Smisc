@@ -64,4 +64,3 @@ findDepMat(t(Y), rows = FALSE)
 Landon Sego
 }
 \keyword{misc}
-

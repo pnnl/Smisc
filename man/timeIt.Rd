@@ -56,4 +56,3 @@ x3[c("elapsed","units")]
 Landon Sego
 }
 \keyword{misc}
-

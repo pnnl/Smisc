@@ -63,4 +63,3 @@ parseJob(11, 3, collate = TRUE, text.to.eval = TRUE)
 \author{
 Landon Sego
 }
-

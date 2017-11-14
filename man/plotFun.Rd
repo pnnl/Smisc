@@ -69,4 +69,3 @@ plotFun(fList, c(0.0001, 0.9999), ylim = c(0, 3.5),
 \author{
 Landon Sego
 }
-

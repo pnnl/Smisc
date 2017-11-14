@@ -29,12 +29,11 @@ files <- dir(file.path(path.package(package = "Smisc"), "data"), full.names = TR
 print(files)
 getPath(files)
 }
-\author{
-Landon Sego
-}
 \seealso{
 Additional functions for filename manipulations:  \code{\link{stripExtension}}, \code{\link{getExtension}},
 \code{\link{stripPath}}, \code{\link{grabLast}}, \code{\link{basename}}, \code{\link{dirname}}
 }
+\author{
+Landon Sego
+}
 \keyword{misc}
-

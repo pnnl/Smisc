@@ -44,11 +44,10 @@ allMissing(d2, byRow=FALSE)
 d2[,!allMissing(d2, byRow = FALSE)]
 
 }
-\author{
-Landon Sego
-}
 \seealso{
 \code{\link{complete.cases}}
 }
+\author{
+Landon Sego
+}
 \keyword{misc}
-

@@ -99,4 +99,3 @@ formatDT(c(NA,"","2010-10-23 3:47PM"), weekday = TRUE)
 Landon Sego
 }
 \keyword{misc}
-

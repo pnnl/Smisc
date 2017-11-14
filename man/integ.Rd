@@ -61,12 +61,11 @@ y <- 2 * x + 3
 integ(y, x = x, method = "t")
 integ(y, a = 0, b = 2)
 }
-\author{
-Landon Sego
-}
 \references{
 Ellis R, Gulick D. "Calculus: One and Several Variables,"
 Harcourt Brace Jovanovich, Publishers: New York, 1991; 479-482.
 }
+\author{
+Landon Sego
+}
 \keyword{math}
-

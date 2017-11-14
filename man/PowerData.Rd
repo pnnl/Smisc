@@ -19,4 +19,3 @@ rm(PowerData, envir=.GlobalEnv)
 
 }
 \keyword{datasets}
-

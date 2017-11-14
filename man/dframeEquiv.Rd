@@ -91,14 +91,13 @@ y <- x
 dframeEquiv(x, y)
 
 }
-\author{
-Landon Sego
-}
 \references{
 \url{http://www.cygnus-software.com/papers/comparingfloats/comparingfloats.htm}
 }
 \seealso{
 \code{\link{all.equal}}, \code{\link{identical}}
 }
+\author{
+Landon Sego
+}
 \keyword{misc}
-

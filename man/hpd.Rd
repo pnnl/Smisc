@@ -2,8 +2,8 @@
 % Please edit documentation in R/hpd.R
 \name{hpd}
 \alias{hpd}
-\alias{plot.hpd}
 \alias{print.hpd}
+\alias{plot.hpd}
 \title{Calculate the highest posterior density credible interval for a unimodal density}
 \usage{
 hpd(pdf, support, prob = 0.95, cdf = NULL, njobs = 1, checkUnimodal = 0)
@@ -66,6 +66,7 @@ probabilty of that interval.
 
 \item \code{plot}: Plots the density, overlaying the lower and upper limits of the credible interval
 }}
+
 \examples{
 \donttest{
 # A credible interval using the standard normal
@@ -92,4 +93,3 @@ plot(int)
 \author{
 Landon Sego
 }
-

@@ -15,6 +15,8 @@ pddply(.data, .variables, .fun = NULL, ..., njobs = parallel::detectCores()
 
 \item{.fun}{function to apply to each piece}
 
+\item{\dots}{other arguments passed on to '.fun'}
+
 \item{njobs}{the number of parallel jobs to launch, defaulting to one less than the number of available cores on the machine}
 
 \item{.progress}{name of the progress bar to use, see \code{\link[plyr:create_progress_bar]{plyr::create_progress_bar}}}
@@ -29,8 +31,6 @@ preserved (FALSE) or dropped (TRUE, default)}
 when parallel computation is enabled.  This is important if (for example) your code relies on external data
 or packages. Use the \code{.export} and \code{.packages} arguments to
 supply them so that all cluster nodes have the correct environment set up for computing.}
-
-\item{\dots}{other arguments passed on to '.fun'}
 }
 \value{
 The object data frame returned by \code{\link[plyr:ddply]{plyr::ddply}}
@@ -95,4 +95,3 @@ identical(o5, o6)
 \seealso{
 \code{\link[plyr:ddply]{plyr::ddply}}
 }
-

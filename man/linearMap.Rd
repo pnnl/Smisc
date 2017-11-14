@@ -47,4 +47,3 @@ identical(y, x)
 \author{
 Landon Sego
 }
-

@@ -45,12 +45,11 @@ print(files)
 stripExtension(files)
 stripExtension(stripPath(files))
 }
-\author{
-Landon Sego
-}
 \seealso{
 Additional functions for filename manipulations:  \code{\link{getExtension}}, \code{\link{stripPath}},
 \code{\link{getPath}}, \code{\link{grabLast}}, \code{\link{basename}}, \code{\link{dirname}}
 }
+\author{
+Landon Sego
+}
 \keyword{misc}
-

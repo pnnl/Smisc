@@ -13,4 +13,3 @@ data(timeDiff.eg)
 
 }
 \keyword{datasets}
-

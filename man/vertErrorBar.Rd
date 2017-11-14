@@ -63,4 +63,3 @@ vertErrorBar(x, 0.3, center = y, barLength = 2 * 1.96, blankMiddle = 0.25)
 \author{
 Landon Sego
 }
-

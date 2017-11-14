@@ -26,4 +26,3 @@ timeStamp("aFilename", "txt")
 Landon Sego
 }
 \keyword{misc}
-
