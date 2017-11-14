@@ -513,7 +513,7 @@ plapply <- function(X, FUN, ...,
     # Now launch the i_th job, the annoying 'nohup.out' is routed to /dev/null
     if (os.win) {
           
-      Rcmd <- paste(file.path(R.home("bin"), "Rcmd.exe"), "CMD BATCH --no-restore --no-save", fname, paste(fname, "out", sep = ""))
+      Rcmd <- paste(file.path(R.home("bin"), "Rcmd.exe"), "BATCH --no-restore --no-save", fname, paste(fname, "out", sep = ""))
       shell(Rcmd, mustWork = TRUE, wait = FALSE, translate = TRUE)
           
     } 
