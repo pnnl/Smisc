@@ -17,16 +17,15 @@ Before you get started, the source code of the `Smisc` package contains C code t
 
 Then type the following in R:
 
-    # From CRAN
+    # To install from From CRAN
     install.packages("Smisc") 
 
 
-    # Or from GitHub
+    # Or to install from GitHub
     install.packages("devtools") # if the `devtools` package not already installed
     devtools::install_github("pnnl/Smisc")
 
 #### Acknowledgements:
 
 This package was developed with support from the Signature Discovery Initiative at Pacific Northwest National Laboratory, conducted under the Laboratory Directed Research and Development Program at PNNL, a multiprogram national laboratory operated by Battelle for the U.S. Department of Energy. 
-
 
