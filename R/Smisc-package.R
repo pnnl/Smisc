@@ -16,7 +16,7 @@
 ##'
 ##' @docType package
 ##'
-##' @useDynLib Smisc
+##' @useDynLib Smisc, .registration = TRUE
 ##'
 ##' @importFrom graphics abline axis axis.POSIXct legend lines par plot plot.default points
 ##' @importFrom grDevices rainbow

@@ -82,7 +82,7 @@ cusum <- function(X, k, h, initial = 0, reset = TRUE) {
   }
 
   # Calculate the cusum
-  cusum <- .C("cusum",
+  cusum <- .C("cusum_c",
               X = as.double(X),
               k = as.double(k),
               h = as.double(h),

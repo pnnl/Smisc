@@ -1,5 +1,13 @@
-0. print and plot methods for cusum
-1. checkArgs argument for pkbinom()
-2. Finish adding testthat checks for all functions
-3. Add matrix support for list2df (or perhaps, a new function called list2matrix)
+Long Term
+
+1. print and plot methods for cusum
+2. checkArgs argument for pkbinom()
+3. Finish adding testthat checks for all functions
+4. Add matrix support for list2df (or perhaps, a new function called list2matrix)
+
+Short Term
+
+1. Update oline documentation
+2. Run tests
+3. resubmit to CRAN
 

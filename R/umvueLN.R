@@ -104,7 +104,7 @@ umvueLN <- function(x, tol = 1e-15, verbose = FALSE) {
 
 psi_n_t <- function(n, tx, tol, verbose) {
 
-  .C("psi_n_t",
+  .C("psi_n_t_c",
      as.integer(n),
      as.double(tx),
      as.double(tol),

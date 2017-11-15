@@ -127,7 +127,7 @@ smartFilter <- function(y, weights, min.window = 1, start = 1, skip = 1, balance
   num.windows <- length(win.centers)
 
   # Calculate the moving dot products
-  out <- .C("smartFilter",
+  out <- .C("smartFilter_c",
             as.double(y),
             as.integer(!is.na(y)),
             as.integer(n),
