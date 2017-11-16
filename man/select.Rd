@@ -82,4 +82,3 @@ select(d, 0, cols = FALSE)
 \author{
 Landon Sego
 }
-

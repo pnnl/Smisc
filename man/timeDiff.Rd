@@ -109,4 +109,3 @@ max(abs(v1.avg.check - v1.avg))
 Landon Sego
 }
 \keyword{misc}
-

@@ -167,7 +167,7 @@ dkbinom <- function(x, size, prob, log = FALSE, verbose = FALSE,
   } else {
 
     # Calculate the probabilities
-    res <- .C("dkbinom",
+    res <- .C("dkbinom_c",
               as.integer(max(x)),
               as.integer(size),
               as.double(prob),
@@ -241,7 +241,7 @@ pkbinom <- function(q, size, prob, log.p = FALSE, verbose = FALSE,
   # Butler method
   else if ((method == "butler") | (length(size) > 5)) {
 
-    res <- .C("dkbinom",
+    res <- .C("dkbinom_c",
               as.integer(max(q)),
               as.integer(size),
               as.double(prob),
@@ -265,7 +265,7 @@ pkbinom <- function(q, size, prob, log.p = FALSE, verbose = FALSE,
     }
 
 
-    res <- .C("pkbinom",
+    res <- .C("pkbinom_c",
               as.integer(c(rep(0, 5 - length(size)), size)),
               as.double(c(rep(1, 5 - length(prob)), prob)),
               as.integer(q),

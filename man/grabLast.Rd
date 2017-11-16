@@ -22,12 +22,11 @@ filename manipulations, among other things.
 grabLast(c(a="email@nowhere.com", "this.has.no.at.sign", "@",
              "bad.email@weird.com@", NA, "2at's@email@good.net"), "@")
 }
-\author{
-Landon Sego
-}
 \seealso{
 Additional functions for filename manipulations:  \code{\link{stripExtension}}, \code{\link{getExtension}},
 \code{\link{stripPath}}, \code{\link{getPath}}, \code{\link{basename}}, \code{\link{dirname}}
 }
+\author{
+Landon Sego
+}
 \keyword{misc}
-

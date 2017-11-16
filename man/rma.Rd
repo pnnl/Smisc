@@ -13,4 +13,3 @@ An alias for \code{rm(list = ls())}.
 Landon Sego
 }
 \keyword{misc}
-

@@ -89,11 +89,10 @@ returned for the corresponding index.
  smartFilter(y, rep(1,5)/5, min.window = 2, balance = FALSE)
 
 }
-\author{
-Landon Sego
-}
 \seealso{
 \code{\link{movAvg2}}, \code{\link{filter}}
 }
+\author{
+Landon Sego
+}
 \keyword{misc}
-

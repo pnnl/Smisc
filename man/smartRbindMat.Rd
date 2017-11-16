@@ -7,15 +7,15 @@
 smartRbindMat(..., distinguish = FALSE, filler = NA)
 }
 \arguments{
+\item{\dots}{matrix objects (separated by commas), a list of matrices, or a
+character vector containing the names of matrix objects}
+
 \item{distinguish}{if \code{TRUE}, then rownames of the returned matrix are
 assigned a name consisting of the source object name as a prefix, followed by the
 row name, separated by a ":".  Otherwise, the original rownames are used.}
 
 \item{filler}{The character to insert into the final matrix for those empty
 elements which occur when not all the matrices have the same column names.}
-
-\item{\dots}{matrix objects (separated by commas), a list of matrices, or a
-character vector containing the names of matrix objects}
 }
 \value{
 Produces a matrix with a union of the column names.  Empty elements
@@ -60,11 +60,10 @@ smartRbindMat(w1,x1,y,z1,z)
 smartRbindMat(w1,x1,y,z1,z, distinguish = TRUE)
 
 }
-\author{
-Landon Sego
-}
 \seealso{
 \code{\link{rbind}}
 }
+\author{
+Landon Sego
+}
 \keyword{misc}
-

@@ -1,3 +1,18 @@
+Version 0.3.8, 2017-11-14
+-----------------------------------------------------------------------------------
+
+FEATURES / CHANGES
+
+- System calls to R in `plapply()` corrected to call the version of R being used, as opposed to the one in the search path (thanks to Kurt Hornik for the feedback)
+
+Version 0.3.7, 2016-07-04
+-----------------------------------------------------------------------------------
+
+FEATURES / CHANGES
+
+- Numerical tests for `dkbinom()` relaxed to pass on SparcSolaris in the CRAN check
+
+
 Version 0.3.6, 2016-06-22
 -----------------------------------------------------------------------------------
 
@@ -5,6 +20,7 @@ FEATURES / CHANGES
 
 - `\donttest{}` added to examples for `timeIt()`, `dkbinom()`, `pddply()`, `hpd()`, and `dfplapply()` to appease CRAN.
 - Additional language added to `Description` in `DESCRIPTION`.
+
 
 Version 0.3.5, 2016-06-20
 -----------------------------------------------------------------------------------

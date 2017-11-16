@@ -56,4 +56,3 @@ dev.list()
 Landon Sego
 }
 \keyword{misc}
-

@@ -30,10 +30,9 @@ cat("Here's a file\\n", "with a few lines\\n",
 more("tmpFile.txt")
 unlink("tmpFile.txt")
 }
-\author{
-Landon Sego
-}
 \seealso{
 \code{\link{readLines}}
 }
-
+\author{
+Landon Sego
+}

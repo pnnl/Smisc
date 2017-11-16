@@ -53,7 +53,7 @@
 ##' @seealso \code{\link{all.equal}}, \code{\link{identical}}
 ##'
 ##' @references
-##' \url{http://www.cygnus-software.com/papers/comparingfloats/comparingfloats.htm}
+##' \url{https://randomascii.wordpress.com/category/floating-point}
 ##' 
 ##' @keywords misc
 ##' 

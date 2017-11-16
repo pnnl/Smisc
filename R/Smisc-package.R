@@ -5,8 +5,8 @@
 ##' \tabular{ll}{
 ##' Package: \tab Smisc\cr
 ##' Type: \tab Package\cr
-##' Version: \tab 0.3.6\cr
-##' Date: \tab 2016-06-22\cr
+##' Version: \tab 0.3.8\cr
+##' Date: \tab 2017-11-14\cr
 ##' License: \tab file LICENSE\cr
 ##' }
 ##'
@@ -16,7 +16,7 @@
 ##'
 ##' @docType package
 ##'
-##' @useDynLib Smisc
+##' @useDynLib Smisc, .registration = TRUE
 ##'
 ##' @importFrom graphics abline axis axis.POSIXct legend lines par plot plot.default points
 ##' @importFrom grDevices rainbow

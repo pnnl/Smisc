@@ -60,11 +60,10 @@ try(pcbinom(c(7.3, 7.8), c(12, 14, 16), c(0.7, 0.8)))
 
 
 }
-\author{
-Landon Sego
-}
 \seealso{
 \code{\link{pbinom}}, \code{\link{pbeta}}
 }
+\author{
+Landon Sego
+}
 \keyword{misc}
-

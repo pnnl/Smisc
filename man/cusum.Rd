@@ -2,8 +2,8 @@
 % Please edit documentation in R/cusum.R
 \name{cusum}
 \alias{cusum}
-\alias{plot.cusum}
 \alias{print.cusum}
+\alias{plot.cusum}
 \alias{signal.cusum}
 \title{Calculates a sequence of Cusum statistics}
 \usage{
@@ -28,13 +28,13 @@ cusum(X, k, h, initial = 0, reset = TRUE)
 
 \item{x}{Object of class \code{cusum}}
 
+\item{\dots}{Additional arguments to \code{\link{print.default}} or \code{\link{plot.default}}.  Ignored by the \code{signal} method.}
+
 \item{indexes}{A vector of indexes that select the elements of the cusum statistics that will be plotted.}
 
 \item{emphOOC}{A logical indicating whether out of control points should be emphasized in red.}
 
 \item{object}{Object of class \code{cusum}}
-
-\item{\dots}{Additional arguments to \code{\link{print.default}} or \code{\link{plot.default}}.  Ignored by the \code{signal} method.}
 }
 \value{
 A object of class \code{cusum}, which is a vector of the Cusum statistics, along with the following attributes:
@@ -59,6 +59,7 @@ given by the log-likelihood ratio, in which case \code{k = 0} would make sense.
 
 \item \code{signal}: Prints the indexes in a \code{cusum} object that exceed the control limit
 }}
+
 \examples{
 y <- cusum(rnorm(50), 0.2, 2)
 y
@@ -75,4 +76,3 @@ attributes(y)
 \references{
 Hawkins DM and Olwell DH. (1998) Cumulative Sum Charts and Charting for Quality Improvement. Springer.
 }
-

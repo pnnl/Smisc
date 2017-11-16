@@ -13,14 +13,14 @@ returns a corresponding vector}
 
 \item{x}{A vector of values that is the first argument to \code{fun}}
 
+\item{\dots}{Additional named arguments for \code{fun}}
+
 \item{njobs}{The number of parallel jobs to spawn using \code{\link{parLapplyW}}.}
 
 \item{random.seed}{If a numeric value is provided, \code{x} is randomized to better distribute the work among
 the jobs if some values of \code{x} take longer to evaluate than others.
 The original ordering is restored before \code{fun(x, ...)} is returned. If \code{NULL},
 no randomization is performed.}
-
-\item{\dots}{Additional named arguments for \code{fun}}
 }
 \value{
 The same result that would be had by calling \code{fun(x, ...)}, except calculated in parallel
@@ -54,4 +54,3 @@ identical(y1, y3)
 \author{
 Landon Sego
 }
-

@@ -46,4 +46,3 @@ hardCode(c(TRUE, FALSE, TRUE), vname = "newLogical")
 \author{
 Landon Sego
 }
-

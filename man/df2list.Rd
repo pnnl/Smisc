@@ -34,11 +34,10 @@ d1 <- data.frame(a = 1:3, b = 7:9)
 df2list(d1, out.type = "v")
 
 }
-\author{
-Landon Sego
-}
 \seealso{
 \code{\link{list2df}}, \code{\link{as.list}}
 }
+\author{
+Landon Sego
+}
 \keyword{misc}
-

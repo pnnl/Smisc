@@ -7,6 +7,9 @@
 pvar(..., digits = NULL, abbrev = NULL, sep = ";", verbose = TRUE)
 }
 \arguments{
+\item{\dots}{Objects whose names and values are to be printed, separated by
+commas. Can also be a simple list.}
+
 \item{digits}{Number of digits to display for numeric objects.  Defaults to
 \code{NULL}, which corresponds to no restriction on the number of digits.  This
 is passed to the \code{digits} argument of \code{\link{round}}.}
@@ -19,9 +22,6 @@ of characters.}
 
 \item{verbose}{\code{=TRUE} writes the value of the object(s) to the
 session window}
-
-\item{\dots}{Objects whose names and values are to be printed, separated by
-commas. Can also be a simple list.}
 }
 \value{
 Invisibly returns a character string containing the names of the
@@ -70,4 +70,3 @@ for (i in 1:2) {
 Landon Sego
 }
 \keyword{misc}
-

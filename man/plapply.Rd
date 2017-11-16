@@ -16,6 +16,8 @@ plapply(X, FUN, ..., njobs = parallel::detectCores() - 1, packages = NULL,
 
 \item{FUN}{A function whose first argument is an element of \code{X}}
 
+\item{\dots}{Additional named arguments to \code{FUN}}
+
 \item{njobs}{The number of jobs (subsets).  Defaults to one less than the
 number of cores on the machine.}
 
@@ -70,8 +72,6 @@ alone in \code{workDir}.}
 
 \item{verbose}{\code{= TRUE} prints messages which show the progress of the
 jobs.}
-
-\item{\dots}{Additional named arguments to \code{FUN}}
 }
 \value{
 A list equivalent to that returned by \code{lapply(X, FUN, ...)}.
@@ -90,7 +90,7 @@ the original list order, randomized, or collated (first-in-first-out).
 \item In each R instance, pre-processing or post-processing steps can be performed
 before and after the call to \code{\link{lapply}}}
 These pre-processing and post-processing steps can depend
-on instance of R, such that each instance can be treated differently, if desired.
+on the instance of R, such that each instance can be treated differently, if desired.
 These features give greater control over the computing process, which can be especially useful for large jobs.
 }
 \details{
@@ -183,11 +183,10 @@ res2 <- lapply(a, f1)
 # Compare results
 identical(res1, res2)
 }
-\author{
-Landon Sego
-}
 \seealso{
 \code{\link{parLapplyW}}, \code{\link{dfplapply}}, \code{\link{parLapply}}, \code{\link{mclapply}}
 }
+\author{
+Landon Sego
+}
 \keyword{misc}
-

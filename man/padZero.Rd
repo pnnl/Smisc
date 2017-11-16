@@ -49,4 +49,3 @@ padZero(c(1.2, 1.34, 1.399), num = 5, side = "r")
 Landon Sego
 }
 \keyword{misc}
-

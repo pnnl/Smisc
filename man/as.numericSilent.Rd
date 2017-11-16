@@ -21,11 +21,10 @@ as.numericSilent(c("this","that"))
 as.numericSilent(c("2893.9","9423.48"))
 as.numericSilent(c("392.1", "that"))
 }
-\author{
-Landon Sego
-}
 \seealso{
 \code{\link{as.numeric}}
 }
+\author{
+Landon Sego
+}
 \keyword{misc}
-

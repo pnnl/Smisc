@@ -51,11 +51,10 @@ rm(A, B, C, more.data, some.data)
 
 
 }
-\author{
-Landon Sego
-}
 \seealso{
 \code{\link{data}},\code{\link{loadObject}},\code{\link{read.csv}}
 }
+\author{
+Landon Sego
+}
 \keyword{misc}
-

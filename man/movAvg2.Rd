@@ -2,8 +2,8 @@
 % Please edit documentation in R/movAvg2.R
 \name{movAvg2}
 \alias{movAvg2}
-\alias{plot.movAvg2}
 \alias{print.movAvg2}
+\alias{plot.movAvg2}
 \title{Calculate the moving average using a 2-sided, symmetric window}
 \usage{
 movAvg2(y = NULL, bw = 30, type = c("gaussian", "exponential", "linear",
@@ -31,11 +31,11 @@ the weights at the left and right edges of the window.  Ignored when \code{type 
 \item{center.weight}{A single, positive number corresponding to the unnormalized value of
 the weights at the center of the window.}
 
-\item{x}{Object of class \code{movAvg2}.}
-
 \item{\dots}{For \code{movAvg2}, these are additional arguments to \code{\link{smartFilter}}.
 For the \code{print} and \code{plot} methods, the "\dots" are additional arguments passed to
 \code{\link{print.default}} and \code{\link{plot.default}}, respectively.}
+
+\item{x}{Object of class \code{movAvg2}.}
 }
 \value{
 An object class \code{movAvg2}, which is a numeric vector containing the moving average (dot product) of the
@@ -63,6 +63,7 @@ weights as possible.
 
 \item \code{plot}: Plots the unnormalized weights.
 }}
+
 \examples{
 z <- movAvg2(rnorm(25), bw = 10, type = "e", center.weight = 2)
 z
@@ -86,11 +87,10 @@ filter(x, rep(1, 5) / 5)
 movAvg2(x, bw = 1, type = "l", furthest.weight = 0.5, center.weight = 1)
 filter(x, c(0.5, 1, 0.5) / 2)
 }
-\author{
-Landon Sego
-}
 \seealso{
 \code{\link{smartFilter}}, \code{\link{filter}}
 }
+\author{
+Landon Sego
+}
 \keyword{misc}
-

@@ -63,11 +63,10 @@ smartTimeAxis(timeData[200:237,"time"], nticks = 20, time.format = "hh:mm:ss pm"
 # Restore the original par settings
 par(op)
 }
-\author{
-Landon Sego
-}
 \seealso{
 \code{\link{axis.POSIXct}}
 }
+\author{
+Landon Sego
+}
 \keyword{misc}
-

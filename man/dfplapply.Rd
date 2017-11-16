@@ -121,11 +121,10 @@ test.3 <- function(x) {
 
 dfplapply(X, test.3, output.df = TRUE, needed.objects = "a.out", njobs = 2)
 }
-\author{
-Landon Sego
-}
 \seealso{
 \code{\link{plapply}}
 }
+\author{
+Landon Sego
+}
 \keyword{misc}
-

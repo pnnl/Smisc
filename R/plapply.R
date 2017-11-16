@@ -13,7 +13,7 @@
 ##' \item In each R instance, pre-processing or post-processing steps can be performed
 ##' before and after the call to \code{\link{lapply}}}
 ##' These pre-processing and post-processing steps can depend
-##' on instance of R, such that each instance can be treated differently, if desired.
+##' on the instance of R, such that each instance can be treated differently, if desired.
 ##' These features give greater control over the computing process, which can be especially useful for large jobs.
 ##'
 ##' @details  \code{plapply} applies \code{FUN} to each element of the list \code{X} by
@@ -512,12 +512,17 @@ plapply <- function(X, FUN, ...,
 
     # Now launch the i_th job, the annoying 'nohup.out' is routed to /dev/null
     if (os.win) {
-      shell(paste("R CMD BATCH --no-restore --no-save", fname, paste(fname, "out", sep = ""),
-            mustWork = TRUE, wait = FALSE, translate = TRUE))
+          
+      Rcmd <- paste(file.path(R.home("bin"), "Rcmd.exe"), "BATCH --no-restore --no-save", fname, paste(fname, "out", sep = ""))
+      shell(Rcmd, mustWork = TRUE, wait = FALSE, translate = TRUE)
+          
     } 
     else {
-      system(paste("nohup R CMD BATCH --no-restore --no-save", fname, paste(fname, "out", sep = ""),
-             "> /dev/null 2>&1 &"))
+        
+      Rcmd <- paste("nohup", file.path(R.home("bin"), "R"), "CMD BATCH --no-restore --no-save",
+                    fname, paste(fname, "out", sep = ""), "> /dev/null 2>&1 &")
+      system(Rcmd)
+             
     }
 
     if (verbose) {
