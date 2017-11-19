@@ -1,13 +1,13 @@
 ##' Smisc: Sego Miscellaneous
 ##'
-##' A collection of functions for statistical computing and data manipulation
+##' A collection of functions for statistical computing, data manipulation, and visualization
 ##'
 ##' \tabular{ll}{
 ##' Package: \tab Smisc\cr
 ##' Type: \tab Package\cr
-##' Version: \tab 0.3.8\cr
-##' Date: \tab 2017-11-14\cr
-##' License: \tab file LICENSE\cr
+##' Version: \tab 0.3.9\cr
+##' Date: \tab 2017-11-18\cr
+##' License: \tab BSD_3_clause + file LICENSE\cr
 ##' }
 ##'
 ##' @name Smisc-package
@@ -26,7 +26,7 @@
 ##'
 ##' @author Landon Sego
 ##'
-##' Maintainer: Landon Sego <Landon.Sego@@pnnl.gov>
+##' Maintainer: Landon Sego <LHS@byu.net>
 ##'
 ##' @keywords package
 ##'

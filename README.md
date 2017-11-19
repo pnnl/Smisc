@@ -21,7 +21,7 @@ You can install from  [GitHub](https://github.com) using the [devtools](https://
 in which case you'll need these prerequistites in order to compile the C code in the `Smisc` package:
 
 - Mac: you'll need [Xcode](https://developer.apple.com/xcode/)
-- Windows: you'll need to install [R tools](http://cran.r-project.org/bin/windows/Rtools/)
+- Windows: you'll need to install [R tools](https://cran.r-project.org/bin/windows/Rtools/)
 - Linux/Unix: compilation should take place automatically
 
 Now do the following in R:
