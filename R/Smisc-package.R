@@ -5,8 +5,8 @@
 ##' \tabular{ll}{
 ##' Package: \tab Smisc\cr
 ##' Type: \tab Package\cr
-##' Version: \tab 0.3.8\cr
-##' Date: \tab 2017-11-14\cr
+##' Version: \tab 0.3.9\cr
+##' Date: \tab 2017-11-18\cr
 ##' License: \tab file LICENSE\cr
 ##' }
 ##'
@@ -26,7 +26,7 @@
 ##'
 ##' @author Landon Sego
 ##'
-##' Maintainer: Landon Sego <Landon.Sego@@pnnl.gov>
+##' Maintainer: Landon Sego <LHS@byu.net>
 ##'
 ##' @keywords package
 ##'
