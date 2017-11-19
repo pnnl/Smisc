@@ -1,9 +1,9 @@
 ##' Linear mapping of a numeric vector or scalar
 ##'
-##' Linear mapping of a numeric vector or scalar from one contiguous interval
+##' Linear mapping of a numeric vector or scalar from one closed interval
 ##' to another
 ##'
-##' The mapping is \eqn{f : D \rightarrow R}, where \eqn{f(D[1]) = R[1]} and
+##' The mapping is \eqn{f : D --> R}, where \eqn{f(D[1]) = R[1]} and
 ##' \eqn{f(D[2]) = R[2]}.
 ##'
 ##' @export

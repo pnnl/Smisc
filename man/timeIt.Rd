@@ -2,13 +2,13 @@
 % Please edit documentation in R/timeIt.R
 \name{timeIt}
 \alias{timeIt}
-\title{Times the execution of an expression.}
+\title{Times the execution of an expression}
 \usage{
 timeIt(expr, units = c("automatic", "seconds", "minutes", "hours", "days"),
   return.time = FALSE, verbose = TRUE)
 }
 \arguments{
-\item{expr}{Any R expression.}
+\item{expr}{Any R \code{\link{expression}}.}
 
 \item{units}{A character expression long enough to uniquely identify one of
 "automatic", "seconds", "minutes", or "hours".  Defaults to "automatic".}
@@ -27,7 +27,7 @@ the following components:
 \item{units}{The time units of the elapsed time}
 }
 \description{
-Times the execution of an expression.
+Times the execution of an expression
 }
 \details{
 If \code{units = "automatic"}, then the units are choosen according to the
@@ -51,6 +51,9 @@ str(x2)
 x3 <- timeIt(rnorm(10^7), verbose = FALSE, return.time = TRUE)
 x3[c("elapsed","units")]
 }
+}
+\seealso{
+\code{\link{proc.time}}
 }
 \author{
 Landon Sego

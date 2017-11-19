@@ -2,7 +2,7 @@
 % Please edit documentation in R/more.R
 \name{more}
 \alias{more}
-\title{Display the contents of a file to the R console}
+\title{Display the contents of a text file to the R console}
 \usage{
 more(file, n = -1, display = c("all", "head", "tail"))
 }
@@ -22,7 +22,7 @@ the last 6 lines that were read.}
 Returns nothing, but it does display the contents of the file on the R console.
 }
 \description{
-Display the contents of a file to the R console
+Display the contents of a text file to the R console
 }
 \examples{
 cat("Here's a file\\n", "with a few lines\\n",

@@ -12,6 +12,8 @@
 ##'
 ##' @author Landon Sego
 ##'
+##' @seealso \code{\link{load}}
+##'
 ##' @examples
 ##'# Create some filenames we'll use in this example
 ##'fileName1 <- "demo_load_object_1.Rdata"

@@ -32,6 +32,8 @@
 ##' (Simpson) or over the range of \code{x} (trapezoid).
 ##' 
 ##' @author Landon Sego
+##'
+##' @seealso \code{\link{integrate}}
 ##' 
 ##' @references Ellis R, Gulick D. "Calculus: One and Several Variables,"
 ##' Harcourt Brace Jovanovich, Publishers: New York, 1991; 479-482.
