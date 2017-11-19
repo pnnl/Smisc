@@ -6,7 +6,7 @@
 \alias{Smisc}
 \title{Smisc: Sego Miscellaneous}
 \description{
-A collection of functions for statistical computing and data manipulation
+A collection of functions for statistical computing, data manipulation, and visualization
 }
 \details{
 \tabular{ll}{
@@ -14,7 +14,7 @@ Package: \tab Smisc\cr
 Type: \tab Package\cr
 Version: \tab 0.3.9\cr
 Date: \tab 2017-11-18\cr
-License: \tab file LICENSE\cr
+License: \tab BSD_3_clause + file LICENSE\cr
 }
 }
 \examples{
