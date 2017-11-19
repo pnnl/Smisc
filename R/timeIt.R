@@ -1,11 +1,11 @@
-##' Times the execution of an expression.
+##' Times the execution of an expression
 ##'
 ##' @details If \code{units = "automatic"}, then the units are choosen according to the
 ##' following rule: If the duration is < 2 min, use seconds.  Else if duration
 ##' < 2 hours, use minutes. Else if < 2 days, use hours.  Otherwise, use days.
 ##'
 ##' @export
-##' @param expr Any R expression.
+##' @param expr Any R \code{\link{expression}}.
 ##'
 ##' @param units A character expression long enough to uniquely identify one of
 ##' "automatic", "seconds", "minutes", or "hours".  Defaults to "automatic".
@@ -25,6 +25,8 @@
 ##' @author Landon Sego
 ##'
 ##' @keywords misc
+##'
+##' @seealso \code{\link{proc.time}}
 ##'
 ##' @examples
 ##'# We can assign the object within the call to timeIt():

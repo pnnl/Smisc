@@ -29,7 +29,7 @@ A row (or column) is considered to be a linear combination of another if
 the maximum of the absolute succesive differences of the ratios of the two
 rows (columns) exceeds the tolerance, \code{tol}.  This is a fairly crude
 criterion and may need improvement--but it at least will identify the
-almost exact linear dependencies.
+almost-exact linear dependencies.
 
 \code{findDepMat} identifies linearly dependent rows (columns) similar to
 the way \code{\link{duplicated}} identifies duplicates. As such, the first

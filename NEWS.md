@@ -1,9 +1,14 @@
 Version 0.3.8, 2017-11-14
 -----------------------------------------------------------------------------------
 
-FEATURES / CHANGES
+FIXES
 
 - System calls to R in `plapply()` corrected to call the version of R being used, as opposed to the one in the search path (thanks to Kurt Hornik for the feedback)
+
+FEATURES / CHANGES
+
+- Updates and minor edits to documentation
+
 
 Version 0.3.7, 2016-07-04
 -----------------------------------------------------------------------------------

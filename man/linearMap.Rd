@@ -21,11 +21,11 @@ mapping. \code{R[1]} is mapped to \code{D[1]}, and \code{R[2]} is mapped to
 The linear mapping of \code{x} from \code{D} to \code{R}
 }
 \description{
-Linear mapping of a numeric vector or scalar from one contiguous interval
+Linear mapping of a numeric vector or scalar from one closed interval
 to another
 }
 \details{
-The mapping is \eqn{f : D \rightarrow R}, where \eqn{f(D[1]) = R[1]} and
+The mapping is \eqn{f : D --> R}, where \eqn{f(D[1]) = R[1]} and
 \eqn{f(D[2]) = R[2]}.
 }
 \examples{

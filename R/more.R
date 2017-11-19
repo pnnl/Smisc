@@ -1,4 +1,4 @@
-##' Display the contents of a file to the R console
+##' Display the contents of a text file to the R console
 ##'
 ##' @export
 ##' @param file Text string giving the file name

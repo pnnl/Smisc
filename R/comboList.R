@@ -13,7 +13,7 @@
 ##' saved.
 ##'
 ##' @param njobs Integer indicating the number of parallel jobs to be used in
-##' calculating the combinations, using \code{\link{parLapply}}
+##' calculating the combinations, using \code{\link{parLapplyW}}
 ##'
 ##' @return A list of class \code{combolist} is invisibly returned with the two
 ##' components shown below.  If \code{outFile} is not \code{NULL}, this same

@@ -65,6 +65,9 @@ integ(y, a = 0, b = 2)
 Ellis R, Gulick D. "Calculus: One and Several Variables,"
 Harcourt Brace Jovanovich, Publishers: New York, 1991; 479-482.
 }
+\seealso{
+\code{\link{integrate}}
+}
 \author{
 Landon Sego
 }

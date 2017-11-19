@@ -53,6 +53,9 @@ both
 # Delete the files
 unlink(c(fileName1, fileName2))
 }
+\seealso{
+\code{\link{load}}
+}
 \author{
 Landon Sego
 }
