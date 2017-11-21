@@ -1,9 +1,9 @@
-Version 0.3.9, 2017-11-18
+Version 0.3.9, 2017-11-20
 -----------------------------------------------------------------------------------
 
 FIXES
 
-- Email address update in `Smisc-package.Rd`
+- Email address update in `Smisc-package.Rd`, corrections to URLs
 
 
 Version 0.3.8, 2017-11-14

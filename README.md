@@ -5,11 +5,11 @@ An R package containing a collection of functions for statistical computing, dat
 #### To cite:
 
 Sego LH. 2016. Smisc: Sego Miscellaneous. A collection of functions for statistical computing and data manipulation in R.
-Pacific Northwest National Laboratory. http://pnnl.github.io/Smisc.
+Pacific Northwest National Laboratory. https://pnnl.github.io/Smisc.
 
 #### To install:
 
-You can install the package from [CRAN](https://cran.r-project.org/) or from [GitHub](https://github.com):
+You can install the package from [CRAN](https://CRAN.R-project.org/) or from [GitHub](https://github.com):
 
 ##### CRAN
 
@@ -21,7 +21,7 @@ You can install from  [GitHub](https://github.com) using the [devtools](https://
 in which case you'll need these prerequistites in order to compile the C code in the `Smisc` package:
 
 - Mac: you'll need [Xcode](https://developer.apple.com/xcode/)
-- Windows: you'll need to install [R tools](https://cran.r-project.org/bin/windows/Rtools/)
+- Windows: you'll need to install [R tools](https://CRAN.R-project.org/bin/windows/Rtools/)
 - Linux/Unix: compilation should take place automatically
 
 Now do the following in R:

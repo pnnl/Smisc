@@ -6,10 +6,10 @@ citEntry(entry = "Manual",
   organization = "{Pacific Northwest National Laboratory}",
   address      = "Richland, WA",
   year         = "2016",
-  url          = "http://pnnl.github.io/Smisc",
+  url          = "https://pnnl.github.io/Smisc",
 
   textVersion  =
   paste("Sego LH. 2016. Smisc: Sego Miscellaneous. A collection of functions for statistical",
         "computing and data manipulation in R. Pacific Northwest National Laboratory.",
-        "http://pnnl.github.io/Smisc.")
+        "https://pnnl.github.io/Smisc.")
 )
