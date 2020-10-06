@@ -4,8 +4,7 @@
 \alias{dframeEquiv}
 \title{Examines the equivalence of two dataframes or matrices}
 \usage{
-dframeEquiv(d1, d2, maxAbsError = 1e-12, maxRelError = 1e-14,
-  verbose = TRUE)
+dframeEquiv(d1, d2, maxAbsError = 1e-12, maxRelError = 1e-14, verbose = TRUE)
 }
 \arguments{
 \item{d1}{The first dataframe or matrix}

@@ -4,9 +4,19 @@
 \alias{plotFun}
 \title{Plot one or more functions on a single plot}
 \usage{
-plotFun(fun, xlim, col = rainbow(length(fun)), lty = 1:length(fun),
-  type = "l", legendLabels = NULL, relX = 0.7, relY = 0.9,
-  nPoints = 1000, njobs = 1, ...)
+plotFun(
+  fun,
+  xlim,
+  col = rainbow(length(fun)),
+  lty = 1:length(fun),
+  type = "l",
+  legendLabels = NULL,
+  relX = 0.7,
+  relY = 0.9,
+  nPoints = 1000,
+  njobs = 1,
+  ...
+)
 }
 \arguments{
 \item{fun}{A function or a list of functions to be plotted.  These functions should take a single, numeric vector argument and return

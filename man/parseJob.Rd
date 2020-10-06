@@ -4,8 +4,7 @@
 \alias{parseJob}
 \title{Parses a collection  of elements into (almost) equal-sized groups}
 \usage{
-parseJob(n, njobs, collate = FALSE, random.seed = NULL,
-  text.to.eval = FALSE)
+parseJob(n, njobs, collate = FALSE, random.seed = NULL, text.to.eval = FALSE)
 }
 \arguments{
 \item{n}{The number elements to be parsed}

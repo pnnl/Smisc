@@ -4,9 +4,14 @@
 \alias{timeIntegration}
 \title{Approximate the integral of a vector of data over time}
 \usage{
-timeIntegration(data, time = names(data), lower = time[1],
-  upper = time[length(time)], check.plot = FALSE, units = c("hours",
-  "minutes", "seconds"))
+timeIntegration(
+  data,
+  time = names(data),
+  lower = time[1],
+  upper = time[length(time)],
+  check.plot = FALSE,
+  units = c("hours", "minutes", "seconds")
+)
 }
 \arguments{
 \item{data}{Vector of numerical data}

@@ -4,8 +4,16 @@
 \alias{vertErrorBar}
 \title{Draw vertical error bar(s) on a plot}
 \usage{
-vertErrorBar(x, width, center = NULL, barLength = NULL, min.y = NULL,
-  max.y = NULL, blankMiddle = NULL, ...)
+vertErrorBar(
+  x,
+  width,
+  center = NULL,
+  barLength = NULL,
+  min.y = NULL,
+  max.y = NULL,
+  blankMiddle = NULL,
+  ...
+)
 }
 \arguments{
 \item{x}{Vector of x value on the plot around which the vertical error bar will be drawn}

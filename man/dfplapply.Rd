@@ -4,12 +4,26 @@
 \alias{dfplapply}
 \title{Parallelized single row processing of a data frame}
 \usage{
-dfplapply(X, FUN, ..., output.df = FALSE, njobs = parallel::detectCores() -
-  1, packages = NULL, header.file = NULL, needed.objects = NULL,
-  needed.objects.env = parent.frame(), workDir = "plapply",
-  clobber = TRUE, max.hours = 24, check.interval.sec = 1,
-  collate = FALSE, random.seed = NULL, rout = NULL, clean.up = TRUE,
-  verbose = FALSE)
+dfplapply(
+  X,
+  FUN,
+  ...,
+  output.df = FALSE,
+  njobs = parallel::detectCores() - 1,
+  packages = NULL,
+  header.file = NULL,
+  needed.objects = NULL,
+  needed.objects.env = parent.frame(),
+  workDir = "plapply",
+  clobber = TRUE,
+  max.hours = 24,
+  check.interval.sec = 1,
+  collate = FALSE,
+  random.seed = NULL,
+  rout = NULL,
+  clean.up = TRUE,
+  verbose = FALSE
+)
 }
 \arguments{
 \item{X}{The data frame, each row of which will be processed using

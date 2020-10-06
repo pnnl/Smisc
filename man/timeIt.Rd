@@ -4,8 +4,12 @@
 \alias{timeIt}
 \title{Times the execution of an expression}
 \usage{
-timeIt(expr, units = c("automatic", "seconds", "minutes", "hours", "days"),
-  return.time = FALSE, verbose = TRUE)
+timeIt(
+  expr,
+  units = c("automatic", "seconds", "minutes", "hours", "days"),
+  return.time = FALSE,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{expr}{Any R \code{\link{expression}}.}

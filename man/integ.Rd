@@ -4,8 +4,7 @@
 \alias{integ}
 \title{Simple numerical integration routine}
 \usage{
-integ(y, x = NULL, a = NULL, b = NULL, method = c("simpson",
-  "trapezoid"))
+integ(y, x = NULL, a = NULL, b = NULL, method = c("simpson", "trapezoid"))
 }
 \arguments{
 \item{y}{Vector of f(x) values}

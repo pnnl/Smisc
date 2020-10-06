@@ -4,8 +4,13 @@
 \alias{doCallParallel}
 \title{Call a function with a vectorized input in parallel}
 \usage{
-doCallParallel(fun, x, ..., njobs = parallel::detectCores() - 1,
-  random.seed = NULL)
+doCallParallel(
+  fun,
+  x,
+  ...,
+  njobs = parallel::detectCores() - 1,
+  random.seed = NULL
+)
 }
 \arguments{
 \item{fun}{A function, or a text string with the name of the function, whose first argument is a vector and
