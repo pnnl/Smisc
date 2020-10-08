@@ -4,8 +4,13 @@
 \alias{formatDT}
 \title{Converts date or datetime strings into alternate formats}
 \usage{
-formatDT(dt, date.outformat = NULL, time.outformat = NULL, posix = TRUE,
-  weekday = FALSE)
+formatDT(
+  dt,
+  date.outformat = NULL,
+  time.outformat = NULL,
+  posix = TRUE,
+  weekday = FALSE
+)
 }
 \arguments{
 \item{dt}{A character vector of date values or datetime values}

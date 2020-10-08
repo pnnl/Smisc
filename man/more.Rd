@@ -25,8 +25,8 @@ Returns nothing, but it does display the contents of the file on the R console.
 Display the contents of a text file to the R console
 }
 \examples{
-cat("Here's a file\\n", "with a few lines\\n",
-    "to read.\\n", sep = "", file = "tmpFile.txt")
+cat("Here's a file\n", "with a few lines\n",
+    "to read.\n", sep = "", file = "tmpFile.txt")
 more("tmpFile.txt")
 unlink("tmpFile.txt")
 }

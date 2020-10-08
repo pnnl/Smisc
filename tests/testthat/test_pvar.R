@@ -3,14 +3,14 @@ context("pvar()")
 test_that("pvar() returns values as expected", {
 
   w <- NULL
-  x <- 10.7775
+  x <- 10.7777
   y <- "text"
   z <- FALSE
 
-  expect_output(pvar(w, x, y, z), "w = NULL; x = 10.7775; y = text; z = FALSE")
+  expect_output(pvar(w, x, y, z), "w = NULL; x = 10.7777; y = text; z = FALSE")
   expect_output(pvar(x, y, digits = 2), "x = 10.78; y = text")
-  expect_output(pvar(w, y, x, z, abbrev = 2, digits = 3), "w = NU; y = te; x = 10.777; z = FALSE")
-  expect_output(pvar(y, x, z, abbrev = 2, digits = 3, sep = "k"), "y = tek x = 10.777k z = FALSE")
+  expect_output(pvar(w, y, x, z, abbrev = 2, digits = 3), "w = NU; y = te; x = 10.778; z = FALSE")
+  expect_output(pvar(y, x, z, abbrev = 2, digits = 3, sep = "k"), "y = tek x = 10.778k z = FALSE")
   expect_identical(pvar(x, y, verbose = FALSE, digits = 1), c("x = 10.8; y = text"))
   expect_identical(pvar(list(x = x, y = y), verbose = FALSE, digits = 1), c("x = 10.8; y = text"))
   

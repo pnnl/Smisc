@@ -4,12 +4,25 @@
 \alias{plapply}
 \title{Simple parallelization of lapply}
 \usage{
-plapply(X, FUN, ..., njobs = parallel::detectCores() - 1, packages = NULL,
-  header.file = NULL, needed.objects = NULL,
-  needed.objects.env = parent.frame(), workDir = "plapply",
-  clobber = TRUE, max.hours = 24, check.interval.sec = 1,
-  collate = FALSE, random.seed = NULL, rout = NULL, clean.up = TRUE,
-  verbose = FALSE)
+plapply(
+  X,
+  FUN,
+  ...,
+  njobs = parallel::detectCores() - 1,
+  packages = NULL,
+  header.file = NULL,
+  needed.objects = NULL,
+  needed.objects.env = parent.frame(),
+  workDir = "plapply",
+  clobber = TRUE,
+  max.hours = 24,
+  check.interval.sec = 1,
+  collate = FALSE,
+  random.seed = NULL,
+  rout = NULL,
+  clean.up = TRUE,
+  verbose = FALSE
+)
 }
 \arguments{
 \item{X}{A list or vector, each element of which will be the input to \code{FUN}}

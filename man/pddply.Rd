@@ -4,9 +4,17 @@
 \alias{pddply}
 \title{Parallel wrapper for plyr::ddply}
 \usage{
-pddply(.data, .variables, .fun = NULL, ..., njobs = parallel::detectCores()
-  - 1, .progress = "none", .inform = FALSE, .drop = TRUE,
-  .paropts = NULL)
+pddply(
+  .data,
+  .variables,
+  .fun = NULL,
+  ...,
+  njobs = parallel::detectCores() - 1,
+  .progress = "none",
+  .inform = FALSE,
+  .drop = TRUE,
+  .paropts = NULL
+)
 }
 \arguments{
 \item{.data}{data frame to be processed}
@@ -42,8 +50,7 @@ All of the arguments except \code{njobs} are passed directly to arguments of the
 \code{\link[plyr:ddply]{plyr::ddply}}.
 }
 \details{
-An innocuous warning is thrown when \code{\link[plyr:ddply]{plyr::ddply}} is called in parallel:
-\url{https://github.com/hadley/plyr/issues/203}.  This function catches and hides that warning, which looks like this:
+An innocuous warning is thrown when \code{\link[plyr:ddply]{plyr::ddply}} is called in parallel.  This function catches and hides that warning, which looks like this:
 \verb{
 
 Warning messages:

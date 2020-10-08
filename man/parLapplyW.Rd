@@ -4,8 +4,15 @@
 \alias{parLapplyW}
 \title{A wrapper for parLapply}
 \usage{
-parLapplyW(X, FUN, ..., njobs = parallel::detectCores() - 1, expr = NULL,
-  varlist = NULL, envir = parent.frame())
+parLapplyW(
+  X,
+  FUN,
+  ...,
+  njobs = parallel::detectCores() - 1,
+  expr = NULL,
+  varlist = NULL,
+  envir = parent.frame()
+)
 }
 \arguments{
 \item{X}{A vector (atomic or list)}

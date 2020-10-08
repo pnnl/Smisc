@@ -6,8 +6,14 @@
 \alias{plot.movAvg2}
 \title{Calculate the moving average using a 2-sided, symmetric window}
 \usage{
-movAvg2(y = NULL, bw = 30, type = c("gaussian", "exponential", "linear",
-  "uniform"), furthest.weight = 0.01, center.weight = 1, ...)
+movAvg2(
+  y = NULL,
+  bw = 30,
+  type = c("gaussian", "exponential", "linear", "uniform"),
+  furthest.weight = 0.01,
+  center.weight = 1,
+  ...
+)
 
 \method{print}{movAvg2}(x, ...)
 

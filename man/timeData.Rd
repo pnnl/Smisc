@@ -4,11 +4,13 @@
 \name{timeData}
 \alias{timeData}
 \title{Generic data frame with a time variable}
-\format{A data frame with 414 observations on the following 2 variables.
+\format{
+A data frame with 414 observations on the following 2 variables.
 \describe{
 \item{time}{a POSIXt time variable}
 \item{x}{a numeric vector}
-}}
+}
+}
 \description{
 Generic data frame with a time variable to support the example in
 \code{\link{smartTimeAxis}}.

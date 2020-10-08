@@ -53,21 +53,21 @@ sepList(list(a = 1:2, b = list(b1 = 5, b2 = FALSE)), verbose = TRUE)
 sepTest <- function(x) {
 
  # Keep objects inside the local environment
- cat("Objects in the local environment before separating the list:\\n")
+ cat("Objects in the local environment before separating the list:\n")
  print(ls())
 
  sepList(x)
 
- cat("Objects in the local environment after separating the list:\\n")
+ cat("Objects in the local environment after separating the list:\n")
  print(ls())
 
  # Place objects in the global environment instead
- cat("Objects in the global environment before separating the list:\\n")
+ cat("Objects in the global environment before separating the list:\n")
  print(ls(.GlobalEnv))
 
  sepList(x, envir = .GlobalEnv)
 
- cat("Objects in the local environment after separating the list:\\n")
+ cat("Objects in the local environment after separating the list:\n")
  print(ls(.GlobalEnv))
 
 } # sepTest

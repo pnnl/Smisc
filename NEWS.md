@@ -1,3 +1,19 @@
+Version 0.4.0, 2020-10-08
+-----------------------------------------------------------------------------------
+
+FIXES
+
+- `test_pvar.R` was failing due to OS-specific behavior of `round()` when called in `pvar()`.  Replaced `10.7775` with `10.7777`
+
+
+Version 0.3.9.1, 2019-04-22
+-----------------------------------------------------------------------------------
+
+FIXES
+
+- `suppressWarnings(RNGversion("3.5.0"))` added to `testthat.R` to make the testing run correctly
+
+
 Version 0.3.9, 2017-11-20
 -----------------------------------------------------------------------------------
 

@@ -4,8 +4,13 @@
 \alias{smartTimeAxis}
 \title{Produces a time axis with smart spacing}
 \usage{
-smartTimeAxis(time.vec, nticks = 15, side = 1, time.format = c("hh:mm",
-  "hh:mm:sspm", "hh:mm:ss pm", "hh:mm:ss", "hh:mmpm", "hh:mm pm"))
+smartTimeAxis(
+  time.vec,
+  nticks = 15,
+  side = 1,
+  time.format = c("hh:mm", "hh:mm:sspm", "hh:mm:ss pm", "hh:mm:ss", "hh:mmpm",
+    "hh:mm pm")
+)
 }
 \arguments{
 \item{time.vec}{A time object (vector) that was used to construct the plot,

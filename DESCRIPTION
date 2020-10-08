@@ -1,8 +1,9 @@
 Package: Smisc
 Title: Sego Miscellaneous
 Version: 0.4.0
-Date: 2020-10-06
-Authors@R: c(person("Landon", "Sego", role = c("aut", "cre"), email = "LHS@byu.net"))
+Date: 2020-10-08
+Author: Landon Sego [aut, cre]
+Maintainer: Landon Sego <LHS@byu.net>
 URL: https://pnnl.github.io/Smisc
 Description: A collection of functions for statistical computing and data manipulation in R. 
     Includes routines for data ingestion, operating on dataframes and matrices, conversion to and 
@@ -19,4 +20,4 @@ Suggests:
     testthat,
     foreach
 License: BSD_3_clause + file LICENSE
-RoxygenNote: 6.0.1
+RoxygenNote: 7.1.1

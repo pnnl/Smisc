@@ -4,8 +4,7 @@
 \alias{smartFilter}
 \title{Calculate a moving dot product (or filter) over a numeric vector}
 \usage{
-smartFilter(y, weights, min.window = 1, start = 1, skip = 1,
-  balance = TRUE)
+smartFilter(y, weights, min.window = 1, start = 1, skip = 1, balance = TRUE)
 }
 \arguments{
 \item{y}{A numeric vector (can be labeled)}

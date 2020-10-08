@@ -4,8 +4,13 @@
 \alias{list2df}
 \title{Convert a list to a data frame}
 \usage{
-list2df(vList, col.names = NULL, row.names = NULL, convert.numeric = TRUE,
-  strings.as.factors = FALSE)
+list2df(
+  vList,
+  col.names = NULL,
+  row.names = NULL,
+  convert.numeric = TRUE,
+  strings.as.factors = FALSE
+)
 }
 \arguments{
 \item{vList}{List of vectors, data frames, or lists. See Details.}
@@ -56,7 +61,7 @@ etc.
 \examples{
 # For a list of vectors
 x <- c("r1c1 1", "r2c1 2", "r3c1 3", "r4c4 4")
-y <- strsplit(x, "\\ ")
+y <- strsplit(x, "\ ")
 y
 list2df(y)
 list2df(y, col.names = LETTERS[1:2])
