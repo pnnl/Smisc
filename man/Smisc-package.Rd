@@ -13,7 +13,7 @@ A collection of functions for statistical computing, data manipulation, and visu
 Package: \tab Smisc\cr
 Type: \tab Package\cr
 Version: \tab 0.4.0\cr
-Date: \tab 2020-10-06\cr
+Date: \tab 2020-10-08\cr
 License: \tab BSD_3_clause + file LICENSE\cr
 }
 }
