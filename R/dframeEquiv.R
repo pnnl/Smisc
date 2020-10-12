@@ -53,7 +53,7 @@
 ##' @seealso \code{\link{all.equal}}, \code{\link{identical}}
 ##'
 ##' @references
-##' \url{https://randomascii.wordpress.com/category/floating-point}
+##' \url{https://randomascii.wordpress.com/category/floating-point/}
 ##' 
 ##' @keywords misc
 ##' 

@@ -1,11 +1,11 @@
 ## Smisc
 
-An R package containing a collection of functions for statistical computing, data manipulation, and visualization.  You can find package vignettes and documentation [here](https://pnnl.github.io/Smisc).
+An R package containing a collection of functions for statistical computing, data manipulation, and visualization.  You can find package vignettes and documentation [here](https://pnnl.github.io/Smisc/).
 
 #### To cite:
 
 Sego LH. 2016. Smisc: Sego Miscellaneous. A collection of functions for statistical computing and data manipulation in R.
-Pacific Northwest National Laboratory. https://pnnl.github.io/Smisc.
+Pacific Northwest National Laboratory. https://pnnl.github.io/Smisc/.
 
 #### To install:
 
