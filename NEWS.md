@@ -110,7 +110,7 @@ Version 0.3.0, 2016-04-09
 
 FEATURES / CHANGES
 
-- Stream editing functions `streamEdit()`, `sed_insert()`, `sed_replace()`, `sed_substitute()`, and `sed_comment()` become their own package: [rsed](https://pnnl.github.io/rsed)
+- Stream editing functions `streamEdit()`, `sed_insert()`, `sed_replace()`, `sed_substitute()`, and `sed_comment()` become their own package: [rsed](https://pnnl.github.io/rsed/)
 - `umvue.ln()` renamed `umvueLN()`, and it gets `tol` and `verbose` arguments
 - `factor2num()` renamed `factor2numeric()`
 - `validEmailAddress()` is deprecated

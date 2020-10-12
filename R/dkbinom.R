@@ -60,10 +60,10 @@
 ##'
 ##' @seealso \code{\link{dbinom}}, \code{\link{pbinom}}
 ##'
-##' @references The Butler method is based on the exact algorithm discussed by: 
+##' @references The Butler method utilizes the exact algorithm discussed by: 
 ##' Butler, Ken and Stephens, Michael. (1993) The Distribution of a Sum of
 ##' Binomial Random Variables. Technical Report No. 467, Department of
-##' Statistics, Stanford University. \url{http://www.dtic.mil/dtic/tr/fulltext/u2/a266969.pdf}
+##' Statistics, Stanford University. \url{https://apps.dtic.mil/dtic/tr/fulltext/u2/a266969.pdf}
 ##'
 ##' @keywords misc
 ##'

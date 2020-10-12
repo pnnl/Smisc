@@ -91,7 +91,7 @@ dframeEquiv(x, y)
 
 }
 \references{
-\url{https://randomascii.wordpress.com/category/floating-point}
+\url{https://randomascii.wordpress.com/category/floating-point/}
 }
 \seealso{
 \code{\link{all.equal}}, \code{\link{identical}}

@@ -6,7 +6,7 @@
 //   Binomial Random Variables. Technical Report No. 467, Department of
 //   Statistics, Stanford University.
 //   
-//   http://www.dtic.mil/dtic/tr/fulltext/u2/a266969.pdf
+//   https://apps.dtic.mil/dtic/tr/fulltext/u2/a266969.pdf
 // 
 // Landon Sego 2011-12-05
 
